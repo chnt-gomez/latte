@@ -48,6 +48,14 @@ public class Util {
         }
     }
 
+    public static String fromFloat(float f){
+        try{
+            return String.valueOf(f);
+        }catch(Exception e){
+            return "err";
+        }
+    }
+
     public interface NewMaterialInterface{
         void returnMaterial(Material material);
     }

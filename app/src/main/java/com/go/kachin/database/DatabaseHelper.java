@@ -81,18 +81,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 null,
                 null
         );
-
         if(c.getCount() > 0) {
             c.moveToFirst();
-
-            while (c.isAfterLast()) {
+            do  {
                 String materialName = c.getString(c.getColumnIndex(MaterialContract.C_NAME));
                 String materialUnit = c.getString(c.getColumnIndex(MaterialContract.C_UNIT));
                 float materialCost = c.getFloat(c.getColumnIndex(MaterialContract.C_COST));
                 float materialAmount = c.getFloat(c.getColumnIndex(MaterialContract.C_AMOUNT));
                 materials.add(new Material(materialName, materialUnit, materialCost));
                 c.moveToNext();
-            }
+            } while(!c.isAfterLast());
             c.close();
             return materials;
         }

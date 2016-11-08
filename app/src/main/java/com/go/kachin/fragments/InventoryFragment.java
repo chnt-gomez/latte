@@ -1,43 +1,32 @@
 package com.go.kachin.fragments;
 
-import android.app.Dialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ListView;
 
+import com.go.kachin.InventoryActivity;
 import com.go.kachin.R;
+import com.go.kachin.adapters.InventoryListAdapter;
 import com.go.kachin.models.Material;
 import com.go.kachin.util.Util;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link InventoryService} interface
- * to handle interaction events.
- * Use the {@link InventoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class InventoryFragment extends Fragment implements OnClickListener, Util.NewMaterialInterface {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private View view;
-    private Button btnAdd;
+public class InventoryFragment extends Fragment implements OnClickListener,
+        Util.NewMaterialInterface{
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private View view;
+    private FloatingActionButton btnAdd;
+    private InventoryListAdapter adapter;
+    ListView listView;
 
     private InventoryService mListener;
 
@@ -45,49 +34,32 @@ public class InventoryFragment extends Fragment implements OnClickListener, Util
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment InventoryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static InventoryFragment newInstance(String param1, String param2) {
+    public static InventoryFragment newInstance() {
         InventoryFragment fragment = new InventoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_inventory, container, false);
         init();
         return view;
     }
 
     private void init() {
-        btnAdd = (Button)view.findViewById(R.id.btn_add);
+        btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
         addToListener(btnAdd);
         if(mListener.getMaterials() != null) {
-            for (Material m : mListener.getMaterials()) {
-                Log.d(getClass().getSimpleName(), m.getMaterialName());
-            }
+            adapter = new InventoryListAdapter(getContext(),
+                    R.layout.row_material_item, mListener.getMaterials());
+            listView = (ListView)view.findViewById(R.id.lv_materials_list_view);
+            listView.setAdapter(adapter);
         }
     }
 
@@ -125,22 +97,18 @@ public class InventoryFragment extends Fragment implements OnClickListener, Util
 
     @Override
     public void returnMaterial(Material material) {
-        if(material != null)
+        if(material != null) {
             mListener.addMaterial(material);
+        }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
+    private void updateList() {
+        adapter.setItems(mListener.getMaterials());
+        listView.setAdapter(adapter);
+    }
+
     public interface InventoryService {
-        // TODO: Update argument type and name
         void addMaterial(Material material);
         List<Material> getMaterials();
     }
