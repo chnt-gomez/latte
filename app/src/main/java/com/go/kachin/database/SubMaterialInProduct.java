@@ -22,5 +22,8 @@ public class SubMaterialInProduct {
                     "FOREIGN KEY ("+C_PRODUCT_ID+") REFERENCES "+
                     ProductContract.TABLE_NAME+ " ("+ProductContract.C_ID+")";
 
+    public static final String DROP_TABLE =
+            "DROP TABLE IF EXISTS " + TABLE_NAME+"; ";
+
 
 }

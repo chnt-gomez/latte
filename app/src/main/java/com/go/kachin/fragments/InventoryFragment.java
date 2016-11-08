@@ -1,9 +1,12 @@
 package com.go.kachin.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +17,8 @@ import com.go.kachin.R;
 import com.go.kachin.models.Material;
 import com.go.kachin.util.Util;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -22,7 +27,7 @@ import com.go.kachin.util.Util;
  * Use the {@link InventoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InventoryFragment extends Fragment implements OnClickListener {
+public class InventoryFragment extends Fragment implements OnClickListener, Util.NewMaterialInterface {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -79,6 +84,11 @@ public class InventoryFragment extends Fragment implements OnClickListener {
     private void init() {
         btnAdd = (Button)view.findViewById(R.id.btn_add);
         addToListener(btnAdd);
+        if(mListener.getMaterials() != null) {
+            for (Material m : mListener.getMaterials()) {
+                Log.d(getClass().getSimpleName(), m.getMaterialName());
+            }
+        }
     }
 
     private void addToListener(View... params){
@@ -108,9 +118,15 @@ public class InventoryFragment extends Fragment implements OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_add:
-                //TODO : ps aqui
-                break;
+                Util.newMaterialDialog("New material", null, getActivity(),
+                        getActivity().getLayoutInflater(), this).show();
         }
+    }
+
+    @Override
+    public void returnMaterial(Material material) {
+        if(material != null)
+            mListener.addMaterial(material);
     }
 
     /**
@@ -126,5 +142,6 @@ public class InventoryFragment extends Fragment implements OnClickListener {
     public interface InventoryService {
         // TODO: Update argument type and name
         void addMaterial(Material material);
+        List<Material> getMaterials();
     }
 }

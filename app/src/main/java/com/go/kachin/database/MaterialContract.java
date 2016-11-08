@@ -16,12 +16,15 @@ public class MaterialContract {
     public static final String C_STATUS = "material_status";
 
     public static final String MAKE_TABLE =
-            "CREATE TABLE " + TABLE_NAME + " ("+C_ID+" PRIMARY KEY AUTOINCREMENT, " +
+            "CREATE TABLE " + TABLE_NAME + " ("+C_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     C_NAME+" TEXT, " +
                     C_UNIT+" TEXT, " +
                     C_AMOUNT+" REAL, " +
                     C_COST+" REAL,"+
                     C_STATUS+" INTEGER"+
-                    ")";
+                    "); ";
+
+    public static final String DROP_TABLE =
+            "DROP TABLE IF EXISTS " + TABLE_NAME+"; ";
 
 }
