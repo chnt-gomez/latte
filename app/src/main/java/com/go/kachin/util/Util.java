@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-
 import com.go.kachin.R;
 import com.go.kachin.models.Material;
 
@@ -20,7 +19,6 @@ public class Util {
                                              final LayoutInflater inflater,final NewMaterialInterface callback){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final View view = inflater.inflate(R.layout.dialog_new_material, null);
-        final Material[] material = new Material[1];
         builder.setView(view)
                 .setTitle(dialogTitle)
                 .setMessage(dialogMessage)
