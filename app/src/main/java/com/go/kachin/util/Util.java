@@ -16,7 +16,7 @@ import com.go.kachin.models.Material;
 public class Util {
 
     public static Dialog newMaterialDialog(String dialogTitle, String dialogMessage, Context context,
-                                             final LayoutInflater inflater,final NewMaterialInterface callback){
+                                             final LayoutInflater inflater,final DialogEventListener callback){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final View view = inflater.inflate(R.layout.dialog_new_material, null);
         builder.setView(view)
@@ -54,7 +54,7 @@ public class Util {
         }
     }
 
-    public interface NewMaterialInterface{
+    public interface DialogEventListener {
         void returnMaterial(Material material);
     }
 

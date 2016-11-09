@@ -5,30 +5,29 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
-
-import com.go.kachin.InventoryActivity;
 import com.go.kachin.R;
 import com.go.kachin.adapters.InventoryListAdapter;
+import com.go.kachin.interfaces.FragmentNavigationService;
+import com.go.kachin.interfaces.InventoryService;
 import com.go.kachin.models.Material;
 import com.go.kachin.util.Util;
 
-import java.util.List;
-
 public class InventoryFragment extends Fragment implements OnClickListener,
-        Util.NewMaterialInterface{
+        Util.DialogEventListener {
 
     private View view;
     private FloatingActionButton btnAdd;
     private InventoryListAdapter adapter;
-    ListView listView;
+    private ListView listView;
 
-    private InventoryService mListener;
+    private InventoryService inventoryService;
+    private FragmentNavigationService navigationService;
 
     public InventoryFragment() {
         // Required empty public constructor
@@ -37,6 +36,11 @@ public class InventoryFragment extends Fragment implements OnClickListener,
     public static InventoryFragment newInstance() {
         InventoryFragment fragment = new InventoryFragment();
         return fragment;
+    }
+
+    @Override
+    public void setMenuVisibility(boolean menuVisible) {
+        navigationService.showActionBar();
     }
 
     @Override
@@ -55,10 +59,18 @@ public class InventoryFragment extends Fragment implements OnClickListener,
     private void init() {
         btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
         addToListener(btnAdd);
-        if(mListener.getMaterials() != null) {
+        if(inventoryService.getMaterials() != null) {
             adapter = new InventoryListAdapter(getContext(),
-                    R.layout.row_material_item, mListener.getMaterials());
+                    R.layout.row_material_item, inventoryService.getMaterials());
             listView = (ListView)view.findViewById(R.id.lv_materials_list_view);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    inventoryService.moveToFragment(MaterialDetailFragment.newInstance(adapter.getItem(position).getId()));
+                }
+            });
+
             listView.setAdapter(adapter);
         }
     }
@@ -72,18 +84,19 @@ public class InventoryFragment extends Fragment implements OnClickListener,
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof InventoryService) {
-            mListener = (InventoryService) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement InventoryService");
-        }
+        inventoryService = (InventoryService)context;
+        navigationService = (FragmentNavigationService)context;
+        if (navigationService != null)
+            navigationService.setActionBarTitle("Inventory");
+
+
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        inventoryService = null;
     }
 
     @Override
@@ -98,18 +111,13 @@ public class InventoryFragment extends Fragment implements OnClickListener,
     @Override
     public void returnMaterial(Material material) {
         if(material != null) {
-            mListener.addMaterial(material);
+            inventoryService.addMaterial(material);
         }
     }
 
 
     private void updateList() {
-        adapter.setItems(mListener.getMaterials());
+        adapter.setItems(inventoryService.getMaterials());
         listView.setAdapter(adapter);
-    }
-
-    public interface InventoryService {
-        void addMaterial(Material material);
-        List<Material> getMaterials();
     }
 }

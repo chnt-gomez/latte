@@ -7,7 +7,9 @@ public class Material {
 
     private String materialName;
     private String materialUnit;
+    private float materialAmount;
     private float materialCost;
+    private long id;
 
     public Material(String materialName, String materialUnit, float materialCost) {
         this.materialName = materialName;
@@ -16,6 +18,13 @@ public class Material {
     }
 
     public Material(){}
+
+    public Material(String materialName, String materialUnit, float materialCost, long materialId) {
+        this.materialName = materialName;
+        this.materialUnit = materialUnit;
+        this.materialCost = materialCost;
+        this.id = materialId;
+    }
 
     public String getMaterialName() {
         return materialName;
@@ -39,5 +48,21 @@ public class Material {
 
     public void setMaterialCost(float materialCost) {
         this.materialCost = materialCost;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public float getMaterialAmount() {
+        return materialAmount;
+    }
+
+    public void setMaterialAmount(float materialAmount) {
+        this.materialAmount = materialAmount;
     }
 }

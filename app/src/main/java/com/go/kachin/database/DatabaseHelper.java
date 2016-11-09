@@ -63,6 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public List<Material> getMaterials() {
         List <Material> materials = new ArrayList<>();
         String projection[] = {
+                MaterialContract.C_ID,
                 MaterialContract.C_NAME,
                 MaterialContract.C_UNIT,
                 MaterialContract.C_COST,
@@ -88,11 +89,55 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 String materialUnit = c.getString(c.getColumnIndex(MaterialContract.C_UNIT));
                 float materialCost = c.getFloat(c.getColumnIndex(MaterialContract.C_COST));
                 float materialAmount = c.getFloat(c.getColumnIndex(MaterialContract.C_AMOUNT));
-                materials.add(new Material(materialName, materialUnit, materialCost));
+                long materialId = c.getLong(c.getColumnIndex(MaterialContract.C_ID));
+                materials.add(new Material(materialName, materialUnit, materialCost, materialId));
+
                 c.moveToNext();
             } while(!c.isAfterLast());
             c.close();
             return materials;
+        }
+        return null;
+    }
+
+    public Material getMaterialFromId(long id) {
+        Material material = new Material();
+        String projection[] = {
+                MaterialContract.C_ID,
+                MaterialContract.C_NAME,
+                MaterialContract.C_UNIT,
+                MaterialContract.C_COST,
+                MaterialContract.C_AMOUNT
+        };
+
+        String selection = MaterialContract.C_STATUS + " = ? AND " + MaterialContract.C_ID + " = ?";
+        String selectionArgs[] = {"1", String.valueOf(id)};
+
+        Cursor c = getReadableDatabase().query(
+                MaterialContract.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        if(c.getCount() > 0) {
+            c.moveToFirst();
+            String materialName = c.getString(c.getColumnIndex(MaterialContract.C_NAME));
+            String materialUnit = c.getString(c.getColumnIndex(MaterialContract.C_UNIT));
+            float materialCost = c.getFloat(c.getColumnIndex(MaterialContract.C_COST));
+            float materialAmount = c.getFloat(c.getColumnIndex(MaterialContract.C_AMOUNT));
+            long materialId = c.getLong(c.getColumnIndex(MaterialContract.C_ID));
+
+            material.setMaterialName(materialName);
+            material.setMaterialUnit(materialUnit);
+            material.setMaterialCost(materialCost);
+            material.setMaterialAmount(materialAmount);
+            material.setId(materialId);
+
+            c.close();
+            return material;
         }
         return null;
     }
