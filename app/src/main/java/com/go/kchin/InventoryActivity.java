@@ -11,18 +11,17 @@ import android.view.MenuInflater;
 import android.widget.SearchView;
 
 import com.go.kchin.database.DatabaseHelper;
-import com.go.kchin.fragments.InventoryFragment;
+import com.go.kchin.fragments.ProductListFragment;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
 import com.go.kchin.models.Material;
+import com.go.kchin.models.Product;
 
-import java.util.EventListener;
 import java.util.List;
 
 public class InventoryActivity extends AppCompatActivity implements InventoryService, FragmentNavigationService {
 
     DatabaseHelper helper;
-    EventListener fragmentEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,8 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     private void init() {
         helper = new DatabaseHelper(this);
-        addFragment(InventoryFragment.newInstance());
+        //addFragment(MaterialListFragment.newInstance());
+        addFragment(new ProductListFragment());
     }
 
     private void addFragment(Fragment fragment) {
@@ -69,16 +69,11 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
                     return true;
                 }
                 return false;
-
             }
         });
 
         return true;
     }
-
-    /*
-    Materials and Inventory methods
-     */
 
     @Override
     public Material getMaterial(long id) {
@@ -105,6 +100,26 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     @Override
     public void updateMaterial(long id, Material material) {
         log("UPDATED: "+helper.updateMaterial(id, material));
+    }
+
+    @Override
+    public Product getProduct(long id) {
+        return null;
+    }
+
+    @Override
+    public void addProduct(Product product) {
+
+    }
+
+    @Override
+    public List<Product> getProducts() {
+        return null;
+    }
+
+    @Override
+    public void updateProduct(long id, Product product) {
+
     }
 
     @Override

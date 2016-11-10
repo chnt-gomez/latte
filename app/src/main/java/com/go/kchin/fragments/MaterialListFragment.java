@@ -18,7 +18,7 @@ import com.go.kchin.interfaces.InventoryService;
 import com.go.kchin.models.Material;
 import com.go.kchin.util.Util;
 
-public class InventoryFragment extends Fragment implements OnClickListener,
+public class MaterialListFragment extends Fragment implements OnClickListener,
         Util.DialogEventListener {
 
     private View view;
@@ -29,12 +29,12 @@ public class InventoryFragment extends Fragment implements OnClickListener,
     private InventoryService inventoryService;
     private FragmentNavigationService navigationService;
 
-    public InventoryFragment() {
+    public MaterialListFragment() {
         // Required empty public constructor
     }
 
-    public static InventoryFragment newInstance() {
-        InventoryFragment fragment = new InventoryFragment();
+    public static MaterialListFragment newInstance() {
+        MaterialListFragment fragment = new MaterialListFragment();
         return fragment;
     }
 
@@ -120,7 +120,7 @@ public class InventoryFragment extends Fragment implements OnClickListener,
     }
 
     private void updateList() {
-        adapter.setItems(inventoryService.getMaterials());
+        adapter.addAll(inventoryService.getMaterials());
         listView.setAdapter(adapter);
     }
 }

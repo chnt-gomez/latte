@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.go.kchin.models.Material;
+import com.go.kchin.models.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "kchin.db";
     private static final int DATABASE_VERSION = 1;
-    private List<Material> materials;
 
 
     public DatabaseHelper(Context context){
@@ -45,6 +45,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         );
     }
 
+    private long insert(String table, ContentValues values){
+        return getWritableDatabase().insert(table, null, values);
+    }
+
+    private int update(String table, ContentValues values, String selection, String[] selectionArgs){
+        return getWritableDatabase().update(
+            table,
+            values,
+            selection,
+            selectionArgs
+        );
+    }
+
     public long addMaterial(Material material) {
         ContentValues values = new ContentValues();
         values.put(MaterialContract.C_NAME, material.getMaterialName());
@@ -54,10 +67,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         values.put(MaterialContract.C_STATUS, 1);
 
         return insert(MaterialContract.TABLE_NAME, values);
-    }
-
-    private long insert(String table, ContentValues values){
-        return getWritableDatabase().insert(table, null, values);
     }
 
     public List<Material> getMaterials() {
@@ -151,12 +160,56 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         String selection = MaterialContract.C_ID + " = ?";
         String [] selectionArgs = {String.valueOf(id)};
 
-        int count = getWritableDatabase().update(
-                MaterialContract.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs
+        return update(MaterialContract.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public long addProduct(Product product){
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.C_NAME, product.getProductName());
+        values.put(ProductContract.C_AMOUNT, product.getProductAmount());
+        values.put(ProductContract.C_COST, product.getProductPurchasePrice());
+        values.put(ProductContract.C_DEPARTMENT, product.getProductDepartment());
+        values.put(ProductContract.C_PRICE, product.getProductSalePrice());
+        values.put(ProductContract.C_SOLD, 0.0f);
+        values.put(ProductContract.C_STATUS, 1);
+
+        return insert(ProductContract.TABLE_NAME, values);
+    }
+
+    public List<Product> getProducts(){
+        List<Product> products = new ArrayList<>();
+        String projection[] = {
+                ProductContract.C_ID,
+                ProductContract.C_DEPARTMENT,
+                ProductContract.C_AMOUNT,
+                ProductContract.C_COST,
+                ProductContract.C_NAME,
+                ProductContract.C_PRICE,
+                ProductContract.C_SOLD,
+                ProductContract.C_UNIT
+        };
+
+        String selection = ProductContract.C_STATUS + " = ?";
+        String selectionArgs[] = {"1"};
+
+        Cursor c = query(ProductContract.TABLE_NAME, projection, selection, selectionArgs);
+
+        if (c.getCount() > 1){
+            c.moveToFirst();
+            do {
+                products.add(Product.fromCursor(c));
+                c.moveToNext();
+            }while(!c.isAfterLast());
+            c.close();
+            return products;
+        }
+        return null;
+    }
+
+    private Cursor query(String table, String[] projection, String selection, String[] selectionArgs){
+        Cursor c = getReadableDatabase().query(
+                table, projection, selection, selectionArgs, null, null, null
         );
-        return count;
+        return c;
     }
 }

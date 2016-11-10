@@ -21,7 +21,8 @@ import java.util.List;
 
 public class InventoryListAdapter extends ArrayAdapter<Material> {
 
-    private List<Material> items;
+
+
 
     public InventoryListAdapter (Context context, int resource, List<Material> items){
         super(context, resource, items);
@@ -44,9 +45,5 @@ public class InventoryListAdapter extends ArrayAdapter<Material> {
         txtMaterialAmount.setText(Util.fromFloat(getItem(position).getMaterialAmount()));
 
         return view;
-    }
-
-    public void setItems(List<Material> items) {
-        this.items = items;
     }
 }
