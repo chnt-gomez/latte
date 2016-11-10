@@ -1,4 +1,4 @@
-package com.go.kachin.models;
+package com.go.kchin.models;
 
 /**
  * Created by vicente on 6/11/16.

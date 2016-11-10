@@ -1,4 +1,4 @@
-package com.go.kachin.models;
+package com.go.kchin.models;
 
 /**
  * Created by vicente on 6/11/16.
@@ -25,6 +25,16 @@ public class Material {
         this.materialCost = materialCost;
         this.id = materialId;
     }
+
+    public Material(String materialName, String materialUnit, float materialCost, long materialId,
+                    float materialAmount) {
+        this.materialName = materialName;
+        this.materialUnit = materialUnit;
+        this.materialCost = materialCost;
+        this.id = materialId;
+        this.materialAmount = materialAmount;
+    }
+
 
     public String getMaterialName() {
         return materialName;

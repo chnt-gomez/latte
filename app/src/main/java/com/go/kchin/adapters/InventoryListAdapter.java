@@ -1,4 +1,4 @@
-package com.go.kachin.adapters;
+package com.go.kchin.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,9 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
-import com.go.kachin.R;
-import com.go.kachin.models.Material;
-import com.go.kachin.util.Util;
+import com.go.kchin.R;
+import com.go.kchin.models.Material;
+import com.go.kchin.util.Util;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class InventoryListAdapter extends ArrayAdapter<Material> {
 
         txtMaterialName.setText(getItem(position).getMaterialName());
         txtMaterialUnit.setText(getItem(position).getMaterialUnit());
-        txtMaterialAmount.setText(Util.fromFloat(getItem(position).getMaterialCost()));
+        txtMaterialAmount.setText(Util.fromFloat(getItem(position).getMaterialAmount()));
 
         return view;
     }

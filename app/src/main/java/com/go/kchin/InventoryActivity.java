@@ -1,4 +1,4 @@
-package com.go.kachin;
+package com.go.kchin;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -10,11 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.SearchView;
 
-import com.go.kachin.database.DatabaseHelper;
-import com.go.kachin.fragments.InventoryFragment;
-import com.go.kachin.interfaces.FragmentNavigationService;
-import com.go.kachin.interfaces.InventoryService;
-import com.go.kachin.models.Material;
+import com.go.kchin.database.DatabaseHelper;
+import com.go.kchin.fragments.InventoryFragment;
+import com.go.kchin.interfaces.FragmentNavigationService;
+import com.go.kchin.interfaces.InventoryService;
+import com.go.kchin.models.Material;
 
 import java.util.EventListener;
 import java.util.List;
@@ -39,7 +39,7 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     private void addFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_fragment_holder, fragment ,fragment.getTag()).commit();;
+                .add(R.id.main_fragment_holder, fragment ,fragment.getTag()).commit();
     }
 
     @Override
@@ -100,6 +100,11 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.main_fragment_holder, fragment).addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void updateMaterial(long id, Material material) {
+        log("UPDATED: "+helper.updateMaterial(id, material));
     }
 
     @Override

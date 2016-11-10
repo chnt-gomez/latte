@@ -1,8 +1,8 @@
-package com.go.kachin.interfaces;
+package com.go.kchin.interfaces;
 
 import android.support.v4.app.Fragment;
 
-import com.go.kachin.models.Material;
+import com.go.kchin.models.Material;
 
 import java.util.List;
 
@@ -16,5 +16,6 @@ public interface InventoryService {
     void addMaterial(Material material);
     List<Material> getMaterials();
     void moveToFragment(Fragment fragment);
+    void updateMaterial(long id, Material material);
 
 }

@@ -1,4 +1,4 @@
-package com.go.kachin.util;
+package com.go.kchin.util;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import com.go.kachin.R;
-import com.go.kachin.models.Material;
+import com.go.kchin.R;
+import com.go.kchin.models.Material;
 
 /**
  * Created by vicente on 7/11/16.
@@ -37,6 +37,26 @@ public class Util {
         return builder.create();
     }
 
+    public static Dialog newBuyMaterialDialog(String dialogTitle, String dialogMessage, Context context,
+                                              final LayoutInflater inflater, final DialogEventListener callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final View view = inflater.inflate(R.layout.dialog_buy_material, null);
+        builder.setView(view)
+                .setTitle(dialogTitle)
+                .setMessage(dialogMessage)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String materialAmount = ((EditText)view.findViewById(R.id.edt_material_amount))
+                                .getText().toString();
+                        float amount = Util.toFloat(materialAmount);
+                        callback.returnFloat(amount);
+                    }
+                });
+        return builder.create();
+    }
+
+
     public static float toFloat(String s){
         try {
             return Float.valueOf(s);
@@ -56,6 +76,8 @@ public class Util {
 
     public interface DialogEventListener {
         void returnMaterial(Material material);
+
+        void returnFloat(float amount);
     }
 
 }

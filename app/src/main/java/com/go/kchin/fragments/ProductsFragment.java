@@ -1,4 +1,4 @@
-package com.go.kachin.fragments;
+package com.go.kchin.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.go.kachin.R;
+import com.go.kchin.R;
 
 /**
  * A simple {@link Fragment} subclass.

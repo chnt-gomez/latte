@@ -1,4 +1,4 @@
-package com.go.kachin;
+package com.go.kchin;
 
 import org.junit.Test;
 

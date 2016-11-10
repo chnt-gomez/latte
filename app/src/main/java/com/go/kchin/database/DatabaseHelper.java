@@ -1,4 +1,4 @@
-package com.go.kachin.database;
+package com.go.kchin.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.go.kachin.models.Material;
+import com.go.kchin.models.Material;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 float materialCost = c.getFloat(c.getColumnIndex(MaterialContract.C_COST));
                 float materialAmount = c.getFloat(c.getColumnIndex(MaterialContract.C_AMOUNT));
                 long materialId = c.getLong(c.getColumnIndex(MaterialContract.C_ID));
-                materials.add(new Material(materialName, materialUnit, materialCost, materialId));
+                materials.add(new Material(materialName, materialUnit, materialCost, materialId, materialAmount));
 
                 c.moveToNext();
             } while(!c.isAfterLast());
@@ -140,5 +140,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             return material;
         }
         return null;
+    }
+
+    public int updateMaterial(long id, Material material) {
+        ContentValues values = new ContentValues();
+        values.put(MaterialContract.C_NAME, material.getMaterialName());
+        values.put(MaterialContract.C_AMOUNT, material.getMaterialAmount());
+        values.put(MaterialContract.C_UNIT, material.getMaterialUnit());
+
+        String selection = MaterialContract.C_ID + " = ?";
+        String [] selectionArgs = {String.valueOf(id)};
+
+        int count = getWritableDatabase().update(
+                MaterialContract.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+        return count;
     }
 }

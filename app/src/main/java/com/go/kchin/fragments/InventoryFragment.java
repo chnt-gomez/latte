@@ -1,4 +1,4 @@
-package com.go.kachin.fragments;
+package com.go.kchin.fragments;
 
 
 import android.content.Context;
@@ -11,12 +11,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.go.kachin.R;
-import com.go.kachin.adapters.InventoryListAdapter;
-import com.go.kachin.interfaces.FragmentNavigationService;
-import com.go.kachin.interfaces.InventoryService;
-import com.go.kachin.models.Material;
-import com.go.kachin.util.Util;
+import com.go.kchin.R;
+import com.go.kchin.adapters.InventoryListAdapter;
+import com.go.kchin.interfaces.FragmentNavigationService;
+import com.go.kchin.interfaces.InventoryService;
+import com.go.kchin.models.Material;
+import com.go.kchin.util.Util;
 
 public class InventoryFragment extends Fragment implements OnClickListener,
         Util.DialogEventListener {
@@ -89,8 +89,6 @@ public class InventoryFragment extends Fragment implements OnClickListener,
         if (navigationService != null)
             navigationService.setActionBarTitle("Inventory");
 
-
-
     }
 
     @Override
@@ -115,6 +113,11 @@ public class InventoryFragment extends Fragment implements OnClickListener,
         }
     }
 
+    @Override
+    public void returnFloat(float amount) {
+
+
+    }
 
     private void updateList() {
         adapter.setItems(inventoryService.getMaterials());

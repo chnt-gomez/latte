@@ -1,4 +1,4 @@
-package com.go.kachin.interfaces;
+package com.go.kchin.interfaces;
 
 import android.support.v4.app.Fragment;
 

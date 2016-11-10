@@ -1,4 +1,4 @@
-package com.go.kachin.database;
+package com.go.kchin.database;
 
 /**
  * Created by vicente on 6/11/16.
