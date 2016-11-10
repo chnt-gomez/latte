@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="horizontal" android:layout_width="match_parent"
+android:layout_height="wrap_content" android:weightSum="2">
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:ems="10"
+            android:id="@+id/edt_material_unit"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_material_amount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/white"
+            android:drawableEnd="@drawable/ic_add_shopping_cart_white_24dp"
+            android:textAlignment="center"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:layout_weight="1"
+            android:textSize="18sp"/>
+</LinearLayout>
