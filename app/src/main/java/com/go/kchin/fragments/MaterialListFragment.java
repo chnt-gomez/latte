@@ -19,7 +19,7 @@ import com.go.kchin.models.Material;
 import com.go.kchin.util.Util;
 
 public class MaterialListFragment extends Fragment implements OnClickListener,
-        Util.DialogEventListener {
+        Util.MaterialDialogEventListener, Util.UtilDialogEventListener {
 
     private View view;
     private FloatingActionButton btnAdd;
@@ -51,7 +51,7 @@ public class MaterialListFragment extends Fragment implements OnClickListener,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_inventory, container, false);
+        view = inflater.inflate(R.layout.fragment_material_list, container, false);
         init();
         return view;
     }
@@ -115,7 +115,6 @@ public class MaterialListFragment extends Fragment implements OnClickListener,
 
     @Override
     public void returnFloat(float amount) {
-
 
     }
 

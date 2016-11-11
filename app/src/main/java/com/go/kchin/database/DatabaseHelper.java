@@ -27,22 +27,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(
-                MaterialContract.MAKE_TABLE+
-                ProductContract.MAKE_TABLE+
-                ServiceContract.MAKE_TABLE+
-                SubMaterialInProduct.MAKE_TABLE
-        );
+        sqLiteDatabase.execSQL(MaterialContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(ProductContract.MAKE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL(
-                SubMaterialInProduct.DROP_TABLE+
-                MaterialContract.DROP_TABLE+
-                ProductContract.DROP_TABLE+
-                ServiceContract.DROP_TABLE
-        );
+        //TODO: Set upgrade code
     }
 
     private long insert(String table, ContentValues values){
@@ -102,11 +93,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 materials.add(new Material(materialName, materialUnit, materialCost, materialId, materialAmount));
 
                 c.moveToNext();
+
             } while(!c.isAfterLast());
             c.close();
             return materials;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public Material getMaterialFromId(long id) {
@@ -171,6 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         values.put(ProductContract.C_DEPARTMENT, product.getProductDepartment());
         values.put(ProductContract.C_PRICE, product.getProductSalePrice());
         values.put(ProductContract.C_SOLD, 0.0f);
+        values.put(ProductContract.C_UNIT, product.getProductUnit());
         values.put(ProductContract.C_STATUS, 1);
 
         return insert(ProductContract.TABLE_NAME, values);
@@ -194,7 +187,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         Cursor c = query(ProductContract.TABLE_NAME, projection, selection, selectionArgs);
 
-        if (c.getCount() > 1){
+        if (c.getCount() > 0){
             c.moveToFirst();
             do {
                 products.add(Product.fromCursor(c));
@@ -203,7 +196,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             c.close();
             return products;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     private Cursor query(String table, String[] projection, String selection, String[] selectionArgs){
@@ -211,5 +204,29 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 table, projection, selection, selectionArgs, null, null, null
         );
         return c;
+    }
+
+    public Product getProduct(long id) {
+
+        String[] projection = {
+                ProductContract.C_ID,
+                ProductContract.C_DEPARTMENT,
+                ProductContract.C_AMOUNT,
+                ProductContract.C_COST,
+                ProductContract.C_NAME,
+                ProductContract.C_PRICE,
+                ProductContract.C_SOLD,
+                ProductContract.C_UNIT
+        };
+
+        String selection = ProductContract.C_STATUS+" = ? AND "+ProductContract.C_ID+" = ?";
+        String selectionArgs[] = {"1", String.valueOf(id)};
+
+        Cursor c = query(ProductContract.TABLE_NAME, projection, selection, selectionArgs);
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            return Product.fromCursor(c);
+        }
+        return new Product();
     }
 }

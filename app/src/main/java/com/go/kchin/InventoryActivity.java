@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.widget.SearchView;
 
 import com.go.kchin.database.DatabaseHelper;
+import com.go.kchin.fragments.MaterialListFragment;
 import com.go.kchin.fragments.ProductListFragment;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
@@ -33,8 +34,7 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     private void init() {
         helper = new DatabaseHelper(this);
-        //addFragment(MaterialListFragment.newInstance());
-        addFragment(new ProductListFragment());
+        addFragment(ProductListFragment.newInstance());
     }
 
     private void addFragment(Fragment fragment) {
@@ -104,17 +104,17 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     @Override
     public Product getProduct(long id) {
-        return null;
+        return helper.getProduct(id);
     }
 
     @Override
     public void addProduct(Product product) {
-
+        log(""+helper.addProduct(product));
     }
 
     @Override
     public List<Product> getProducts() {
-        return null;
+        return helper.getProducts();
     }
 
     @Override

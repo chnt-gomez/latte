@@ -6,18 +6,18 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:hint="Material name"
+        android:hint="Product name"
         android:layout_height="wrap_content"
         android:id="@+id/edt_product_name"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Unit(Kg, piece, lb...)"
-        android:id="@+id/edt_material_unit"/>
+        android:id="@+id/edt_product_unit"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Cost"
-        android:id="@+id/edt_material_cost"/>
+        android:hint="Sale price"
+        android:id="@+id/edt_product_sale_price"/>
 
 </LinearLayout>

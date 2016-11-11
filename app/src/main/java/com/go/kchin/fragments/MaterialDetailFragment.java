@@ -21,7 +21,8 @@ import com.go.kchin.models.Material;
 import com.go.kchin.util.Util;
 
 
-public class MaterialDetailFragment extends Fragment implements View.OnClickListener, TextWatcher, Util.DialogEventListener {
+public class MaterialDetailFragment extends Fragment implements View.OnClickListener, TextWatcher,
+        Util.UtilDialogEventListener {
 
     private static final String MATERIAL_ID = "materialId";
 
@@ -41,9 +42,7 @@ public class MaterialDetailFragment extends Fragment implements View.OnClickList
     private InventoryService inventoryService;
     private FragmentNavigationService navigationService;
 
-    public MaterialDetailFragment() {
-        // Required empty public constructor
-    }
+    public MaterialDetailFragment() {}
 
     public static MaterialDetailFragment newInstance(long material_id) {
         MaterialDetailFragment fragment = new MaterialDetailFragment();
@@ -61,8 +60,6 @@ public class MaterialDetailFragment extends Fragment implements View.OnClickList
         //if (navigationService!= null);
             //navigationService.hideActionBar();
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +95,7 @@ public class MaterialDetailFragment extends Fragment implements View.OnClickList
         btnSave = (FloatingActionButton) view.findViewById(R.id.btn_save);
         btnRestore = (FloatingActionButton) view.findViewById(R.id.btn_undo);
 
-        edtMaterialName = (EditText) view.findViewById(R.id.edt_material_name);
+        edtMaterialName = (EditText) view.findViewById(R.id.edt_product_name);
         edtMaterialUnit = (EditText) view.findViewById(R.id.edt_material_unit);
         btnMaterialBuy = (Button) view.findViewById(R.id.btn_material_amount);
         txtMaterialPrice = (TextView)view.findViewById(R.id.txt_material_price);
@@ -205,11 +202,6 @@ public class MaterialDetailFragment extends Fragment implements View.OnClickList
     @Override
     public void afterTextChanged(Editable s) {
         isRestoreAvailable(true);
-    }
-
-    @Override
-    public void returnMaterial(Material material) {
-        //TODO nothing to do here
     }
 
     @Override
