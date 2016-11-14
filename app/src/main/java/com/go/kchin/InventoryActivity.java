@@ -15,6 +15,7 @@ import com.go.kchin.fragments.MaterialListFragment;
 import com.go.kchin.fragments.ProductListFragment;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
+import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
 
@@ -119,6 +120,26 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     @Override
     public void updateProduct(long id, Product product) {
+
+    }
+
+    @Override
+    public Department getDepartment(long id) {
+        return null;
+    }
+
+    @Override
+    public List<Department> getDepartments() {
+        return null;
+    }
+
+    @Override
+    public void updateDepartment(long id, Department department) {
+
+    }
+
+    @Override
+    public void addDepartment(Department department) {
 
     }
 

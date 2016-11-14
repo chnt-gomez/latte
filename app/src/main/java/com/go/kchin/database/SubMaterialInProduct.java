@@ -15,7 +15,7 @@ public class SubMaterialInProduct {
     public static final String MAKE_TABLE =
             "CREATE TABLE " + TABLE_NAME + " ("+
                     C_MATERIAL_ID+" INTEGER, "+
-                    C_PRODUCT_ID+" INTEGER "+
+                    C_PRODUCT_ID+" INTEGER, "+
                     C_QUANTITY+" REAL)," +
                     "FOREIGN KEY ("+C_MATERIAL_ID+") REFERENCES "+
                     MaterialContract.TABLE_NAME+ " ("+MaterialContract.C_ID+"), " +

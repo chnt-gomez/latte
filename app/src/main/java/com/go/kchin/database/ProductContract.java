@@ -27,8 +27,9 @@ public class ProductContract {
                     C_AMOUNT +" REAL,"+
                     C_SOLD + " REAL,"+
                     C_COST+ " REAL, "+
-                    C_DEPARTMENT+" INTEGER"+
-                    "); ";
+                    C_DEPARTMENT+" INTEGER, "+
+                    " FOREIGN KEY ("+C_DEPARTMENT+") REFERENCES "
+                    +DepartmentContract.TABLE_NAME+" ("+DepartmentContract.C_ID+"))";
 
     public static final String DROP_TABLE =
             "DROP TABLE IF EXISTS " + TABLE_NAME+"; ";

@@ -28,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(MaterialContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(DepartmentContract.MAKE_TABLE);
         sqLiteDatabase.execSQL(ProductContract.MAKE_TABLE);
     }
 
@@ -197,6 +198,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             return products;
         }
         return new ArrayList<>();
+    }
+
+    public int updateProduct(long productId, Product product){
+        ContentValues values = new ContentValues();
+
+        values.put(ProductContract.C_NAME, product.getProductName());
+        values.put(ProductContract.C_UNIT, product.getProductUnit());
+
+        String selection = ProductContract.C_ID + " = ?";
+        String [] selectionArgs = {String.valueOf(productId)};
+
+        return update(ProductContract.TABLE_NAME, values, selection, selectionArgs);
     }
 
     private Cursor query(String table, String[] projection, String selection, String[] selectionArgs){

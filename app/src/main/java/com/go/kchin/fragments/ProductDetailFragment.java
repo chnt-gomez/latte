@@ -16,6 +16,7 @@ import com.go.kchin.R;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
 import com.go.kchin.models.Product;
+import com.go.kchin.util.Util;
 
 /**
  * Created by MAV1GA on 11/11/2016.
@@ -30,9 +31,9 @@ public class ProductDetailFragment extends Fragment {
     private boolean isRestoreAvailable = false;
 
     private EditText edtProduct, edtProductUnit;
-    private Button btnProductMake;
+    private Button btnProductMake, btnSalePrice, btnDepartment, btnRecipe, btnPackages;
     private FloatingActionButton btnSave, btnRestore;
-    private TextView txtProductSellPrice;
+    private TextView txtProductCost;
     private InventoryService inventoryService;
     private FragmentNavigationService navigationService;
 
@@ -73,5 +74,22 @@ public class ProductDetailFragment extends Fragment {
 
     private void init() {
         product = inventoryService.getProduct(productId);
+
+        edtProduct = (EditText)view.findViewById(R.id.edt_product_name);
+        edtProductUnit = (EditText)view.findViewById(R.id.edt_product_unit);
+        btnProductMake = (Button)view.findViewById(R.id.btn_product_amount);
+        btnSalePrice = (Button)view.findViewById(R.id.btn_sale_price);
+        txtProductCost = (TextView) view.findViewById(R.id.txt_product_cost);
+        btnDepartment = (Button) view.findViewById(R.id.btn_product_department);
+        btnRecipe = (Button)view.findViewById(R.id.btn_see_recipe);
+        btnPackages = (Button)view.findViewById(R.id.btn_see_package);
+
+        edtProduct.setText(product.getProductName());
+        edtProductUnit.setText(product.getProductUnit());
+        btnProductMake.setText(Util.fromFloat(product.getProductAmount()));
+        btnSalePrice.setText(Util.fromFloat(product.getProductSalePrice()));
+        txtProductCost.setText(Util.fromFloat(product.getProductPurchasePrice()));
+        //btnDepartment.setText(product.getProductDepartment());
+
     }
 }

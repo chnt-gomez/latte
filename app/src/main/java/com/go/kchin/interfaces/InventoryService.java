@@ -2,6 +2,7 @@ package com.go.kchin.interfaces;
 
 import android.support.v4.app.Fragment;
 
+import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
 
@@ -19,8 +20,6 @@ public interface InventoryService {
 
     List<Material> getMaterials();
 
-    void moveToFragment(Fragment fragment);
-
     void updateMaterial(long id, Material material);
 
     Product getProduct(long id);
@@ -30,5 +29,15 @@ public interface InventoryService {
     List<Product> getProducts();
 
     void updateProduct(long id, Product product);
+
+    Department getDepartment(long id);
+
+    List<Department> getDepartments();
+
+    void updateDepartment(long id, Department department);
+
+    void addDepartment(Department department);
+
+
 
 }
