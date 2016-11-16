@@ -4,13 +4,11 @@
     android:layout_height="wrap_content" android:weightSum="2">
 
 
-    <EditText
+    <Spinner
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:ems="10"
-        android:id="@+id/edt_product_unit"
+        android:layout_height="match_parent"
+        android:id="@+id/spn_product_unit"
+        android:entries="@array/units_array"
         android:layout_weight="1"/>
 
     <Button
@@ -24,6 +22,5 @@
         android:gravity="center"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
-        android:layout_weight="1"
-        android:textSize="18sp"/>
+        android:layout_weight="1"/>
 </LinearLayout>

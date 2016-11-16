@@ -6,12 +6,17 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
+
 import com.go.kchin.R;
+import com.go.kchin.adapters.DepartmentListAdapter;
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
+
+import java.util.List;
 
 /**
  * Created by vicente on 7/11/16.
@@ -35,6 +40,24 @@ public class Util {
                         String materialCost = ((EditText)view.findViewById(R.id.edt_material_unit))
                                 .getText().toString();
                         callback.returnMaterial(new Material(materialName, materialUnit, toFloat(materialCost)));
+                    }
+                });
+        return builder.create();
+    }
+
+    public static Dialog newProductSalePriceDialog (String dialogTitle, float oldPrice, Context context,
+                                                    final LayoutInflater inflater,final UtilDialogEventListener callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final View view = inflater.inflate(R.layout.dialog_new_product_price, null);
+        ((EditText)view.findViewById(R.id.edt_product_sale_price)).setHint("Old price: $ "+Util.fromFloat(oldPrice));
+        builder.setView(view)
+                .setTitle(dialogTitle)
+                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        float newSalePrice = Util.toFloat(((EditText)view.findViewById(R.id.edt_product_sale_price))
+                                .getText().toString());
+                        callback.returnFloat(newSalePrice);
                     }
                 });
         return builder.create();
@@ -66,23 +89,49 @@ public class Util {
         return builder.create();
     }
 
-    public static Dialog newBuyMaterialDialog(String dialogTitle, String dialogMessage, Context context,
-                                              final LayoutInflater inflater, final UtilDialogEventListener callback){
+    public static Dialog newBuyItemDialog(String dialogTitle, String dialogMessage, Context context,
+                                          final LayoutInflater inflater, final UtilDialogEventListener callback){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final View view = inflater.inflate(R.layout.dialog_buy_material, null);
+        final View view = inflater.inflate(R.layout.dialog_buy_item, null);
         builder.setView(view)
                 .setTitle(dialogTitle)
                 .setMessage(dialogMessage)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String materialAmount = ((EditText)view.findViewById(R.id.edt_material_amount))
+                        String materialAmount = ((EditText)view.findViewById(R.id.edt_item_amount))
                                 .getText().toString();
                         float amount = Util.toFloat(materialAmount);
                         callback.returnFloat(amount);
                     }
                 });
         return builder.create();
+    }
+
+    public static Dialog newChooseDepartmentDialog(String dialogTitle, String dialogMessage, Context context,
+                                                   final LayoutInflater inflater, final DepartmentDialogEventListener callback,
+                                                   final List<Department> departmentList){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final Dialog dialog;
+        final View view = inflater.inflate(R.layout.dialog_choose_department, null);
+        DepartmentListAdapter adapter = new DepartmentListAdapter(context, R.layout.row_despartment_item, departmentList);
+        ListView lv = (ListView)view.findViewById(R.id.lv_department_list_view);
+        lv.setAdapter(adapter);
+
+        builder.setView(view)
+                .setTitle(dialogTitle)
+                .setMessage(dialogMessage);
+        dialog = builder.create();
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                callback.returnDepartment(departmentList.get(position));
+                dialog.dismiss();
+            }
+        });
+        return dialog;
+
     }
 
     public static Dialog newDepartmentDialog(String dialogTitle, String dialogMessage, Context context,
@@ -120,6 +169,24 @@ public class Util {
         }catch(Exception e){
             return "err";
         }
+    }
+
+    public static int getSelectionIndexFromString(String productUnit) {
+        if(productUnit.equals("Piece"))
+            return 0;
+        if(productUnit.equals("Kg"))
+            return 1;
+        if(productUnit.equals("Lt"))
+            return 2;
+        if(productUnit.equals("Lb"))
+            return 3;
+        if(productUnit.equals("Pound"))
+            return 4;
+        if(productUnit.equals("Gram"))
+            return 5;
+        if(productUnit.equals("Oz"))
+            return 6;
+        return 0;
     }
 
     public interface MaterialDialogEventListener {

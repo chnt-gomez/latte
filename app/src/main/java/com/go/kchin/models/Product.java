@@ -10,9 +10,9 @@ import com.go.kchin.database.ProductContract;
 public class Product {
 
     private String productName, productUnit;
-    private long productId;
+    private long productId, productDepartment;
     private float productSalePrice, productPurchasePrice, productAmount, productSold;
-    private int productDepartment, productStatus;
+    private int productStatus;
     private Recipe productRecipe;
 
     public String getProductName() {
@@ -71,11 +71,11 @@ public class Product {
         this.productSold = productSold;
     }
 
-    public int getProductDepartment() {
+    public long getProductDepartment() {
         return productDepartment;
     }
 
-    public void setProductDepartment(int productDepartment) {
+    public void setProductDepartment(long productDepartment) {
         this.productDepartment = productDepartment;
     }
 
@@ -98,7 +98,7 @@ public class Product {
     public static Product fromCursor(Cursor c) {
         Product product = new Product();
         product.setProductAmount(c.getFloat(c.getColumnIndex(ProductContract.C_AMOUNT)));
-        product.setProductDepartment(c.getInt(c.getColumnIndex(ProductContract.C_DEPARTMENT)));
+        product.setProductDepartment(c.getLong(c.getColumnIndex(ProductContract.C_DEPARTMENT)));
         product.setProductId(c.getLong(c.getColumnIndex(ProductContract.C_ID)));
         product.setProductName(c.getString(c.getColumnIndex(ProductContract.C_NAME)));
         product.setProductPurchasePrice(c.getFloat(c.getColumnIndex(ProductContract.C_COST)));

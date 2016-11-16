@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_default_margin_small">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_default_margin_small"
+        android:background="@color/colorWarning"
+        android:text="Changing the product sale price will affect current sales report. Consider this action only after today's cut or after saving a partial day report."/>
+
+    <include layout="@layout/include_space_4dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:id="@+id/edt_product_sale_price"
+        android:inputType="numberDecimal"/>
+
+</LinearLayout>

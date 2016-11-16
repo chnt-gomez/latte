@@ -205,10 +205,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         values.put(ProductContract.C_NAME, product.getProductName());
         values.put(ProductContract.C_UNIT, product.getProductUnit());
-
+        values.put(ProductContract.C_PRICE, product.getProductSalePrice());
+        values.put(ProductContract.C_DEPARTMENT, product.getProductDepartment());
+        values.put(ProductContract.C_AMOUNT, product.getProductAmount());
         String selection = ProductContract.C_ID + " = ?";
-        String [] selectionArgs = {String.valueOf(productId)};
 
+        String [] selectionArgs = {String.valueOf(productId)};
         return update(ProductContract.TABLE_NAME, values, selection, selectionArgs);
     }
 
@@ -287,5 +289,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(DepartmentContract.C_NAME, department.getDepartmentName());
         return insert(DepartmentContract.TABLE_NAME, values);
+    }
+
+    public long updateDepartment(long id, Department department) {
+        ContentValues values = new ContentValues();
+        values.put(DepartmentContract.C_NAME, department.getDepartmentName());
+
+        String selection = DepartmentContract.C_ID + " = ?";
+        String [] selectionArgs = {String.valueOf(id)};
+
+        return update(DepartmentContract.TABLE_NAME, values, selection, selectionArgs);
     }
 }

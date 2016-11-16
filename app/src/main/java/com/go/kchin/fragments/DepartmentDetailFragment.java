@@ -3,6 +3,7 @@ package com.go.kchin.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,50 +19,50 @@ import com.go.kchin.models.Department;
  * Created by MAV1GA on 14/11/2016.
  */
 
-public class DepartmentDetailFragment extends Fragment{
+public class DepartmentDetailFragment extends FragmentInventoryDetail{
 
-    private static final String DEPARTMENT_ID = "departmentId";
-    private long departmentId;
-    private View view;
     private Department department;
     private EditText edtDepartment;
-    private InventoryService inventoryService;
-    private FragmentNavigationService navigationService;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
-            departmentId = getArguments().getLong(DEPARTMENT_ID);
+            objectId = getArguments().getLong(OBJECT_ID);
         }
     }
 
     public static DepartmentDetailFragment newInstance(long materialId){
         DepartmentDetailFragment fragment = new DepartmentDetailFragment();
         Bundle args = new Bundle();
-        args.putLong(DEPARTMENT_ID, materialId);
+        args.putLong(OBJECT_ID, materialId);
+        args.putInt(LAYOUT_RES, R.layout.fragment_department_detail);
         fragment.setArguments(args);
         return fragment;
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_department_detail, null);
-        init();
-        return view;
+    protected void init() {
+        super.init();
+        department = inventoryService.getDepartment(objectId);
+        edtDepartment = (EditText) findViewById(R.id.edt_department_name);
+        edtDepartment.setText(department.getDepartmentName());
+        addTextWatcher(edtDepartment);
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.inventoryService = (InventoryService)context;
-        this.navigationService = (FragmentNavigationService)context;
+    protected void save() {
+        String newDepartmentName = edtDepartment.getText().toString();
+        department.setDepartmentName(newDepartmentName);
+        inventoryService.updateDepartment(objectId, department);
+        super.save();
     }
 
-    private void init() {
-        department = inventoryService.getDepartment(departmentId);
-        edtDepartment = (EditText)view.findViewById(R.id.edt_department_name);
+    @Override
+    protected void undo() {
         edtDepartment.setText(department.getDepartmentName());
+        super.undo();
     }
 }

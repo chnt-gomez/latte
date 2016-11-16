@@ -24,6 +24,5 @@ android:layout_height="wrap_content" android:weightSum="2">
             android:gravity="center"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:layout_weight="1"
-            android:textSize="18sp"/>
+            android:layout_weight="1"/>
 </LinearLayout>

@@ -36,7 +36,7 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     private void init() {
         helper = new DatabaseHelper(this);
-        addFragment(DepartmentListFragment.newInstance());
+        addFragment(ProductListFragment.newInstance());
     }
 
     private void addFragment(Fragment fragment) {
@@ -121,7 +121,7 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     @Override
     public void updateProduct(long id, Product product) {
-
+        helper.updateProduct(id, product);
     }
 
     @Override
@@ -135,8 +135,8 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
-    public void updateDepartment(long id, Department department) {
-
+    public long updateDepartment(long id, Department department) {
+       return helper.updateDepartment(id, department);
     }
 
     @Override

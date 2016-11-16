@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_default_margin_small">
 
-    <EditText
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/edt_material_amount" />
+        android:layout_height="match_parent"
+        android:id="@+id/lv_department_list_view"/>
+
 </LinearLayout>

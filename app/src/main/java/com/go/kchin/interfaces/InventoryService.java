@@ -34,7 +34,7 @@ public interface InventoryService {
 
     List<Department> getDepartments();
 
-    void updateDepartment(long id, Department department);
+    long updateDepartment(long id, Department department);
 
     void addDepartment(Department department);
 
