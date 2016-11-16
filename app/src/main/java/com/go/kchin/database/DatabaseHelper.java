@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.go.kchin.models.Department;
+import com.go.kchin.models.Ingredient;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
+import com.go.kchin.models.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "kchin.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
 
     public DatabaseHelper(Context context){
@@ -34,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        //TODO: Set upgrade code
+        sqLiteDatabase.execSQL(SubMaterialInProduct.MAKE_TABLE);
     }
 
     private long insert(String table, ContentValues values){
@@ -299,5 +301,32 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         String [] selectionArgs = {String.valueOf(id)};
 
         return update(DepartmentContract.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public Recipe getRecipe(long productId){
+
+        List<Ingredient> items = new ArrayList<>();
+        Recipe recipe = new Recipe();
+
+        String[] projection = {
+                SubMaterialInProduct.C_MATERIAL_ID,
+                SubMaterialInProduct.C_PRODUCT_ID,
+                SubMaterialInProduct.C_QUANTITY,
+        };
+
+        String selection = SubMaterialInProduct.C_PRODUCT_ID+" = ?";
+
+        String selectionArgs[] = {"'"+productId+"'"};
+
+        Cursor c = query(SubMaterialInProduct.TABLE_NAME, projection, selection, selectionArgs);
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            do {
+                items.add(Ingredient.fromCursor(c));
+                c.moveToNext();
+            }while (!c.isAfterLast());
+            c.close();
+        }
+        return recipe;
     }
 }

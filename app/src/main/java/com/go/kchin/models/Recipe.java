@@ -8,17 +8,22 @@ import java.util.List;
 
 public class Recipe {
 
-    private List<Material> materials;
+    private long productId;
+    private List<Ingredient> recipe;
 
-    public List<Material> getMaterials() {
-        return materials;
+    public long getProductId() {
+        return productId;
     }
 
-    public void setMaterials(List<Material> materials) {
-        this.materials = materials;
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 
-    public void addMaterial(Material material){
-        materials.add(material);
+    public List<Ingredient> getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(List<Ingredient> recipe) {
+        this.recipe = recipe;
     }
 }

@@ -160,6 +160,9 @@ public class ProductDetailFragment extends FragmentInventoryDetail {
                             }
                         }, inventoryService.getDepartments())
                         .show();
+                break;
+
+            case R.id.btn_see_recipe:
         }
     }
 
