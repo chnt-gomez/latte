@@ -15,11 +15,12 @@ import com.go.kchin.R;
 import com.go.kchin.adapters.InventoryListAdapter;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
+import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.util.Util;
 
 public class MaterialListFragment extends Fragment implements OnClickListener,
-        Util.MaterialDialogEventListener, Util.UtilDialogEventListener {
+        Util.MaterialDialogEventListener {
 
     private View view;
     private FloatingActionButton btnAdd;
@@ -67,7 +68,7 @@ public class MaterialListFragment extends Fragment implements OnClickListener,
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    inventoryService.moveToFragment(MaterialDetailFragment.newInstance(adapter.getItem(position).getId()));
+                    navigationService.moveToFragment(MaterialDetailFragment.newInstance(adapter.getItem(position).getId()));
                 }
             });
 
@@ -111,11 +112,6 @@ public class MaterialListFragment extends Fragment implements OnClickListener,
         if(material != null) {
             inventoryService.addMaterial(material);
         }
-    }
-
-    @Override
-    public void returnFloat(float amount) {
-
     }
 
     private void updateList() {

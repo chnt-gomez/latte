@@ -208,4 +208,10 @@ public class MaterialDetailFragment extends Fragment implements View.OnClickList
     public void returnFloat(float amount) {
         buy(amount);
     }
+
+
+    @Override
+    public void returnString(String arg) {
+        //Unused
+    }
 }

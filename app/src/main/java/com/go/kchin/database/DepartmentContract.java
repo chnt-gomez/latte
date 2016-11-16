@@ -12,10 +12,12 @@ public class DepartmentContract {
 
     public static final String C_ID = "department_id";
     public static final String C_NAME = "department_name";
+    public static final String C_STATUS = "department_status";
+    public static final String C_PRODUCTS = "products";
 
     public static final String MAKE_TABLE =
             "CREATE TABLE "+TABLE_NAME+ " ("+C_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    C_NAME+" TEXT)";
+                    C_NAME+" TEXT, "+C_STATUS+" INTEGER)";
 
 
 }

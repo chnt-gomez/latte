@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
 
@@ -241,5 +241,51 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             return Product.fromCursor(c);
         }
         return new Product();
+    }
+
+    public List<Department> getDepartments (){
+        ArrayList<Department> departments = new ArrayList<>();
+
+        String newQuery =
+                "SELECT "+DepartmentContract.C_ID +", "+
+                        DepartmentContract.C_NAME +", "+
+                        "(SELECT COUNT(*) FROM "+ProductContract.TABLE_NAME+
+                        " WHERE "+DepartmentContract.C_ID+"="+ProductContract.TABLE_NAME+"."+
+                        ProductContract.C_DEPARTMENT+") AS "+DepartmentContract.C_PRODUCTS+" " +
+                        "FROM "+DepartmentContract.TABLE_NAME;
+
+        Cursor c = getReadableDatabase().rawQuery(newQuery, null);
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            do{
+                departments.add(Department.fromCursor(c));
+                c.moveToNext();
+            }while(!c.isAfterLast());
+        }
+        c.close();
+        return departments;
+    }
+
+    public Department getDepartment (long departmentId){
+        String rawQuery =
+                "SELECT "+DepartmentContract.C_ID +", "+
+                        DepartmentContract.C_NAME +", "+
+                        "(SELECT COUNT(*) FROM "+ProductContract.TABLE_NAME+
+                        " WHERE "+DepartmentContract.C_ID+"="+ProductContract.TABLE_NAME+"."+
+                        ProductContract.C_DEPARTMENT+") AS "+DepartmentContract.C_PRODUCTS+" " +
+                        "FROM "+DepartmentContract.TABLE_NAME+" WHERE "+DepartmentContract.C_ID+"="+
+                        departmentId;
+        Cursor c = getReadableDatabase().rawQuery(rawQuery, null);
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            return Department.fromCursor(c);
+        }
+        return new Department();
+    }
+
+    public long addDepartment(Department department) {
+        ContentValues values = new ContentValues();
+        values.put(DepartmentContract.C_NAME, department.getDepartmentName());
+        return insert(DepartmentContract.TABLE_NAME, values);
     }
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_default_margin_small"
+    tools:showIn="@layout/fragment_department_detail">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Department name:"
+        android:labelFor="@+id/edt_product_name"
+        android:id="@+id/textView" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text|textPersonName"
+        android:ems="10"
+        android:textAlignment="center"
+        android:id="@+id/edt_department_name"/>
+    <include layout="@layout/include_space_8dp"/>
+
+    <TextView
+        android:text="Department settings"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:drawableStart="@drawable/ic_settings_white_24dp"
+        android:background="@color/colorPrimary"
+        android:drawablePadding="4dp"
+        android:layout_width="match_parent"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_material_settings"/>
+    <include layout="@layout/include_space_4dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_material_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/txt_material_settings">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Deactivate department"
+                android:layout_weight="2"/>
+            <CheckBox
+                android:textAlignment="center"
+                android:id="@+id/chk_deactivate"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:layout_width="match_parent"/>
+        </LinearLayout>
+    </LinearLayout>
+    <include layout="@layout/include_space_4dp"/>
+
+    <include layout="@layout/include_department_delete_warning"/>
+
+
+
+</LinearLayout>

@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import com.go.kchin.R;
+import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
 
@@ -83,6 +85,26 @@ public class Util {
         return builder.create();
     }
 
+    public static Dialog newDepartmentDialog(String dialogTitle, String dialogMessage, Context context,
+                                                 final LayoutInflater inflater, final DepartmentDialogEventListener callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final View view = inflater.inflate (R.layout.dialog_new_department, null);
+        builder.setView(view)
+                .setTitle(dialogTitle)
+                .setMessage(dialogMessage)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Department department = new Department();
+                        String departmentName = ((EditText)view.findViewById(R.id.edt_department_name))
+                                .getText().toString();
+                        department.setDepartmentName(departmentName);
+                        callback.returnDepartment(department);
+                    }
+                });
+        return builder.create();
+    }
+
     public static float toFloat(String s){
         try {
             return Float.valueOf(s);
@@ -105,11 +127,17 @@ public class Util {
     }
 
     public interface UtilDialogEventListener{
-        void returnFloat(float amount);
+        void returnFloat(float arg);
+        void returnString(String arg);
     }
 
     public interface ProductDialogEventListener{
         void returnProduct(Product product);
+    }
+
+    public interface DepartmentDialogEventListener{
+        void returnDepartment(Department department);
+        void editDepartment(long id, Department department);
     }
 
 }

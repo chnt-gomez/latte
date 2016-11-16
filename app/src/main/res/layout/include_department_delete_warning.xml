@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWarning"
+    android:padding="@dimen/activity_default_margin_small">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Would you like to move the products in this department to another?"
+        android:id="@+id/textView3" />
+    <include layout="@layout/include_space_4dp"/>
+    <Button
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:drawablePadding="4dp"
+        android:textColor="@android:color/white"
+        android:text="select department"
+        android:drawableEnd="@drawable/ic_style_white_24dp"/>
+
+</LinearLayout>

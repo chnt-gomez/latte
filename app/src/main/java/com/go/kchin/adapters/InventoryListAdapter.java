@@ -21,9 +21,6 @@ import java.util.List;
 
 public class InventoryListAdapter extends ArrayAdapter<Material> {
 
-
-
-
     public InventoryListAdapter (Context context, int resource, List<Material> items){
         super(context, resource, items);
     }
