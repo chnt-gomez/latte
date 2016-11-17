@@ -5,4 +5,7 @@ package com.go.kchin.fragments;
  */
 
 public class RecipeListFragment extends InventoryListFragment {
+
+
+
 }

@@ -4,9 +4,9 @@ package com.go.kchin.database;
 /**
  * Created by vicente on 6/11/16.
  */
-public class SubMaterialInProduct {
+public class RecipeContract {
 
-    private SubMaterialInProduct(){}
+    private RecipeContract(){}
 
     public static final String TABLE_NAME = "material_in_product";
     public static final String C_MATERIAL_ID = "material_id";

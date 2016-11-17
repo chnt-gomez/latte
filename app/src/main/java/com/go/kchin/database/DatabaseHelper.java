@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL(SubMaterialInProduct.MAKE_TABLE);
+        sqLiteDatabase.execSQL(RecipeContract.MAKE_TABLE);
     }
 
     private long insert(String table, ContentValues values){
@@ -309,16 +309,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         Recipe recipe = new Recipe();
 
         String[] projection = {
-                SubMaterialInProduct.C_MATERIAL_ID,
-                SubMaterialInProduct.C_PRODUCT_ID,
-                SubMaterialInProduct.C_QUANTITY,
+                RecipeContract.C_MATERIAL_ID,
+                RecipeContract.C_PRODUCT_ID,
+                RecipeContract.C_QUANTITY,
         };
 
-        String selection = SubMaterialInProduct.C_PRODUCT_ID+" = ?";
+        String selection = RecipeContract.C_PRODUCT_ID+" = ?";
 
         String selectionArgs[] = {"'"+productId+"'"};
 
-        Cursor c = query(SubMaterialInProduct.TABLE_NAME, projection, selection, selectionArgs);
+        Cursor c = query(RecipeContract.TABLE_NAME, projection, selection, selectionArgs);
         if (c.getCount() > 0){
             c.moveToFirst();
             do {
@@ -328,5 +328,46 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             c.close();
         }
         return recipe;
+    }
+
+    public List<Product> getProductsFromMaterial (long materialId){
+
+        String[] projection = {
+                ProductContract.TABLE_NAME+"."+ProductContract.C_ID,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_DEPARTMENT,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_AMOUNT,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_COST,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_NAME,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_PRICE,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_SOLD,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_UNIT
+        };
+
+        String selection = ProductContract.TABLE_NAME+"."+ProductContract.C_ID+"="+
+                RecipeContract.TABLE_NAME+"."+RecipeContract.C_PRODUCT_ID+" AND "+
+                RecipeContract.TABLE_NAME+"."+RecipeContract.C_MATERIAL_ID+"="+
+                MaterialContract.TABLE_NAME+"."+MaterialContract.C_ID+" AND "+
+                MaterialContract.TABLE_NAME+"."+MaterialContract.C_ID+"=?";
+
+        String selectionArgs[] = {
+            String.valueOf(materialId)
+        };
+
+        String tables = ProductContract.TABLE_NAME+", "+RecipeContract.TABLE_NAME+","+MaterialContract.TABLE_NAME;
+
+        List<Product> products = new ArrayList<>();
+
+        Cursor c = query(tables,  projection, selection, selectionArgs);
+
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            do{
+                products.add(Product.fromCursor(c));
+                c.moveToNext();
+            }while(!c.isAfterLast());
+            c.close();
+        }
+
+        return products;
     }
 }

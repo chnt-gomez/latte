@@ -16,7 +16,7 @@ public interface InventoryService {
 
     Material getMaterial(long id);
 
-    void addMaterial(Material material);
+    long addMaterial(Material material);
 
     List<Material> getMaterials();
 

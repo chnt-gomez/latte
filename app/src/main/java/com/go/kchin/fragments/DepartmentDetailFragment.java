@@ -1,25 +1,16 @@
 package com.go.kchin.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.go.kchin.R;
-import com.go.kchin.interfaces.FragmentNavigationService;
-import com.go.kchin.interfaces.InventoryService;
 import com.go.kchin.models.Department;
 
 /**
  * Created by MAV1GA on 14/11/2016.
  */
 
-public class DepartmentDetailFragment extends FragmentInventoryDetail{
+public class DepartmentDetailFragment extends InventoryDetailFragment {
 
     private Department department;
     private EditText edtDepartment;

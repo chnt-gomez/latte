@@ -18,7 +18,7 @@ import com.go.kchin.util.Util;
  * Created by MAV1GA on 11/11/2016.
  */
 
-public class ProductDetailFragment extends FragmentInventoryDetail {
+public class ProductDetailFragment extends InventoryDetailFragment {
 
     private EditText edtProduct;
     private Spinner spnUnit;
@@ -68,7 +68,7 @@ public class ProductDetailFragment extends FragmentInventoryDetail {
         btnDepartment.setText(inventoryService.getDepartment(product.getProductDepartment()).getDepartmentName());
 
         addTextWatcher(edtProduct);
-        addToClickListener(btnSalePrice, btnProductMake, btnDepartment);
+        addToClickListener(btnSalePrice, btnProductMake, btnDepartment, btnRecipe);
         addOnSpinnerSelectedListener(spnUnit);
 
     }
@@ -86,7 +86,6 @@ public class ProductDetailFragment extends FragmentInventoryDetail {
             product.setProductDepartment(temporaryDepartmentId);
         product.setProductAmount(newProductAmount);
         inventoryService.updateProduct(objectId, product);
-
         super.save();
     }
 
@@ -163,6 +162,8 @@ public class ProductDetailFragment extends FragmentInventoryDetail {
                 break;
 
             case R.id.btn_see_recipe:
+
+                break;
         }
     }
 

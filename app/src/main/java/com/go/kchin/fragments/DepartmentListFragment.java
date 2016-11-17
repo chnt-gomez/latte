@@ -24,7 +24,8 @@ import java.util.List;
  * Created by MAV1GA on 14/11/2016.
  */
 
-public class DepartmentListFragment extends Fragment implements Util.DepartmentDialogEventListener, View.OnClickListener{
+public class DepartmentListFragment extends Fragment implements Util.DepartmentDialogEventListener,
+        View.OnClickListener{
 
     private ListView listView;
     private View view;
@@ -41,11 +42,13 @@ public class DepartmentListFragment extends Fragment implements Util.DepartmentD
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_department_list, null);
         init();
         return view;
     }
+
 
     private void init() {
         List<Department> list = inventoryService.getDepartments();
@@ -59,7 +62,6 @@ public class DepartmentListFragment extends Fragment implements Util.DepartmentD
                 navigationService.moveToFragment(DepartmentDetailFragment.newInstance(adapter.getItem(position).getDepartmentId()));
             }
         });
-
         btnAdd = (FloatingActionButton)view.findViewById(R.id.btn_add);
         addToClickListener(btnAdd);
     }
@@ -91,9 +93,10 @@ public class DepartmentListFragment extends Fragment implements Util.DepartmentD
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_add:
-                Util.newDepartmentDialog("New department", null, getActivity(), getActivity().getLayoutInflater(),
-                        this).show();
+                Util.newDepartmentDialog("New department", null, getActivity(), getActivity().
+                        getLayoutInflater(), this).show();
                 break;
         }
     }
+
 }

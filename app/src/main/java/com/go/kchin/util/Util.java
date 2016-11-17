@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.DepartmentListAdapter;
@@ -35,11 +36,25 @@ public class Util {
                     public void onClick(DialogInterface dialog, int which) {
                         String materialName = ((EditText)view.findViewById(R.id.edt_product_name))
                                 .getText().toString();
-                        String materialUnit = ((EditText)view.findViewById(R.id.edt_material_unit))
-                                .getText().toString();
-                        String materialCost = ((EditText)view.findViewById(R.id.edt_material_unit))
+                        String materialUnit = ((Spinner)view.findViewById(R.id.spn_material_unit))
+                                .getSelectedItem().toString();
+                        String materialCost = ((EditText)view.findViewById(R.id.edt_material_cost))
                                 .getText().toString();
                         callback.returnMaterial(new Material(materialName, materialUnit, toFloat(materialCost)));
+                    }
+                })
+                .setNeutralButton("Add and see", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String materialName = ((EditText)view.findViewById(R.id.edt_product_name))
+                                .getText().toString();
+                        String materialUnit = ((Spinner)view.findViewById(R.id.spn_material_unit))
+                                .getSelectedItem().toString();
+                        String materialCost = ((EditText)view.findViewById(R.id.edt_material_cost))
+                                .getText().toString();
+                        long id = callback.returnMaterial(new Material(materialName, materialUnit, toFloat(materialCost)));
+                        callback.moveToMaterial(id);
+
                     }
                 });
         return builder.create();
@@ -190,7 +205,9 @@ public class Util {
     }
 
     public interface MaterialDialogEventListener {
-        void returnMaterial(Material material);
+        long returnMaterial(Material material);
+
+        void moveToMaterial(long id);
     }
 
     public interface UtilDialogEventListener{

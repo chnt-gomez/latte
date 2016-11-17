@@ -29,7 +29,9 @@
         android:layout_height="wrap_content"
         android:text="Measure and amount:"
         android:labelFor="@+id/edt_material_unit"/>
+
     <include layout="@layout/include_material_amount"/>
+
     <include layout="@layout/include_space_8dp"/>
 
     <TextView

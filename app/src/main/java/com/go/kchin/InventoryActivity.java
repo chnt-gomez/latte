@@ -36,7 +36,7 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     private void init() {
         helper = new DatabaseHelper(this);
-        addFragment(ProductListFragment.newInstance());
+        addFragment(MaterialListFragment.newInstance());
     }
 
     private void addFragment(Fragment fragment) {
@@ -83,8 +83,8 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
-    public void addMaterial(Material material) {
-       helper.addMaterial(material);
+    public long addMaterial(Material material) {
+       return helper.addMaterial(material);
     }
 
     @Override

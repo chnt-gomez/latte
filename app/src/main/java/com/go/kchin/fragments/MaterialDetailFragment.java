@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.go.kchin.R;
@@ -14,10 +16,11 @@ import com.go.kchin.models.Material;
 import com.go.kchin.util.Util;
 
 
-public class MaterialDetailFragment extends FragmentInventoryDetail implements
-        Util.UtilDialogEventListener {
+public class MaterialDetailFragment extends InventoryDetailFragment implements
+        Util.UtilDialogEventListener{
 
-    private EditText edtMaterialName, edtMaterialUnit;
+    private EditText edtMaterialName;
+    private Spinner spnMaterialUnit;
     private Button btnMaterialBuy;
     private TextView txtMaterialPrice;
 
@@ -36,32 +39,25 @@ public class MaterialDetailFragment extends FragmentInventoryDetail implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-
-    @Override
     protected void init(){
 
         super.init();
-
         edtMaterialName = (EditText) findViewById(R.id.edt_product_name);
-        edtMaterialUnit = (EditText) findViewById(R.id.edt_material_unit);
+        spnMaterialUnit = (Spinner) findViewById(R.id.spn_material_unit);
         btnMaterialBuy = (Button) findViewById(R.id.btn_material_amount);
         txtMaterialPrice = (TextView) findViewById(R.id.txt_material_price);
 
         material = inventoryService.getMaterial(objectId);
 
         edtMaterialName.setText(material.getMaterialName());
-        edtMaterialUnit.setText(material.getMaterialUnit());
+        spnMaterialUnit.setSelection(Util.getSelectionIndexFromString(material.getMaterialUnit()));
         btnMaterialBuy.setText(Util.fromFloat(material.getMaterialAmount()));
 
         txtMaterialPrice.setText(Util.fromFloat(material.getMaterialCost()));
 
         addToClickListener(btnMaterialBuy);
-        addTextWatcher(edtMaterialName, edtMaterialUnit);
+        addTextWatcher(edtMaterialName);
+        addOnSpinnerSelectedListener(spnMaterialUnit);
 
         if(!isUndoAvailable)
             btnSave.setImageResource(R.drawable.ic_done_all_white_24dp);
@@ -71,10 +67,9 @@ public class MaterialDetailFragment extends FragmentInventoryDetail implements
     @Override
     protected void undo(){
         edtMaterialName.setText(material.getMaterialName());
-        edtMaterialUnit.setText(material.getMaterialUnit());
+        spnMaterialUnit.setSelection(Util.getSelectionIndexFromString(material.getMaterialUnit()));
         btnMaterialBuy.setText(Util.fromFloat(material.getMaterialAmount()));
         super.undo();
-
     }
 
     @Override
@@ -82,7 +77,7 @@ public class MaterialDetailFragment extends FragmentInventoryDetail implements
         Material newMaterial = new Material();
 
         String  newMaterialName = edtMaterialName.getText().toString();
-        String  newMaterialUnit = edtMaterialUnit.getText().toString();
+        String  newMaterialUnit = spnMaterialUnit.getSelectedItem().toString();
         float newMaterialAmount = Util.toFloat(btnMaterialBuy.getText().toString());
 
         newMaterial.setMaterialName(newMaterialName);
@@ -107,7 +102,7 @@ public class MaterialDetailFragment extends FragmentInventoryDetail implements
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_material_amount:
                 Util.newBuyItemDialog("Buy materials", null, getActivity(),
                         getActivity().getLayoutInflater(), this).show();
@@ -116,14 +111,21 @@ public class MaterialDetailFragment extends FragmentInventoryDetail implements
     }
 
     @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (position != Util.getSelectionIndexFromString(material.getMaterialUnit()))
+            isUndoAvailable(true);
+    }
+
+    @Override
     public void returnFloat(float amount) {
         buy(amount);
     }
-
 
     @Override
     public void returnString(String arg) {
         //Unused
     }
+
+
 
 }

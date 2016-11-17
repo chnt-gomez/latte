@@ -9,15 +9,24 @@
         android:hint="Material name"
         android:layout_height="wrap_content"
         android:id="@+id/edt_product_name"/>
+
+    <include layout="@layout/include_space_4dp"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Unit(Kg, piece, lb...)"
-        android:id="@+id/edt_material_unit"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
         android:hint="Cost"
         android:id="@+id/edt_material_cost"/>
-
+    <include layout="@layout/include_space_4dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/spn_material_unit"
+        android:text="Measure unit:"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_default_margin_big"
+        android:id="@+id/spn_material_unit"
+        android:entries="@array/units_array"/>
 </LinearLayout>

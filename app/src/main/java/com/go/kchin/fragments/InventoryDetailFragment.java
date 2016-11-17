@@ -22,7 +22,7 @@ import com.go.kchin.interfaces.InventoryService;
  * Created by MAV1GA on 16/11/2016.
  */
 
-public abstract class FragmentInventoryDetail extends Fragment implements View.OnClickListener, TextWatcher,
+public abstract class InventoryDetailFragment extends Fragment implements View.OnClickListener, TextWatcher,
         Spinner.OnItemSelectedListener{
 
     protected void save(){
