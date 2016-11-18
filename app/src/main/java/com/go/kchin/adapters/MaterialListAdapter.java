@@ -19,9 +19,9 @@ import java.util.List;
  * Created by MAV1GA on 08/11/2016.
  */
 
-public class InventoryListAdapter extends ArrayAdapter<Material> {
+public class MaterialListAdapter extends ArrayAdapter<Material> {
 
-    public InventoryListAdapter (Context context, int resource, List<Material> items){
+    public MaterialListAdapter(Context context, int resource, List<Material> items){
         super(context, resource, items);
     }
 

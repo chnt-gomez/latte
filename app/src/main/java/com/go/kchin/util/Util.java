@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.DepartmentListAdapter;
+import com.go.kchin.adapters.MaterialListAdapter;
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
@@ -149,6 +150,30 @@ public class Util {
 
     }
 
+    public static Dialog newChooseMaterialDialog(String dialogTitle, String dialogMessage, Context context,
+                                                 final LayoutInflater inflater, final Util.UtilDialogEventListener callback,
+                                                 final List<Material> materials){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final Dialog dialog;
+        final View view = inflater.inflate(R.layout.dialog_choose_department, null);
+        MaterialListAdapter adapter = new MaterialListAdapter(context, R.layout.row_despartment_item, materials);
+        ListView lv = (ListView)view.findViewById(R.id.lv_department_list_view);
+        lv.setAdapter(adapter);
+
+        builder.setView(view)
+                .setTitle(dialogTitle)
+                .setMessage(dialogMessage);
+        dialog = builder.create();
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                callback.returnLong(materials.get(position).getId());
+                dialog.dismiss();
+            }
+        });
+        return dialog;
+    }
+
     public static Dialog newDepartmentDialog(String dialogTitle, String dialogMessage, Context context,
                                                  final LayoutInflater inflater, final DepartmentDialogEventListener callback){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -213,6 +238,7 @@ public class Util {
     public interface UtilDialogEventListener{
         void returnFloat(float arg);
         void returnString(String arg);
+        void returnLong(long arg);
     }
 
     public interface ProductDialogEventListener{

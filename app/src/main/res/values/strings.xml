@@ -15,4 +15,11 @@
         <item>Oz</item>
     </string-array>
 
+    <string-array name="drawer_items">
+        <item>Inventory</item>
+        <item>Sales</item>
+        <item>Reports</item>
+        <item>Settings</item>
+    </string-array>
+
 </resources>

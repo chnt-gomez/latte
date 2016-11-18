@@ -2,15 +2,12 @@ package com.go.kchin.fragments;
 
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.go.kchin.R;
 import com.go.kchin.models.Material;
 import com.go.kchin.util.Util;
@@ -21,7 +18,7 @@ public class MaterialDetailFragment extends InventoryDetailFragment implements
 
     private EditText edtMaterialName;
     private Spinner spnMaterialUnit;
-    private Button btnMaterialBuy;
+    private Button btnMaterialBuy, btnSeeProducts;
     private TextView txtMaterialPrice;
 
     private Material material;
@@ -46,6 +43,7 @@ public class MaterialDetailFragment extends InventoryDetailFragment implements
         spnMaterialUnit = (Spinner) findViewById(R.id.spn_material_unit);
         btnMaterialBuy = (Button) findViewById(R.id.btn_material_amount);
         txtMaterialPrice = (TextView) findViewById(R.id.txt_material_price);
+        btnSeeProducts = (Button)findViewById(R.id.btn_related_products);
 
         material = inventoryService.getMaterial(objectId);
 
@@ -55,7 +53,7 @@ public class MaterialDetailFragment extends InventoryDetailFragment implements
 
         txtMaterialPrice.setText(Util.fromFloat(material.getMaterialCost()));
 
-        addToClickListener(btnMaterialBuy);
+        addToClickListener(btnMaterialBuy, btnSeeProducts);
         addTextWatcher(edtMaterialName);
         addOnSpinnerSelectedListener(spnMaterialUnit);
 
@@ -107,6 +105,9 @@ public class MaterialDetailFragment extends InventoryDetailFragment implements
                 Util.newBuyItemDialog("Buy materials", null, getActivity(),
                         getActivity().getLayoutInflater(), this).show();
                 break;
+            case R.id.btn_related_products:
+                navigationService.moveToFragment(ProductListFragment.newInstance(material.getId()));
+                break;
         }
     }
 
@@ -126,6 +127,10 @@ public class MaterialDetailFragment extends InventoryDetailFragment implements
         //Unused
     }
 
+    @Override
+    public void returnLong(long arg) {
+        //Unused
+    }
 
 
 }

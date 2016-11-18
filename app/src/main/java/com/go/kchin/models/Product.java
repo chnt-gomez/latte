@@ -13,7 +13,6 @@ public class Product {
     private long productId, productDepartment;
     private float productSalePrice, productPurchasePrice, productAmount, productSold;
     private int productStatus;
-    private Recipe productRecipe;
 
     public String getProductName() {
         return productName;
@@ -85,14 +84,6 @@ public class Product {
 
     public void setProductStatus(int productStatus) {
         this.productStatus = productStatus;
-    }
-
-    public Recipe getProductRecipe() {
-        return productRecipe;
-    }
-
-    public void setProductRecipe(Recipe productRecipe) {
-        this.productRecipe = productRecipe;
     }
 
     public static Product fromCursor(Cursor c) {

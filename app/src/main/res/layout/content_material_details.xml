@@ -50,6 +50,7 @@
     <include layout="@layout/include_space_4dp"/>
 
     <Button
+        android:id="@+id/btn_related_products"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
         android:layout_width="match_parent"

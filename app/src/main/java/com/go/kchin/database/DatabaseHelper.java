@@ -6,10 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.go.kchin.models.Department;
-import com.go.kchin.models.Ingredient;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
-import com.go.kchin.models.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,15 +86,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         if(c.getCount() > 0) {
             c.moveToFirst();
             do  {
-                String materialName = c.getString(c.getColumnIndex(MaterialContract.C_NAME));
-                String materialUnit = c.getString(c.getColumnIndex(MaterialContract.C_UNIT));
-                float materialCost = c.getFloat(c.getColumnIndex(MaterialContract.C_COST));
-                float materialAmount = c.getFloat(c.getColumnIndex(MaterialContract.C_AMOUNT));
-                long materialId = c.getLong(c.getColumnIndex(MaterialContract.C_ID));
-                materials.add(new Material(materialName, materialUnit, materialCost, materialId, materialAmount));
-
+                materials.add(Material.fromCursor(c, false));
                 c.moveToNext();
-
             } while(!c.isAfterLast());
             c.close();
             return materials;
@@ -303,31 +294,36 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return update(DepartmentContract.TABLE_NAME, values, selection, selectionArgs);
     }
 
-    public Recipe getRecipe(long productId){
+    public List<Material> getRecipe(long productId){
 
-        List<Ingredient> items = new ArrayList<>();
-        Recipe recipe = new Recipe();
+        List<Material> items = new ArrayList<>();
 
-        String[] projection = {
-                RecipeContract.C_MATERIAL_ID,
-                RecipeContract.C_PRODUCT_ID,
-                RecipeContract.C_QUANTITY,
+        String projection[] = {
+                MaterialContract.TABLE_NAME+"."+MaterialContract.C_ID,
+                MaterialContract.TABLE_NAME+"."+MaterialContract.C_NAME,
+                MaterialContract.TABLE_NAME+"."+MaterialContract.C_UNIT,
+                MaterialContract.TABLE_NAME+"."+MaterialContract.C_COST,
+                RecipeContract.TABLE_NAME+"."+RecipeContract.C_QUANTITY
         };
 
-        String selection = RecipeContract.C_PRODUCT_ID+" = ?";
+        String selection = MaterialContract.TABLE_NAME+"."+MaterialContract.C_ID +"="+
+                RecipeContract.TABLE_NAME+"."+RecipeContract.C_MATERIAL_ID+" AND "+
+                RecipeContract.TABLE_NAME+"."+RecipeContract.C_PRODUCT_ID+"= ?";
 
-        String selectionArgs[] = {"'"+productId+"'"};
+        String selectionArgs[] = {String.valueOf(productId)};
 
-        Cursor c = query(RecipeContract.TABLE_NAME, projection, selection, selectionArgs);
+        String tables = MaterialContract.TABLE_NAME+", "+RecipeContract.TABLE_NAME;
+        Cursor c = query(tables, projection, selection, selectionArgs);
+
         if (c.getCount() > 0){
             c.moveToFirst();
-            do {
-                items.add(Ingredient.fromCursor(c));
+            do{
+                items.add(Material.fromCursor(c, true));
                 c.moveToNext();
-            }while (!c.isAfterLast());
-            c.close();
+            }while(!c.isAfterLast());
         }
-        return recipe;
+        c.close();
+        return items;
     }
 
     public List<Product> getProductsFromMaterial (long materialId){
@@ -369,5 +365,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
 
         return products;
+    }
+
+    public void addMaterialToRecipe(long materialId, long productId) {
+        ContentValues values = new ContentValues();
+        values.put(RecipeContract.C_MATERIAL_ID, materialId);
+        values.put(RecipeContract.C_PRODUCT_ID, productId);
+        values.put(RecipeContract.C_QUANTITY, 1.0f);
+
+        insert(RecipeContract.TABLE_NAME, values);
     }
 }

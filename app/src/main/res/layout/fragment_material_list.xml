@@ -20,4 +20,15 @@
         app:layout_anchor="@id/lv_materials_list_view"
         app:layout_anchorGravity="bottom|right|end" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="@dimen/activity_default_margin_big"
+        android:id="@+id/btn_add_to_recipe"
+        android:visibility="gone"
+        android:src="@drawable/ic_note_add_white_24dp"
+        app:layout_anchor="@id/lv_materials_list_view"
+        app:layout_anchorGravity="bottom|center"/>
+
 </android.support.design.widget.CoordinatorLayout>

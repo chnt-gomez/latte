@@ -119,6 +119,11 @@ public class ProductDetailFragment extends InventoryDetailFragment {
                             public void returnString(String arg) {
                                 //Unused
                             }
+
+                            @Override
+                            public void returnLong(long arg) {
+
+                            }
                         }).show();
                 break;
 
@@ -136,6 +141,11 @@ public class ProductDetailFragment extends InventoryDetailFragment {
 
                             @Override
                             public void returnString(String arg) {
+
+                            }
+
+                            @Override
+                            public void returnLong(long arg) {
 
                             }
                         }).show();
@@ -162,7 +172,7 @@ public class ProductDetailFragment extends InventoryDetailFragment {
                 break;
 
             case R.id.btn_see_recipe:
-
+                navigationService.moveToFragment(MaterialListFragment.newInstance(product.getProductId()));
                 break;
         }
     }

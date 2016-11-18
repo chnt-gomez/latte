@@ -1,41 +1,40 @@
 package com.go.kchin.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
-import com.go.kchin.interfaces.FragmentNavigationService;
-import com.go.kchin.interfaces.InventoryService;
-import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
 import com.go.kchin.util.Util;
 
+import java.util.List;
 
-public class ProductListFragment extends Fragment implements View.OnClickListener,
+
+public class ProductListFragment extends InventoryListFragment implements
         Util.ProductDialogEventListener{
 
-    private InventoryService inventoryService;
-    private FragmentNavigationService navigationService;
+    public static final long ALL_PRODUCTS = -1;
     private ProductListAdapter adapter;
-    private View view;
-    private FloatingActionButton btnAdd;
+    protected static final String MATERIAL_ID = "material_id";
 
-    public ProductListFragment() {
-        // Required empty public constructor
-    }
+    public ProductListFragment() {}
 
-    public static ProductListFragment newInstance() {
+    public static ProductListFragment newInstance(long materialId) {
         ProductListFragment fragment = new ProductListFragment();
+        Bundle args = new Bundle();
+        args.putInt(LAYOUT_RES, R.layout.fragment_product_list);
+        args.putInt(LIST_VIEW_ID, R.id.lv_products_list_view);
+        if (materialId != -1) {
+            args.putLong(MATERIAL_ID, materialId);
+        }
+        fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,19 +44,22 @@ public class ProductListFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
-    private void init() {
-        adapter = new ProductListAdapter(getContext(), R.layout.row_product_item, inventoryService.getProducts());
-        ListView listView = (ListView) view.findViewById(R.id.lv_products_list_view);
-        btnAdd = (FloatingActionButton)view.findViewById(R.id.btn_add);
-        addToClickListener(btnAdd);
+    protected void init() {
+        super.init();
+        final List<Product> items;
+        if (getArguments().containsKey(MATERIAL_ID)){
+            items = inventoryService.getProductsFromMaterial(getArguments().getLong(MATERIAL_ID));
+        }else{
+            items = inventoryService.getProducts();
+        }
+        adapter = new ProductListAdapter(getContext(), R.layout.row_product_item, items);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                navigationService.moveToFragment(ProductDetailFragment.
-                        newInstance(adapter.getItem(position).getProductId()));
-            }
-        });
+        addToClickListener(btnAdd);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        navigationService.moveToFragment(ProductDetailFragment.newInstance(adapter.getItem(position).getProductId()));
     }
 
     private void addToClickListener(View... params) {
@@ -67,27 +69,9 @@ public class ProductListFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.inventoryService = (InventoryService)context;
-        this.navigationService = (FragmentNavigationService)context;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        inventoryService = null;
-        navigationService = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_add:
-                Util.newProductDialog("New product", null, getActivity(), getActivity().getLayoutInflater(),
-                        this).show();
-                break;
-        }
+    protected void add() {
+        Util.newProductDialog("New product", null, getActivity(), getActivity().getLayoutInflater(),
+                this).show();
     }
 
     @Override

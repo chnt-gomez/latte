@@ -38,6 +38,10 @@ public interface InventoryService {
 
     void addDepartment(Department department);
 
+    List<Product> getProductsFromMaterial(long materialId);
 
 
+    List<Material> getMaterialsFromProduct(long aLong);
+
+    void addMaterialToRecipe(long materialId, long productId);
 }

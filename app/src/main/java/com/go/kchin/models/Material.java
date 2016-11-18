@@ -1,5 +1,10 @@
 package com.go.kchin.models;
 
+import android.database.Cursor;
+
+import com.go.kchin.database.MaterialContract;
+import com.go.kchin.database.RecipeContract;
+
 /**
  * Created by vicente on 6/11/16.
  */
@@ -74,5 +79,18 @@ public class Material {
 
     public void setMaterialAmount(float materialAmount) {
         this.materialAmount = materialAmount;
+    }
+
+    public static Material fromCursor(Cursor c, boolean isRecipe) {
+        Material material = new Material();
+        if (isRecipe)
+            material.setMaterialAmount(c.getFloat(c.getColumnIndex(RecipeContract.C_QUANTITY)));
+        else
+            material.setMaterialAmount(c.getFloat(c.getColumnIndex(MaterialContract.C_AMOUNT)));
+        material.setMaterialName(c.getString(c.getColumnIndex(MaterialContract.C_NAME)));
+        material.setMaterialUnit(c.getString(c.getColumnIndex(MaterialContract.C_UNIT)));
+        material.setMaterialCost(c.getFloat(c.getColumnIndex(MaterialContract.C_COST)));
+        material.setId(c.getLong(c.getColumnIndex(MaterialContract.C_ID)));
+        return material;
     }
 }
