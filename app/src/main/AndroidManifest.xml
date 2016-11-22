@@ -14,6 +14,10 @@
                 android:resource="@xml/searchable" />
         </activity>
 
+        <activity android:name=".activities.SalesActivity">
+
+        </activity>
+
         <activity android:name="com.go.kchin.activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

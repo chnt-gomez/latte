@@ -24,7 +24,6 @@ public class InventoryListFragment extends Fragment implements AdapterView.OnIte
     protected static final String LIST_VIEW_ID = "list_view_id";
     protected FloatingActionButton btnAdd;
 
-
     protected ListView listView;
     protected View view;
 

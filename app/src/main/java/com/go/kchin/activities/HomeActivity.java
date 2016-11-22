@@ -21,24 +21,30 @@ public class HomeActivity extends AppCompatActivity {
     private String mPanelItems[];
     private DrawerListAdapter adapter;
 
+    private static final int INVENTORY = 0;
+    private static final int SALES = 1;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.drawer_layout);
         mPanelItems = getResources().getStringArray(R.array.drawer_items);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerList = (ListView)findViewById(R.id.lv_left_drawer);
         adapter = new DrawerListAdapter(this, R.layout.row_drawer_item, mPanelItems);
-
         mDrawerList.setAdapter(adapter);
-
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mDrawerLayout.closeDrawer(mDrawerList);
+               switch (position){
+                   case INVENTORY:
+                       startActivity(new Intent(HomeActivity.this, InventoryActivity.class));
+                       break;
+                   case SALES:
+                       startActivity(new Intent(HomeActivity.this, SalesActivity.class));
+                       break;
+               }
 
-                startActivity(new Intent(HomeActivity.this, InventoryActivity.class));
             }
         });
 

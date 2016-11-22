@@ -6,4 +6,13 @@
         android:icon="@drawable/ic_search_white_24dp"
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView" />
+    <item android:id="@+id/menu_see_materials"
+        android:title="Materials"
+        app:showAsAction="never"/>
+    <item android:id="@+id/menu_see_products"
+        android:title="Products"
+        app:showAsAction="never"/>
+    <item android:id="@+id/menu_see_departments"
+        android:title="Departments"
+        app:showAsAction="never"/>
 </menu>

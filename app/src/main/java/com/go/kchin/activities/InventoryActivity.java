@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.go.kchin.R;
@@ -30,9 +31,8 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_inventary);
         init();
-
     }
 
     private void init() {
@@ -76,6 +76,23 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
         });
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+            case R.id.menu_see_products:
+                moveToFragment(ProductListFragment.newInstance(ProductListFragment.ALL_PRODUCTS));
+                break;
+            case R.id.menu_see_materials:
+                moveToFragment(MaterialListFragment.newInstance(MaterialListFragment.ALL_MATERIALS));
+                break;
+            case R.id.menu_see_departments:
+                moveToFragment(DepartmentListFragment.newInstance());
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
