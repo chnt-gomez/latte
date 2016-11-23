@@ -20,8 +20,6 @@ import com.go.kchin.interfaces.InventoryService;
  */
 public class InventoryListFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
-    protected static final String LAYOUT_RES = "layout_res";
-    protected static final String LIST_VIEW_ID = "list_view_id";
     protected FloatingActionButton btnAdd;
 
     protected ListView listView;
@@ -33,16 +31,22 @@ public class InventoryListFragment extends Fragment implements AdapterView.OnIte
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(getArguments().getInt(LAYOUT_RES), null);
+        view = inflater.inflate(R.layout.fragment_inventory, null);
         init();
         return view;
     }
 
     protected void init() {
-        listView = (ListView)findViewById(getArguments().getInt(LIST_VIEW_ID));
+        listView = (ListView)findViewById(R.id.lv_inventory);
         listView.setOnItemClickListener(this);
         btnAdd = (FloatingActionButton)findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        navigationService.showActionBar();
     }
 
     protected View findViewById(int res){

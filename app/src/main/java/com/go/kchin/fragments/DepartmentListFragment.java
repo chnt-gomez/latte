@@ -24,15 +24,8 @@ import java.util.List;
  * Created by MAV1GA on 14/11/2016.
  */
 
-public class DepartmentListFragment extends Fragment implements Util.DepartmentDialogEventListener,
+public class DepartmentListFragment extends InventoryListFragment implements Util.DepartmentDialogEventListener,
         View.OnClickListener{
-
-    private ListView listView;
-    private View view;
-    private FragmentNavigationService navigationService;
-    private InventoryService inventoryService;
-    private DepartmentListAdapter adapter;
-    private FloatingActionButton btnAdd;
 
     public DepartmentListFragment(){}
 
@@ -40,43 +33,13 @@ public class DepartmentListFragment extends Fragment implements Util.DepartmentD
         return new DepartmentListFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_department_list, null);
-        init();
-        return view;
-    }
-
-
-    private void init() {
+    protected void init() {
+        super.init();
         List<Department> list = inventoryService.getDepartments();
-        adapter = new DepartmentListAdapter(getActivity(), R.layout.row_despartment_item,
+        DepartmentListAdapter adapter = new DepartmentListAdapter(getActivity(), R.layout.row_despartment_item,
                 list);
-        listView = (ListView)view.findViewById(R.id.lv_department_list_view);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                navigationService.moveToFragment(DepartmentDetailFragment.newInstance(adapter.getItem(position).getDepartmentId()));
-            }
-        });
-        btnAdd = (FloatingActionButton)view.findViewById(R.id.btn_add);
-        addToClickListener(btnAdd);
-    }
-
-    private void addToClickListener(View ... args) {
-        for (View v : args){
-            v.setOnClickListener(this);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.navigationService = (FragmentNavigationService)context;
-        this.inventoryService = (InventoryService)context;
     }
 
     @Override
@@ -85,18 +48,19 @@ public class DepartmentListFragment extends Fragment implements Util.DepartmentD
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        navigationService.setActionBarTitle("Departments");
+    }
+
+    @Override
     public void editDepartment(long id, Department department) {
         inventoryService.updateDepartment(id, department);
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_add:
-                Util.newDepartmentDialog("New department", null, getActivity(), getActivity().
-                        getLayoutInflater(), this).show();
-                break;
-        }
+    protected void add() {
+        Util.newDepartmentDialog("New department", null, getActivity(), getActivity().getLayoutInflater(),
+                this).show();
     }
-
 }

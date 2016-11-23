@@ -80,6 +80,12 @@ public abstract class InventoryDetailFragment extends Fragment implements View.O
         super.onDetach();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        navigationService.hideActionBar();
+    }
+
     protected void addToClickListener(View... params){
         for (View v : params){
             v.setOnClickListener(this);

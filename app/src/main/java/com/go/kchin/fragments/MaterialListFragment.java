@@ -17,7 +17,7 @@ public class MaterialListFragment extends InventoryListFragment{
     public static final int ALL_MATERIALS = -1;
     protected static final String PRODUCT_ID = "product_id";
     private MaterialListAdapter adapter;
-    private FloatingActionButton btnAddToRecipe;
+    private List<Material> items;
     public MaterialListFragment() {
         // Required empty public constructor
     }
@@ -25,8 +25,6 @@ public class MaterialListFragment extends InventoryListFragment{
     public static MaterialListFragment newInstance(long productId) {
         MaterialListFragment fragment = new MaterialListFragment();
         Bundle args = new Bundle();
-        args.putInt(LAYOUT_RES, R.layout.fragment_material_list);
-        args.putInt(LIST_VIEW_ID, R.id.lv_materials_list_view);
         if (productId != -1)
             args.putLong(PRODUCT_ID, productId);
         fragment.setArguments(args);
@@ -41,12 +39,15 @@ public class MaterialListFragment extends InventoryListFragment{
     @Override
     protected void init() {
         super.init();
-        final List<Material> items;
         if (getArguments().containsKey(PRODUCT_ID)){
             items = inventoryService.getMaterialsFromProduct(getArguments().getLong(PRODUCT_ID));
-            btnAddToRecipe = (FloatingActionButton)findViewById(R.id.btn_add_to_recipe);
-            btnAddToRecipe.setVisibility(FloatingActionButton.VISIBLE);
-            addOnClickListener(btnAddToRecipe);
+            btnAdd.setImageResource(R.drawable.ic_note_add_white_24dp);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //Select the ammount
+                }
+            });
         }else{
             items = inventoryService.getMaterials();
         }
@@ -56,45 +57,46 @@ public class MaterialListFragment extends InventoryListFragment{
     }
 
     @Override
-    public void onClick(View view) {
-        super.onClick(view);
-        switch(view.getId()){
-            case R.id.btn_add_to_recipe:
-                Util.newChooseMaterialDialog("Select product", null, getActivity(), getActivity().getLayoutInflater(),
-                        new Util.UtilDialogEventListener() {
-                            @Override
-                            public void returnFloat(float arg) {
-                                //Unused
-                            }
+    protected void add() {
+        if (!getArguments().containsKey(PRODUCT_ID)) {
+            Util.newMaterialDialog("New material", null, getActivity(), getActivity().getLayoutInflater(),
+                    new Util.MaterialDialogEventListener() {
+                        @Override
+                        public long returnMaterial(Material material) {
+                            return inventoryService.addMaterial(material);
+                        }
 
-                            @Override
-                            public void returnString(String arg) {
-                                //Unused
-                            }
+                        @Override
+                        public void moveToMaterial(long id) {
+                            navigationService.moveToFragment(MaterialDetailFragment.newInstance(id));
+                        }
+                    }).show();
+        }else{
+            List<Material> materials = inventoryService.getMaterials();
+            Util.newChooseMaterialDialog("Select material", null, getActivity(), getActivity().getLayoutInflater(),
+                    new Util.UtilDialogEventListener() {
+                        @Override
+                        public void returnFloat(float arg) {
 
-                            @Override
-                            public void returnLong(long arg) {
-                                inventoryService.addMaterialToRecipe(arg, getArguments().getLong(PRODUCT_ID));
-                            }
-                        }, inventoryService.getMaterials()).show();
-                break;
+                        }
+
+                        @Override
+                        public void returnString(String arg) {
+
+                        }
+
+                        @Override
+                        public void returnLong(long arg) {
+                            inventoryService.addMaterialToRecipe(arg, getArguments().getLong(PRODUCT_ID) );
+                        }
+                    },materials).show();
         }
     }
 
     @Override
-    protected void add() {
-        Util.newMaterialDialog("New material", null, getActivity(), getActivity().getLayoutInflater(),
-                new Util.MaterialDialogEventListener() {
-                    @Override
-                    public long returnMaterial(Material material) {
-                        return inventoryService.addMaterial(material);
-                    }
-
-                    @Override
-                    public void moveToMaterial(long id) {
-                        navigationService.moveToFragment(MaterialDetailFragment.newInstance(id));
-                    }
-                }).show();
+    public void onResume() {
+        super.onResume();
+        navigationService.setActionBarTitle("Materials");
     }
 
     @Override
@@ -103,6 +105,5 @@ public class MaterialListFragment extends InventoryListFragment{
                 adapter.getItem(position).getId()));
 
     }
-
 
 }

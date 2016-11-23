@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
+
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Product;
@@ -19,7 +21,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "kchin.db";
     private static final int DATABASE_VERSION = 2;
-
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     private long insert(String table, ContentValues values){
-        return getWritableDatabase().insert(table, null, values);
+       return getWritableDatabase().insert(table, null, values);
     }
 
     private int update(String table, ContentValues values, String selection, String[] selectionArgs){
@@ -57,7 +58,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         values.put(MaterialContract.C_COST,material.getMaterialCost());
         values.put(MaterialContract.C_AMOUNT, 0.0f);
         values.put(MaterialContract.C_STATUS, 1);
-
         return insert(MaterialContract.TABLE_NAME, values);
     }
 

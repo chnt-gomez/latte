@@ -61,6 +61,23 @@ public class Util {
         return builder.create();
     }
 
+    public static Dialog editAmountDialog(String dialogTitle, String dialogMessage, Context context,
+                                   final LayoutInflater inflater, final UtilDialogEventListener callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final View view = inflater.inflate(R.layout.dialog_float_amount, null);
+        builder.setView(view)
+                .setTitle(dialogTitle)
+                .setMessage(dialogMessage)
+                .setPositiveButton("Set", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Pos aqui viendo que show
+                    }
+                });
+        return builder.create();
+
+    }
+
     public static Dialog newProductSalePriceDialog (String dialogTitle, float oldPrice, Context context,
                                                     final LayoutInflater inflater,final UtilDialogEventListener callback){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

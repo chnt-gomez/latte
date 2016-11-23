@@ -26,6 +26,4 @@ public class SalesActivity extends AppCompatActivity implements SalesService {
                 QuickSaleFragment.newInstance()).commit();
     }
 
-
-
 }
