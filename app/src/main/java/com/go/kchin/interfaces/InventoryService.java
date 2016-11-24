@@ -33,6 +33,8 @@ public interface InventoryService {
 
     List<Department> getDepartments();
 
+    List<Department> getDepartments(String query);
+
     long updateDepartment(long id, Department department);
 
     Operation addDepartment(Department department);
@@ -47,4 +49,8 @@ public interface InventoryService {
     List<Material> updateRecipe(long materialId, long productId, float amount);
 
     List<Product> searchProducts(String query);
+
+    List<Department> searchDepartment(String args);
+
+    List<Material> searchMaterials(String query);
 }

@@ -18,6 +18,15 @@ public class MaterialListFragment extends InventoryListFragment{
     protected static final String PRODUCT_ID = "product_id";
     private MaterialListAdapter adapter;
     private List<Material> items;
+
+    @Override
+    public void onSearch(String args) {
+        if (args == null)
+            updateItemList(inventoryService.getMaterials());
+        else
+            updateItemList(inventoryService.searchMaterials(args));
+    }
+
     public MaterialListFragment() {
         // Required empty public constructor
     }
@@ -81,7 +90,9 @@ public class MaterialListFragment extends InventoryListFragment{
                     new Util.MaterialDialogEventListener() {
                         @Override
                         public Operation returnMaterial(Material material) {
-                            return inventoryService.addMaterial(material);
+                            Operation operation = inventoryService.addMaterial(material);
+                            updateItemList(operation.getMaterials());
+                            return operation;
                         }
 
                         @Override

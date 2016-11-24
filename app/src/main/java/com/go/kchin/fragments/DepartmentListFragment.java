@@ -19,6 +19,7 @@ import com.go.kchin.models.Department;
 import com.go.kchin.models.Operation;
 import com.go.kchin.util.Util;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class DepartmentListFragment extends InventoryListFragment implements Uti
         View.OnClickListener{
 
     public DepartmentListFragment(){}
+    private DepartmentListAdapter adapter;
 
     public static DepartmentListFragment newInstance(){
         return new DepartmentListFragment();
@@ -38,9 +40,17 @@ public class DepartmentListFragment extends InventoryListFragment implements Uti
     protected void init() {
         super.init();
         List<Department> list = inventoryService.getDepartments();
-        DepartmentListAdapter adapter = new DepartmentListAdapter(getActivity(), R.layout.row_despartment_item,
+        adapter = new DepartmentListAdapter(getActivity(), R.layout.row_despartment_item,
                 list);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onSearch(String query) {
+        if (query == null)
+            updateItemList(inventoryService.getDepartments());
+        else
+            updateItemList(inventoryService.getDepartments(query));
     }
 
     @Override
@@ -64,4 +74,13 @@ public class DepartmentListFragment extends InventoryListFragment implements Uti
         Util.newDepartmentDialog("New department", null, getActivity(), getActivity().getLayoutInflater(),
                 this).show();
     }
+
+    @Override
+    protected void updateItemList(List<?> items) {
+        adapter.clear();
+        adapter.addAll((Collection<? extends Department>) items);
+        listView.setAdapter(adapter);
+    }
+
+
 }

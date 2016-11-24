@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
@@ -441,5 +442,67 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         update(RecipeContract.TABLE_NAME, values, selection, selectionArgs);
 
         return getRecipe(productId);
+    }
+
+    public List<Material> getMaterials(String query) {
+        List <Material> materials = new ArrayList<>();
+        String regex = Util.toRegex(query);
+        String projection[] = {
+                MaterialContract.C_ID,
+                MaterialContract.C_NAME,
+                MaterialContract.C_UNIT,
+                MaterialContract.C_COST,
+                MaterialContract.C_AMOUNT
+        };
+
+        String selection = MaterialContract.C_STATUS + " = ? AND "+
+                MaterialContract.C_NAME+" LIKE ?";
+        String selectionArgs[] = {"1", "%"+regex+"%"};
+
+        Cursor c = getReadableDatabase().query(
+                MaterialContract.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        if(c.getCount() > 0) {
+            c.moveToFirst();
+            do  {
+                materials.add(Material.fromCursor(c, false));
+                c.moveToNext();
+            } while(!c.isAfterLast());
+            c.close();
+            return materials;
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Department> getDepartments(String query) {
+        ArrayList<Department> departments = new ArrayList<>();
+
+        String newQuery =
+                "SELECT "+DepartmentContract.C_ID +", "+
+                        DepartmentContract.C_NAME +", "+
+                        "(SELECT COUNT(*) FROM "+ProductContract.TABLE_NAME+
+                        " WHERE "+DepartmentContract.C_ID+"="+ProductContract.TABLE_NAME+"."+
+                        ProductContract.C_DEPARTMENT+ ") AS "+DepartmentContract.C_PRODUCTS+
+                        " FROM "+DepartmentContract.TABLE_NAME+" WHERE " + DepartmentContract.TABLE_NAME+"."+
+                        DepartmentContract.C_NAME+ " LIKE '%"+Util.toRegex(query)+"%'";
+
+        Log.d("Database: ", newQuery);
+
+        Cursor c = getReadableDatabase().rawQuery(newQuery, null);
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            do{
+                departments.add(Department.fromCursor(c));
+                c.moveToNext();
+            }while(!c.isAfterLast());
+        }
+        c.close();
+        return departments;
     }
 }

@@ -161,6 +161,11 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
+    public List<Department> getDepartments(String query) {
+        return helper.getDepartments(query);
+    }
+
+    @Override
     public long updateDepartment(long id, Department department) {
        return helper.updateDepartment(id, department);
     }
@@ -193,6 +198,16 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     @Override
     public List<Product> searchProducts(String query) {
         return helper.getProducts(query);
+    }
+
+    @Override
+    public List<Department> searchDepartment(String args) {
+        return null;
+    }
+
+    @Override
+    public List<Material> searchMaterials(String query) {
+        return helper.getMaterials(query);
     }
 
     @Override
