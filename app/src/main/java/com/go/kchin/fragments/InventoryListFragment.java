@@ -12,13 +12,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.go.kchin.R;
+import com.go.kchin.activities.InventoryActivity;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
+import com.go.kchin.interfaces.SearchService;
+
+import java.util.List;
 
 /**
  * Created by MAV1GA on 16/11/2016.
  */
-public class InventoryListFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class InventoryListFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, SearchService {
 
     protected FloatingActionButton btnAdd;
 
@@ -37,10 +41,10 @@ public class InventoryListFragment extends Fragment implements AdapterView.OnIte
     }
 
     protected void init() {
-        listView = (ListView)findViewById(R.id.lv_inventory);
+        listView = (ListView) findViewById(R.id.lv_inventory);
         listView.setOnItemClickListener(this);
-        btnAdd = (FloatingActionButton)findViewById(R.id.btn_add);
-        btnAdd.setOnClickListener(this);
+        btnAdd = (FloatingActionButton) findViewById(R.id.btn_add);
+        addOnClickListener(btnAdd);
     }
 
     @Override
@@ -49,12 +53,12 @@ public class InventoryListFragment extends Fragment implements AdapterView.OnIte
         navigationService.showActionBar();
     }
 
-    protected View findViewById(int res){
+    protected View findViewById(int res) {
         return view.findViewById(res);
     }
 
-    protected void addOnClickListener(View ... params){
-        for (View v : params){
+    protected void addOnClickListener(View... params) {
+        for (View v : params) {
             v.setOnClickListener(this);
         }
     }
@@ -62,8 +66,10 @@ public class InventoryListFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.navigationService = (FragmentNavigationService)context;
-        this.inventoryService = (InventoryService)context;
+        this.navigationService = (FragmentNavigationService) context;
+        this.inventoryService = (InventoryService) context;
+        ((InventoryActivity) context).setSearchService(this);
+
     }
 
     @Override
@@ -78,7 +84,7 @@ public class InventoryListFragment extends Fragment implements AdapterView.OnIte
 
     }
 
-    protected void add(){
+    protected void add() {
 
     }
 
@@ -88,5 +94,14 @@ public class InventoryListFragment extends Fragment implements AdapterView.OnIte
             add();
             return;
         }
+    }
+
+    protected void updateItemList(List<?> items) {
+
+    }
+
+    @Override
+    public void onSearch(String resultItems) {
+
     }
 }

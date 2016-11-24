@@ -9,14 +9,17 @@ import android.widget.AdapterView;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
+import com.go.kchin.interfaces.SearchService;
+import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
 import com.go.kchin.util.Util;
 
+import java.util.Collection;
 import java.util.List;
 
 
 public class ProductListFragment extends InventoryListFragment implements
-        Util.ProductDialogEventListener{
+        Util.ProductDialogEventListener {
 
     public static final long ALL_PRODUCTS = -1;
     private ProductListAdapter adapter;
@@ -66,8 +69,29 @@ public class ProductListFragment extends InventoryListFragment implements
     }
 
     @Override
-    public void returnProduct(Product product) {
-        inventoryService.addProduct(product);
+    public Operation returnProduct(Product product) {
+        Operation operation = inventoryService.addProduct(product);
+        updateItemList(operation.getProducts());
+        return operation;
     }
 
+    @Override
+    public void moveToProduct(long productId) {
+        navigationService.moveToFragment(ProductDetailFragment.newInstance(productId));
+    }
+
+    @Override
+    protected void updateItemList(List<?> items) {
+        adapter.clear();
+        adapter.addAll((Collection<? extends Product>) items);
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onSearch(String query) {
+        if (query == null)
+            updateItemList(inventoryService.getProducts());
+        else
+            updateItemList(inventoryService.searchProducts(query));
+    }
 }

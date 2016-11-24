@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.go.kchin.R;
 import com.go.kchin.models.Department;
+import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
 import com.go.kchin.util.Util;
 
@@ -155,12 +156,13 @@ public class ProductDetailFragment extends InventoryDetailFragment {
                 Util.newChooseDepartmentDialog("Select department", null, getActivity(), getActivity().getLayoutInflater(),
                         new Util.DepartmentDialogEventListener() {
                             @Override
-                            public void returnDepartment(Department department) {
+                            public Operation returnDepartment(Department department) {
                                 if (product.getProductDepartment() != department.getDepartmentId()) {
                                     btnDepartment.setText(department.getDepartmentName());
                                     temporaryDepartmentId = department.getDepartmentId();
                                     isUndoAvailable(true);
                                 }
+                                return null;
                             }
 
                             @Override

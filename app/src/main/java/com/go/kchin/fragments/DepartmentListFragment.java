@@ -16,6 +16,7 @@ import com.go.kchin.adapters.DepartmentListAdapter;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
 import com.go.kchin.models.Department;
+import com.go.kchin.models.Operation;
 import com.go.kchin.util.Util;
 
 import java.util.List;
@@ -43,8 +44,8 @@ public class DepartmentListFragment extends InventoryListFragment implements Uti
     }
 
     @Override
-    public void returnDepartment(Department department) {
-        inventoryService.addDepartment(department);
+    public Operation returnDepartment(Department department) {
+        return inventoryService.addDepartment(department);
     }
 
     @Override

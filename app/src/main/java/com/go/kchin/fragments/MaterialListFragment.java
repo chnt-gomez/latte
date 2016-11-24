@@ -1,13 +1,13 @@
 package com.go.kchin.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.MaterialListAdapter;
 import com.go.kchin.models.Material;
+import com.go.kchin.models.Operation;
 import com.go.kchin.util.Util;
 
 import java.util.List;
@@ -45,7 +45,25 @@ public class MaterialListFragment extends InventoryListFragment{
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //Select the ammount
+                    final long materialId = position;
+                    final long productId = getArguments().getLong(PRODUCT_ID);
+                    Util.editAmountDialog("Edit amount", null, getActivity(), getActivity().getLayoutInflater(),
+                            new Util.UtilDialogEventListener() {
+                                @Override
+                                public void returnFloat(float arg) {
+                                    inventoryService.updateRecipe(materialId, productId, arg);
+                                }
+
+                                @Override
+                                public void returnString(String arg) {
+
+                                }
+
+                                @Override
+                                public void returnLong(long arg) {
+
+                                }
+                            }).show();
                 }
             });
         }else{
@@ -62,7 +80,7 @@ public class MaterialListFragment extends InventoryListFragment{
             Util.newMaterialDialog("New material", null, getActivity(), getActivity().getLayoutInflater(),
                     new Util.MaterialDialogEventListener() {
                         @Override
-                        public long returnMaterial(Material material) {
+                        public Operation returnMaterial(Material material) {
                             return inventoryService.addMaterial(material);
                         }
 
@@ -87,7 +105,7 @@ public class MaterialListFragment extends InventoryListFragment{
 
                         @Override
                         public void returnLong(long arg) {
-                            inventoryService.addMaterialToRecipe(arg, getArguments().getLong(PRODUCT_ID) );
+                            inventoryService.updateRecipe(arg, getArguments().getLong(PRODUCT_ID) );
                         }
                     },materials).show();
         }
@@ -106,4 +124,10 @@ public class MaterialListFragment extends InventoryListFragment{
 
     }
 
+    @Override
+    protected void updateItemList(List<?> items) {
+        this.adapter.clear();
+        adapter.addAll((List<Material>)items);
+        listView.setAdapter(adapter);
+    }
 }

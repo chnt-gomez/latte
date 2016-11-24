@@ -16,6 +16,7 @@ import com.go.kchin.adapters.DepartmentListAdapter;
 import com.go.kchin.adapters.MaterialListAdapter;
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
+import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
 
 import java.util.List;
@@ -53,8 +54,8 @@ public class Util {
                                 .getSelectedItem().toString();
                         String materialCost = ((EditText)view.findViewById(R.id.edt_material_cost))
                                 .getText().toString();
-                        long id = callback.returnMaterial(new Material(materialName, materialUnit, toFloat(materialCost)));
-                        callback.moveToMaterial(id);
+                        Operation operation = callback.returnMaterial(new Material(materialName, materialUnit, toFloat(materialCost)));
+                        callback.moveToMaterial(operation.getInsertionId());
 
                     }
                 });
@@ -71,7 +72,9 @@ public class Util {
                 .setPositiveButton("Set", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Pos aqui viendo que show
+                        float newAmount = Util.toFloat(((EditText)view.findViewById(R.id.edt_amount))
+                                .getText().toString());
+                        callback.returnFloat(newAmount);
                     }
                 });
         return builder.create();
@@ -117,6 +120,25 @@ public class Util {
                         product.setProductName(productName);
                         product.setProductSalePrice(Util.toFloat(productPrice));
                         callback.returnProduct(product);
+
+                    }
+                })
+                .setNeutralButton("Add and see", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String productName = ((EditText)view.findViewById(R.id.edt_product_name))
+                                .getText().toString();
+                        String productUnit = ((EditText)view.findViewById(R.id.edt_product_unit))
+                                .getText().toString();
+                        String productPrice = ((EditText)view.findViewById(R.id.edt_product_sale_price))
+                                .getText().toString();
+                        Product product = new Product();
+                        product.setProductUnit(productUnit);
+                        product.setProductName(productName);
+                        product.setProductSalePrice(Util.toFloat(productPrice));
+                        long id = callback.returnProduct(product).getInsertionId();
+                        callback.moveToProduct(id);
+
                     }
                 });
         return builder.create();
@@ -247,7 +269,7 @@ public class Util {
     }
 
     public interface MaterialDialogEventListener {
-        long returnMaterial(Material material);
+        Operation returnMaterial(Material material);
 
         void moveToMaterial(long id);
     }
@@ -259,12 +281,17 @@ public class Util {
     }
 
     public interface ProductDialogEventListener{
-        void returnProduct(Product product);
+        Operation returnProduct(Product product);
+        void moveToProduct(long productId);
     }
 
     public interface DepartmentDialogEventListener{
-        void returnDepartment(Department department);
+        Operation returnDepartment(Department department);
         void editDepartment(long id, Department department);
+    }
+
+    public static String toRegex(String arg){
+        return arg.replace(" ", "%");
     }
 
 }

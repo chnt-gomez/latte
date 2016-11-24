@@ -1,9 +1,8 @@
 package com.go.kchin.interfaces;
 
-import android.support.v4.app.Fragment;
-
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
+import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public interface InventoryService {
 
     Material getMaterial(long id);
 
-    long addMaterial(Material material);
+    Operation addMaterial(Material material);
 
     List<Material> getMaterials();
 
@@ -24,7 +23,7 @@ public interface InventoryService {
 
     Product getProduct(long id);
 
-    void addProduct(Product product);
+    Operation addProduct(Product product);
 
     List<Product> getProducts();
 
@@ -36,12 +35,16 @@ public interface InventoryService {
 
     long updateDepartment(long id, Department department);
 
-    void addDepartment(Department department);
+    Operation addDepartment(Department department);
 
     List<Product> getProductsFromMaterial(long materialId);
 
 
     List<Material> getMaterialsFromProduct(long aLong);
 
-    void addMaterialToRecipe(long materialId, long productId);
+    List<Material> updateRecipe(long materialId, long productId);
+
+    List<Material> updateRecipe(long materialId, long productId, float amount);
+
+    List<Product> searchProducts(String query);
 }

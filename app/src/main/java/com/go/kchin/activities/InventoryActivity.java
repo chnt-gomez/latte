@@ -2,11 +2,9 @@ package com.go.kchin.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,12 +14,15 @@ import android.widget.SearchView;
 import com.go.kchin.R;
 import com.go.kchin.database.DatabaseHelper;
 import com.go.kchin.fragments.DepartmentListFragment;
+import com.go.kchin.fragments.InventoryListFragment;
 import com.go.kchin.fragments.MaterialListFragment;
 import com.go.kchin.fragments.ProductListFragment;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
+import com.go.kchin.interfaces.SearchService;
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
+import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
 
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
 public class InventoryActivity extends AppCompatActivity implements InventoryService, FragmentNavigationService {
 
     DatabaseHelper helper;
+    SearchService searchCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,6 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
         helper = new DatabaseHelper(this);
         addFragment(ProductListFragment.newInstance(ProductListFragment.ALL_PRODUCTS));
     }
-
-
 
     private void addFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
@@ -65,17 +65,21 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //TODO: passive search
+                searchCallback.onSearch(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.length() >= 3){
-                    //TODO: active search!
-                    return true;
+                if (newText.length() > 0) {
+                    if (newText.substring(newText.length() - 1, newText.length()).equals(" ")) {
+                        searchCallback.onSearch(newText);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
+                searchCallback.onSearch(null);
+                return true;
             }
         });
 
@@ -105,8 +109,8 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
-    public long addMaterial(Material material) {
-       return helper.addMaterial(material);
+    public Operation addMaterial(Material material) {
+        return helper.addMaterial(material);
     }
 
     @Override
@@ -132,8 +136,8 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
-    public void addProduct(Product product) {
-        log(""+helper.addProduct(product));
+    public Operation addProduct(Product product) {
+        return helper.addProduct(product);
     }
 
     @Override
@@ -162,8 +166,8 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
-    public void addDepartment(Department department) {
-        log(String.valueOf(helper.addDepartment(department)));
+    public Operation addDepartment(Department department) {
+        return helper.addDepartment(department);
     }
 
     @Override
@@ -177,8 +181,18 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
-    public void addMaterialToRecipe(long materialId, long productId) {
-        helper.addMaterialToRecipe(materialId, productId);
+    public List<Material> updateRecipe(long materialId, long productId) {
+        return helper.updateRecipe(materialId, productId);
+    }
+
+    @Override
+    public List<Material> updateRecipe(long materialId, long productId, float amount) {
+        return helper.updateRecipe(materialId, productId, amount);
+    }
+
+    @Override
+    public List<Product> searchProducts(String query) {
+        return helper.getProducts(query);
     }
 
     @Override
@@ -202,4 +216,8 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
         Log.d(getClass().getSimpleName(), message);
     }
 
+
+    public void setSearchService(SearchService arg) {
+        this.searchCallback = arg;
+    }
 }

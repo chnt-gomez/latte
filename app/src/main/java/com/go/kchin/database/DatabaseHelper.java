@@ -9,7 +9,9 @@ import android.os.AsyncTask;
 
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
+import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
+import com.go.kchin.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +33,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL(MaterialContract.MAKE_TABLE);
         sqLiteDatabase.execSQL(DepartmentContract.MAKE_TABLE);
         sqLiteDatabase.execSQL(ProductContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(RecipeContract.MAKE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL(RecipeContract.MAKE_TABLE);
+        //super.onUpgrade(sqLiteDatabase, oldVersion, newVersion);
     }
 
     private long insert(String table, ContentValues values){
@@ -51,14 +54,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         );
     }
 
-    public long addMaterial(Material material) {
+    public Operation addMaterial(Material material) {
+
+        final Operation operation = new Operation();
+
         ContentValues values = new ContentValues();
         values.put(MaterialContract.C_NAME, material.getMaterialName());
         values.put(MaterialContract.C_UNIT, material.getMaterialUnit());
         values.put(MaterialContract.C_COST,material.getMaterialCost());
         values.put(MaterialContract.C_AMOUNT, 0.0f);
         values.put(MaterialContract.C_STATUS, 1);
-        return insert(MaterialContract.TABLE_NAME, values);
+
+        operation.setInsertionId(insert(MaterialContract.TABLE_NAME, values));
+
+        operation.setMaterials(getMaterials());
+
+        return operation;
     }
 
     public List<Material> getMaterials() {
@@ -149,8 +160,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return update(MaterialContract.TABLE_NAME, values, selection, selectionArgs);
     }
 
-    public long addProduct(Product product){
+    public Operation addProduct(Product product){
         ContentValues values = new ContentValues();
+        final Operation operation = new Operation();
         values.put(ProductContract.C_NAME, product.getProductName());
         values.put(ProductContract.C_AMOUNT, product.getProductAmount());
         values.put(ProductContract.C_COST, product.getProductPurchasePrice());
@@ -160,7 +172,42 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         values.put(ProductContract.C_UNIT, product.getProductUnit());
         values.put(ProductContract.C_STATUS, 1);
 
-        return insert(ProductContract.TABLE_NAME, values);
+        operation.setInsertionId(insert(ProductContract.TABLE_NAME, values));
+        operation.setProducts(getProducts());
+
+        return operation;
+    }
+
+    public List<Product> getProducts(String query){
+        List<Product> products = new ArrayList<>();
+        String projection[] = {
+                ProductContract.C_ID,
+                ProductContract.C_DEPARTMENT,
+                ProductContract.C_AMOUNT,
+                ProductContract.C_COST,
+                ProductContract.C_NAME,
+                ProductContract.C_PRICE,
+                ProductContract.C_SOLD,
+                ProductContract.C_UNIT
+        };
+
+        final String regex = Util.toRegex(query);
+
+        String selection = ProductContract.C_STATUS + " = ? AND "+ProductContract.C_NAME + " LIKE ?";
+        String selectionArgs[] = {"1", "%"+regex+"%"};
+
+        Cursor c = query(ProductContract.TABLE_NAME, projection, selection, selectionArgs);
+
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            do {
+                products.add(Product.fromCursor(c));
+                c.moveToNext();
+            }while(!c.isAfterLast());
+            c.close();
+            return products;
+        }
+        return new ArrayList<>();
     }
 
     public List<Product> getProducts(){
@@ -278,10 +325,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return new Department();
     }
 
-    public long addDepartment(Department department) {
+    public Operation addDepartment(Department department) {
         ContentValues values = new ContentValues();
+        final Operation operation = new Operation();
         values.put(DepartmentContract.C_NAME, department.getDepartmentName());
-        return insert(DepartmentContract.TABLE_NAME, values);
+        operation.setInsertionId(insert(DepartmentContract.TABLE_NAME, values));
+        operation.setDepartments(getDepartments());
+        return operation;
     }
 
     public long updateDepartment(long id, Department department) {
@@ -367,12 +417,29 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return products;
     }
 
-    public void addMaterialToRecipe(long materialId, long productId) {
+    public List<Material> updateRecipe(long materialId, long productId) {
         ContentValues values = new ContentValues();
         values.put(RecipeContract.C_MATERIAL_ID, materialId);
         values.put(RecipeContract.C_PRODUCT_ID, productId);
         values.put(RecipeContract.C_QUANTITY, 1.0f);
 
         insert(RecipeContract.TABLE_NAME, values);
+        return getRecipe(productId);
+    }
+
+    public List<Material> updateRecipe(long materialId, long productId, float amount) {
+        ContentValues values = new ContentValues();
+        values.put(RecipeContract.C_QUANTITY, amount);
+
+        String selection = RecipeContract.C_MATERIAL_ID + " = ? AND "+
+                RecipeContract.C_PRODUCT_ID + " = ?";
+        String selectionArgs[] = {
+                String.valueOf(materialId),
+                String.valueOf(productId)
+        };
+
+        update(RecipeContract.TABLE_NAME, values, selection, selectionArgs);
+
+        return getRecipe(productId);
     }
 }
