@@ -14,7 +14,6 @@ import android.widget.SearchView;
 import com.go.kchin.R;
 import com.go.kchin.database.DatabaseHelper;
 import com.go.kchin.fragments.DepartmentListFragment;
-import com.go.kchin.fragments.InventoryListFragment;
 import com.go.kchin.fragments.MaterialListFragment;
 import com.go.kchin.fragments.ProductListFragment;
 import com.go.kchin.interfaces.FragmentNavigationService;
@@ -23,6 +22,7 @@ import com.go.kchin.interfaces.SearchService;
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Operation;
+import com.go.kchin.models.Package;
 import com.go.kchin.models.Product;
 
 import java.util.List;
@@ -211,6 +211,26 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
+    public List<Package> getPackages() {
+        return helper.getPackages();
+    }
+
+    @Override
+    public List<Package> getPackages(long productId) {
+        return null;
+    }
+
+    @Override
+    public Package getPackage(long packageId) {
+        return null;
+    }
+
+    @Override
+    public List<Package> addPackage(Package arg) {
+        return helper.addPackage(arg);
+    }
+
+    @Override
     public void setActionBarTitle(String title) {
         setTitle(title);
     }
@@ -230,7 +250,6 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     private void log(String message){
         Log.d(getClass().getSimpleName(), message);
     }
-
 
     public void setSearchService(SearchService arg) {
         this.searchCallback = arg;

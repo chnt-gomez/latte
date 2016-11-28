@@ -11,6 +11,7 @@ import android.util.Log;
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Operation;
+import com.go.kchin.models.Package;
 import com.go.kchin.models.Product;
 import com.go.kchin.util.Util;
 
@@ -414,7 +415,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             }while(!c.isAfterLast());
             c.close();
         }
-
         return products;
     }
 
@@ -504,5 +504,66 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
         c.close();
         return departments;
+    }
+
+    public List<Package> getPackages(){
+        List<Package> packages = new ArrayList<>();
+        String [] projection = {
+                PackageContract.C_ID,
+                PackageContract.C_DEPARTMENT,
+                PackageContract.C_SOLD,
+                PackageContract.C_NAME,
+                PackageContract.C_COST,
+        };
+        String selection = PackageContract.C_STATUS +" = ?";
+        String selectionArgs[] = {"1"};
+
+        Cursor c = query(PackageContract.TABLE_NAME, projection, selection, selectionArgs);
+
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            do {
+                packages.add(Package.fromCursor(c));
+            }while(!c.isAfterLast());
+        }
+        return packages;
+    }
+
+    public List<Product> getProductsInPackage(long packageId){
+
+        String[] projection = {
+                ProductContract.TABLE_NAME+"."+ProductContract.C_ID,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_NAME
+
+        };
+
+        String selection = ProductContract.C_ID+" = " +
+                ProductInPackageContract.C_PRODUCT+" AND "+PackageContract.C_ID+" = " +
+                ProductInPackageContract.C_PACKAGE+" AND "+PackageContract.C_ID+" = ?";
+
+        String selectionArgs[] = {String.valueOf(packageId)};
+
+        String tables = ProductContract.TABLE_NAME+", "+PackageContract.TABLE_NAME+", "+
+                ProductInPackageContract.TABLE_NAME;
+
+        Cursor c = query(tables, projection, selection, selectionArgs);
+
+        List<Product> products = new ArrayList<>();
+
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            do{
+                products.add(Product.fromCursor(c));
+            }while (!c.isAfterLast());
+        }
+
+        return products;
+    }
+
+    public List<Package> addPackage(Package arg){
+        ContentValues values = new ContentValues();
+        values.put(PackageContract.C_NAME, arg.getName());
+        insert(PackageContract.TABLE_NAME, values);
+        return getPackages();
     }
 }

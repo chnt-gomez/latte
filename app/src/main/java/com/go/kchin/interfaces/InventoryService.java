@@ -4,6 +4,7 @@ import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
+import com.go.kchin.models.Package;
 
 import java.util.List;
 
@@ -53,4 +54,14 @@ public interface InventoryService {
     List<Department> searchDepartment(String args);
 
     List<Material> searchMaterials(String query);
+
+    /*
+        Packages methods
+     */
+    List<com.go.kchin.models.Package> getPackages();
+    List<com.go.kchin.models.Package> getPackages(long productId);
+    com.go.kchin.models.Package getPackage(long packageId);
+    List<Package> addPackage(Package arg);
+
+
 }
