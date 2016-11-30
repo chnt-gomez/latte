@@ -24,7 +24,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "kchin.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -36,11 +36,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL(DepartmentContract.MAKE_TABLE);
         sqLiteDatabase.execSQL(ProductContract.MAKE_TABLE);
         sqLiteDatabase.execSQL(RecipeContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(PackageContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(ProductInPackageContract.MAKE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         //super.onUpgrade(sqLiteDatabase, oldVersion, newVersion);
+        sqLiteDatabase.execSQL(PackageContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(ProductInPackageContract.MAKE_TABLE);
     }
 
     private long insert(String table, ContentValues values){
@@ -524,6 +528,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             c.moveToFirst();
             do {
                 packages.add(Package.fromCursor(c));
+                c.moveToNext();
             }while(!c.isAfterLast());
         }
         return packages;
@@ -560,10 +565,48 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return products;
     }
 
-    public List<Package> addPackage(Package arg){
+    public Operation addPackage(Package arg){
+        Operation operation = new Operation();
         ContentValues values = new ContentValues();
         values.put(PackageContract.C_NAME, arg.getName());
-        insert(PackageContract.TABLE_NAME, values);
-        return getPackages();
+        values.put(PackageContract.C_STATUS, 1);
+
+        operation.setInsertionId(insert(PackageContract.TABLE_NAME, values));
+        operation.setPackages(getPackages());
+        return operation;
+    }
+
+    public Package getPackage(long packageId) {
+        String[] projection = {
+                PackageContract.C_ID,
+                PackageContract.C_DEPARTMENT,
+                PackageContract.C_SOLD,
+                PackageContract.C_NAME,
+                PackageContract.C_COST,
+        };
+
+        String selection = PackageContract.C_ID+" = ?";
+
+        String selectionArgs[] = {
+                String.valueOf(packageId)
+        };
+
+        Cursor c = query(PackageContract.TABLE_NAME, projection, selection, selectionArgs);
+
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            return Package.fromCursor(c);
+        }
+        c.close();
+        return new Package();
+    }
+
+    public void updatePackage(long packageId, Package aPackage) {
+        ContentValues values = new ContentValues();
+        values.put(PackageContract.C_NAME, aPackage.getName());
+        values.put(PackageContract.C_COST, aPackage.getPrice());
+        String selection = PackageContract.C_ID + " = ?";
+        String selectionArgs[] = { String.valueOf(packageId)};
+        update(PackageContract.TABLE_NAME, values, selection, selectionArgs);
     }
 }

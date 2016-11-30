@@ -61,7 +61,8 @@ public interface InventoryService {
     List<com.go.kchin.models.Package> getPackages();
     List<com.go.kchin.models.Package> getPackages(long productId);
     com.go.kchin.models.Package getPackage(long packageId);
-    List<Package> addPackage(Package arg);
+    Operation addPackage(Package arg);
+    void updatePackage(long packageId, Package aPackage);
 
 
 }

@@ -10,11 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
-
 import com.go.kchin.R;
 import com.go.kchin.database.DatabaseHelper;
 import com.go.kchin.fragments.DepartmentListFragment;
 import com.go.kchin.fragments.MaterialListFragment;
+import com.go.kchin.fragments.PackageListFragment;
 import com.go.kchin.fragments.ProductListFragment;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
@@ -98,6 +98,9 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
                 break;
             case R.id.menu_see_departments:
                 moveToFragment(DepartmentListFragment.newInstance());
+                break;
+            case R.id.menu_see_package:
+                moveToFragment(PackageListFragment.newInstance(PackageListFragment.ALL_PACKAGES));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -222,12 +225,17 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     @Override
     public Package getPackage(long packageId) {
-        return null;
+        return helper.getPackage(packageId);
     }
 
     @Override
-    public List<Package> addPackage(Package arg) {
+    public Operation addPackage(Package arg) {
         return helper.addPackage(arg);
+    }
+
+    @Override
+    public void updatePackage(long packageId, Package aPackage) {
+        helper.updatePackage(packageId, aPackage);
     }
 
     @Override

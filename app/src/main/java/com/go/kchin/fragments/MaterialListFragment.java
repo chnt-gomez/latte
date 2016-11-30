@@ -3,7 +3,6 @@ package com.go.kchin.fragments;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-
 import com.go.kchin.R;
 import com.go.kchin.adapters.MaterialListAdapter;
 import com.go.kchin.models.Material;

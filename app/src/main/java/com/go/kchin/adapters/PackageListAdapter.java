@@ -36,10 +36,8 @@ public class PackageListAdapter extends ArrayAdapter<com.go.kchin.models.Package
         TextView txtPackageName = (TextView)view.findViewById(R.id.txt_package_name);
         TextView txtPackagePrice = (TextView)view.findViewById(R.id.txt_package_cost);
         TextView txtPackageProducts = (TextView)view.findViewById(R.id.txt_products_in_package);
-
         txtPackageName.setText(getItem(position).getName());
-        txtPackageName.setText(Util.fromFloat(getItem(position).getPrice()));
-
+        txtPackagePrice.setText(Util.fromFloat(getItem(position).getPrice()));
 
         return view;
     }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_default_margin_small">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Package name:"
+        android:labelFor="@+id/edt_package_name"
+        android:id="@+id/textView" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text|textPersonName"
+        android:ems="10"
+        android:textAlignment="center"
+        android:id="@+id/edt_package_name"/>
+
+
+    <include layout="@layout/include_space_8dp"/>
+
+    <TextView
+        android:text="Package details"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:drawableStart="@drawable/ic_timeline_white_24dp"
+        android:background="@color/colorPrimary"
+        android:drawablePadding="4dp"
+        android:layout_width="match_parent"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_material_details" />
+    <include layout="@layout/include_space_4dp"/>
+
+
+    <include layout="@layout/include_product_cost"/>
+    <include layout="@layout/include_space_4dp"/>
+
+    <include layout="@layout/include_product_sale_price"/>
+
+    <include layout="@layout/include_space_4dp"/>
+
+    <Button
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:drawablePadding="4dp"
+        android:textColor="@android:color/white"
+        android:drawableEnd="@drawable/ic_add_white_24dp"
+        android:text="Add product"
+        android:id="@+id/btn_add_product" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_packages"/>
+
+    <include layout="@layout/include_space_4dp"/>
+
+    <include layout="@layout/include_space_8dp"/>
+
+    <TextView
+        android:text="Product settings"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:drawableStart="@drawable/ic_settings_white_24dp"
+        android:background="@color/colorPrimary"
+        android:drawablePadding="4dp"
+        android:layout_width="match_parent"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_material_settings"/>
+
+
+</LinearLayout>

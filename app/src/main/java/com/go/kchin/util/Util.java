@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -268,9 +269,29 @@ public class Util {
         return 0;
     }
 
+    public static Dialog showNewPackageDialog(String dialogTitle, String dialogMessage, Context context,
+                                              final PackageDialogEventListener callback, final LayoutInflater
+                                              inflater) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            final View view = inflater.inflate (R.layout.dialog_new_package, null);
+            builder.setView(view)
+                    .setTitle(dialogTitle)
+                    .setMessage(dialogMessage)
+                    .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            com.go.kchin.models.Package aPackage = new com.go.kchin.models.Package();
+                            String packageName = ((EditText)view.findViewById(R.id.edt_package_name))
+                                    .getText().toString();
+                            aPackage.setName(packageName);
+                            callback.returnPackage(aPackage);
+                        }
+                    });
+            return builder.create();
+    }
+
     public interface MaterialDialogEventListener {
         Operation returnMaterial(Material material);
-
         void moveToMaterial(long id);
     }
 
@@ -288,6 +309,10 @@ public class Util {
     public interface DepartmentDialogEventListener{
         Operation returnDepartment(Department department);
         void editDepartment(long id, Department department);
+    }
+
+    public interface PackageDialogEventListener{
+        Operation returnPackage(com.go.kchin.models.Package aPackage);
     }
 
     public static String toRegex(String arg){

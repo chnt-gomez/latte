@@ -52,7 +52,6 @@ public class ProductDetailFragment extends InventoryDetailFragment {
     protected void init() {
         super.init();
         product = inventoryService.getProduct(objectId);
-
         edtProduct = (EditText)findViewById(R.id.edt_product_name);
         spnUnit = (Spinner)findViewById(R.id.spn_product_unit);
         btnProductMake = (Button)findViewById(R.id.btn_product_amount);
@@ -67,9 +66,8 @@ public class ProductDetailFragment extends InventoryDetailFragment {
         btnSalePrice.setText(Util.fromFloat(product.getProductSalePrice()));
         txtProductCost.setText(Util.fromFloat(product.getProductPurchasePrice()));
         btnDepartment.setText(inventoryService.getDepartment(product.getProductDepartment()).getDepartmentName());
-
         addTextWatcher(edtProduct);
-        addToClickListener(btnSalePrice, btnProductMake, btnDepartment, btnRecipe);
+        addToClickListener(btnSalePrice, btnProductMake, btnDepartment, btnRecipe, btnPackages);
         addOnSpinnerSelectedListener(spnUnit);
 
     }
@@ -175,6 +173,9 @@ public class ProductDetailFragment extends InventoryDetailFragment {
 
             case R.id.btn_see_recipe:
                 navigationService.moveToFragment(MaterialListFragment.newInstance(product.getProductId()));
+                break;
+            case R.id.btn_see_package:
+                navigationService.moveToFragment(PackageListFragment.newInstance(product.getProductId()));
                 break;
         }
     }
