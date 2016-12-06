@@ -71,6 +71,6 @@ public class PackageListFragment extends InventoryListFragment implements Util.P
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        navigationService.moveToFragment(PackageDetailFragment.newInstance(adapter.getItem(position).getPackageId()));
+        navigationService.moveToFragment(PackageDetailFragment.newInstance(adapter.getItem(position).getPackageId()), true);
     }
 }

@@ -2,6 +2,7 @@ package com.go.kchin.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,7 +21,6 @@ public class HomeActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private String mPanelItems[];
     private DrawerListAdapter adapter;
-
     private static final int INVENTORY = 0;
     private static final int SALES = 1;
 

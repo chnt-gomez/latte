@@ -60,7 +60,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lv_packages"/>
+        android:id="@+id/lv_products_in_package"/>
 
     <include layout="@layout/include_space_4dp"/>
 

@@ -1,5 +1,7 @@
 package com.go.kchin.interfaces;
 
+import android.support.annotation.Nullable;
+
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Operation;
@@ -63,6 +65,10 @@ public interface InventoryService {
     com.go.kchin.models.Package getPackage(long packageId);
     Operation addPackage(Package arg);
     void updatePackage(long packageId, Package aPackage);
+    long addProductToPackage(long packageId, long productId);
+    List<Product> getProductsFromPackage(long objectId);
 
+    void undo(String tableName, long primaryId, long secondaryId);
 
+    void delete(String tableName, long primaryId, long secondaryId);
 }

@@ -172,10 +172,10 @@ public class ProductDetailFragment extends InventoryDetailFragment {
                 break;
 
             case R.id.btn_see_recipe:
-                navigationService.moveToFragment(MaterialListFragment.newInstance(product.getProductId()));
+                navigationService.moveToFragment(MaterialListFragment.newInstance(product.getProductId()), true);
                 break;
             case R.id.btn_see_package:
-                navigationService.moveToFragment(PackageListFragment.newInstance(product.getProductId()));
+                navigationService.moveToFragment(PackageListFragment.newInstance(product.getProductId()), true);
                 break;
         }
     }

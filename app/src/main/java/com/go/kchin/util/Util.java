@@ -112,8 +112,7 @@ public class Util {
                     public void onClick(DialogInterface dialog, int which) {
                         String productName = ((EditText)view.findViewById(R.id.edt_product_name))
                                 .getText().toString();
-                        String productUnit = ((EditText)view.findViewById(R.id.edt_product_unit))
-                                .getText().toString();
+                        String productUnit = ((Spinner)view.findViewById(R.id.spn_product_unit)).getSelectedItem().toString();
                         String productPrice = ((EditText)view.findViewById(R.id.edt_product_sale_price))
                                 .getText().toString();
                         Product product = new Product();
@@ -129,8 +128,8 @@ public class Util {
                     public void onClick(DialogInterface dialog, int which) {
                         String productName = ((EditText)view.findViewById(R.id.edt_product_name))
                                 .getText().toString();
-                        String productUnit = ((EditText)view.findViewById(R.id.edt_product_unit))
-                                .getText().toString();
+                        String productUnit = ((Spinner)view.findViewById(R.id.spn_product_unit))
+                                .getSelectedItem().toString();
                         String productPrice = ((EditText)view.findViewById(R.id.edt_product_sale_price))
                                 .getText().toString();
                         Product product = new Product();

@@ -3,11 +3,18 @@ package com.go.kchin.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.go.kchin.R;
+import com.go.kchin.adapters.ProductListAdapter;
+import com.go.kchin.database.ProductInPackageContract;
+import com.go.kchin.models.Product;
 import com.go.kchin.util.Util;
+
+import java.util.List;
 
 /**
  * Created by MAV1GA on 29/11/2016.
@@ -15,10 +22,12 @@ import com.go.kchin.util.Util;
 
 public class PackageDetailFragment extends InventoryDetailFragment {
 
-
     private com.go.kchin.models.Package localPackage;
     private EditText edtPackageName;
     private Button btnSalePrice, btnAddProducts;
+    List<Product> items;
+    private ListView listView;
+    ProductListAdapter adapter;
 
     public PackageDetailFragment(){}
 
@@ -43,13 +52,24 @@ public class PackageDetailFragment extends InventoryDetailFragment {
     protected void init() {
         super.init();
         localPackage = inventoryService.getPackage(objectId);
+        items = inventoryService.getProductsFromPackage(objectId);
+        listView = (ListView)findViewById(R.id.lv_products_in_package);
+        adapter = new ProductListAdapter(getActivity(), R.layout.row_product_item, items);
+        listView.setAdapter(adapter);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                inventoryService.delete(ProductInPackageContract.TABLE_NAME, getArguments().getLong(OBJECT_ID),
+                        adapter.getItem(position).getProductId());
+                return true;
+            }
+        });
         edtPackageName = (EditText)findViewById(R.id.edt_package_name);
         btnSalePrice = (Button)findViewById(R.id.btn_sale_price);
         btnAddProducts = (Button)findViewById(R.id.btn_add_product);
         btnSalePrice.setText(Util.fromFloat(localPackage.getPrice()));
         edtPackageName.setText(localPackage.getName());
         addToClickListener(btnAddProducts, btnSalePrice);
-
     }
 
     @Override
@@ -74,6 +94,9 @@ public class PackageDetailFragment extends InventoryDetailFragment {
 
                     }
                 }).show();
+                break;
+            case R.id.btn_add_product:
+                navigationService.moveToFragment(ProductListFragment.newInstanceForPakage(localPackage.getPackageId()), true);
                 break;
         }
     }

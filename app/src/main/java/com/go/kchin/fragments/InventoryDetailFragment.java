@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -155,5 +156,9 @@ public abstract class InventoryDetailFragment extends Fragment implements View.O
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    protected void makeSnackBar(String message, String actionText, View.OnClickListener listener){
+        Snackbar.make(fragmentView, message, Snackbar.LENGTH_LONG).setAction(actionText, listener).show();
     }
 }

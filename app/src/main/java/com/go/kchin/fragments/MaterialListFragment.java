@@ -96,7 +96,7 @@ public class MaterialListFragment extends InventoryListFragment{
 
                         @Override
                         public void moveToMaterial(long id) {
-                            navigationService.moveToFragment(MaterialDetailFragment.newInstance(id));
+                            navigationService.moveToFragment(MaterialDetailFragment.newInstance(id), true);
                         }
                     }).show();
         }else{
@@ -130,7 +130,7 @@ public class MaterialListFragment extends InventoryListFragment{
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         navigationService.moveToFragment(MaterialDetailFragment.newInstance(
-                adapter.getItem(position).getId()));
+                adapter.getItem(position).getId()), true);
 
     }
 

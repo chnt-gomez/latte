@@ -9,11 +9,12 @@
         android:hint="Product name"
         android:layout_height="wrap_content"
         android:id="@+id/edt_product_name"/>
-    <EditText
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Unit(Kg, piece, lb...)"
-        android:id="@+id/edt_product_unit"/>
+        android:entries="@array/units_array"
+        android:padding="@dimen/activity_default_margin_small"
+        android:id="@+id/spn_product_unit"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

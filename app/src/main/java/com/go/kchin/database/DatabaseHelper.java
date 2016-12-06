@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.go.kchin.models.Department;
@@ -538,13 +539,20 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         String[] projection = {
                 ProductContract.TABLE_NAME+"."+ProductContract.C_ID,
-                ProductContract.TABLE_NAME+"."+ProductContract.C_NAME
-
+                ProductContract.TABLE_NAME+"."+ProductContract.C_DEPARTMENT,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_AMOUNT,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_COST,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_NAME,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_PRICE,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_SOLD,
+                ProductContract.TABLE_NAME+"."+ProductContract.C_UNIT
         };
 
-        String selection = ProductContract.C_ID+" = " +
-                ProductInPackageContract.C_PRODUCT+" AND "+PackageContract.C_ID+" = " +
-                ProductInPackageContract.C_PACKAGE+" AND "+PackageContract.C_ID+" = ?";
+        String selection = ProductContract.TABLE_NAME+"."+ProductContract.C_ID+" = " +
+                ProductInPackageContract.TABLE_NAME+"."+ProductInPackageContract.C_PRODUCT+" AND "+
+                PackageContract.TABLE_NAME+"."+PackageContract.C_ID+" = " +
+                ProductInPackageContract.TABLE_NAME+"."+ProductInPackageContract.C_PACKAGE+" AND "+
+                PackageContract.TABLE_NAME+"."+PackageContract.C_ID+" = ?";
 
         String selectionArgs[] = {String.valueOf(packageId)};
 
@@ -559,6 +567,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             c.moveToFirst();
             do{
                 products.add(Product.fromCursor(c));
+                c.moveToNext();
             }while (!c.isAfterLast());
         }
 
@@ -608,5 +617,74 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         String selection = PackageContract.C_ID + " = ?";
         String selectionArgs[] = { String.valueOf(packageId)};
         update(PackageContract.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public long addProductToPackage(long packageId, long productId) {
+        ContentValues values = new ContentValues();
+        values.put(ProductInPackageContract.C_PACKAGE, packageId);
+        values.put(ProductInPackageContract.C_PRODUCT, productId);
+        return insert(ProductInPackageContract.TABLE_NAME, values);
+    }
+
+
+
+    public void undoTransaction (String tableName, long primaryId, @Nullable long secondaryId){
+        if (tableName.equals(DepartmentContract.TABLE_NAME)){
+            String whereClause = DepartmentContract.C_ID +" = ?";
+            String[] whereArgs = {String.valueOf(primaryId)};
+            delete(tableName,whereClause, whereArgs );
+            return;
+        }
+        if (tableName.equals(PackageContract.TABLE_NAME)){
+            String whereClause = PackageContract.C_ID +" = ?";
+            String[] whereArgs = {String.valueOf(primaryId)};
+            delete(tableName,whereClause, whereArgs );
+            return;
+        }
+        if (tableName.equals(ProductContract.TABLE_NAME)){
+            String whereClause = ProductContract.C_ID +" = ?";
+            String[] whereArgs = {String.valueOf(primaryId)};
+            delete(tableName,whereClause, whereArgs );
+            return;
+        }
+        if (tableName.equals(ProductInPackageContract.TABLE_NAME)){
+            String whereClause = ProductInPackageContract.C_PACKAGE +"= ? AND "+
+                    ProductInPackageContract.C_PRODUCT+" = ?";
+            String whereArgs[] = {String.valueOf(primaryId), String.valueOf(secondaryId)};
+            delete(tableName, whereClause, whereArgs);
+            return;
+        }
+    }
+
+    private void delete(String tableName, String whereClause, String[] whereArgs){
+        getWritableDatabase().delete(tableName, whereClause, whereArgs);
+    }
+
+    public void erase(String tableName, long primaryId, long secondaryId) {
+        if (tableName.equals(DepartmentContract.TABLE_NAME)){
+            String whereClause = DepartmentContract.C_ID +" = ?";
+            String[] whereArgs = {String.valueOf(primaryId)};
+            delete(tableName,whereClause, whereArgs );
+            return;
+        }
+        if (tableName.equals(PackageContract.TABLE_NAME)){
+            String whereClause = PackageContract.C_ID +" = ?";
+            String[] whereArgs = {String.valueOf(primaryId)};
+            delete(tableName,whereClause, whereArgs );
+            return;
+        }
+        if (tableName.equals(ProductContract.TABLE_NAME)){
+            String whereClause = ProductContract.C_ID +" = ?";
+            String[] whereArgs = {String.valueOf(primaryId)};
+            delete(tableName,whereClause, whereArgs );
+            return;
+        }
+        if (tableName.equals(ProductInPackageContract.TABLE_NAME)){
+            String whereClause = ProductInPackageContract.C_PACKAGE +"= ? AND "+
+                    ProductInPackageContract.C_PRODUCT+" = ?";
+            String whereArgs[] = {String.valueOf(primaryId), String.valueOf(secondaryId)};
+            delete(tableName, whereClause, whereArgs);
+            return;
+        }
     }
 }

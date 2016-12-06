@@ -2,6 +2,7 @@ package com.go.kchin.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
     private void init() {
         helper = new DatabaseHelper(this);
-        addFragment(ProductListFragment.newInstance(ProductListFragment.ALL_PRODUCTS));
+        addFragment(ProductListFragment.newInstance());
     }
 
     private void addFragment(Fragment fragment) {
@@ -91,16 +92,16 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
 
         switch(item.getItemId()){
             case R.id.menu_see_products:
-                moveToFragment(ProductListFragment.newInstance(ProductListFragment.ALL_PRODUCTS));
+                moveToFragment(ProductListFragment.newInstance(), false);
                 break;
             case R.id.menu_see_materials:
-                moveToFragment(MaterialListFragment.newInstance(MaterialListFragment.ALL_MATERIALS));
+                moveToFragment(MaterialListFragment.newInstance(MaterialListFragment.ALL_MATERIALS), false);
                 break;
             case R.id.menu_see_departments:
-                moveToFragment(DepartmentListFragment.newInstance());
+                moveToFragment(DepartmentListFragment.newInstance(),false);
                 break;
             case R.id.menu_see_package:
-                moveToFragment(PackageListFragment.newInstance(PackageListFragment.ALL_PACKAGES));
+                moveToFragment(PackageListFragment.newInstance(PackageListFragment.ALL_PACKAGES),false);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -122,10 +123,16 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
-    public void moveToFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().
-                replace(R.id.main_fragment_holder, fragment).addToBackStack(null)
-                .commit();
+    public void moveToFragment(Fragment fragment, boolean addToBackStackTrace) {
+        if (addToBackStackTrace){
+            getSupportFragmentManager().beginTransaction().
+                    replace(R.id.main_fragment_holder, fragment).addToBackStack(null)
+                    .commit();
+        }else{
+            getSupportFragmentManager().beginTransaction().
+                    replace(R.id.main_fragment_holder, fragment).commit();
+        }
+
     }
 
     @Override
@@ -236,6 +243,26 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     @Override
     public void updatePackage(long packageId, Package aPackage) {
         helper.updatePackage(packageId, aPackage);
+    }
+
+    @Override
+    public long addProductToPackage(long packageId, long productId) {
+        return helper.addProductToPackage(packageId, productId);
+    }
+
+    @Override
+    public List<Product> getProductsFromPackage(long objectId) {
+        return helper.getProductsInPackage(objectId);
+    }
+
+    @Override
+    public void undo(String tableName, long primaryId, @Nullable long secondaryId) {
+        helper.undoTransaction(tableName, primaryId, secondaryId);
+    }
+
+    @Override
+    public void delete(String tableName, long primaryId, @Nullable long secondaryId) {
+        helper.erase(tableName, primaryId, secondaryId);
     }
 
     @Override

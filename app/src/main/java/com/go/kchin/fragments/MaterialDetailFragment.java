@@ -106,7 +106,7 @@ public class MaterialDetailFragment extends InventoryDetailFragment implements
                         getActivity().getLayoutInflater(), this).show();
                 break;
             case R.id.btn_related_products:
-                navigationService.moveToFragment(ProductListFragment.newInstance(material.getId()));
+                navigationService.moveToFragment(ProductListFragment.newInstanceFromMaterial(material.getId()), true);
                 break;
         }
     }
