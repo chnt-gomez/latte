@@ -132,7 +132,6 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
             getSupportFragmentManager().beginTransaction().
                     replace(R.id.main_fragment_holder, fragment).commit();
         }
-
     }
 
     @Override
@@ -256,12 +255,12 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
     }
 
     @Override
-    public void undo(String tableName, long primaryId, @Nullable long secondaryId) {
+    public void undo(String tableName, long primaryId, long secondaryId) {
         helper.undoTransaction(tableName, primaryId, secondaryId);
     }
 
     @Override
-    public void delete(String tableName, long primaryId, @Nullable long secondaryId) {
+    public void delete(String tableName, long primaryId,long secondaryId) {
         helper.erase(tableName, primaryId, secondaryId);
     }
 
