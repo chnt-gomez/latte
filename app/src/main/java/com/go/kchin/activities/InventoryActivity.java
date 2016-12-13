@@ -2,9 +2,7 @@ package com.go.kchin.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,19 +17,19 @@ import com.go.kchin.fragments.PackageListFragment;
 import com.go.kchin.fragments.ProductListFragment;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
-import com.go.kchin.interfaces.SearchService;
+import com.go.kchin.interfaces.SalesService;
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Operation;
 import com.go.kchin.models.Package;
 import com.go.kchin.models.Product;
+import com.go.kchin.models.Sale;
 
 import java.util.List;
 
-public class InventoryActivity extends AppCompatActivity implements InventoryService, FragmentNavigationService {
+public class InventoryActivity extends SearchableActivity implements InventoryService, FragmentNavigationService, SalesService {
 
     DatabaseHelper helper;
-    SearchService searchCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,7 +283,28 @@ public class InventoryActivity extends AppCompatActivity implements InventorySer
         Log.d(getClass().getSimpleName(), message);
     }
 
-    public void setSearchService(SearchService arg) {
-        this.searchCallback = arg;
+    @Override
+    public void addToSale(Sale sale) {
+
+    }
+
+    @Override
+    public List<Sale> getCurrentSale() {
+        return null;
+    }
+
+    @Override
+    public void undoWithProductId(long productId) {
+
+    }
+
+    @Override
+    public void undoWithPackageId(long packageId) {
+
+    }
+
+    @Override
+    public void applySale() {
+
     }
 }

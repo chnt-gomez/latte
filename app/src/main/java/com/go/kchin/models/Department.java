@@ -29,7 +29,7 @@ public class Department {
     public void setProductsInDepartment(int productsInDepartment) {
         this.productsInDepartment = productsInDepartment;
     }
-
+    
     public static Department fromCursor(Cursor c){
         Department department = new Department();
         department.setDepartmentId(c.getLong(c.getColumnIndex(DepartmentContract.C_ID)));

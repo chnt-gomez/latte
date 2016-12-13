@@ -1,8 +1,10 @@
 package com.go.kchin.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +16,11 @@ import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
 import com.go.kchin.database.ProductContract;
 import com.go.kchin.database.ProductInPackageContract;
+import com.go.kchin.interfaces.SalesService;
 import com.go.kchin.interfaces.SearchService;
 import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
+import com.go.kchin.models.Sale;
 import com.go.kchin.util.Util;
 
 import java.util.Collection;
@@ -31,6 +35,8 @@ public class ProductListFragment extends InventoryListFragment implements
     private ProductListAdapter adapter;
     protected static final int FOR_PACKAGE = 1;
     protected static final int FROM_MATERIAL = 2;
+    protected static final int FROM_SALE = 3;
+    private SalesService salesService;
 
     protected static final String FOR_RESULT = "for_result";
 
@@ -49,6 +55,14 @@ public class ProductListFragment extends InventoryListFragment implements
         Bundle args = new Bundle();
         args.putInt(FOR_RESULT, FROM_MATERIAL);
         args.putLong(OBJECT_ID, materialId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static Fragment newInstanceForSale() {
+        ProductListFragment fragment = new ProductListFragment();
+        Bundle args = new Bundle();
+        args.putInt(FOR_RESULT, FROM_SALE);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,7 +90,17 @@ public class ProductListFragment extends InventoryListFragment implements
             case ALL_PRODUCTS:
                 navigationService.setActionBarTitle("Products");
                 break;
+            case FROM_SALE:
+                navigationService.setActionBarTitle("Add to sale");
+                break;
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.salesService = (SalesService)context;
+
     }
 
     protected void init() {
@@ -118,6 +142,24 @@ public class ProductListFragment extends InventoryListFragment implements
                 };
                 listView.setOnItemClickListener(listener);
             break;
+            case FROM_SALE:
+                items = inventoryService.getProducts();
+                btnAdd.setVisibility(View.GONE);
+                listener = new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                        salesService.addToSale(Sale.fromProduct(adapter.getItem(position)));
+                        makeSnackBar("Added to sale", "Undo", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                salesService.undoWithProductId(adapter.getItem(position).getProductId());
+                            }
+                        });
+                    }
+
+                };
+                listView.setOnItemClickListener(listener);
+                break;
             default:
                 items = inventoryService.getProducts();
             break;
@@ -165,4 +207,6 @@ public class ProductListFragment extends InventoryListFragment implements
         else
             updateItemList(inventoryService.searchProducts(query));
     }
+
+
 }

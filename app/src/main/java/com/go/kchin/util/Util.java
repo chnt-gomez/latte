@@ -138,7 +138,6 @@ public class Util {
                         product.setProductSalePrice(Util.toFloat(productPrice));
                         long id = callback.returnProduct(product).getInsertionId();
                         callback.moveToProduct(id);
-
                     }
                 });
         return builder.create();
