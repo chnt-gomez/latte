@@ -13,8 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.go.kchin.R;
-import com.go.kchin.activities.InventoryActivity;
-import com.go.kchin.activities.SearchableActivity;
+import com.go.kchin.activities.KchinSuperActivity;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.InventoryService;
 import com.go.kchin.interfaces.SearchService;
@@ -70,7 +69,7 @@ public class InventoryListFragment extends Fragment implements AdapterView.OnIte
         super.onAttach(context);
         this.navigationService = (FragmentNavigationService) context;
         this.inventoryService = (InventoryService) context;
-        ((SearchableActivity) context).setSearchService(this);
+        ((KchinSuperActivity) context).setSearchService(this);
 
     }
 

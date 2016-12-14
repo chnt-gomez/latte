@@ -2,9 +2,10 @@ package com.go.kchin.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,6 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layout);
+        configureActionBarIcon();
         mPanelItems = getResources().getStringArray(R.array.drawer_items);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerList = (ListView)findViewById(R.id.lv_left_drawer);
@@ -38,15 +40,37 @@ public class HomeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                switch (position){
                    case INVENTORY:
+                       mDrawerLayout.closeDrawer(GravityCompat.START);
                        startActivity(new Intent(HomeActivity.this, InventoryActivity.class));
                        break;
                    case SALES:
+                       mDrawerLayout.closeDrawer(GravityCompat.START);
                        startActivity(new Intent(HomeActivity.this, SalesActivity.class));
                        break;
                }
-
             }
         });
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                }else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void configureActionBarIcon() {
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        }
     }
 }

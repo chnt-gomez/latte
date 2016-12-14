@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import com.go.kchin.R;
 import com.go.kchin.adapters.SaleAdapter;
@@ -53,7 +52,6 @@ public class QuickSaleFragment extends Fragment implements View.OnClickListener,
         sellButton.setOnLongClickListener(this);
         adapter = new SaleAdapter(getActivity(), R.layout.row_sell_item, salesService.getCurrentSale());
         listView.setAdapter(adapter);
-
     }
 
     private View findViewById(int res){
