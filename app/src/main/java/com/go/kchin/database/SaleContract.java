@@ -15,12 +15,12 @@ public class SaleContract {
     public static final String C_VENDOR = "sale_vendor";
 
     public static final String MAKE_TABLE =
-            "CREATE TABLE "+TABLE_NAME+ " ("+C_ID+" INTEGER PRIMARY KEY AUTOINREMENT, " +
+            "CREATE TABLE "+TABLE_NAME+ " ("+C_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     C_TIME +" INTEGER, " +
                     C_TOTAL+ " REAL, " +
                     C_VENDOR+ " TEXT)";
 
     public static final String DROP_TABLE =
-            "DROP TABLE IS EXISTS "+TABLE_NAME+";";
+            "DROP TABLE IS EXISTS "+TABLE_NAME+"; ";
 
 }

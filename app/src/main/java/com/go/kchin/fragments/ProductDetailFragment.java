@@ -2,6 +2,7 @@ package com.go.kchin.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -66,7 +67,6 @@ public class ProductDetailFragment extends InventoryDetailFragment {
         btnSalePrice.setText(Util.fromFloat(product.getProductSalePrice()));
         txtProductCost.setText(Util.fromFloat(product.getProductPurchasePrice()));
         btnDepartment.setText(inventoryService.getDepartment(product.getProductDepartment()).getDepartmentName());
-        addTextWatcher(edtProduct);
         addToClickListener(btnSalePrice, btnProductMake, btnDepartment, btnRecipe, btnPackages);
         addOnSpinnerSelectedListener(spnUnit);
 
@@ -85,18 +85,7 @@ public class ProductDetailFragment extends InventoryDetailFragment {
             product.setProductDepartment(temporaryDepartmentId);
         product.setProductAmount(newProductAmount);
         inventoryService.updateProduct(objectId, product);
-        super.save();
-    }
-
-    @Override
-    protected void undo() {
-        edtProduct.setText(product.getProductName());
-        btnSalePrice.setText(Util.fromFloat(product.getProductSalePrice()));
-        btnProductMake.setText(Util.fromFloat(product.getProductAmount()));
-        spnUnit.setSelection(Util.getSelectionIndexFromString(product.getProductUnit()));
-        btnDepartment.setText(inventoryService.getDepartment(product.getProductDepartment()).getDepartmentName());
-        temporaryDepartmentId = -1;
-        super.undo();
+        Snackbar.make(fragmentView, "Product saved", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -110,7 +99,6 @@ public class ProductDetailFragment extends InventoryDetailFragment {
                             public void returnFloat(float arg) {
                                 if(arg != product.getProductSalePrice()) {
                                     btnSalePrice.setText(Util.fromFloat(arg));
-                                    isUndoAvailable(true);
                                 }
                             }
 
@@ -134,7 +122,6 @@ public class ProductDetailFragment extends InventoryDetailFragment {
                                 if (arg > 0){
                                     float total = Util.toFloat(btnProductMake.getText().toString()) + arg;
                                     btnProductMake.setText(Util.fromFloat(total));
-                                    isUndoAvailable(true);
                                 }
                             }
 
@@ -158,7 +145,6 @@ public class ProductDetailFragment extends InventoryDetailFragment {
                                 if (product.getProductDepartment() != department.getDepartmentId()) {
                                     btnDepartment.setText(department.getDepartmentName());
                                     temporaryDepartmentId = department.getDepartmentId();
-                                    isUndoAvailable(true);
                                 }
                                 return null;
                             }
@@ -178,11 +164,5 @@ public class ProductDetailFragment extends InventoryDetailFragment {
                 navigationService.moveToFragment(PackageListFragment.newInstance(product.getProductId()), true);
                 break;
         }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (position != Util.getSelectionIndexFromString(product.getProductUnit()))
-            isUndoAvailable(true);
     }
 }

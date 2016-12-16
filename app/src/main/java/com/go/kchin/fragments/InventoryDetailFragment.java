@@ -23,22 +23,14 @@ import com.go.kchin.interfaces.InventoryService;
  * Created by MAV1GA on 16/11/2016.
  */
 
-public abstract class InventoryDetailFragment extends Fragment implements View.OnClickListener, TextWatcher,
+public abstract class InventoryDetailFragment extends Fragment implements View.OnClickListener,
         Spinner.OnItemSelectedListener{
 
-    protected void save(){
-        isUndoAvailable(false);
-    }
-    protected void undo(){
-        isUndoAvailable(false);
-    }
-
+    abstract void save();
 
     protected long objectId;
     protected View fragmentView;
-    protected FloatingActionButton btnSave, btnUndo;
-
-    protected boolean isUndoAvailable = false;
+    protected FloatingActionButton btnSave;
 
     protected static final String LAYOUT_RES = "layout";
     protected static final String OBJECT_ID = "object_id";
@@ -52,11 +44,8 @@ public abstract class InventoryDetailFragment extends Fragment implements View.O
 
     protected void init(){
         btnSave = (FloatingActionButton)findViewById(R.id.btn_save);
-        btnUndo = (FloatingActionButton)findViewById(R.id.btn_undo);
-        addToClickListener(btnSave, btnUndo);
+        addToClickListener(btnSave);
         this.objectId = getArguments().getLong(OBJECT_ID);
-        if (!isUndoAvailable)
-            btnSave.setImageResource(R.drawable.ic_done_all_white_24dp);
     }
 
     @Nullable
@@ -99,58 +88,16 @@ public abstract class InventoryDetailFragment extends Fragment implements View.O
         }
     }
 
-    protected void isUndoAvailable(boolean arg){
-        isUndoAvailable= arg;
-        if (isUndoAvailable) {
-            btnUndo.setVisibility(FloatingActionButton.VISIBLE);
-            btnSave.setImageResource(R.drawable.ic_done_white_24dp);
-
-        }
-        else {
-            btnUndo.setVisibility(FloatingActionButton.GONE);
-            btnSave.setImageResource(R.drawable.ic_done_all_white_24dp);
-        }
-    }
-
-    protected void addTextWatcher(EditText... args){
-        for (EditText editText : args){
-            editText.addTextChangedListener(this);
-        }
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        isUndoAvailable(true);
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-    }
-
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_save) {
-            if(isUndoAvailable)
-                save();
-            else
-                getActivity().onBackPressed();
-            return;
-        }
-        if (v.getId() == R.id.btn_undo) {
-            undo();
-            return;
-        }
+        if (v.getId() == R.id.btn_save)
+            save();
+
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        isUndoAvailable(true);
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.go.kchin.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -54,20 +55,8 @@ public class MaterialDetailFragment extends InventoryDetailFragment implements
         txtMaterialPrice.setText(Util.fromFloat(material.getMaterialCost()));
 
         addToClickListener(btnMaterialBuy, btnSeeProducts);
-        addTextWatcher(edtMaterialName);
         addOnSpinnerSelectedListener(spnMaterialUnit);
 
-        if(!isUndoAvailable)
-            btnSave.setImageResource(R.drawable.ic_done_all_white_24dp);
-
-    }
-
-    @Override
-    protected void undo(){
-        edtMaterialName.setText(material.getMaterialName());
-        spnMaterialUnit.setSelection(Util.getSelectionIndexFromString(material.getMaterialUnit()));
-        btnMaterialBuy.setText(Util.fromFloat(material.getMaterialAmount()));
-        super.undo();
     }
 
     @Override
@@ -87,14 +76,13 @@ public class MaterialDetailFragment extends InventoryDetailFragment implements
         this.material.setMaterialAmount(newMaterialAmount);
 
         inventoryService.updateMaterial(objectId, newMaterial);
-        super.save();
 
+        Snackbar.make(fragmentView, "Material saved", Snackbar.LENGTH_SHORT).show();
     }
 
     private void buy(float amount){
         float newAmount = material.getMaterialAmount()+amount;
         btnMaterialBuy.setText(Util.fromFloat(newAmount));
-        isUndoAvailable(true);
     }
 
     @Override
@@ -109,12 +97,6 @@ public class MaterialDetailFragment extends InventoryDetailFragment implements
                 navigationService.moveToFragment(ProductListFragment.newInstanceFromMaterial(material.getId()), true);
                 break;
         }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (position != Util.getSelectionIndexFromString(material.getMaterialUnit()))
-            isUndoAvailable(true);
     }
 
     @Override

@@ -24,6 +24,11 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
         super(context, resource, objects);
     }
 
+    public void setItems(List<Sale> items){
+        this.clear();
+        this.addAll(items);
+    }
+
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

@@ -2,6 +2,7 @@ package com.go.kchin.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -81,7 +82,6 @@ public class PackageDetailFragment extends InventoryDetailFragment {
                     @Override
                     public void returnFloat(float arg) {
                         btnSalePrice.setText(Util.fromFloat(arg));
-                        isUndoAvailable(true);
                     }
 
                     @Override
@@ -108,6 +108,6 @@ public class PackageDetailFragment extends InventoryDetailFragment {
         this.localPackage.setName(newPackageName);
         this.localPackage.setPrice(newPrice);
         inventoryService.updatePackage(objectId, localPackage);
-        super.save();
+        Snackbar.make(fragmentView, "Package saved", Snackbar.LENGTH_SHORT).show();
     }
 }

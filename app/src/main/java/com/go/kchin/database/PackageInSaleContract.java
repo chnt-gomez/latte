@@ -6,7 +6,7 @@ package com.go.kchin.database;
 
 public class PackageInSaleContract {
 
-    private static final String TABLE_NAME = "package_in_sale";
+    public static final String TABLE_NAME = "package_in_sale";
     public static final String C_ID = "product_id";
     public static final String C_SALE_ID = "sale_id";
     public static final String C_PACKAGE_AMOUNT = "package_amount";
@@ -19,4 +19,5 @@ public class PackageInSaleContract {
                     SaleContract.TABLE_NAME+" ("+SaleContract.C_ID+"))";
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS "+TABLE_NAME+"; ";
+
 }

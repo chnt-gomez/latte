@@ -11,8 +11,14 @@ import java.util.List;
 public interface SalesService {
 
     void addToSale(Sale sale);
-    List<Sale> getCurrentSale();
+
     void undoWithProductId(long productId);
-    void undoWithPackageId(long packageId);
-    void applySale();
+
+    void returnSale(Sale sale);
+
+    void applySale(List<Sale> sale);
+
+    List<Sale> getCurrentSale();
+
+    void cancelSale();
 }

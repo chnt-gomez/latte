@@ -11,14 +11,20 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.DepartmentListAdapter;
 import com.go.kchin.adapters.MaterialListAdapter;
+import com.go.kchin.adapters.SaleAdapter;
+import com.go.kchin.fragments.QuickSaleFragment;
 import com.go.kchin.models.Department;
 import com.go.kchin.models.Material;
 import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
+import com.go.kchin.models.Sale;
+
+import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -286,6 +292,45 @@ public class Util {
                         }
                     });
             return builder.create();
+    }
+
+    public static Dialog showConfirmSaleDialog(String dialogTitle, String dialogMessage, Context context,
+                                               final List<Sale> sales, final QuickSaleFragment.SaleDialogEventListener
+                                                       callback, final LayoutInflater inflater){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final View view = inflater.inflate (R.layout.dialog_confirm_sale, null);
+        ListView lv = (ListView) view.findViewById(R.id.lv_sale);
+        SaleAdapter adapter = new SaleAdapter(context, R.layout.row_sell_item, sales);
+        lv.setAdapter(adapter);
+        TextView txtTotal = (TextView)view.findViewById(R.id.txt_sale_total);
+        txtTotal.setText(Util.fromFloat(Sale.getTotalFromSale(sales)));
+        builder.setView(view)
+                .setTitle(dialogTitle)
+                .setMessage(dialogMessage)
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        callback.confirmSale(sales);
+                    }
+                })
+                .setNegativeButton("Go back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setNeutralButton("Cancel & Clear", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        callback.dismissSale();
+                        dialog.dismiss();
+                    }
+                });
+        return builder.create();
+    }
+
+    public static long getCurrentDateInSeconds() {
+        return DateTime.now().getMillis();
     }
 
     public interface MaterialDialogEventListener {

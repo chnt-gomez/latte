@@ -2,6 +2,7 @@ package com.go.kchin.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 
 public class KchinSuperActivity extends AppCompatActivity implements InventoryService,
-        SalesService, FragmentNavigationService {
+        FragmentNavigationService, SalesService {
 
     protected SearchService searchService;
     protected DatabaseHelper helper;
@@ -267,42 +268,47 @@ public class KchinSuperActivity extends AppCompatActivity implements InventorySe
     }
 
     @Override
-        public List<Product> getProductsFromPackage(long objectId) {
-            return helper.getProductsInPackage(objectId);
-        }
+    public List<Product> getProductsFromPackage(long objectId) {
+        return helper.getProductsInPackage(objectId);
+    }
 
-        @Override
-        public void undo(String tableName, long primaryId, long secondaryId) {
-            helper.undoTransaction(tableName, primaryId, secondaryId);
-        }
+    @Override
+    public void undo(String tableName, long primaryId, long secondaryId) {
+        helper.undoTransaction(tableName, primaryId, secondaryId);
+    }
 
-        @Override
-        public void delete(String tableName, long primaryId, long secondaryId) {
-            helper.erase(tableName, primaryId, secondaryId);
-        }
+    @Override
+    public void delete(String tableName, long primaryId, long secondaryId) {
+        helper.erase(tableName, primaryId, secondaryId);
+    }
 
-        @Override
-        public void addToSale(Sale sale) {
-
-        }
-
-        @Override
-        public List<Sale> getCurrentSale() {
-            return null;
-        }
-
-        @Override
-        public void undoWithProductId(long productId) {
+    @Override
+    public void addToSale(Sale sale) {
 
     }
 
     @Override
-    public void undoWithPackageId(long packageId) {
+    public void undoWithProductId(long productId) {
 
     }
 
     @Override
-    public void applySale() {
+    public void returnSale(Sale sale) {
+
+    }
+
+    @Override
+    public void applySale(List<Sale> sale) {
+
+    }
+
+    @Override
+    public List<Sale> getCurrentSale() {
+        return null;
+    }
+
+    @Override
+    public void cancelSale() {
 
     }
 }

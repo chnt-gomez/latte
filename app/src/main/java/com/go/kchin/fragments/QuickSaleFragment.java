@@ -13,6 +13,11 @@ import com.go.kchin.R;
 import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.FragmentNavigationService;
 import com.go.kchin.interfaces.SalesService;
+import com.go.kchin.models.Sale;
+import com.go.kchin.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class QuickSaleFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
@@ -23,6 +28,8 @@ public class QuickSaleFragment extends Fragment implements View.OnClickListener,
     private SaleAdapter adapter;
     private FloatingActionButton sellButton;
     private ListView listView;
+
+    private List<Sale> currentSale;
 
     public QuickSaleFragment(){}
 
@@ -41,8 +48,7 @@ public class QuickSaleFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onResume() {
         super.onResume();
-        listView.setAdapter(adapter);
-
+        updateSale();
     }
 
     private void init() {
@@ -50,7 +56,8 @@ public class QuickSaleFragment extends Fragment implements View.OnClickListener,
         listView = (ListView)findViewById(R.id.lv_sale);
         sellButton.setOnClickListener(this);
         sellButton.setOnLongClickListener(this);
-        adapter = new SaleAdapter(getActivity(), R.layout.row_sell_item, salesService.getCurrentSale());
+        currentSale = new ArrayList<>();
+        adapter = new SaleAdapter(getActivity(), R.layout.row_sell_item, currentSale);
         listView.setAdapter(adapter);
     }
 
@@ -85,9 +92,38 @@ public class QuickSaleFragment extends Fragment implements View.OnClickListener,
     public boolean onLongClick(View v) {
         switch (v.getId()){
             case R.id.btn_sell:
-                salesService.applySale();
+                Util.showConfirmSaleDialog("Confirm sale", null, getActivity(),
+                        salesService.getCurrentSale(), new SaleDialogEventListener() {
+                            @Override
+                            public long confirmSale(List<Sale> sale) {
+                                salesService.applySale(sale);
+                                updateSale();
+                                return 0;
+                            }
+
+                            @Override
+                            public void dismissSale() {
+                                salesService.cancelSale();
+                                updateSale();
+                            }
+                        }, getActivity().getLayoutInflater()
+                ).show();
                 break;
         }
         return true;
     }
+
+    public interface SaleDialogEventListener{
+        long confirmSale(List<Sale> sale);
+
+        void dismissSale();
+    }
+
+    private void updateSale(){
+        adapter.setItems(salesService.getCurrentSale());
+        listView.setAdapter(adapter);
+    }
+
+
+
 }

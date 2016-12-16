@@ -14,6 +14,7 @@ import com.go.kchin.models.Material;
 import com.go.kchin.models.Operation;
 import com.go.kchin.models.Package;
 import com.go.kchin.models.Product;
+import com.go.kchin.models.Sale;
 import com.go.kchin.util.Util;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "kchin.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,13 +40,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL(RecipeContract.MAKE_TABLE);
         sqLiteDatabase.execSQL(PackageContract.MAKE_TABLE);
         sqLiteDatabase.execSQL(ProductInPackageContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(SaleContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(ProductInSaleContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(PackageInSaleContract.MAKE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         //super.onUpgrade(sqLiteDatabase, oldVersion, newVersion);
-        sqLiteDatabase.execSQL(PackageContract.MAKE_TABLE);
-        sqLiteDatabase.execSQL(ProductInPackageContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(SaleContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(ProductInSaleContract.MAKE_TABLE);
+        sqLiteDatabase.execSQL(PackageInSaleContract.MAKE_TABLE);
+
     }
 
     private long insert(String table, ContentValues values){
@@ -685,6 +691,50 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             String whereArgs[] = {String.valueOf(primaryId), String.valueOf(secondaryId)};
             delete(tableName, whereClause, whereArgs);
             return;
+        }
+    }
+
+    public long applySale(List<Sale> sale) {
+
+        ContentValues values = new ContentValues();
+        long date = Util.getCurrentDateInSeconds();
+        values.put(SaleContract.C_TIME, date);
+        values.put(SaleContract.C_VENDOR, "Default");
+        float total = Sale.getTotalFromSale(sale);
+        values.put(SaleContract.C_TOTAL, total);
+        long insertion = insert(SaleContract.TABLE_NAME, values);
+
+        applyPackageToSale(sale, insertion);
+        applyProductToSale(sale, insertion);
+
+        return insertion;
+
+
+    }
+
+    private void applyPackageToSale(List<Sale> sale, long saleId){
+
+        for (Sale s : sale){
+            if (s.isPackage()){
+                ContentValues values = new ContentValues();
+                values.put(PackageInSaleContract.C_SALE_ID, saleId);
+                values.put(PackageInSaleContract.C_PACKAGE_AMOUNT, s.getAmmount());
+                values.put(PackageInSaleContract.C_ID, s.getObjectId());
+                insert(PackageInSaleContract.TABLE_NAME, values);
+            }
+        }
+    }
+
+    private void applyProductToSale(List<Sale> sale, long saleId){
+
+        for (Sale s : sale){
+            if (s.isProduct()){
+                ContentValues values = new ContentValues();
+                values.put(ProductInSaleContract.C_SALE_ID, saleId);
+                values.put(ProductInSaleContract.C_PRODUCT_AMOUNT, s.getAmmount());
+                values.put(ProductInSaleContract.C_ID, s.getObjectId());
+                insert(ProductInSaleContract.TABLE_NAME, values);
+            }
         }
     }
 }

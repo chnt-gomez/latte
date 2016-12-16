@@ -40,7 +40,6 @@ public class DepartmentDetailFragment extends InventoryDetailFragment {
         department = inventoryService.getDepartment(objectId);
         edtDepartment = (EditText) findViewById(R.id.edt_department_name);
         edtDepartment.setText(department.getDepartmentName());
-        addTextWatcher(edtDepartment);
     }
 
     @Override
@@ -48,12 +47,5 @@ public class DepartmentDetailFragment extends InventoryDetailFragment {
         String newDepartmentName = edtDepartment.getText().toString();
         department.setDepartmentName(newDepartmentName);
         inventoryService.updateDepartment(objectId, department);
-        super.save();
-    }
-
-    @Override
-    protected void undo() {
-        edtDepartment.setText(department.getDepartmentName());
-        super.undo();
     }
 }

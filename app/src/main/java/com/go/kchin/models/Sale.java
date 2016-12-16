@@ -1,5 +1,7 @@
 package com.go.kchin.models;
 
+import java.util.List;
+
 /**
  * Created by MAV1GA on 09/12/2016.
  */
@@ -81,5 +83,13 @@ public class Sale {
         sale.isPackage = true;
         sale.objectId = aPackage.getPackageId();
         return sale;
+    }
+
+    public static float getTotalFromSale(List<Sale> sale) {
+        float total = 0.0f;
+        for (Sale s : sale){
+            total += (s.ammount*s.getSellPrice());
+        }
+        return total;
     }
 }
