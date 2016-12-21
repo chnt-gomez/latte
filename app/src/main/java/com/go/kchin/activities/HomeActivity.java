@@ -24,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     private DrawerListAdapter adapter;
     private static final int INVENTORY = 0;
     private static final int SALES = 1;
+    private static final int REPORTS = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,15 +39,17 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               switch (position){
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                switch (position){
                    case INVENTORY:
-                       mDrawerLayout.closeDrawer(GravityCompat.START);
+
                        startActivity(new Intent(HomeActivity.this, InventoryActivity.class));
                        break;
                    case SALES:
-                       mDrawerLayout.closeDrawer(GravityCompat.START);
                        startActivity(new Intent(HomeActivity.this, SalesActivity.class));
                        break;
+                   case REPORTS:
+                       startActivity(new Intent(HomeActivity.this, ReportsActivity.class));
                }
             }
         });

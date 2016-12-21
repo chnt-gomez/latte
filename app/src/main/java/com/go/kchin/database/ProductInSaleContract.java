@@ -16,7 +16,7 @@ public class ProductInSaleContract {
     public static final String MAKE_TABLE =
             "CREATE TABLE "+TABLE_NAME+" ("+C_ID+" INTEGER, " +
                     C_SALE_ID + " INTEGER, " +
-                    C_PRODUCT_AMOUNT+ "REAL, "+
+                    C_PRODUCT_AMOUNT+ " REAL, "+
                     "FOREIGN KEY ("+C_SALE_ID+") REFERENCES " +
                     SaleContract.TABLE_NAME+" ("+SaleContract.C_ID+"))";
 
