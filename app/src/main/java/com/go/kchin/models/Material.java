@@ -2,9 +2,6 @@ package com.go.kchin.models;
 
 import android.database.Cursor;
 
-import com.go.kchin.database.MaterialContract;
-import com.go.kchin.database.RecipeContract;
-
 /**
  * Created by vicente on 6/11/16.
  */

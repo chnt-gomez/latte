@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- Recipe Queries -->
+
+    <!-- Get Products in Combo -->
+    <string name="q_get_products_in_combo" translatable="false">
+        Not Used
+    </string>
+
+    <!-- Get recipe from product -->
+    <string name="q_get_recipe_from_product" translatable="false">
+        Not Used
+    </string>
+
+
+
+
+</resources>

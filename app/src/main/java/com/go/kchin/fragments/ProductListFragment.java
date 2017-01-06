@@ -2,22 +2,13 @@ package com.go.kchin.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
-import com.go.kchin.database.ProductContract;
-import com.go.kchin.database.ProductInPackageContract;
 import com.go.kchin.interfaces.SalesService;
-import com.go.kchin.interfaces.SearchService;
 import com.go.kchin.models.Operation;
 import com.go.kchin.models.Product;
 import com.go.kchin.models.Sale;
@@ -82,7 +73,7 @@ public class ProductListFragment extends InventoryListFragment implements
         super.onResume();
         switch (getArguments().getInt(FOR_RESULT)){
             case FOR_PACKAGE:
-                navigationService.setActionBarTitle("Add to Package");
+                navigationService.setActionBarTitle("Add to Combo");
                 break;
             case FROM_MATERIAL:
                 navigationService.setActionBarTitle("Products with Material");

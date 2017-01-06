@@ -2,8 +2,6 @@ package com.go.kchin.models;
 
 import android.database.Cursor;
 
-import com.go.kchin.database.DepartmentContract;
-
 /**
  * Created by MAV1GA on 14/11/2016.
  */

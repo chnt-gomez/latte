@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
-import com.go.kchin.database.ProductInPackageContract;
 import com.go.kchin.models.Product;
 import com.go.kchin.util.Util;
 
@@ -108,6 +107,6 @@ public class PackageDetailFragment extends InventoryDetailFragment {
         this.localPackage.setName(newPackageName);
         this.localPackage.setPrice(newPrice);
         inventoryService.updatePackage(objectId, localPackage);
-        Snackbar.make(fragmentView, "Package saved", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(fragmentView, "Combo saved", Snackbar.LENGTH_SHORT).show();
     }
 }
