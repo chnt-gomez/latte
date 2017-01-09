@@ -10,8 +10,8 @@ public class ProductsInCombo extends SugarRecord {
 
     public ProductsInCombo(){}
 
-    Product product;
-    Combo combo;
+    public Product product;
+    public Combo combo;
 
     public float productAmount;
 

@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 
 import com.go.kchin.R;
-import com.go.kchin.models.Material;
-import com.go.kchin.util.Util;
+import com.go.kchin.model.database.Material;
 
 import java.util.List;
 
@@ -37,9 +36,9 @@ public class MaterialListAdapter extends ArrayAdapter<Material> {
         TextView txtMaterialUnit = (TextView)view.findViewById(R.id.txt_material_unit);
         TextView txtMaterialAmount = (TextView)view.findViewById(R.id.txt_material_amount);
 
-        txtMaterialName.setText(getItem(position).getMaterialName());
-        txtMaterialUnit.setText(getItem(position).getMaterialUnit());
-        txtMaterialAmount.setText(Util.fromFloat(getItem(position).getMaterialAmount()));
+        txtMaterialName.setText(getItem(position).materialName);
+        txtMaterialUnit.setText(getItem(position).materialMeasure);
+        //txtMaterialAmount.setText(Util.fromFloat(getItem(position).materialRemaining));
 
         return view;
     }

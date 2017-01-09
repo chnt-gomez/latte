@@ -9,8 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.go.kchin.R;
-import com.go.kchin.models.Sale;
-import com.go.kchin.util.Util;
+import com.go.kchin.model.database.Sale;
 
 import java.util.List;
 
@@ -42,9 +41,7 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
         TextView txtProductUnit = (TextView)view.findViewById(R.id.txt_sell_unit);
         TextView txtProductPrice = (TextView)view.findViewById(R.id.txt_sell_sale_price);
 
-        txtProductName.setText(getItem(position).getItem());
-        txtProductUnit.setText(Util.fromFloat(getItem(position).getAmmount()));
-        txtProductPrice.setText(Util.fromFloat(getItem(position).getSellPrice()));
+
 
         return view;
 

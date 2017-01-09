@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.go.kchin.R;
-import com.go.kchin.models.Department;
+import com.go.kchin.model.database.Department;
 
 import java.util.List;
 
@@ -33,9 +33,7 @@ public class DepartmentListAdapter extends ArrayAdapter<Department>{
         TextView txtDepartment = (TextView)view.findViewById(R.id.txt_department_name);
         TextView txtDeparmentProductsAmount = (TextView)view.findViewById(R.id.txt_department_products_amount);
 
-        txtDepartment.setText(getItem(position).getDepartmentName());
-        txtDeparmentProductsAmount.setText(String.valueOf(getItem(position).getProductsInDepartment()) + " " +
-                "products.");
+        txtDepartment.setText(getItem(position).departmentName);
         return view;
     }
 }

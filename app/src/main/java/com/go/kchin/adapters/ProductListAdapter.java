@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.go.kchin.R;
-import com.go.kchin.models.Product;
-import com.go.kchin.util.Util;
+
+import com.go.kchin.model.database.Product;
 
 import java.util.List;
 
@@ -38,9 +38,9 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         TextView txtProductUnit = (TextView)view.findViewById(R.id.txt_product_unit);
         TextView txtProductPrice = (TextView)view.findViewById(R.id.txt_product_sale_price);
 
-        txtProductName.setText(getItem(position).getProductName());
-        txtProductUnit.setText(getItem(position).getProductUnit());
-        txtProductPrice.setText(Util.fromFloat(getItem(position).getProductSalePrice()));
+        txtProductName.setText(getItem(position).productName);
+        txtProductUnit.setText(getItem(position).productMeasureUnit);
+        //txtProductPrice.setText(Util.fromFloat(getItem(position).productSellPrice));
 
         return view;
 

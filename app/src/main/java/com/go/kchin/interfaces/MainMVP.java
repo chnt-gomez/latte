@@ -1,12 +1,10 @@
 package com.go.kchin.interfaces;
 
-import android.content.Context;
-import android.content.res.Resources;
-
 import com.go.kchin.model.database.Combo;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.presenter.activities.BaseActivity;
 
 import java.util.List;
 
@@ -33,8 +31,7 @@ public interface MainMVP {
     interface PresenterOps{
         void onConfigurationChanged(RequiredViewOps view);
         void onDestroy(boolean isChangingConfig);
-        void newFoo(String foo);
-        void deleteFoo(String foo);
+        void moveToActivity(Class activity);
         //Any other presenter ops
     }
 
@@ -54,6 +51,26 @@ public interface MainMVP {
      */
     interface RequiredProductsPresenterOps{
 
+    }
+
+    /**
+     * Operations offered from ProductsPresenter to View
+     */
+    interface ProductsPresenterOps{
+        /**
+         * Returns all products to View
+         */
+        List<Product> getAllProducts();
+
+        /**
+         * Moves to a new Activity to create a product
+         */
+        void newProduct();
+
+        /**
+         * Move to product description
+         */
+        void moveToProduct(long productId);
     }
 
     /**
@@ -210,7 +227,7 @@ public interface MainMVP {
          * @param comboId Combo Id reference
          * @param productId Product Id reference
          */
-        void addProductToCombo(long comboId, long productId);
+        void addProductToCombo(long comboId, long productId, float materialAmount);
 
 
         /**

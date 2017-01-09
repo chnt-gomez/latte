@@ -2,16 +2,18 @@
 <resources>
 
 
-    <!-- Recipe Queries -->
-
-    <!-- Get Products in Combo -->
     <string name="q_get_products_in_combo" translatable="false">
         Not Used
     </string>
 
-    <!-- Get recipe from product -->
     <string name="q_get_recipe_from_product" translatable="false">
         Not Used
+    </string>
+
+    <string name="q_get_products_from_material" >
+        SELECT * FROM Product, Recipe, Material WHERE
+        Recipe.Id = Product.Id AND Recipe.Id = Material.Id AND
+        Material.Id = ?
     </string>
 
 
