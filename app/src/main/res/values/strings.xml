@@ -27,6 +27,14 @@
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
     <string name="ok">Ok</string>
+    <string name="new_product">New Product</string>
+    <string name="material_saved">New material saved!</string>
+    <string name="saved">Saved</string>
+    <string name="active">Active now</string>
+    <string name="deactivated">Deactivated</string>
+    <string name="product_saved">New product saved</string>
+    <string name="combo_saved">New combo saved</string>
+    <string name="new_department">New Department</string>
 
 
 </resources>

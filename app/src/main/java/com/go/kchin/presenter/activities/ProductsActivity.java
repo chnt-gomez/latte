@@ -1,13 +1,11 @@
 package com.go.kchin.presenter.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.go.kchin.R;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
-import com.go.kchin.interfaces.MainMVP.RequiredProductsPresenterOps;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.util.dialog.loader.Loader;
 import com.go.kchin.view.fragment.ProductListFragment;
@@ -20,8 +18,7 @@ import java.util.List;
  * Created by MAV1GA on 06/01/2017.
  */
 
-public class ProductsActivity extends BaseActivity implements RequiredProductsPresenterOps,
-        MainMVP.ProductsPresenterOps {
+public class ProductsActivity extends BaseActivity implements MainMVP.ProductsPresenterOps {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,9 +45,8 @@ public class ProductsActivity extends BaseActivity implements RequiredProductsPr
     }
 
     @Override
-    public void newProduct() {
-        Intent intent = new Intent(ProductsActivity.this, ProductActivity.class);
-        startActivity(intent);
+    public void newProduct(Product p) {
+        mModel.addProduct(p);
     }
 
     @Override

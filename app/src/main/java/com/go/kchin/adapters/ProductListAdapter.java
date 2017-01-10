@@ -1,6 +1,7 @@
 package com.go.kchin.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.go.kchin.R;
 
 import com.go.kchin.model.database.Product;
+import com.go.kchin.util.dialog.number.Number;
 
 import java.util.List;
 
@@ -35,12 +37,23 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         }
 
         TextView txtProductName = (TextView)view.findViewById(R.id.txt_product_name);
-        TextView txtProductUnit = (TextView)view.findViewById(R.id.txt_product_unit);
+        TextView txtProductRemaining = (TextView)view.findViewById(R.id.txt_product_remaining);
         TextView txtProductPrice = (TextView)view.findViewById(R.id.txt_product_sale_price);
 
-        txtProductName.setText(getItem(position).productName);
-        txtProductUnit.setText(getItem(position).productMeasureUnit);
-        //txtProductPrice.setText(Util.fromFloat(getItem(position).productSellPrice));
+        String productName = getItem(position).productName;
+        String productRemaining = Number.floatToStringAsNumber(getItem(position).productRemaining);
+        String productPrice = Number.floatToStringAsPrice(getItem(position).productSellPrice);
+
+        txtProductName.setText(productName);
+        txtProductRemaining.setText(productRemaining);
+        txtProductPrice.setText(productPrice);
+
+        /**
+         * Coloring
+         */
+        if (getItem(position).productRemaining <= 0){
+            txtProductRemaining.setTextColor(Color.parseColor("#ff7f7f"));
+        }
 
         return view;
 

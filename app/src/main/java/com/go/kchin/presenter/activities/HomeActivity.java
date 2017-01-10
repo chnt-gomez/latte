@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.go.kchin.R;
+import com.go.kchin.model.database.Department;
 
 
 public class HomeActivity extends BaseActivity
@@ -85,21 +86,13 @@ public class HomeActivity extends BaseActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-            Intent intent = new Intent(HomeActivity.this, ProductsActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_send) {
-
+        switch (item.getItemId()){
+            case R.id.nav_products:
+                startActivity(new Intent(HomeActivity.this, ProductsActivity.class));
+                break;
+            case R.id.nav_departments:
+                startActivity(new Intent(HomeActivity.this, DepartmentsActivity.class));
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

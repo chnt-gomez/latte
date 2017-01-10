@@ -24,35 +24,12 @@
 
     <include layout="@layout/include_space_4dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Measure and amount:"
-        android:labelFor="@+id/edt_material_unit"
-        android:id="@+id/textView2" />
-
     <include layout="@layout/include_product_amount"/>
 
-    <include layout="@layout/include_space_8dp"/>
-
-    <TextView
-        android:text="Product details"
-        android:textSize="18sp"
-        android:padding="8dp"
-        android:drawableStart="@drawable/ic_timeline_white_24dp"
-        android:background="@color/colorPrimary"
-        android:drawablePadding="4dp"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/white"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_material_details" />
     <include layout="@layout/include_space_4dp"/>
 
     <include layout="@layout/include_product_sale_price"/>
 
-    <include layout="@layout/include_space_4dp"/>
-
-    <include layout="@layout/include_product_cost"/>
     <include layout="@layout/include_space_4dp"/>
 
     <include layout="@layout/include_product_department"/>
@@ -89,18 +66,6 @@
     <include layout="@layout/include_space_8dp"/>
 
     <include layout="@layout/include_space_4dp"/>
-
-    <TextView
-        android:text="Product settings"
-        android:textSize="18sp"
-        android:padding="8dp"
-        android:drawableStart="@drawable/ic_settings_white_24dp"
-        android:background="@color/colorPrimary"
-        android:drawablePadding="4dp"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/white"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_material_settings"/>
 
 
 </LinearLayout>

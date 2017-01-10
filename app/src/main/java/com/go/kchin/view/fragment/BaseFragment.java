@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 
 import com.go.kchin.interfaces.MainMVP;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by MAV1GA on 06/01/2017.
  */
 
-public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, View.OnClickListener {
+public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, View.OnClickListener{
 
     protected View view;
     protected MainMVP.PresenterOps mPresenter;
@@ -53,7 +55,11 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
         }
     }
 
-    protected void init() {}
+    protected void init() {
+        if (view != null){
+            ButterKnife.bind(this, view);
+        }
+    }
 
     @Override
     public void onDetach() {

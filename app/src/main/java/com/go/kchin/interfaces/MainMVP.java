@@ -47,13 +47,6 @@ public interface MainMVP {
     }
 
     /**
-     * Operations offered from ProductsPresenter to Model
-     */
-    interface RequiredProductsPresenterOps{
-
-    }
-
-    /**
      * Operations offered from ProductsPresenter to View
      */
     interface ProductsPresenterOps{
@@ -63,14 +56,37 @@ public interface MainMVP {
         List<Product> getAllProducts();
 
         /**
-         * Moves to a new Activity to create a product
+         * Creates a new product
          */
-        void newProduct();
+        void newProduct(Product p);
 
         /**
          * Move to product description
          */
         void moveToProduct(long productId);
+    }
+
+    interface ProductPresenterOps{
+
+        /**
+         * Returns a Product from the Id
+         * @param id the Product Id reference
+         */
+        Product getProduct(long id);
+
+        /**
+         * Returns the Department name from a product Id
+         */
+        String getDepartmentNameFromProduct(long productId);
+    }
+
+    interface DepartmentsPresenterOps {
+
+        List<Department> getAllDepartments();
+        Department getDepartment(long departmentId);
+        void addDepartment(Department department);
+        void addProductToDepartment(long productId, long departmentId);
+
     }
 
     /**
@@ -193,7 +209,6 @@ public interface MainMVP {
          */
         void updateDepartment(long departmentId, Department department);
 
-
         /**
          * Combo operations
          */
@@ -237,6 +252,10 @@ public interface MainMVP {
         //TODO: Continue with sales operations
 
         void onDestroy();
+
+
     }
+
+
 
 }

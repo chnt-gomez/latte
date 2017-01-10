@@ -1,25 +1,16 @@
 package com.go.kchin.presenter.activities;
 
-import android.app.Dialog;
+
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-
 import com.go.kchin.R;
-import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.DatabaseEngine;
-import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.view.fragment.BaseFragment;
-import com.orm.SugarContext;
-import com.orm.SugarRecord;
-
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 /**
  * Created by MAV1GA on 06/01/2017.
@@ -41,7 +32,7 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
 
     @Override
     public void onOperationSuccess(String message) {
-
+        mView.get().showSnackBar(message);
     }
 
     @Override

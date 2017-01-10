@@ -20,7 +20,7 @@ public class Product extends SugarRecord {
     public int productStatus;
     public float productPurchaseCost;
 
-    Department department;
+    public Department department;
 
     List<Material> getRecipe(){
         return Material.find(Material.class, "product = ?", getId().toString());

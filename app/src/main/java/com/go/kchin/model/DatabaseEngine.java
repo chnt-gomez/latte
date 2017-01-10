@@ -29,6 +29,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         }
         mPresenter = presenter;
         return instance;
+
     }
 
     private DatabaseEngine (){}
@@ -37,6 +38,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void addMaterial(Material newMaterial) {
         newMaterial.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.material_saved));
     }
 
     @Override
@@ -58,6 +60,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         material.materialRemaining = newMaterialParams.materialRemaining;
         material.materialStatus = newMaterialParams.materialStatus;
         material.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
 
     @Override
@@ -65,6 +68,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         Material material = Material.findById(Material.class, materialId);
         material.materialStatus = 1;
         material.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.active));
     }
 
     @Override
@@ -72,6 +76,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         Material material = Material.findById(Material.class, materialId);
         material.materialStatus = 0;
         material.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.deactivated));
     }
 
     @Override
@@ -86,11 +91,13 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         Recipe recipe = Recipe.findById(Recipe.class, recipeId);
         recipe.MaterialAmount = newAmount;
         recipe.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
 
     @Override
     public void addProduct(Product newProduct) {
         newProduct.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.product_saved));
     }
 
     @Override
@@ -137,6 +144,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         Department newDepartment = Material.findById(Department.class, departmentId);
         newDepartment.departmentName = department.departmentName;
         newDepartment.departmentStatus = department.departmentStatus;
+        newDepartment.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
 
 
@@ -148,6 +157,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void addCombo(Combo combo) {
         combo.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.combo_saved));
     }
 
     @Override
@@ -171,6 +181,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         arg.product = Product.findById(Product.class, productId);
         arg.combo = Combo.findById(Combo.class, comboId);
         arg.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
+
 
     }
 

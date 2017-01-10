@@ -1,24 +1,27 @@
 package com.go.kchin.view.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.interfaces.RequiredDialogOps;
+import com.go.kchin.model.database.Product;
+import com.go.kchin.presenter.activities.ProductActivity;
 import com.go.kchin.util.dialog.Dialogs;
 
 /**
  * Created by MAV1GA on 09/01/2017.
  */
 
-public class ProductListFragment extends BaseFragment {
+public class ProductListFragment extends BaseFragment implements RequiredDialogOps.RequiredNewProductOps{
 
 
     private ListView listView;
@@ -31,6 +34,16 @@ public class ProductListFragment extends BaseFragment {
         arguments.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory );
         fragment.setArguments(arguments);
         return fragment;
+    }
+
+    private void reload(){
+        adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
+                mProductsPresenter.getAllProducts());
+        try{
+            updateListView();
+        }catch (Exception e){
+            Log.w(getClass().getSimpleName(), e.getMessage());
+        }
     }
 
     @Override
@@ -50,7 +63,8 @@ public class ProductListFragment extends BaseFragment {
         super.onClick(v);
         switch (v.getId()){
             case R.id.btn_add:
-                mProductsPresenter.newProduct();
+                Dialogs.newProductDialog(getContext(), getResources().getString(R.string.new_product),
+                        this).show();
                 break;
         }
     }
@@ -59,16 +73,19 @@ public class ProductListFragment extends BaseFragment {
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
-        adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
-                mProductsPresenter.getAllProducts());
-        try{
-            updateListView();
-        }catch (Exception e){
-            Log.w(getClass().getSimpleName(), e.getMessage());
-        }
-
+        reload();
         FloatingActionButton btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
         addToClickListener(btnAdd);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), ProductActivity.class);
+                Bundle args = new Bundle();
+                args.putLong(ProductActivity.PRODUCT_ID, adapter.getItem(position).getId());
+                intent.putExtras(args);
+                startActivity(intent);
+            }
+        });
     }
 
     private void updateListView(){
@@ -78,4 +95,11 @@ public class ProductListFragment extends BaseFragment {
             throw new RuntimeException("Either adapter or listview is not correctly initialized");
         }
     }
+
+    @Override
+    public void onNewProduct(Product product) {
+        mProductsPresenter.newProduct(product);
+        reload();
+    }
+
 }

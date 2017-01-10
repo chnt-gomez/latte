@@ -28,6 +28,7 @@
 
         <activity android:name=".presenter.activities.ProductsActivity"/>
         <activity android:name=".presenter.activities.ProductActivity"/>
+        <activity android:name=".presenter.activities.DepartmentsActivity"/>
     </application>
 
 </manifest>
