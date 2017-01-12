@@ -1,6 +1,7 @@
 package com.go.kchin.interfaces;
 
 import com.go.kchin.model.database.Department;
+import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
 
 /**
@@ -29,4 +30,11 @@ public interface RequiredDialogOps {
     }
 
 
+    interface RequiredNewMaterialOps {
+        /**
+         * Returns a Material from the Dialog
+         * @param material Material object reference
+         */
+        void onNewMaterial(Material material);
+    }
 }

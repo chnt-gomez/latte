@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.DatabaseEngine;
@@ -31,6 +30,11 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     }
 
     @Override
+    public void onOperationSuccess(String message, long rowId) {
+        mView.get().showOperationResult(message, rowId);
+    }
+
+    @Override
     public void onOperationSuccess(String message) {
         mView.get().showSnackBar(message);
     }
@@ -53,14 +57,6 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_holder, fragment, null).commit();
         mView = new WeakReference<MainMVP.RequiredViewOps>(fragment);
-    }
-
-    protected void lod(String message){
-        Log.d(TAG, message);
-    }
-
-    protected void low(String message){
-        Log.w(TAG, message);
     }
 
     @Override

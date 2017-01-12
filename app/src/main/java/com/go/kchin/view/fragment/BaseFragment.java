@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 
 import butterknife.ButterKnife;
@@ -26,12 +27,28 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     protected final static String LAYOUT_RES_ID = "layout_res_id";
 
     @Override
+    public void showOperationResult(String message, final long rowId) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction(
+                R.string.see, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOperationResultClick(rowId);
+                    }
+                }
+        ).show();
+    }
+
+    @Override
     public void showSnackBar(String msg) {
         Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showAlert(String msg) {
+
+    }
+
+    protected void onOperationResultClick(long rowId){
 
     }
 

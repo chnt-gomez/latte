@@ -37,7 +37,7 @@ public class ProductsActivity extends BaseActivity implements MainMVP.ProductsPr
             public void onLoad() {
                 params.addAll(mModel.getAllProducts());
             }
-        });
+        }, "Loading products...");
 
         loader.execute();
 

@@ -35,6 +35,9 @@
     <string name="product_saved">New product saved</string>
     <string name="combo_saved">New combo saved</string>
     <string name="new_department">New Department</string>
+    <string name="loading">Loading...</string>
+    <string name="department_saved">New Department saved</string>
+    <string name="see">See</string>
 
 
 </resources>

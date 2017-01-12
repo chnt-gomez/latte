@@ -1,6 +1,7 @@
 package com.go.kchin.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.go.kchin.R;
 import com.go.kchin.model.database.Material;
+import com.go.kchin.util.dialog.number.Number;
 
 import java.util.List;
 
@@ -36,9 +38,15 @@ public class MaterialListAdapter extends ArrayAdapter<Material> {
         TextView txtMaterialUnit = (TextView)view.findViewById(R.id.txt_material_unit);
         TextView txtMaterialAmount = (TextView)view.findViewById(R.id.txt_material_amount);
 
-        txtMaterialName.setText(getItem(position).materialName);
-        txtMaterialUnit.setText(getItem(position).materialMeasure);
-        //txtMaterialAmount.setText(Util.fromFloat(getItem(position).materialRemaining));
+        final Material material = getItem(position);
+
+        txtMaterialName.setText(material.materialName);
+        txtMaterialUnit.setText(material.materialMeasure);
+        txtMaterialAmount.setText(Number.floatToStringAsNumber(material.materialRemaining));
+
+        if (material.materialRemaining <= 0){
+            txtMaterialAmount.setTextColor(Color.parseColor("#ff7f7f"));
+        }
 
         return view;
     }

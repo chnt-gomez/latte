@@ -1,5 +1,7 @@
 package com.go.kchin.interfaces;
 
+import android.support.annotation.Nullable;
+
 import com.go.kchin.model.database.Combo;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
@@ -19,8 +21,10 @@ public interface MainMVP {
      *      Presenter -> View
      */
     interface RequiredViewOps{
+        void showOperationResult(String message, long rowId);
         void showSnackBar(String msg);
         void showAlert(String msg);
+
         //All other ops
     }
 
@@ -40,6 +44,8 @@ public interface MainMVP {
      *      Model -> Presenter
      */
     interface RequiredPresenterOps{
+
+        void onOperationSuccess(String message,long rowId);
         void onOperationSuccess(String message);
         void onOperationError(String message);
         String getStringResource(int stringResource);
@@ -86,6 +92,31 @@ public interface MainMVP {
         Department getDepartment(long departmentId);
         void addDepartment(Department department);
         void addProductToDepartment(long productId, long departmentId);
+
+    }
+
+    interface MaterialsPresenterOps {
+
+        /**
+         * Returns all saved Materials
+         */
+        List<Material> getAllMaterials();
+
+        /**
+         * Saves a new Material
+         * @param material Material object reference
+         */
+        void newMaterial(Material material);
+
+    }
+
+    interface MaterialPresenterOps {
+
+        /**
+         * Returns a saved Material
+         * @param materialId Material Id reference
+         */
+        Material getMaterial(long materialId);
 
     }
 

@@ -70,6 +70,12 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     }
 
     @Override
+    protected void onOperationResultClick(long rowId) {
+        super.onOperationResultClick(rowId);
+        seeDetail(rowId);
+    }
+
+    @Override
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
@@ -79,13 +85,17 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), ProductActivity.class);
-                Bundle args = new Bundle();
-                args.putLong(ProductActivity.PRODUCT_ID, adapter.getItem(position).getId());
-                intent.putExtras(args);
-                startActivity(intent);
+               seeDetail(adapter.getItem(position).getId());
             }
         });
+    }
+
+    private void seeDetail(long productId){
+        Intent intent = new Intent(getContext(), ProductActivity.class);
+        Bundle args = new Bundle();
+        args.putLong(ProductActivity.PRODUCT_ID, productId);
+        intent.putExtras(args);
+        startActivity(intent);
     }
 
     private void updateListView(){

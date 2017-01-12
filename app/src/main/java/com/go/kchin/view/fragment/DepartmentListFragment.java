@@ -66,6 +66,10 @@ public class DepartmentListFragment extends BaseFragment implements
         }
     }
 
+    @Override
+    protected void onOperationResultClick(long rowId) {
+        //seeDetail(rowId);
+    }
 
     @Override
     public void onNewDepartment(Department department) {

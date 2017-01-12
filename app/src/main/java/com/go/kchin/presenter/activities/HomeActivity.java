@@ -93,6 +93,9 @@ public class HomeActivity extends BaseActivity
             case R.id.nav_departments:
                 startActivity(new Intent(HomeActivity.this, DepartmentsActivity.class));
                 break;
+            case R.id.nav_materials:
+                startActivity(new Intent(HomeActivity.this, MaterialsActivity.class));
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:hint="Material name"
         android:layout_height="wrap_content"
-        android:id="@+id/edt_product_name"/>
+        android:id="@+id/edt_material_name"/>
 
     <include layout="@layout/include_space_4dp"/>
     <EditText

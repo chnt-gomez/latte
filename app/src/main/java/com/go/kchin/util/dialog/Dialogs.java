@@ -10,11 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.go.kchin.R;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Department;
+import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.util.dialog.number.Number;
 
@@ -115,4 +114,27 @@ public class Dialogs {
     }
 
 
+    public static Dialog newMaterialDialog(Context context, String message,
+                                           final RequiredDialogOps.RequiredNewMaterialOps callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        final View dialogView = inflater.inflate(R.layout.dialog_new_material , null);
+        builder.setView(dialogView).
+                setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Material material = new Material();
+                        final EditText edtMaterialName = (EditText)dialogView.findViewById(R.id.edt_material_name);
+                        final Spinner spnMaterialMeasure = (Spinner)dialogView.findViewById(R.id.spn_material_unit);
+                        final EditText edtMaterialCost = (EditText)dialogView.findViewById(R.id.edt_material_cost);
+                        material.materialName = edtMaterialName.getText().toString();
+                        material.materialMeasure = spnMaterialMeasure.getSelectedItem().toString();
+                        material.materialPurchaseCost = Number.stringToFloat(
+                                edtMaterialCost.getText().toString());
+                        callback.onNewMaterial(material);
+                    }
+                });
+        instance = builder.create();
+        return instance;
+    }
 }

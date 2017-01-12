@@ -37,8 +37,9 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void addMaterial(Material newMaterial) {
-        newMaterial.save();
-        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.material_saved));
+        final long operationId = newMaterial.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.material_saved),
+                operationId);
     }
 
     @Override
@@ -59,7 +60,6 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         material.materialPurchaseCost = newMaterialParams.materialPurchaseCost;
         material.materialRemaining = newMaterialParams.materialRemaining;
         material.materialStatus = newMaterialParams.materialStatus;
-        material.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
 
@@ -96,8 +96,9 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void addProduct(Product newProduct) {
-        newProduct.save();
-        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.product_saved));
+        final long operationId =newProduct.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.product_saved),
+                operationId);
     }
 
     @Override
@@ -137,6 +138,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void addDepartment(Department newDepartment) {
         newDepartment.save();
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.department_saved));
     }
 
     @Override
