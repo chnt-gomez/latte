@@ -21,7 +21,6 @@ public class StateMaintainer {
     private final WeakReference<FragmentManager> mFragmentManager;
     private StateMngFragment mStateMaintainerFrag;
 
-
     /**
      * Constructor
      * @param fragmentManager FragmentManager reference

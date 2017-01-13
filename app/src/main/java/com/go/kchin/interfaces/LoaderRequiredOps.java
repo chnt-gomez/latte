@@ -5,7 +5,7 @@ package com.go.kchin.interfaces;
  */
 
 public interface LoaderRequiredOps {
-
+    void onPreLoad();
     void onLoad();
-
+    void onDoneLoading();
 }

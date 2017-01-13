@@ -23,25 +23,18 @@ public class ProductsActivity extends BaseActivity implements MainMVP.ProductsPr
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products);
-        attachFragment(ProductListFragment.newInstance());
     }
 
     @Override
     public List<Product> getAllProducts() {
+        return mModel.getAllProducts();
+    }
 
-        final List<Product> params = new ArrayList<>();
-
-        Loader loader = new Loader(ProductsActivity.this, new LoaderRequiredOps() {
-            @Override
-            public void onLoad() {
-                params.addAll(mModel.getAllProducts());
-            }
-        }, "Loading products...");
-
-        loader.execute();
-
-        return params;
+    @Override
+    protected void init() {
+        super.init();
+        setContentView(R.layout.activity_products);
+        attachFragment(ProductListFragment.newInstance());
     }
 
     @Override
@@ -50,9 +43,8 @@ public class ProductsActivity extends BaseActivity implements MainMVP.ProductsPr
     }
 
     @Override
-    public void moveToProduct(long productId) {
-
+    public Product findProduct(long productId) {
+        return mModel.getProduct(productId);
     }
-
 
 }

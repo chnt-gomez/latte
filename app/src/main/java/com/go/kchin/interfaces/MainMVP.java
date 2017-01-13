@@ -1,5 +1,6 @@
 package com.go.kchin.interfaces;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.go.kchin.model.database.Combo;
@@ -33,9 +34,7 @@ public interface MainMVP {
      *      View -> Presenter
      */
     interface PresenterOps{
-        void onConfigurationChanged(RequiredViewOps view);
-        void onDestroy(boolean isChangingConfig);
-        void moveToActivity(Class activity);
+        void moveToActivity(Class activity, Bundle args);
         //Any other presenter ops
     }
 
@@ -67,9 +66,10 @@ public interface MainMVP {
         void newProduct(Product p);
 
         /**
-         * Move to product description
+         * Find and returns the Product Id reference
+         * @param productId Product Id reference
          */
-        void moveToProduct(long productId);
+        Product findProduct(long productId);
     }
 
     interface ProductPresenterOps{
@@ -283,8 +283,7 @@ public interface MainMVP {
         //TODO: Continue with sales operations
 
         void onDestroy();
-
-
+        void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter);
     }
 
 

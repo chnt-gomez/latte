@@ -5,20 +5,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.go.kchin.R;
+import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
-
+import com.go.kchin.util.dialog.Dialogs;
 import butterknife.ButterKnife;
 
 /**
  * Created by MAV1GA on 06/01/2017.
  */
 
-public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, View.OnClickListener{
+public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, View.OnClickListener,
+        LoaderRequiredOps{
 
     protected View view;
     protected MainMVP.PresenterOps mPresenter;
@@ -44,13 +46,11 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     }
 
     @Override
-    public void showAlert(String msg) {
+    public void showAlert(String msg) {}
 
-    }
 
-    protected void onOperationResultClick(long rowId){
 
-    }
+    protected void onOperationResultClick(long rowId){}
 
     @Override
     public void onAttach(Context context) {
@@ -81,11 +81,24 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     @Override
     public void onDetach() {
         mPresenter = null;
+        Log.d(getClass().getSimpleName(), "Fragment was detached");
         super.onDetach();
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v) {}
 
+    @Override
+    public void onPreLoad() {
+        Dialogs.buildLoadingDialog(getContext(), "Loading...").show();
     }
+
+    @Override
+    public void onLoad() {}
+
+    @Override
+    public void onDoneLoading() {
+        Dialogs.dismiss();
+    }
+
 }

@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
 import com.go.kchin.interfaces.MainMVP;
@@ -16,6 +15,7 @@ import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.presenter.activities.ProductActivity;
 import com.go.kchin.util.dialog.Dialogs;
+import com.go.kchin.util.dialog.loader.Loader;
 
 /**
  * Created by MAV1GA on 09/01/2017.
@@ -37,13 +37,8 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     }
 
     private void reload(){
-        adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
-                mProductsPresenter.getAllProducts());
-        try{
-            updateListView();
-        }catch (Exception e){
-            Log.w(getClass().getSimpleName(), e.getMessage());
-        }
+        final Loader loader = new Loader(this);
+        loader.execute();
     }
 
     @Override
@@ -52,11 +47,6 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         mProductsPresenter = (MainMVP.ProductsPresenterOps)context;
     }
 
-    @Override
-    public void onDetach() {
-        mProductsPresenter = null;
-        super.onDetach();
-    }
 
     @Override
     public void onClick(View v) {
@@ -90,6 +80,23 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         });
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
+                mProductsPresenter.getAllProducts());
+        try{
+            updateListView();
+        }catch (Exception e){
+            Log.w(getClass().getSimpleName(), e.getMessage());
+        }
+    }
+
+    @Override
+    public void onDoneLoading() {
+        super.onDoneLoading();
+    }
+
     private void seeDetail(long productId){
         Intent intent = new Intent(getContext(), ProductActivity.class);
         Bundle args = new Bundle();
@@ -107,9 +114,13 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     }
 
     @Override
-    public void onNewProduct(Product product) {
-        mProductsPresenter.newProduct(product);
-        reload();
+    public void showOperationResult(String message, long rowId) {
+        super.showOperationResult(message, rowId);
+        adapter.add(mProductsPresenter.findProduct(rowId));
     }
 
+    @Override
+    public void onNewProduct(Product product) {
+        mProductsPresenter.newProduct(product);
+    }
 }

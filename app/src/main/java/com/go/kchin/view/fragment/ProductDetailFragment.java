@@ -3,6 +3,7 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -14,6 +15,7 @@ import com.go.kchin.util.dialog.number.Number;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by MAV1GA on 09/01/2017.
@@ -59,6 +61,11 @@ public class ProductDetailFragment extends BaseFragment {
                     product.department.getId()));
             btnSellPrice.setText(Number.floatToStringAsNumber(product.productPurchaseCost));
         }
+    }
+
+    @OnClick(R.id.btn_save)
+    public void save(View view){
+        showSnackBar(getResources().getString(R.string.saved));
     }
 
     @Override

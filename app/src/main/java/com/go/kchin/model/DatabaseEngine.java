@@ -27,9 +27,13 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         if (instance == null){
             instance = new DatabaseEngine();
         }
-        mPresenter = presenter;
+        instance.setPresenter(presenter);
         return instance;
 
+    }
+
+    private void setPresenter(MainMVP.RequiredPresenterOps presenter){
+        mPresenter = presenter;
     }
 
     private DatabaseEngine (){}
@@ -192,5 +196,10 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public void onDestroy() {
         Log.d(getClass().getSimpleName(), "Called onDestroy() method");
         //TODO: On destroy operations
+    }
+
+    @Override
+    public void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter) {
+        instance.setPresenter(presenter);
     }
 }
