@@ -7,7 +7,9 @@ import com.go.kchin.model.database.Combo;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.Sale;
 import com.go.kchin.presenter.activities.BaseActivity;
+import com.go.kchin.view.fragment.BaseFragment;
 
 import java.util.List;
 
@@ -22,9 +24,12 @@ public interface MainMVP {
      *      Presenter -> View
      */
     interface RequiredViewOps{
-        void showOperationResult(String message, long rowId);
-        void showSnackBar(String msg);
-        void showAlert(String msg);
+
+        void onOperarionSuccesfull(String message, long rowId);
+        void onOperarionSuccesfull(String message);
+        void showMessage(String msg);
+        void showError(String msg);
+        void onOperationError(String msg, long rowId);
 
         //All other ops
     }
@@ -35,7 +40,8 @@ public interface MainMVP {
      */
     interface PresenterOps{
         void moveToActivity(Class activity, Bundle args);
-        //Any other presenter ops
+        void moveToFragment(BaseFragment fragment);
+        void setViewLayer(MainMVP.RequiredViewOps fragment);
     }
 
     /**
@@ -118,6 +124,39 @@ public interface MainMVP {
          */
         Material getMaterial(long materialId);
 
+    }
+
+    interface SalesPresenterOps {
+        /**
+         * Adds a single Sell operation to the current Sale queue
+         * @param sale Sale reference
+         */
+        void sell(Sale sale);
+
+        /**
+         * Adds an array of Sale operations to the current Sale queue
+         * @param sales ArrayList Sale reference
+         */
+        void sell(List<Sale> sales);
+
+
+        /**
+         * Returns the current sale
+         */
+        List<Sale> getCurrentSale();
+
+        /**
+         * Applies the current sale to the Database
+         */
+        void applyCurrentSale();
+
+        List<Product> getProducts();
+
+        /**
+         * Converts a product into a sale and adds it to the Current Sale adapter
+         * @param product Product object reference
+         */
+        void pickProduct(Product product);
     }
 
     /**
@@ -279,11 +318,12 @@ public interface MainMVP {
         /**
          * Sales operations -----------------------------------------------
          */
-
-        //TODO: Continue with sales operations
+        void applySale(List<Sale> currentSale);
 
         void onDestroy();
         void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter);
+
+
     }
 
 

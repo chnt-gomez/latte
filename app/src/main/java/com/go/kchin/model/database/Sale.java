@@ -10,8 +10,9 @@ public class Sale extends SugarRecord {
 
     public Sale(){}
 
-    Product product;
-    SaleTicket saleTicket;
+    public Product product;
+
+    public SaleTicket saleTicket;
 
     public float productAmount;
     public float saleTotal;

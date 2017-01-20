@@ -6,18 +6,26 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.ListViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.go.kchin.R;
+import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.Sale;
 import com.go.kchin.util.dialog.number.Number;
 
 import org.w3c.dom.Text;
+
+import java.util.List;
 
 /**
  * Created by MAV1GA on 09/01/2017.
@@ -132,6 +140,37 @@ public class Dialogs {
                         material.materialPurchaseCost = Number.stringToFloat(
                                 edtMaterialCost.getText().toString());
                         callback.onNewMaterial(material);
+                    }
+                });
+        instance = builder.create();
+        return instance;
+    }
+
+    public static Dialog newApplySaleDialog(final Context context, String message, final List<Sale> sales,
+                                          final RequiredDialogOps.RequiredNewSaleOps callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        final View dialogView = inflater.inflate(R.layout.dialog_confirm_sale , null);
+        final ListView lv = (ListView)dialogView.findViewById(R.id.lv_sale);
+        final TextView edtTotal = (TextView)dialogView.findViewById(R.id.txt_sale_total);
+        final SaleAdapter adapter = new SaleAdapter(context, R.layout.row_sell_item, sales);
+        lv.setAdapter(adapter);
+        float total = 0.0f;
+        for (Sale s : sales){
+            total += s.saleTotal;
+        }
+        edtTotal.setText(Number.floatToStringAsPrice(total));
+        builder.setView(dialogView).
+                setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        callback.onNewSale();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismiss();
                     }
                 });
         instance = builder.create();

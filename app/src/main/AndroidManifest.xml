@@ -31,6 +31,7 @@
         <activity android:name=".presenter.activities.DepartmentsActivity"/>
         <activity android:name=".presenter.activities.MaterialsActivity" />
         <activity android:name=".presenter.activities.MaterialActivity"/>
+        <activity android:name=".presenter.activities.SaleActivity"/>
     </application>
 
 </manifest>

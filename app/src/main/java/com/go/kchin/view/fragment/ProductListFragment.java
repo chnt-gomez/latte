@@ -21,7 +21,8 @@ import com.go.kchin.util.dialog.loader.Loader;
  * Created by MAV1GA on 09/01/2017.
  */
 
-public class ProductListFragment extends BaseFragment implements RequiredDialogOps.RequiredNewProductOps{
+public class ProductListFragment extends BaseFragment implements RequiredDialogOps.RequiredNewProductOps,
+        AdapterView.OnItemClickListener{
 
 
     private ListView listView;
@@ -44,9 +45,9 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mProductsPresenter = (MainMVP.ProductsPresenterOps)context;
-    }
+        mProductsPresenter = (MainMVP.ProductsPresenterOps) context;
 
+    }
 
     @Override
     public void onClick(View v) {
@@ -72,12 +73,7 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         reload();
         FloatingActionButton btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
         addToClickListener(btnAdd);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               seeDetail(adapter.getItem(position).getId());
-            }
-        });
+        listView.setOnItemClickListener(this);
     }
 
     @Override
@@ -85,16 +81,13 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         super.onLoad();
         adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
                 mProductsPresenter.getAllProducts());
-        try{
-            updateListView();
-        }catch (Exception e){
-            Log.w(getClass().getSimpleName(), e.getMessage());
-        }
+
     }
 
     @Override
     public void onDoneLoading() {
         super.onDoneLoading();
+        updateListView();
     }
 
     private void seeDetail(long productId){
@@ -109,18 +102,23 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         if (adapter != null && listView != null) {
             listView.setAdapter(adapter);
         }else{
-            throw new RuntimeException("Either adapter or listview is not correctly initialized");
+            throw new RuntimeException("Either the Adapter or ListView is not correctly initialized");
         }
-    }
-
-    @Override
-    public void showOperationResult(String message, long rowId) {
-        super.showOperationResult(message, rowId);
-        adapter.add(mProductsPresenter.findProduct(rowId));
     }
 
     @Override
     public void onNewProduct(Product product) {
         mProductsPresenter.newProduct(product);
+    }
+
+    @Override
+    public void onDetach() {
+        mProductsPresenter = null;
+        super.onDetach();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        seeDetail(adapter.getItem(position).getId());
     }
 }

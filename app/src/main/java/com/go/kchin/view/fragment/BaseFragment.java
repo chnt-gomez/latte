@@ -29,7 +29,7 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     protected final static String LAYOUT_RES_ID = "layout_res_id";
 
     @Override
-    public void showOperationResult(String message, final long rowId) {
+    public void onOperarionSuccesfull(String message, @Nullable final long rowId) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction(
                 R.string.see, new View.OnClickListener() {
                     @Override
@@ -41,14 +41,37 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     }
 
     @Override
-    public void showSnackBar(String msg) {
+    public void onOperarionSuccesfull(String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showMessage(String msg) {
         Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showAlert(String msg) {}
+    public void showError(String msg) {
+        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onOperationError(String msg, final long rowId) {
+        Snackbar.make(view, msg, Snackbar.LENGTH_LONG).setAction(
+                R.string.see, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOperationResultClick(rowId);
+                    }
+                }
+        ).show();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.setViewLayer(this);
+    }
 
     protected void onOperationResultClick(long rowId){}
 
@@ -57,6 +80,8 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
         super.onAttach(context);
         mPresenter = (MainMVP.PresenterOps)context;
     }
+
+    protected void onOperationErrorResultClick(long rowId){}
 
     @Nullable
     @Override

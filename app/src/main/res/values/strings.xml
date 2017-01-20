@@ -38,6 +38,9 @@
     <string name="loading">Loading...</string>
     <string name="department_saved">New Department saved</string>
     <string name="see">See</string>
+    <string name="nav_sales">Sales</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

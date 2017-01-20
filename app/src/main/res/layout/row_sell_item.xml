@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:padding="@dimen/activity_default_margin_small"
     android:layout_height="wrap_content">
 
+
     <TextView
-        android:text="Product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_sell_unit"
+        android:layout_marginEnd="@dimen/activity_default_margin_small"/>
+
+    <TextView
         android:id="@+id/txt_sell_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    
     <TextView
-        android:text="Unit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_sell_unit" />
-
-    <TextView
-        android:text="Price"
+        android:gravity="end"
+        android:layout_marginStart="@dimen/activity_default_margin_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_sell_sale_price"

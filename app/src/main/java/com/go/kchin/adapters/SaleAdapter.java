@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.go.kchin.R;
 import com.go.kchin.model.database.Sale;
+import com.go.kchin.util.dialog.number.Number;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
         super(context, resource, objects);
     }
 
-    public void setItems(List<Sale> items){
+    public void update(List<Sale> items){
         this.clear();
         this.addAll(items);
     }
@@ -41,7 +42,11 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
         TextView txtProductUnit = (TextView)view.findViewById(R.id.txt_sell_unit);
         TextView txtProductPrice = (TextView)view.findViewById(R.id.txt_sell_sale_price);
 
+        Sale sale = getItem(position);
 
+        txtProductName.setText(sale.product.productName);
+        txtProductUnit.setText("1");
+        txtProductPrice.setText(Number.floatToStringAsPrice(sale.saleTotal));
 
         return view;
 

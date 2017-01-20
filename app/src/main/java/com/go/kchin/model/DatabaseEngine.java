@@ -10,6 +10,10 @@ import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.model.database.ProductsInCombo;
 import com.go.kchin.model.database.Recipe;
+import com.go.kchin.model.database.Sale;
+import com.go.kchin.model.database.SaleTicket;
+
+import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -190,6 +194,25 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
 
 
+    }
+
+    @Override
+    public void applySale(List<Sale> currentSale) {
+        //TODO: Apply sale
+        SaleTicket ticket = new SaleTicket();
+        ticket.dateTime = DateTime.now().getMillis();
+        float total = 0.0f;
+        for (Sale s : currentSale){
+            total += s.saleTotal;
+        }
+        ticket.saleTotal = total;
+        ticket.vendor = "Toad";
+        ticket.save();
+        for (Sale s : currentSale){
+            s.saleTicket = ticket;
+            Log.d(getClass().getSimpleName(), "Sale saved to ticket: "+s.product+" -> "+ticket.getId() );
+        }
+        mPresenter.onOperationSuccess("Sale applied");
     }
 
     @Override

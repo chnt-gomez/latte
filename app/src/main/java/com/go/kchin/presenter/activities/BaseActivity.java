@@ -4,6 +4,7 @@ package com.go.kchin.presenter.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import com.go.kchin.R;
@@ -39,12 +40,12 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
 
     @Override
     public void onOperationSuccess(String message, long rowId) {
-        mView.showOperationResult(message, rowId);
+        mView.onOperarionSuccesfull(message, rowId);
     }
 
     @Override
     public void onOperationSuccess(String message) {
-        mView.showSnackBar(message);
+        mView.onOperarionSuccesfull(message);
     }
 
     @Override
@@ -65,17 +66,29 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
 
 
     protected void attachFragment(BaseFragment fragment){
-        Log.d(getClass().getSimpleName(), "Fragment attached");
-        mView = fragment;
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_holder, fragment, null).commit();
     }
 
+    protected void addFragment(BaseFragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder,
+                fragment, null).addToBackStack(null).commit();
+    }
 
     @Override
     public void moveToActivity(Class type, Bundle args) {
         Intent intent = new Intent(this, type);
         startActivity(intent);
+    }
+
+    @Override
+    public void moveToFragment(BaseFragment fragment) {
+        addFragment(fragment);
+    }
+
+    @Override
+    public void setViewLayer(MainMVP.RequiredViewOps fragment) {
+        mView = fragment;
     }
 
 }

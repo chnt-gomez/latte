@@ -3,6 +3,9 @@ package com.go.kchin.interfaces;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.Sale;
+
+import java.util.List;
 
 /**
  * Created by MAV1GA on 10/01/2017.
@@ -36,5 +39,12 @@ public interface RequiredDialogOps {
          * @param material Material object reference
          */
         void onNewMaterial(Material material);
+    }
+
+    interface RequiredNewSaleOps {
+        /**
+         * Applies the current sale
+         */
+        void onNewSale();
     }
 }

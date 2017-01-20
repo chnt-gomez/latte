@@ -65,7 +65,7 @@ public class ProductDetailFragment extends BaseFragment {
 
     @OnClick(R.id.btn_save)
     public void save(View view){
-        showSnackBar(getResources().getString(R.string.saved));
+
     }
 
     @Override

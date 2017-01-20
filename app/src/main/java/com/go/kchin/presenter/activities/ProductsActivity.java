@@ -1,5 +1,6 @@
 package com.go.kchin.presenter.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
