@@ -20,4 +20,18 @@
         </menu>
     </item>
 
+    <item android:title="Reports">
+        <menu>
+            <item
+                android:id="@+id/nav_quick_report"
+                android:title="Quick report"/>
+            <item
+                android:id="@+id/nav_reports"
+                android:title="Sales report"/>
+            <item
+                android:id="@+id/nav_report_generator"
+                android:title="Custom report"/>
+        </menu>
+    </item>
+
 </menu>

@@ -12,9 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.go.kchin.R;
-import com.go.kchin.model.database.Department;
 
 
 public class HomeActivity extends BaseActivity
@@ -98,6 +96,9 @@ public class HomeActivity extends BaseActivity
                 break;
             case R.id.nav_sales:
                 startActivity(new Intent(HomeActivity.this, SaleActivity.class));
+                break;
+            case R.id.nav_quick_report:
+                startActivity(new Intent(HomeActivity.this, QuickReportActivity.class));
                 break;
         }
 

@@ -32,6 +32,7 @@
         <activity android:name=".presenter.activities.MaterialsActivity" />
         <activity android:name=".presenter.activities.MaterialActivity"/>
         <activity android:name=".presenter.activities.SaleActivity"/>
+        <activity android:name=".presenter.activities.QuickReportActivity"/>
     </application>
 
 </manifest>

@@ -5,4 +5,6 @@
     <color name="colorAccent">#0cc4f7</color>
     <color name="colorError">#ff7f7f</color>
     <color name="colorWarning">#fff5a0</color>
+    <color name="colorDarkGrayBlue">#1c2430</color>
+    <color name="colorDarkGray">#313338</color>
 </resources>

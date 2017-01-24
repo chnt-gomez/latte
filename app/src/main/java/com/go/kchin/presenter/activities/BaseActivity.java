@@ -4,9 +4,8 @@ package com.go.kchin.presenter.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.DatabaseEngine;
@@ -40,17 +39,17 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
 
     @Override
     public void onOperationSuccess(String message, long rowId) {
-        mView.onOperarionSuccesfull(message, rowId);
+        mView.onOperationSuccesfull(message, rowId);
     }
 
     @Override
     public void onOperationSuccess(String message) {
-        mView.onOperarionSuccesfull(message);
+        mView.onOperationSuccesfull(message);
     }
 
     @Override
     public void onOperationError(String message) {
-
+        mView.showError(message);
     }
 
     @Override

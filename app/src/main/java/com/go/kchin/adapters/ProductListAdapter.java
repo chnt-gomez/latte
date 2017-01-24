@@ -42,7 +42,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
         String productName = getItem(position).productName;
         String productRemaining = Number.floatToStringAsNumber(getItem(position).productRemaining);
-        String productPrice = Number.floatToStringAsPrice(getItem(position).productSellPrice);
+        String productPrice = Number.floatToStringAsPrice(getItem(position).productSellPrice, true);
 
         txtProductName.setText(productName);
         txtProductRemaining.setText(productRemaining);

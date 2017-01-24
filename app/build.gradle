@@ -29,4 +29,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'joda-time:joda-time:2.9.6'
     compile 'com.github.satyan:sugar:1.4'
+    compile 'com.sothree.slidinguppanel:library:3.3.1'
 }

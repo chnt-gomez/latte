@@ -12,6 +12,7 @@ import com.go.kchin.R;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.util.dialog.number.Number;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -20,13 +21,23 @@ import java.util.List;
 
 public class SaleAdapter extends ArrayAdapter<Sale> {
 
+    private List<Sale> items;
+
     public SaleAdapter(Context context, int resource, List<Sale> objects) {
         super(context, resource, objects);
+        this.items = objects;
     }
 
-    public void update(List<Sale> items){
-        this.clear();
-        this.addAll(items);
+    public List<Sale> getAll(){
+        return this.items;
+    }
+
+    public float getTotal(){
+        float total = 0.0f;
+        for (Sale s : items){
+            total += s.saleTotal;
+        }
+        return total;
     }
 
     @NonNull
@@ -46,9 +57,10 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
 
         txtProductName.setText(sale.product.productName);
         txtProductUnit.setText("1");
-        txtProductPrice.setText(Number.floatToStringAsPrice(sale.saleTotal));
+        txtProductPrice.setText(Number.floatToStringAsPrice(sale.saleTotal, true));
 
         return view;
 
     }
+
 }

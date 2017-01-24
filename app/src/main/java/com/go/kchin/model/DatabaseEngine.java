@@ -198,19 +198,24 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void applySale(List<Sale> currentSale) {
-        //TODO: Apply sale
+        if (currentSale.size() == 0){
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.cannot_apply_void_sale));
+            return;
+        }
         SaleTicket ticket = new SaleTicket();
         ticket.dateTime = DateTime.now().getMillis();
         float total = 0.0f;
         for (Sale s : currentSale){
             total += s.saleTotal;
         }
+
         ticket.saleTotal = total;
         ticket.vendor = "Toad";
         ticket.save();
         for (Sale s : currentSale){
             s.saleTicket = ticket;
             Log.d(getClass().getSimpleName(), "Sale saved to ticket: "+s.product+" -> "+ticket.getId() );
+            s.save();
         }
         mPresenter.onOperationSuccess("Sale applied");
     }
@@ -224,5 +229,19 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter) {
         instance.setPresenter(presenter);
+    }
+
+    @Override
+    public List<SaleTicket> getTicketsFromDate(DateTime time){
+        String millsAtMorning = String.valueOf(time.withTimeAtStartOfDay().getMillis());
+        String millsAtMidnight = String.valueOf(time.plusDays(1).withTimeAtStartOfDay().getMillis());
+        String params [] = {millsAtMorning, millsAtMidnight};
+        return SaleTicket.find(SaleTicket.class, "date_time >= ? and date_time < ?", params);
+    }
+
+    @Override
+    public List<Sale> getSalesInTicket(SaleTicket ticket){
+        String ticketId = String.valueOf(ticket.getId());
+        return Sale.find(Sale.class, "sale_ticket = ?", ticketId );
     }
 }

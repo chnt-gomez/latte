@@ -159,7 +159,7 @@ public class Dialogs {
         for (Sale s : sales){
             total += s.saleTotal;
         }
-        edtTotal.setText(Number.floatToStringAsPrice(total));
+        edtTotal.setText(Number.floatToStringAsPrice(total, false));
         builder.setView(dialogView).
                 setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
                     @Override

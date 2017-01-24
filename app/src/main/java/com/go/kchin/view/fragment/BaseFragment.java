@@ -1,6 +1,7 @@
 package com.go.kchin.view.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.go.kchin.R;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
@@ -29,7 +32,7 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     protected final static String LAYOUT_RES_ID = "layout_res_id";
 
     @Override
-    public void onOperarionSuccesfull(String message, @Nullable final long rowId) {
+    public void onOperationSuccesfull(String message, @Nullable final long rowId) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction(
                 R.string.see, new View.OnClickListener() {
                     @Override
@@ -41,7 +44,7 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     }
 
     @Override
-    public void onOperarionSuccesfull(String message) {
+    public void onOperationSuccesfull(String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
 
@@ -51,8 +54,16 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     }
 
     @Override
+    public void showMessage(int resourceString) {
+        Snackbar.make(view, getResources().getString(R.string.added_to_kart), Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showError(String msg) {
-        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
+        Snackbar snack = Snackbar.make(view, msg, Snackbar.LENGTH_SHORT);
+        TextView tv = (TextView)snack.getView().findViewById((android.support.design.R.id.snackbar_text));
+        tv.setTextColor(Color.parseColor("#ff7f7f"));
+        snack.show();
     }
 
     @Override
