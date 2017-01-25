@@ -131,19 +131,44 @@ public interface MainMVP {
 
     }
 
-    interface QuickSalePresenterOps {
+    interface DetailedReportPresenterOps {
 
         /**
          * Returns all SaleTickets from the system date
          */
-        List<SaleTicket> getDaySaleTickets();
+        List<SaleTicket> getDaySaleTickets(DateTime date);
 
         /**
          * Returns all Sales related to a SaleTicket
-         * @param saleTicket SaleTicker object reference
+         * @param saleTicket SaleTicket object reference
          */
         List<Sale> getSalesInTicket(SaleTicket saleTicket);
 
+
+    }
+
+    interface QuickReportPresenterOps{
+
+        /**
+         * Returns the total of sales of a given date
+         */
+        float getDaySaleTotal(DateTime date);
+
+        /**
+         * Returns the total of purchases of a given date
+         */
+        float getDayPurchasesTotal(DateTime date);
+
+        /**
+         * Returns the total of earnings with the sales discount applies
+         */
+        float getNetEarnings(DateTime date);
+
+        /**
+         * Returns an array with the initial id of the recorded sale, and with the final
+         * id of the sale
+         */
+        long[] getRecordedTicketsIdRange(DateTime date);
     }
 
     interface SalesPresenterOps {

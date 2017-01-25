@@ -44,6 +44,8 @@
     <string name="added_to_kart">Added to kart</string>
     <string name="cannot_apply_void_sale">Cannot apply a void sale!</string>
     <string name="today_total">Today\'s sales</string>
+    <string name="day_sale_total">Day sale total:</string>
+    <string name="see_details">See details</string>
 
 
 </resources>
