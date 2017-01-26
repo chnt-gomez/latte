@@ -21,7 +21,7 @@ public class Number {
 
     public static String floatToStringAsNumber(float f){
         try{
-            return String.format(Locale.US, "$ %.3f", f);
+            return String.format(Locale.US, "%.3f", f);
         }catch (Exception e){
             Log.w("Number format!", f+ "cannot be converted to String format: $ #.##");
             return String.valueOf(f);

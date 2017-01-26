@@ -13,7 +13,7 @@ public class Material extends SugarRecord {
     public Material(){}
 
     public String materialName;
-    public String materialMeasure;
+    public int materialMeasure;
     public float materialRemaining;
     public float materialPurchaseCost;
     public int materialStatus;

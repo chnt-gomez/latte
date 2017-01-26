@@ -7,7 +7,9 @@
     </string>
 
     <string name="q_get_recipe_from_product" translatable="false">
-        Not Used
+       SELECT * FROM Material, Recipe, Product WHERE
+        Recipe.product = Product.Id And Recipe.material = Material.Id AND
+        Product.Id = ?
     </string>
 
     <string name="q_get_products_from_material" >
