@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.go.kchin.R;
 import com.go.kchin.model.database.Material;
+import com.go.kchin.util.dialog.MeasurePicker;
 import com.go.kchin.util.dialog.number.Number;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class MaterialListAdapter extends ArrayAdapter<Material> {
         final Material material = getItem(position);
 
         txtMaterialName.setText(material.materialName);
-        txtMaterialUnit.setText(material.materialMeasure);
+        txtMaterialUnit.setText(MeasurePicker.getString(getContext().getResources(),material.materialMeasure));
         txtMaterialAmount.setText(Number.floatToStringAsNumber(material.materialRemaining));
 
         if (material.materialRemaining <= 0){

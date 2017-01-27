@@ -95,6 +95,30 @@ public interface MainMVP {
          * Returns the Department name from a product Id
          */
         String getDepartmentNameFromProduct(long productId);
+
+        /**
+         * Saves an already existing product
+         * @param product Product object reference
+         */
+        long saveProduct(Product product);
+
+        /**
+         * Gets all Departments
+         */
+        List<Department> getAllDepartments();
+
+        /**
+         * Updates the current Product with a new Department
+         * @param aLong Product id reference
+         * @param item Department object reference
+         */
+        void pickDepartment(long aLong, Department item);
+
+        List<Material> getRecipe(long aLong);
+
+        List<Material> getAllMaterials();
+
+        void addMaterialToProductRecipe(long aLong, Material item);
     }
 
     interface DepartmentsPresenterOps {
@@ -185,7 +209,7 @@ public interface MainMVP {
 
     /**
      * Model operations offered to Presenter
-     *      Presenter -> Model
+     * Presenter -> Model
      */
     interface ModelOps{
 
@@ -195,6 +219,7 @@ public interface MainMVP {
 
         /**
          * Saves a material
+         *
          * @param newMaterial Material reference
          */
         void addMaterial(Material newMaterial);
@@ -206,31 +231,36 @@ public interface MainMVP {
 
         /**
          * Returns a material from the id
+         *
          * @param materialId Material id reference
          */
         Material getMaterialFromId(long materialId);
 
         /**
          * Updates the parameters of a Material
-         * @param materialId Material id reference
+         *
+         * @param materialId        Material id reference
          * @param newMaterialParams new Material parameters
          */
         void updateMaterial(long materialId, Material newMaterialParams);
 
         /**
          * Sets the status of the Material to active
+         *
          * @param materialId Material id reference
          */
         void activateMaterial(long materialId);
 
         /**
          * Sets the status of the material to inactive
+         *
          * @param materialId Material id reference
          */
         void deactivateMaterial(long materialId);
 
         /**
          * Returns all Materials used in a Recipe from a Product
+         *
          * @param productId Product Id reference
          */
         List<Material> getRecipeFromProduct(long productId);
@@ -247,6 +277,7 @@ public interface MainMVP {
 
         /**
          * Saves a new product
+         *
          * @param newProduct Product reference
          */
         void addProduct(Product newProduct);
@@ -258,22 +289,39 @@ public interface MainMVP {
 
         /**
          * Returns all Products from the given Combo
+         *
          * @param comboId Combo Id reference
          */
         List<Product> getProductsFromCombo(long comboId);
 
         /**
          * Returns all Products using given Material
+         *
          * @param materialId Material Id reference
          */
         List<Product> getProductsFromMaterial(long materialId);
 
         /**
          * Returns a Product from Id
+         *
          * @param productId Product Id reference
          */
         Product getProduct(long productId);
 
+        /**
+         * Updates a Product
+         */
+        long updateProduct(Product product);
+
+        void addMaterialToRecipe(long aLong, Material item);
+
+        /**
+         * Sets a Department reference of a Product
+         *
+         * @param aLong Product id reference
+         * @param item  Department reference
+         */
+        void setProductDepartment(long aLong, Department item);
 
         /**
          * Department operations ----------------------------------------
@@ -286,20 +334,23 @@ public interface MainMVP {
 
         /**
          * Returns a department from given Id
+         *
          * @param departmentId Department Id reference
          */
         Department getDepartment(long departmentId);
 
         /**
          * Saves a new Department
+         *
          * @param newDepartment Department reference
          */
         void addDepartment(Department newDepartment);
 
         /**
          * Updates a Department with the given Id
+         *
          * @param departmentId Department Id reference
-         * @param department Department new parameters
+         * @param department   Department new parameters
          */
         void updateDepartment(long departmentId, Department department);
 
@@ -314,26 +365,30 @@ public interface MainMVP {
 
         /**
          * Saves a new Combo
+         *
          * @param combo Combo reference parameters
          */
         void addCombo(Combo combo);
 
         /**
          * Returns a Combo from the Id
+         *
          * @param comboId Combo Id reference
          */
         Combo getCombo(long comboId);
 
         /**
          * Updates a Combo parameters from the Id
+         *
          * @param comboId Combo Id reference
-         * @param combo Combo parameters reference
+         * @param combo   Combo parameters reference
          */
         void updateCombo(long comboId, Combo combo);
 
         /**
          * Adds an existing product to a Combo
-         * @param comboId Combo Id reference
+         *
+         * @param comboId   Combo Id reference
          * @param productId Product Id reference
          */
         void addProductToCombo(long comboId, long productId, float materialAmount);
@@ -341,18 +396,19 @@ public interface MainMVP {
         List<SaleTicket> getTicketsFromDate(DateTime time);
 
         List<Sale> getSalesInTicket(SaleTicket ticket);
+
         /**
          * Sales operations -----------------------------------------------
          */
         void applySale(List<Sale> currentSale);
 
         void onDestroy();
+
         void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter);
 
 
 
     }
-
 
 
 }

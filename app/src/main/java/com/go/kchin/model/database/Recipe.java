@@ -8,8 +8,8 @@ import com.orm.SugarRecord;
 
 public class Recipe extends SugarRecord {
 
-    Material material;
-    Product product;
+    public Material material;
+    public Product product;
 
     public float MaterialAmount;
 

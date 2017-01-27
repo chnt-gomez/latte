@@ -34,6 +34,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         instance.setPresenter(presenter);
         return instance;
 
+
+
     }
 
     private void setPresenter(MainMVP.RequiredPresenterOps presenter){
@@ -107,6 +109,28 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         final long operationId =newProduct.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.product_saved),
                 operationId);
+    }
+
+    @Override
+    public long updateProduct(Product product) {
+        return product.save();
+    }
+
+    @Override
+    public void addMaterialToRecipe(long aLong, Material item) {
+        Recipe recipe = new Recipe();
+        recipe.MaterialAmount = 1.0f;
+        recipe.product = getProduct(aLong);
+        recipe.material = item;
+        recipe.save();
+        mPresenter.onOperationSuccess("Saved");
+    }
+
+    @Override
+    public void setProductDepartment(long aLong, Department item) {
+        Product product = Product.findById(Product.class, aLong);
+        product.department = item;
+        updateProduct(product);
     }
 
     @Override

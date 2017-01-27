@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ListViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -65,17 +66,20 @@ public class Dialogs {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         final View dialogView = inflater.inflate(R.layout.dialog_new_product, null);
+        final EditText productName = (EditText)dialogView.findViewById(R.id.edt_product_name);
+        final EditText productSellPrice = (EditText)dialogView.findViewById(R.id.edt_product_sale_price);
+        final Spinner productMeasure = (Spinner)dialogView.findViewById(R.id.spn_product_unit);
+        productMeasure.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item,
+                MeasurePicker.getEntries(context.getResources())));
         builder.setView(dialogView).
                 setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Product product = new Product();
-                        EditText productName = (EditText)dialogView.findViewById(R.id.edt_product_name);
-                        EditText productSellPrice = (EditText)dialogView.findViewById(R.id.edt_product_sale_price);
-                        Spinner productMeasure = (Spinner)dialogView.findViewById(R.id.spn_product_unit);
+
                         product.productName = productName.getText().toString();
                         product.productSellPrice = Number.stringToFloat(productSellPrice.getText().toString());
-                        product.productMeasureUnit = productMeasure.getSelectedItem().toString();
+                        product.productMeasureUnit = productMeasure.getSelectedItemPosition();
                         callback.onNewProduct(product);
                     }
                 });
@@ -136,7 +140,7 @@ public class Dialogs {
                         final Spinner spnMaterialMeasure = (Spinner)dialogView.findViewById(R.id.spn_material_unit);
                         final EditText edtMaterialCost = (EditText)dialogView.findViewById(R.id.edt_material_cost);
                         material.materialName = edtMaterialName.getText().toString();
-                        material.materialMeasure = spnMaterialMeasure.getSelectedItem().toString();
+                        material.materialMeasure = spnMaterialMeasure.getSelectedItemPosition();
                         material.materialPurchaseCost = Number.stringToFloat(
                                 edtMaterialCost.getText().toString());
                         callback.onNewMaterial(material);

@@ -117,7 +117,6 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     @Override
     public void onDetach() {
         mPresenter = null;
-        Log.d(getClass().getSimpleName(), "Fragment was detached");
         super.onDetach();
     }
 

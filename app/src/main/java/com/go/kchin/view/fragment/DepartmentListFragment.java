@@ -43,6 +43,12 @@ public class DepartmentListFragment extends BaseFragment implements
         mDepartmentsPresenter = (MainMVP.DepartmentsPresenterOps)context;
     }
 
+    @Override
+    public void onDetach() {
+        mDepartmentsPresenter = null;
+        super.onDetach();
+    }
+
     @OnClick(R.id.btn_add)
     public void addDepartment(){
         Dialogs.newDepartmentDialog(getContext(), getResources().getString(R.string.new_department),
