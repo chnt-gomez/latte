@@ -71,7 +71,6 @@ public class ProductDetailFragment extends BaseFragment{
     public void onLoad() {
         super.onLoad();
         product = mProductPresenter.getProduct(getArguments().getLong(PRODUCT_ID));
-
     }
 
     @Override
