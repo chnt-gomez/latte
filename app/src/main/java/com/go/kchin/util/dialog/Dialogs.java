@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ListViewCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -177,6 +178,33 @@ public class Dialogs {
                         dismiss();
                     }
                 });
+        instance = builder.create();
+        return instance;
+    }
+
+    public static Dialog newFloatDialog(final Context context, String title, String message,
+                                        final RequiredDialogOps.NewFloatOps callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if (title != null)
+            builder.setTitle(title);
+        if(message != null)
+            builder.setMessage(message);
+        final View dialogView = inflater.inflate(R.layout.dialog_float_amount , null);
+        builder.setView(dialogView);
+        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EditText edtAmount = (EditText)dialogView.findViewById(R.id.edt_amount);
+                float amount = 0.0f;
+                try{amount = Float.valueOf(edtAmount.getText().toString());}
+                catch(NumberFormatException e){
+                    Log.w(getClass().getSimpleName(), "Invalid format");
+                }
+
+                callback.onNewFloat(amount);
+            }
+        });
         instance = builder.create();
         return instance;
     }

@@ -112,8 +112,9 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public long updateProduct(Product product) {
-        return product.save();
+    public void updateProduct(Product product) {
+        product.save();
+        mPresenter.onOperationSuccess(R.string.saved);
     }
 
     @Override

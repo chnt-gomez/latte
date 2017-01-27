@@ -43,6 +43,9 @@
     <string name="measure_lt">Lt</string>
     <string name="measure_oz">Oz</string>
     <string name="measure_non_specified">Not specified</string>
+    <string name="coming_soon">Coming soon</string>
+    <string name="edit_price">Edit price</string>
+    <string name="buy_more">Buy more</string>
 
 
 </resources>

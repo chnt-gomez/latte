@@ -48,6 +48,11 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     }
 
     @Override
+    public void onOperationSuccess(int resource) {
+        mView.showMessage(resource);
+    }
+
+    @Override
     public void onOperationError(String message) {
         mView.showError(message);
     }

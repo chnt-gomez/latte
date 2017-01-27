@@ -55,7 +55,7 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     @Override
     public void showMessage(int resourceString) {
-        Snackbar.make(view, getResources().getString(R.string.added_to_kart), Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, getResources().getString(resourceString), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

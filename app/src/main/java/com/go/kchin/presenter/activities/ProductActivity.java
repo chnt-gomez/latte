@@ -44,8 +44,8 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     }
 
     @Override
-    public long saveProduct(Product product) {
-        return mModel.updateProduct(product);
+    public void saveProduct(Product product) {
+        mModel.updateProduct(product);
     }
 
     @Override
@@ -72,5 +72,4 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     public void addMaterialToProductRecipe(long aLong, Material item) {
         mModel.addMaterialToRecipe(aLong, item);
     }
-
 }

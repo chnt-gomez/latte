@@ -16,6 +16,8 @@ import com.go.kchin.util.dialog.number.Number;
 
 import java.util.List;
 
+import static android.R.color.tab_indicator_text;
+
 /**
  * Created by MAV1GA on 11/11/2016.
  */
@@ -53,6 +55,8 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
          */
         if (getItem(position).productRemaining <= 0){
             txtProductRemaining.setTextColor(Color.parseColor("#ff7f7f"));
+        }else{
+            txtProductRemaining.setTextColor(Color.parseColor("#808080"));
         }
 
         return view;

@@ -62,7 +62,6 @@
         android:id="@+id/btn_see_package" />
 
 
-
     <include layout="@layout/include_space_8dp"/>
 
     <include layout="@layout/include_space_4dp"/>

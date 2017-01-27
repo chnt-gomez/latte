@@ -47,4 +47,8 @@ public interface RequiredDialogOps {
          */
         void onNewSale();
     }
+
+    interface NewFloatOps {
+        void onNewFloat(float arg);
+    }
 }

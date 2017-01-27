@@ -46,7 +46,6 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     public void onAttach(Context context) {
         super.onAttach(context);
         mProductsPresenter = (MainMVP.ProductsPresenterOps) context;
-
     }
 
     @Override
@@ -61,6 +60,12 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        reload();
+    }
+
+    @Override
     protected void onOperationResultClick(long rowId) {
         super.onOperationResultClick(rowId);
         seeDetail(rowId);
@@ -70,7 +75,6 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
-        reload();
         FloatingActionButton btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
         addToClickListener(btnAdd);
         listView.setOnItemClickListener(this);

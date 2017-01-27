@@ -57,6 +57,7 @@ public interface MainMVP {
 
         void onOperationSuccess(String message,long rowId);
         void onOperationSuccess(String message);
+        void onOperationSuccess(int resource);
         void onOperationError(String message);
         String getStringResource(int stringResource);
         //Any other returning operation
@@ -100,7 +101,7 @@ public interface MainMVP {
          * Saves an already existing product
          * @param product Product object reference
          */
-        long saveProduct(Product product);
+        void saveProduct(Product product);
 
         /**
          * Gets all Departments
@@ -311,7 +312,7 @@ public interface MainMVP {
         /**
          * Updates a Product
          */
-        long updateProduct(Product product);
+        void updateProduct(Product product);
 
         void addMaterialToRecipe(long aLong, Material item);
 

@@ -1,6 +1,7 @@
 package com.go.kchin.view.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +15,9 @@ import android.widget.SpinnerAdapter;
 
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.util.dialog.MeasurePicker;
 import com.go.kchin.util.dialog.loader.Loader;
 import com.go.kchin.util.dialog.number.Number;
@@ -27,7 +30,7 @@ import butterknife.OnClick;
  * Created by MAV1GA on 09/01/2017.
  */
 
-public class ProductDetailFragment extends BaseFragment {
+public class ProductDetailFragment extends BaseFragment{
 
     private final static String PRODUCT_ID = "product_id";
     private Product product;
@@ -39,7 +42,7 @@ public class ProductDetailFragment extends BaseFragment {
     @BindView(R.id.btn_product_department)Button btnProductDepartment;
     @BindView(R.id.btn_sale_price)Button btnSellPrice;
     @BindView(R.id.btn_see_recipe)Button btnRecipe;
-    @BindView(R.id.btn_see_package)Button btnCombo;
+    @BindView(R.id.btn_see_package)Button btnPackages;
     @BindView(R.id.btn_save)FloatingActionButton btnSave;
 
     public static ProductDetailFragment newInstance(long productId){
@@ -81,7 +84,7 @@ public class ProductDetailFragment extends BaseFragment {
             if (product.department != null)
                 btnProductDepartment.setText(mProductPresenter.getDepartmentNameFromProduct(
                         product.department.getId()));
-            btnSellPrice.setText(Number.floatToStringAsPrice(product.productPurchaseCost, false));
+            btnSellPrice.setText(Number.floatToStringAsPrice(product.productSellPrice, false));
             spnProductMeasure.setSelection(product.productMeasureUnit);
         }
     }
@@ -99,6 +102,33 @@ public class ProductDetailFragment extends BaseFragment {
     @OnClick(R.id.btn_see_recipe)
     public void seeRecipe(View view){
         mPresenter.moveToFragment(RecipeListFragment.newInstance(product.getId()));
+    }
+
+    @OnClick(R.id.btn_see_package)
+    public void seePackages(View view){
+        showMessage(R.string.coming_soon);
+    }
+
+    @OnClick(R.id.btn_sale_price)
+    public void editPrice(View view){
+        Dialogs.newFloatDialog(getContext(), getString(R.string.edit_price), null, new RequiredDialogOps.NewFloatOps() {
+            @Override
+            public void onNewFloat(float arg) {
+                product.setProductSellPrice(arg);
+                btnSellPrice.setText(Number.floatToStringAsPrice(arg, false));
+            }
+        }).show();
+    }
+
+    @OnClick(R.id.btn_product_amount)
+    public void buyMore(View view){
+        Dialogs.newFloatDialog(getContext(), getString(R.string.buy_more), null, new RequiredDialogOps.NewFloatOps(){
+            @Override
+            public void onNewFloat(float arg) {
+                product.productRemaining += arg;
+                btnProductRemaining.setText(Number.floatToStringAsNumber(product.productRemaining));
+            }
+        }).show();
     }
 
     @Override
