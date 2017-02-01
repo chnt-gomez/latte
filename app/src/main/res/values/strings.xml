@@ -46,6 +46,7 @@
     <string name="coming_soon">Coming soon</string>
     <string name="edit_price">Edit price</string>
     <string name="buy_more">Buy more</string>
-
-
+    <string name="price_hint">$ 0.00</string>
+    <string name="keep_track">Keep track on sale</string>
+    <string name="active_tracking">Active tracking</string>
 </resources>

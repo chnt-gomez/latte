@@ -63,13 +63,14 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public void updateMaterial(long materialId, Material newMaterialParams) {
-        Material material = Material.findById(Material.class, materialId);
+    public void updateMaterial(Material newMaterialParams) {
+        Material material = Material.findById(Material.class, newMaterialParams.getId());
         material.materialMeasure = newMaterialParams.materialMeasure;
         material.materialName = newMaterialParams.materialName;
         material.materialPurchaseCost = newMaterialParams.materialPurchaseCost;
         material.materialRemaining = newMaterialParams.materialRemaining;
         material.materialStatus = newMaterialParams.materialStatus;
+        material.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
 

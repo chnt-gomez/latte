@@ -1,18 +1,13 @@
 package com.go.kchin.view.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
@@ -21,9 +16,7 @@ import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.util.dialog.MeasurePicker;
 import com.go.kchin.util.dialog.loader.Loader;
 import com.go.kchin.util.dialog.number.Number;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -55,6 +48,12 @@ public class ProductDetailFragment extends BaseFragment{
     }
 
     @Override
+    public void onPause() {
+        save(null);
+        super.onPause();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mProductPresenter = (MainMVP.ProductPresenterOps) context;
@@ -64,8 +63,6 @@ public class ProductDetailFragment extends BaseFragment{
         Loader loader = new Loader(this);
         loader.execute();
     }
-
-
 
     @Override
     public void onLoad() {
@@ -90,6 +87,7 @@ public class ProductDetailFragment extends BaseFragment{
 
     @OnClick(R.id.btn_save)
     public void save(View view){
+        product.productName = edtProductName.getText().toString();
         mProductPresenter.saveProduct(product);
     }
 

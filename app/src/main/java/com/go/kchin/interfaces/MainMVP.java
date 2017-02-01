@@ -154,6 +154,11 @@ public interface MainMVP {
          */
         Material getMaterial(long materialId);
 
+        /**
+         * Saves the actual state of the Material object
+         */
+        void save(Material material);
+
     }
 
     interface DetailedReportPresenterOps {
@@ -243,7 +248,7 @@ public interface MainMVP {
          * @param materialId        Material id reference
          * @param newMaterialParams new Material parameters
          */
-        void updateMaterial(long materialId, Material newMaterialParams);
+        void updateMaterial(Material newMaterialParams);
 
         /**
          * Sets the status of the Material to active

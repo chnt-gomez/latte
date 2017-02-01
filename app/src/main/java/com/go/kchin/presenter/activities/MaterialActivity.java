@@ -17,7 +17,6 @@ public class MaterialActivity extends BaseActivity implements MainMVP.MaterialPr
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -30,5 +29,10 @@ public class MaterialActivity extends BaseActivity implements MainMVP.MaterialPr
     @Override
     public Material getMaterial(long materialId) {
         return mModel.getMaterialFromId(materialId);
+    }
+
+    @Override
+    public void save(Material material) {
+        mModel.updateMaterial(material);
     }
 }
