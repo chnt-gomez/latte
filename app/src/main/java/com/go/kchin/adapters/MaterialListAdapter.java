@@ -47,8 +47,9 @@ public class MaterialListAdapter extends ArrayAdapter<Material> {
 
         if (material.materialRemaining <= 0){
             txtMaterialAmount.setTextColor(Color.parseColor("#ff7f7f"));
+        }else{
+            txtMaterialAmount.setTextColor(Color.parseColor("#808080"));
         }
-
         return view;
     }
 }

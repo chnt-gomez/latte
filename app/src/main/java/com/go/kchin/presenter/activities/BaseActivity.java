@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.DatabaseEngine;
@@ -36,6 +35,7 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         }
 
     }
+
 
     @Override
     public void onOperationSuccess(String message, long rowId) {

@@ -29,7 +29,10 @@
         <activity android:name=".presenter.activities.ProductsActivity"/>
         <activity android:name=".presenter.activities.ProductActivity"/>
         <activity android:name=".presenter.activities.DepartmentsActivity"/>
-        <activity android:name=".presenter.activities.MaterialsActivity" />
+        <activity android:name=".presenter.activities.MaterialsActivity" >
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
         <activity android:name=".presenter.activities.MaterialActivity"/>
         <activity android:name=".presenter.activities.SaleActivity"/>
         <activity android:name=".presenter.activities.QuickReportActivity"/>

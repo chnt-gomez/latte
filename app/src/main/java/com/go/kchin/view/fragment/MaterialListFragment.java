@@ -3,7 +3,10 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +18,8 @@ import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.presenter.activities.MaterialActivity;
 import com.go.kchin.util.dialog.Dialogs;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,7 +47,7 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
     @Override
     public void onNewMaterial(Material material) {
         mMaterialsPresenter.newMaterial(material);
-        reload();
+        reload(null);
     }
 
     @Override
@@ -57,7 +62,11 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
         super.onDetach();
     }
 
-
+    @Override
+    public void search(String query) {
+        super.search(query);
+        reload(query);
+    }
 
     @OnClick(R.id.btn_add)
     public void newMaterial(View view){
@@ -69,7 +78,6 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
-        reload();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -91,9 +99,22 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
         startActivity(intent);
     }
 
-    private void reload(){
-        adapter = new MaterialListAdapter(getContext(), R.layout.row_material_item,
-                mMaterialsPresenter.getAllMaterials());
+    @Override
+    public void onResume() {
+        super.onResume();
+        reload(null);
+    }
+
+    private void reload(@Nullable String query){
+
+        List<Material> items;
+
+        if (query == null) {
+           items = mMaterialsPresenter.getAllMaterials();
+        }else{
+            items = mMaterialsPresenter.getMaterials(query);
+        }
+        adapter = new MaterialListAdapter(getContext(), R.layout.row_material_item, items);
         if (listView != null) {
             listView.setAdapter(adapter);
         }else{

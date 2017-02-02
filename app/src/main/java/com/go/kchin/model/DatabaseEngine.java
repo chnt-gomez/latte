@@ -91,6 +91,12 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
+    public List<Material> getMaterials(String query) {
+        String formatedSearchQuery = formatForQuery(query);
+        return Material.find(Material.class, "material_name LIKE ?", "%"+formatedSearchQuery+"%");
+    }
+
+    @Override
     public List<Material> getRecipeFromProduct(long productId) {
         return Material.findWithQuery(
                 Material.class, mPresenter.getStringResource(R.string.q_get_recipe_from_product),
@@ -269,5 +275,9 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public List<Sale> getSalesInTicket(SaleTicket ticket){
         String ticketId = String.valueOf(ticket.getId());
         return Sale.find(Sale.class, "sale_ticket = ?", ticketId );
+    }
+
+    private static String formatForQuery(String rawQuery){
+        return rawQuery.replace(" ", "%");
     }
 }

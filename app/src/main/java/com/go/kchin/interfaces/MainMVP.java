@@ -34,6 +34,7 @@ public interface MainMVP {
         void showMessage(int resourceString);
         void showError(String msg);
         void onOperationError(String msg, long rowId);
+        void search(String query);
 
         //All other ops
     }
@@ -137,6 +138,8 @@ public interface MainMVP {
          * Returns all saved Materials
          */
         List<Material> getAllMaterials();
+
+        List<Material> getMaterials(String query);
 
         /**
          * Saves a new Material
@@ -245,7 +248,6 @@ public interface MainMVP {
         /**
          * Updates the parameters of a Material
          *
-         * @param materialId        Material id reference
          * @param newMaterialParams new Material parameters
          */
         void updateMaterial(Material newMaterialParams);
@@ -275,6 +277,12 @@ public interface MainMVP {
          * Updates the actual amount of Material used in a Recipe
          */
         void updateRecipe(long recipeId, float newAmount);
+
+
+        /**
+         * Searches and returns any material related to the query
+         */
+        List<Material> getMaterials(String query);
 
 
         /**

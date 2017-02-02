@@ -79,6 +79,11 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     }
 
     @Override
+    public void search(String query) {
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mPresenter.setViewLayer(this);
