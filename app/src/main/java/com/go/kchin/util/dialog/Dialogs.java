@@ -77,7 +77,6 @@ public class Dialogs {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Product product = new Product();
-
                         product.productName = productName.getText().toString();
                         product.productSellPrice = Number.stringToFloat(productSellPrice.getText().toString());
                         product.productMeasureUnit = productMeasure.getSelectedItemPosition();
@@ -132,14 +131,16 @@ public class Dialogs {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         final View dialogView = inflater.inflate(R.layout.dialog_new_material , null);
+        final EditText edtMaterialName = (EditText)dialogView.findViewById(R.id.edt_material_name);
+        final Spinner spnMaterialMeasure = (Spinner)dialogView.findViewById(R.id.spn_material_unit);
+        final EditText edtMaterialCost = (EditText)dialogView.findViewById(R.id.edt_material_cost);
+        spnMaterialMeasure.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item,
+                MeasurePicker.getEntries(context.getResources())));
         builder.setView(dialogView).
                 setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Material material = new Material();
-                        final EditText edtMaterialName = (EditText)dialogView.findViewById(R.id.edt_material_name);
-                        final Spinner spnMaterialMeasure = (Spinner)dialogView.findViewById(R.id.spn_material_unit);
-                        final EditText edtMaterialCost = (EditText)dialogView.findViewById(R.id.edt_material_cost);
                         material.materialName = edtMaterialName.getText().toString();
                         material.materialMeasure = spnMaterialMeasure.getSelectedItemPosition();
                         material.materialPurchaseCost = Number.stringToFloat(
