@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.Material;
@@ -82,6 +81,13 @@ public class MaterialsActivity extends BaseActivity implements MainMVP.Materials
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        return false;
+        if (newText.length() >= 3 && newText.length() % 3 == 0){
+            mView.search(newText);
+        }
+
+        if(newText.length() == 0){
+            mView.search(null);
+        }
+        return true;
     }
 }

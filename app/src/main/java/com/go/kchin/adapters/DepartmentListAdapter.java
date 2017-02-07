@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.go.kchin.R;
 import com.go.kchin.model.database.Department;
+import com.go.kchin.util.dialog.number.Number;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class DepartmentListAdapter extends ArrayAdapter<Department>{
         TextView txtDeparmentProductsAmount = (TextView)view.findViewById(R.id.txt_department_products_amount);
 
         txtDepartment.setText(getItem(position).departmentName);
+        txtDeparmentProductsAmount.setText(String.valueOf(getItem(position).productsInDepartment));
         return view;
     }
 }

@@ -22,64 +22,9 @@ public class Product extends SugarRecord {
 
     public Department department;
 
-    List<Material> getRecipe(){
-        return Material.find(Material.class, "product = ?", getId().toString());
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public float getProductRemaining() {
-        return productRemaining;
-    }
-
-    public void setProductRemaining(float productRemaining) {
-        this.productRemaining = productRemaining;
-    }
-
-    public int getProductMeasureType() {
-        return productMeasureType;
-    }
-
-    public void setProductMeasureType(int productMeasureType) {
-        this.productMeasureType = productMeasureType;
-    }
-
-    public int getProductMeasureUnit() {
-        return productMeasureUnit;
-    }
-
-    public void setProductMeasureUnit(int productMeasureUnit) {
-        this.productMeasureUnit = productMeasureUnit;
-    }
-
-    public float getProductSellPrice() {
-        return productSellPrice;
-    }
 
     public void setProductSellPrice(float productSellPrice) {
         this.productSellPrice = productSellPrice;
-    }
-
-    public int getProductStatus() {
-        return productStatus;
-    }
-
-    public void setProductStatus(int productStatus) {
-        this.productStatus = productStatus;
-    }
-
-    public float getProductPurchaseCost() {
-        return productPurchaseCost;
-    }
-
-    public void setProductPurchaseCost(float productPurchaseCost) {
-        this.productPurchaseCost = productPurchaseCost;
     }
 
     public String getDepartmentName() {

@@ -33,9 +33,6 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         }
         instance.setPresenter(presenter);
         return instance;
-
-
-
     }
 
     private void setPresenter(MainMVP.RequiredPresenterOps presenter){
@@ -151,6 +148,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         return Product.findWithQuery(Product.class, mPresenter.
                 getStringResource(R.string.q_get_products_in_combo),
                 String.valueOf(comboId));
+
     }
 
     @Override
@@ -167,12 +165,23 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public List<Department> getAllDepartments() {
-        return Department.listAll(Department.class);
+        List<Department> items = Department.listAll(Department.class);
+        for (Department d : items){
+            d.productsInDepartment = getProductsInDepartment(d.getId());
+        }
+        return items;
     }
 
     @Override
     public Department getDepartment(long departmentId) {
-        return Department.findById(Department.class, departmentId);
+        Department department = Department.findById(Department.class, departmentId);
+        department.productsInDepartment = getProductsInDepartment(departmentId);
+        return department;
+    }
+
+    private long getProductsInDepartment(long departmentId) {
+        return Product.count(Product.class, "department = ?",
+                new String[]{String.valueOf(departmentId)});
     }
 
     @Override

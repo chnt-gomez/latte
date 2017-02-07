@@ -63,7 +63,7 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
     }
 
     @Override
-    public void search(String query) {
+    public void search(@Nullable String query) {
         super.search(query);
         reload(query);
     }
