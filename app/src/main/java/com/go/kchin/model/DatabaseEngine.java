@@ -273,6 +273,12 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
+    public List<Product> getProducts(String query) {
+        String formatedSearchQuery = formatForQuery(query);
+        return Product.find(Product.class, "product_name LIKE ?", "%"+formatedSearchQuery+"%");
+    }
+
+    @Override
     public List<SaleTicket> getTicketsFromDate(DateTime time){
         String millsAtMorning = String.valueOf(time.withTimeAtStartOfDay().getMillis());
         String millsAtMidnight = String.valueOf(time.plusDays(1).withTimeAtStartOfDay().getMillis());

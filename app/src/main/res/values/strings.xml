@@ -51,4 +51,7 @@
     <string name="active_tracking">Active tracking</string>
     <string name="search_title">Search</string>
     <string name="search">Search...</string>
+    <string name="filter">Filter</string>
+    <string name="department">Department</string>
+    <string name="sales">Sales</string>
 </resources>

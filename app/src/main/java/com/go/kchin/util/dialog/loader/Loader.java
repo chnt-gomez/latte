@@ -7,7 +7,7 @@ import com.go.kchin.interfaces.LoaderRequiredOps;
  * Created by MAV1GA on 09/01/2017.
  */
 
-public class Loader extends AsyncTask<Void, Void, Void> {
+public class Loader extends AsyncTask<String, Void, Void> {
 
     private LoaderRequiredOps presenter;
 
@@ -22,8 +22,13 @@ public class Loader extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
-        presenter.onLoad();
+    protected Void doInBackground(String... params) {
+
+        if (params == null || params.length == 0 || params[0] == null){
+            presenter.onLoad();
+        }else{
+            presenter.onSearch(params[0]);
+        }
         return null;
     }
 

@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.Material;
@@ -54,6 +56,10 @@ public class MaterialsActivity extends BaseActivity implements MainMVP.Materials
         }else{
             Log.w(getClass().getSimpleName(), "SEARCH VIEW IS NULL");
         }
+
+        menu.findItem(R.id.filter).setVisible(false);
+        invalidateOptionsMenu();
+
         return true;
     }
 

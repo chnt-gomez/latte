@@ -3,6 +3,7 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
@@ -37,9 +38,9 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         return fragment;
     }
 
-    private void reload(){
+    private void reload(@Nullable String query){
         final Loader loader = new Loader(this);
-        loader.execute();
+        loader.execute(query);
     }
 
     @Override
@@ -62,7 +63,13 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     @Override
     public void onResume() {
         super.onResume();
-        reload();
+        reload(null);
+    }
+
+    @Override
+    public void search(String query) {
+        super.search(query);
+        reload(query);
     }
 
     @Override
@@ -92,6 +99,12 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     public void onDoneLoading() {
         super.onDoneLoading();
         updateListView();
+    }
+
+    @Override
+    public void onSearch(String query) {
+        adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
+                mProductsPresenter.getAllProducts(query));
     }
 
     private void seeDetail(long productId){

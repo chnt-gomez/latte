@@ -141,4 +141,9 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
         Dialogs.dismiss();
     }
 
+    @Override
+    public void onSearch(String query) {
+
+    }
+
 }

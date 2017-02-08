@@ -60,9 +60,9 @@ public class Dialogs {
     /**
      * Builds a dialog to create a new Product.
      * @param context The Activity reference
-     * @param message A message reference
+     * @param title A title reference
      */
-    public static Dialog newProductDialog(Context context, String message,
+    public static Dialog newProductDialog(Context context, String title,
                                           final RequiredDialogOps.RequiredNewProductOps callback){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -73,6 +73,7 @@ public class Dialogs {
         productMeasure.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item,
                 MeasurePicker.getEntries(context.getResources())));
         builder.setView(dialogView).
+                setTitle(title).
                 setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -90,14 +91,15 @@ public class Dialogs {
     /**
      * Builds a dialog to create a new Department
      * @param context Activity reference
-     * @param message Message reference
+     * @param title A title reference
      */
-    public static Dialog newDepartmentDialog(Context context, String message,
+    public static Dialog newDepartmentDialog(Context context, String title,
                                            final RequiredDialogOps.RequiredNewDepartmentOps callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         final View dialogView = inflater.inflate(R.layout.dialog_new_department , null);
         builder.setView(dialogView).
+                setTitle(title).
                 setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -126,7 +128,7 @@ public class Dialogs {
     }
 
 
-    public static Dialog newMaterialDialog(Context context, String message,
+    public static Dialog newMaterialDialog(Context context, String title,
                                            final RequiredDialogOps.RequiredNewMaterialOps callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -137,6 +139,7 @@ public class Dialogs {
         spnMaterialMeasure.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item,
                 MeasurePicker.getEntries(context.getResources())));
         builder.setView(dialogView).
+                setTitle(title).
                 setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -152,7 +155,7 @@ public class Dialogs {
         return instance;
     }
 
-    public static Dialog newApplySaleDialog(final Context context, String message, final List<Sale> sales,
+    public static Dialog newApplySaleDialog(final Context context, String title, final List<Sale> sales,
                                           final RequiredDialogOps.RequiredNewSaleOps callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -167,6 +170,7 @@ public class Dialogs {
         }
         edtTotal.setText(Number.floatToStringAsPrice(total, false));
         builder.setView(dialogView).
+                setTitle(title).
                 setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -202,7 +206,6 @@ public class Dialogs {
                 catch(NumberFormatException e){
                     Log.w(getClass().getSimpleName(), "Invalid format");
                 }
-
                 callback.onNewFloat(amount);
             }
         });

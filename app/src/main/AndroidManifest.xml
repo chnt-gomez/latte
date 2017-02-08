@@ -26,7 +26,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presenter.activities.ProductsActivity"/>
+        <activity android:name=".presenter.activities.ProductsActivity">
+            <meta-data android:name="searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
         <activity android:name=".presenter.activities.ProductActivity"/>
         <activity android:name=".presenter.activities.DepartmentsActivity"/>
         <activity android:name=".presenter.activities.MaterialsActivity" >

@@ -83,6 +83,8 @@ public interface MainMVP {
          * @param productId Product Id reference
          */
         Product findProduct(long productId);
+
+        List<Product> getAllProducts(String query);
     }
 
     interface ProductPresenterOps{
@@ -421,7 +423,7 @@ public interface MainMVP {
         void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter);
 
 
-
+        List<Product> getProducts(String query);
     }
 
 

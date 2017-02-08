@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,9 +16,7 @@ import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.presenter.activities.MaterialActivity;
 import com.go.kchin.util.dialog.Dialogs;
-
-import java.util.List;
-
+import com.go.kchin.util.dialog.loader.Loader;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -107,18 +103,35 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
 
     private void reload(@Nullable String query){
 
-        List<Material> items;
+        final Loader loader = new Loader(this);
+        loader.execute(query);
 
-        if (query == null) {
-           items = mMaterialsPresenter.getAllMaterials();
-        }else{
-            items = mMaterialsPresenter.getMaterials(query);
-        }
-        adapter = new MaterialListAdapter(getContext(), R.layout.row_material_item, items);
-        if (listView != null) {
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        adapter = new MaterialListAdapter(getContext(), R.layout.row_material_item,
+            mMaterialsPresenter.getAllMaterials());
+    }
+
+    @Override
+    public void onSearch(String query) {
+        adapter = new MaterialListAdapter(getContext(), R.layout.row_material_item,
+                mMaterialsPresenter.getMaterials(query));
+    }
+
+    @Override
+    public void onDoneLoading() {
+        super.onDoneLoading();
+        updateListView();
+    }
+
+    private void updateListView() {
+        if(adapter != null && listView != null){
             listView.setAdapter(adapter);
         }else{
-            throw new RuntimeException("Either adapter or listview is not correctly initialized");
+            throw new RuntimeException("Either the Adapter or ListView is not correctly initialized");
         }
     }
 }
