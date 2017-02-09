@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Kchin</string>
+    <string name="app_name" translatable="false">Kchin</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="title_activity_main2" translatable="false">Main2Activity</string>
 
     <string-array name="drawer_items">
         <item>Inventory</item>
@@ -10,7 +10,7 @@
         <item>Reports</item>
         <item>Settings</item>
     </string-array>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
     <string name="title_activity_home">Start</string>
 
     <string name="action_settings">Settings</string>
@@ -18,14 +18,14 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="ok">Ok</string>
     <string name="new_product">New Product</string>
-    <string name="material_saved">New material saved!</string>
+    <string name="material_saved">New Material saved</string>
     <string name="saved">Saved</string>
     <string name="active">Active now</string>
     <string name="deactivated">Deactivated</string>
-    <string name="product_saved">New product saved</string>
+    <string name="product_saved">New Product saved</string>
     <string name="combo_saved">New combo saved</string>
     <string name="new_department">New Department</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="department_saved">New Department saved</string>
     <string name="see">See</string>
     <string name="nav_sales">Sales</string>
@@ -38,7 +38,7 @@
     <string name="see_details">See details</string>
     <string name="measure_piece">Piece</string>
     <string name="measure_kg">Kg</string>
-    <string name="measure_g">Gram</string>
+    <string name="measure_g">Grams</string>
     <string name="measure_lb">Lb</string>
     <string name="measure_lt">Lt</string>
     <string name="measure_oz">Oz</string>
@@ -46,12 +46,17 @@
     <string name="coming_soon">Coming soon</string>
     <string name="edit_price">Edit price</string>
     <string name="buy_more">Buy more</string>
-    <string name="price_hint">$ 0.00</string>
+    <string name="price_hint" translatable="false">$ 0.00</string>
     <string name="keep_track">Keep track on sale</string>
     <string name="active_tracking">Active tracking</string>
     <string name="search_title">Search</string>
-    <string name="search">Search...</string>
+    <string name="search">Search…</string>
     <string name="filter">Filter</string>
     <string name="department">Department</string>
     <string name="sales">Sales</string>
+    <string name="inventory">Inventory</string>
+    <string name="description_inventory_card">Keep track of Products and Materials. Create new products from you current Materials or purchase more. Sort them by Department to figure out your best items.</string>
+    <string name="description_sales_card">Start recording your sales to see how your bisness perform</string>
+    <string name="reports">Reports</string>
+    <string name="description_reports_card">Find out the most important data of your business operation model. The more you check on your updated reports, the better desitions you will take.</string>
 </resources>
