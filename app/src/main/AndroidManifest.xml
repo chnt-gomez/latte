@@ -3,17 +3,25 @@
     package="com.go.kchin">
 
     <application
+        android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:configChanges="orientation|screenSize"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.orm.SugarApp">
-
-        <meta-data android:name="DATABASE" android:value="kchin.db" />
-        <meta-data android:name="VERSION" android:value="2" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.go.kchin.model.database"/>
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="DATABASE"
+            android:value="kchin.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="2" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.go.kchin.model.database" />
 
         <activity
             android:name=".presenter.activities.HomeActivity"
@@ -24,20 +32,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".presenter.activities.ProductsActivity">
-            <meta-data android:name="searchable"
-                android:resource="@xml/searchable"/>
+        <activity android:name=".presenter.activities.ProductsActivity"
+            android:configChanges="orientation|screenSize">
+            <meta-data
+                android:name="searchable"
+                android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".presenter.activities.ProductActivity"/>
-        <activity android:name=".presenter.activities.DepartmentsActivity"/>
-        <activity android:name=".presenter.activities.MaterialsActivity" >
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+        <activity android:name=".presenter.activities.ProductActivity" />
+        <activity android:name=".presenter.activities.DepartmentsActivity" />
+        <activity android:name=".presenter.activities.MaterialsActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".presenter.activities.MaterialActivity"/>
-        <activity android:name=".presenter.activities.SaleActivity"/>
-        <activity android:name=".presenter.activities.QuickReportActivity"/>
+        <activity android:name=".presenter.activities.MaterialActivity" />
+        <activity android:name=".presenter.activities.SaleActivity" />
+        <activity android:name=".presenter.activities.QuickReportActivity" />
+        <activity
+            android:name=".presenter.activities.SettingsActivity"
+            android:label="@string/title_activity_settings"/>
     </application>
 
 </manifest>

@@ -6,11 +6,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Department:"
+        android:text="@string/department"
         android:layout_weight="5"/>
 
     <Button
-        android:text="Department"
         android:id="@+id/btn_product_department"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

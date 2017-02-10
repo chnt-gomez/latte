@@ -135,7 +135,6 @@ public class Dialogs {
         final View dialogView = inflater.inflate(R.layout.dialog_new_material , null);
         final EditText edtMaterialName = (EditText)dialogView.findViewById(R.id.edt_material_name);
         final Spinner spnMaterialMeasure = (Spinner)dialogView.findViewById(R.id.spn_material_unit);
-        final EditText edtMaterialCost = (EditText)dialogView.findViewById(R.id.edt_material_cost);
         spnMaterialMeasure.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item,
                 MeasurePicker.getEntries(context.getResources())));
         builder.setView(dialogView).
@@ -146,8 +145,6 @@ public class Dialogs {
                         Material material = new Material();
                         material.materialName = edtMaterialName.getText().toString();
                         material.materialMeasure = spnMaterialMeasure.getSelectedItemPosition();
-                        material.materialPurchaseCost = Number.stringToFloat(
-                                edtMaterialCost.getText().toString());
                         callback.onNewMaterial(material);
                     }
                 });
@@ -201,6 +198,33 @@ public class Dialogs {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 EditText edtAmount = (EditText)dialogView.findViewById(R.id.edt_amount);
+                float amount = 0.0f;
+                try{amount = Float.valueOf(edtAmount.getText().toString());}
+                catch(NumberFormatException e){
+                    Log.w(getClass().getSimpleName(), "Invalid format");
+                }
+                callback.onNewFloat(amount);
+            }
+        });
+        instance = builder.create();
+        return instance;
+    }
+
+    public static Dialog newFloatMoneyDialog(final Context context, String title, String message,
+                                        final RequiredDialogOps.NewFloatOps callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if (title != null)
+            builder.setTitle(title);
+        if(message != null)
+            builder.setMessage(message);
+        final View dialogView = inflater.inflate(R.layout.dialog_float_amount , null);
+        builder.setView(dialogView);
+        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EditText edtAmount = (EditText)dialogView.findViewById(R.id.edt_amount);
+                edtAmount.setHint("$0.00");
                 float amount = 0.0f;
                 try{amount = Float.valueOf(edtAmount.getText().toString());}
                 catch(NumberFormatException e){

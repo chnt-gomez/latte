@@ -7,13 +7,6 @@
     android:padding="@dimen/activity_default_margin_small"
     tools:showIn="@layout/fragment_product_detail">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Product name:"
-        android:labelFor="@+id/edt_product_name"
-        android:id="@+id/textView" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +38,7 @@
         android:drawablePadding="4dp"
         android:textColor="@android:color/white"
         android:drawableEnd="@drawable/ic_description_white_24dp"
-        android:text="See recipe"
+        android:text="@string/recipe"
         android:id="@+id/btn_see_recipe" />
     <include layout="@layout/include_space_4dp"/>
 
@@ -58,13 +51,9 @@
         android:drawablePadding="4dp"
         android:textColor="@android:color/white"
         android:drawableEnd="@drawable/ic_shopping_basket_white_24dp"
-        android:text="Packages"
+        android:text="@string/combos"
         android:id="@+id/btn_see_package" />
 
-
-    <include layout="@layout/include_space_8dp"/>
-
-    <include layout="@layout/include_space_4dp"/>
 
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -23,6 +24,9 @@ public class PickDepartmentFragment extends BaseFragment implements AdapterView.
     private static final String PRODUCT_ID = "product_id";
     @BindView(R.id.lv_inventory)
     ListView listView;
+
+    @BindView(R.id.btn_add)
+    FloatingActionButton btnAdd;
 
     private DepartmentListAdapter adapter;
     private MainMVP.ProductPresenterOps mProductPresenter;
@@ -53,6 +57,7 @@ public class PickDepartmentFragment extends BaseFragment implements AdapterView.
     @Override
     protected void init() {
         super.init();
+        btnAdd.setVisibility(View.GONE);
         reload();
         listView.setOnItemClickListener(this);
     }

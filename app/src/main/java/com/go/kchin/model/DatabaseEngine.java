@@ -128,7 +128,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         recipe.product = getProduct(aLong);
         recipe.material = item;
         recipe.save();
-        mPresenter.onOperationSuccess("Saved");
+        mPresenter.onOperationSuccess(R.string.saved);
     }
 
     @Override
@@ -255,7 +255,6 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         ticket.save();
         for (Sale s : currentSale){
             s.saleTicket = ticket;
-            Log.d(getClass().getSimpleName(), "Sale saved to ticket: "+s.product+" -> "+ticket.getId() );
             s.save();
         }
         mPresenter.onOperationSuccess("Sale applied");

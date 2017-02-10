@@ -6,23 +6,16 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:hint="Material name"
+        android:hint="@string/material_name"
         android:layout_height="wrap_content"
         android:id="@+id/edt_material_name"/>
 
-    <include layout="@layout/include_space_4dp"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="Cost"
-        android:id="@+id/edt_material_cost"/>
     <include layout="@layout/include_space_4dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:labelFor="@+id/spn_material_unit"
-        android:text="Measure unit:"/>
+        android:text="@string/measure"/>
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

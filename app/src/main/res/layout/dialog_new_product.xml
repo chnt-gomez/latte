@@ -12,27 +12,20 @@
 
     <include layout="@layout/include_space_4dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/activity_default_margin_small"
-            android:id="@+id/spn_product_unit"
-            android:layout_weight="1"/>
+            android:id="@+id/spn_product_unit"/>
+
+    <include layout="@layout/include_space_4dp"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:inputType="numberDecimal"
-            android:hint="@string/price_hint"
-            android:textAlignment="viewEnd"
+            android:hint="@string/sale_price"
             android:id="@+id/edt_product_sale_price"/>
-    </LinearLayout>
 
     <include layout="@layout/include_space_8dp"/>
 

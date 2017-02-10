@@ -1,7 +1,10 @@
 package com.go.kchin.presenter.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
+
 import com.go.kchin.R;
 import com.go.kchin.view.fragment.HomeFragment;
 
@@ -27,30 +30,12 @@ public class HomeActivity extends BaseActivity {
         return true;
     }
 
-/*
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        switch (item.getItemId()){
-            case R.id.nav_products:
-                startActivity(new Intent(HomeActivity.this, ProductsActivity.class));
-                break;
-            case R.id.nav_departments:
-                startActivity(new Intent(HomeActivity.this, DepartmentsActivity.class));
-                break;
-            case R.id.nav_materials:
-                startActivity(new Intent(HomeActivity.this, MaterialsActivity.class));
-                break;
-
-            case R.id.nav_quick_report:
-                startActivity(new Intent(HomeActivity.this, QuickReportActivity.class));
-                break;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings){
+            startActivity(new Intent(this, SettingsActivity.class));
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return super.onOptionsItemSelected(item);
     }
-    */
 }
