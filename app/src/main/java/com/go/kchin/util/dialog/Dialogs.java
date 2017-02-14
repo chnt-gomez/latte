@@ -4,9 +4,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ListViewCompat;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -231,6 +234,45 @@ public class Dialogs {
                     Log.w(getClass().getSimpleName(), "Invalid format");
                 }
                 callback.onNewFloat(amount);
+            }
+        });
+        instance = builder.create();
+        return instance;
+    }
+
+    public static Dialog newPasswordDialog(final Context context, String title, String message,
+                                           final RequiredDialogOps.RequiredPasswordOps callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if(title != null)
+            builder.setTitle(title);
+        if(message != null){
+            builder.setMessage(message);
+        }
+        final View dialogView = inflater.inflate(R.layout.dialog_password, null);
+        builder.setView(dialogView);
+        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EditText edtPassword = (EditText)dialogView.findViewById(R.id.edt_password);
+                String password = edtPassword.getText().toString();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                    if (prefs != null && prefs.contains("password")) {
+                        if (password.equals(prefs.getString("password", null))) {
+                            callback.isAuthorized(true);
+                        } else {
+                            callback.isAuthorized(false);
+                        }
+
+                    }
+                    //TODO: what happens it there is not a password set?!
+                }
+
+        });
+        builder.setNegativeButton(context.getString(R.string.forgot_password), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                callback.recoverPassword();
             }
         });
         instance = builder.create();

@@ -51,4 +51,10 @@ public interface RequiredDialogOps {
     interface NewFloatOps {
         void onNewFloat(float arg);
     }
+
+    interface RequiredPasswordOps {
+        void isAuthorized(boolean isAuthorized);
+
+        void recoverPassword();
+    }
 }

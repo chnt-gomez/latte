@@ -145,4 +145,22 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="my_business_name">My business</string>
+    <string name="admin_name">Administrator name</string>
+    <string name="busines_name">Business name</string>
+    <string name="inventory_settings">Inventory settings</string>
+    <string name="allow_depleted_sales">Allow depleted stock sales</string>
+    <string name="allow_depleted_sales_summary">If marked, the app will allow you to sell products even when you dont have any more in the inventory.</string>
+    <string name="allow_depleted_production">Allow depleted production</string>
+    <string name="allow_depleted_production_summary">If marked, the app will allow you to produce more products even when one or more of it\'s materials required are depleted.</string>
+    <string name="active_tracking_summary">If marked, will keep track of materials and products for every single sale you make. We recommend you to keep marked this option.</string>
+    <string name="administration_settings">Administrative setting</string>
+    <string name="protect_with_password">Protect with password</string>
+    <string name="protect_with_password_summary">If marked, the app won\'t be able to modify the settings, inventory or cancel sales without the administrator password. Disable this is only you operate the app.</string>
+    <string name="password">Administrator password</string>
+    <string name="content_protected">Content protected</string>
+    <string name="content_protected_summary">This content is protected by the administrator. Please use the administrator password</string>
+    <string name="unauthorized" >Not authorized</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="recover_password">Coming soon</string>
 </resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/my_business_name">
+        <EditTextPreference android:title="@string/busines_name"
+            android:summary="This is your business name"
+            android:key="business_name"/>
+        <EditTextPreference android:title="@string/admin_name"
+            android:key="username"
+            android:summary="This is you. Mr CEO"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/inventory_settings">
+        <CheckBoxPreference android:title="@string/allow_depleted_sales"
+            android:summary="@string/allow_depleted_sales_summary"
+            android:key="allow_depleted_sales"/>
+        <CheckBoxPreference android:title="@string/allow_depleted_production"
+            android:summary="@string/allow_depleted_production_summary"
+            android:key="allow_depleted_production"/>
+        <CheckBoxPreference android:title="@string/active_tracking"
+            android:summary="@string/active_tracking_summary"
+            android:key="active_tracking"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/administration_settings">
+        <CheckBoxPreference android:title="@string/protect_with_password"
+            android:summary="@string/protect_with_password_summary"
+            android:key="protect_with_password"/>
+        <EditTextPreference android:title="@string/password"
+            android:inputType="textPassword"
+            android:key="password"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
