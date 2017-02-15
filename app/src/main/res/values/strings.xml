@@ -163,4 +163,5 @@
     <string name="unauthorized" >Not authorized</string>
     <string name="forgot_password">Forgot password</string>
     <string name="recover_password">Coming soon</string>
+    <string name="too_few_in_stock_to_sell">Not enough in stock to sell</string>
 </resources>

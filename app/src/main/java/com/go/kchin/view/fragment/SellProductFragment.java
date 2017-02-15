@@ -2,6 +2,7 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -62,10 +63,18 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
     }
 
     @Override
+    public void onOperationSuccesfull(String message, @Nullable long rowId) {
+        super.onOperationSuccesfull(message, rowId);
+        updateListView();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mSalesPresenter = (MainMVP.SalesPresenterOps)context;
     }
+
+
 
     @Override
     protected void init() {
@@ -107,6 +116,7 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
             saleAdapter.clear();
             txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
         }
+        updateListView();
     }
 
     @Override

@@ -139,6 +139,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
+    public void buyProduct(long productId, long purchaseAmount) {
+
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         return Product.listAll(Product.class);
     }
@@ -189,6 +194,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         newDepartment.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.department_saved));
     }
+
+
 
     @Override
     public void updateDepartment(long departmentId, Department department) {
@@ -248,6 +255,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         float total = 0.0f;
         for (Sale s : currentSale){
             total += s.saleTotal;
+            if(!mPresenter.getSharedPreferences().getBoolean("allow_depleted_sales", true))
+                if (s.product.productRemaining < s.productAmount){
+                    mPresenter.onOperationError(mPresenter.getStringResource(R.string.too_few_in_stock_to_sell));
+                    return;
+                }
         }
 
         ticket.saleTotal = total;
@@ -256,6 +268,10 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         for (Sale s : currentSale){
             s.saleTicket = ticket;
             s.save();
+            if (mPresenter.getSharedPreferences().getBoolean("active_tracking", true)) {
+                s.product.productRemaining -= s.productAmount;
+                s.product.save();
+            }
         }
         mPresenter.onOperationSuccess("Sale applied");
     }

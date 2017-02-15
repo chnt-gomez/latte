@@ -2,7 +2,10 @@ package com.go.kchin.presenter.activities;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import com.go.kchin.R;
@@ -15,7 +18,7 @@ import com.go.kchin.view.fragment.BaseFragment;
  */
 
 public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredPresenterOps,
-        MainMVP.PresenterOps{
+        MainMVP.PresenterOps, MainMVP.PreferenceAccess{
 
     protected MainMVP.ModelOps mModel;
     protected MainMVP.RequiredViewOps mView;
@@ -62,6 +65,11 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         return getResources().getString(stringResource);
     }
 
+    @Override
+    public SharedPreferences getSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
     protected void init() {
         if (mModel == null) {
             mModel = DatabaseEngine.getInstance(this);
@@ -95,4 +103,45 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         mView = fragment;
     }
 
+
+    @Override
+    public boolean ifPasswordProtected() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("protect_with_password", false);
+    }
+
+    @Override
+    public boolean isAllowingDepletedStokSales() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("allow_depleted_sales", false);
+    }
+
+    @Override
+    public boolean isAllowingDepletedProduction() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("allow_depleted_production", false);
+    }
+
+    @Override
+    public boolean isActiveTracking() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("active_tracking", false);
+    }
+
+    @Override
+    public String getBusinessName() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("business_name", null);
+    }
+
+    @Override
+    public String getAdministratorName() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("username", null);
+    }
+
+    @Override
+    public boolean authorize(String password) {
+        return false;
+    }
 }

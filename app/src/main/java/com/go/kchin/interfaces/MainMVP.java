@@ -1,5 +1,6 @@
 package com.go.kchin.interfaces;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -61,6 +62,8 @@ public interface MainMVP {
         void onOperationSuccess(int resource);
         void onOperationError(String message);
         String getStringResource(int stringResource);
+
+        SharedPreferences getSharedPreferences();
         //Any other returning operation
     }
 
@@ -340,6 +343,11 @@ public interface MainMVP {
         void setProductDepartment(long aLong, Department item);
 
         /**
+         * Buys and generates a buy record for products
+         */
+        void buyProduct(long productId, long purchaseAmount);
+
+        /**
          * Department operations ----------------------------------------
          */
 
@@ -427,4 +435,19 @@ public interface MainMVP {
     }
 
 
+    interface PreferenceAccess {
+
+        boolean ifPasswordProtected();
+        boolean isAllowingDepletedStokSales();
+        boolean isAllowingDepletedProduction();
+        boolean isActiveTracking();
+
+        String getBusinessName();
+        String getAdministratorName();
+
+        boolean authorize(String password);
+
+
+
+    }
 }

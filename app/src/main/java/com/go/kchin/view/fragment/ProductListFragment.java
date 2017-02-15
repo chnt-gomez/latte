@@ -124,6 +124,18 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     }
 
     @Override
+    public void onOperationSuccesfull(String message, @Nullable long rowId) {
+        super.onOperationSuccesfull(message, rowId);
+        updateListView();
+    }
+
+    @Override
+    public void onOperationSuccesfull(String message) {
+        super.onOperationSuccesfull(message);
+        updateListView();
+    }
+
+    @Override
     public void onNewProduct(Product product) {
         mProductsPresenter.newProduct(product);
     }
