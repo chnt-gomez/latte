@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.go.kchin.model.PurchaseOrder;
 import com.go.kchin.model.database.Combo;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
@@ -62,7 +63,6 @@ public interface MainMVP {
         void onOperationSuccess(int resource);
         void onOperationError(String message);
         String getStringResource(int stringResource);
-
         SharedPreferences getSharedPreferences();
         //Any other returning operation
     }
@@ -215,6 +215,8 @@ public interface MainMVP {
 
         List<Product> getProducts();
 
+        List<Product> getAllProducts(String query);
+
         /**
          * Converts a product into a sale and adds it to the Current Sale adapter
          * @param product Product object reference
@@ -345,7 +347,7 @@ public interface MainMVP {
         /**
          * Buys and generates a buy record for products
          */
-        void buyProduct(long productId, long purchaseAmount);
+        void buyProduct(long productId, float purchaseAmount);
 
         /**
          * Department operations ----------------------------------------
@@ -428,10 +430,17 @@ public interface MainMVP {
 
         void onDestroy();
 
-        void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter);
+        void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter, MainMVP.PreferenceAccess
+                                    sPreferencesPresenter);
 
 
         List<Product> getProducts(String query);
+
+        List<PurchaseOrder> getDepletedMaterials();
+        List<PurchaseOrder> getDepletedProducts();
+        List<PurchaseOrder> getAllDepletedArticles();
+
+        void buyMaterial(long purchaseId, float arg);
     }
 
 
@@ -441,13 +450,18 @@ public interface MainMVP {
         boolean isAllowingDepletedStokSales();
         boolean isAllowingDepletedProduction();
         boolean isActiveTracking();
-
         String getBusinessName();
         String getAdministratorName();
-
         boolean authorize(String password);
 
+    }
 
+    interface PurchasesPresenterOps {
 
+        List<PurchaseOrder> getDepletedProducts();
+        List<PurchaseOrder> getDepletedMaterial();
+        List<PurchaseOrder> getAllDepletedArticles();
+
+        void purchase(PurchaseOrder item, float arg);
     }
 }

@@ -57,9 +57,9 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
         return fragment;
     }
 
-    private void reload(){
+    private void reload(@Nullable String query){
         final Loader loader = new Loader(this);
-        loader.execute();
+        loader.execute(query);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
-        reload();
+        reload(null);
         listView.setOnItemClickListener(this);
         slideLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -90,7 +90,6 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                Log.d(getClass().getSimpleName(), "Panel changed from "+previousState.name() +" To "+newState.name());
                 if (newState == SlidingUpPanelLayout.PanelState.EXPANDED){
                     txtTotal.setCompoundDrawablesWithIntrinsicBounds
                             (R.drawable.ic_attach_money_white_24dp, 0, R.drawable.ic_keyboard_arrow_down_white_24dp, 0);
@@ -106,6 +105,8 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
         txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
     }
 
+
+
     @Override
     public void onOperationSuccesfull(String message) {
         super.onOperationSuccesfull(message);
@@ -116,13 +117,19 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
             saleAdapter.clear();
             txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
         }
-        updateListView();
+        reload(null);
     }
 
     @Override
     public void onLoad() {
         productListAdapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
                 mSalesPresenter.getProducts());
+    }
+
+    @Override
+    public void onSearch(String query) {
+        productListAdapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
+                mSalesPresenter.getAllProducts(query));
     }
 
     @Override
@@ -157,5 +164,11 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
         saleAdapter.add(sale);
         txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
         showMessage(R.string.added_to_kart);
+    }
+
+    @Override
+    public void search(String query) {
+        super.search(query);
+        reload(query);
     }
 }

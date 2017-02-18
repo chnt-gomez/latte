@@ -7,6 +7,7 @@ import com.go.kchin.R;
 import com.go.kchin.presenter.activities.DepartmentsActivity;
 import com.go.kchin.presenter.activities.MaterialsActivity;
 import com.go.kchin.presenter.activities.ProductsActivity;
+import com.go.kchin.presenter.activities.PurchaseOrdersActivity;
 
 import butterknife.OnClick;
 
@@ -37,6 +38,11 @@ public class InventoryFragment extends BaseFragment {
     @OnClick(R.id.btn_see_departments)
     public void onSeeDepartmentsClick(View v){
         mPresenter.moveToActivity(DepartmentsActivity.class, null);
+    }
+
+    @OnClick(R.id.btn_purchase_orders)
+    public void onSeePurchasesClick(View v){
+        mPresenter.moveToActivity(PurchaseOrdersActivity.class, null);
     }
 
 }

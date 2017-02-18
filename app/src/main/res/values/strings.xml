@@ -164,4 +164,6 @@
     <string name="forgot_password">Forgot password</string>
     <string name="recover_password">Coming soon</string>
     <string name="too_few_in_stock_to_sell">Not enough in stock to sell</string>
+    <string name="operation_complete">Operation sucessful</string>
+    <string name="new_purchase_order">New purchase order</string>
 </resources>

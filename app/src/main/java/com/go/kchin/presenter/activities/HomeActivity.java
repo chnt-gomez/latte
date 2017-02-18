@@ -36,7 +36,7 @@ public class HomeActivity extends BaseActivity implements RequiredDialogOps.Requ
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_settings){
-            if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("protect_with_password", false)) {
+            if (ifPasswordProtected()) {
                 Dialogs.newPasswordDialog(this, getStringResource(R.string.content_protected),
                         getStringResource(R.string.content_protected_summary), this)
                         .show();

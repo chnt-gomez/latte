@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     protected void onResume() {
         super.onResume();
         if (mModel != null){
-           mModel.onConfigurationChanged(this);
+           mModel.onConfigurationChanged(this, this);
         }
 
     }
@@ -52,7 +52,7 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
 
     @Override
     public void onOperationSuccess(int resource) {
-        mView.showMessage(resource);
+        mView.onOperationSuccesfull(getStringResource(resource));
     }
 
     @Override

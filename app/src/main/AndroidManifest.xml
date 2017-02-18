@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.go.kchin">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -9,6 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="DATABASE"
             android:value="kchin.db" />
@@ -45,11 +48,16 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".presenter.activities.MaterialActivity" />
-        <activity android:name=".presenter.activities.SaleActivity" />
+        <activity android:name=".presenter.activities.SaleActivity">
+            <meta-data
+                android:name="searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
         <activity android:name=".presenter.activities.QuickReportActivity" />
         <activity
             android:name=".presenter.activities.SettingsActivity"
             android:label="@string/title_activity_settings"/>
+        <activity android:name=".presenter.activities.PurchaseOrdersActivity"/>
     </application>
 
 </manifest>

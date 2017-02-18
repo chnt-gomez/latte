@@ -15,6 +15,7 @@ import com.go.kchin.model.database.SaleTicket;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     private static DatabaseEngine instance;
 
     private static MainMVP.RequiredPresenterOps mPresenter;
+    private static MainMVP.PreferenceAccess mPreferencePresenter;
 
     public static DatabaseEngine getInstance(MainMVP.RequiredPresenterOps presenter){
         if (instance == null){
@@ -38,6 +40,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     private void setPresenter(MainMVP.RequiredPresenterOps presenter){
         mPresenter = presenter;
     }
+
+    private void setPreferencesPresenter(MainMVP.PreferenceAccess presenter) { mPreferencePresenter = presenter;}
 
     private DatabaseEngine (){}
 
@@ -139,8 +143,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public void buyProduct(long productId, long purchaseAmount) {
-
+    public void buyProduct(long productId, float purchaseAmount) {
+        Product product = Product.findById(Product.class, productId);
+        product.productRemaining += purchaseAmount;
+        product.save();
+        mPresenter.onOperationSuccess(R.string.operation_complete);
     }
 
     @Override
@@ -255,7 +262,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         float total = 0.0f;
         for (Sale s : currentSale){
             total += s.saleTotal;
-            if(!mPresenter.getSharedPreferences().getBoolean("allow_depleted_sales", true))
+            if(!mPreferencePresenter.isAllowingDepletedStokSales())
                 if (s.product.productRemaining < s.productAmount){
                     mPresenter.onOperationError(mPresenter.getStringResource(R.string.too_few_in_stock_to_sell));
                     return;
@@ -268,7 +275,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         for (Sale s : currentSale){
             s.saleTicket = ticket;
             s.save();
-            if (mPresenter.getSharedPreferences().getBoolean("active_tracking", true)) {
+            if (mPreferencePresenter.isActiveTracking()) {
                 s.product.productRemaining -= s.productAmount;
                 s.product.save();
             }
@@ -283,14 +290,55 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter) {
+    public void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter, MainMVP.PreferenceAccess
+                                       preferencePresenter) {
         instance.setPresenter(presenter);
+        instance.setPreferencesPresenter(preferencePresenter);
+
     }
 
     @Override
     public List<Product> getProducts(String query) {
         String formatedSearchQuery = formatForQuery(query);
         return Product.find(Product.class, "product_name LIKE ?", "%"+formatedSearchQuery+"%");
+    }
+
+    @Override
+    public List<PurchaseOrder> getDepletedMaterials() {
+        List<Material> materialItems = getAllMaterials();
+        List<PurchaseOrder> purchaseList = new ArrayList<>();
+        for (Material m : materialItems){
+            if (m.materialRemaining <= 10 )
+                purchaseList.add(PurchaseOrder.fromMaterial(m));
+        }
+        return purchaseList;
+    }
+
+    @Override
+    public List<PurchaseOrder> getDepletedProducts() {
+        List<Product> productlItems = getAllProducts();
+        List<PurchaseOrder> purchaseList = new ArrayList<>();
+        for (Product p : productlItems){
+            if (p.productRemaining <= 10 )
+                purchaseList.add(PurchaseOrder.fromProduct(p));
+        }
+        return purchaseList;
+    }
+
+    @Override
+    public List<PurchaseOrder> getAllDepletedArticles() {
+        List<PurchaseOrder> purchaseList = new ArrayList<>();
+        purchaseList.addAll(getDepletedMaterials());
+        purchaseList.addAll(getDepletedProducts());
+        return purchaseList;
+    }
+
+    @Override
+    public void buyMaterial(long purchaseId, float arg) {
+        Material material = Material.findById(Material.class, purchaseId);
+        material.materialRemaining += arg;
+        material.save();
+        mPresenter.onOperationSuccess(R.string.operation_complete);
     }
 
     @Override
