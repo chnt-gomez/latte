@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import com.go.kchin.R;
@@ -26,6 +28,7 @@ import butterknife.OnClick;
 public class ProductDetailFragment extends BaseFragment{
 
     private final static String PRODUCT_ID = "product_id";
+
     private Product product;
     private MainMVP.ProductPresenterOps mProductPresenter;
 
@@ -36,7 +39,8 @@ public class ProductDetailFragment extends BaseFragment{
     @BindView(R.id.btn_sale_price)Button btnSellPrice;
     @BindView(R.id.btn_see_recipe)Button btnRecipe;
     @BindView(R.id.btn_see_package)Button btnPackages;
-    @BindView(R.id.btn_save)FloatingActionButton btnSave;
+    @BindView(R.id.chk_product_type)CheckBox chkProductType;
+    @BindView(R.id.chk_is_made_on_sale)CheckBox chkMadeOnSale;
 
     public static ProductDetailFragment newInstance(long productId){
         ProductDetailFragment fragment = new ProductDetailFragment();
@@ -49,7 +53,7 @@ public class ProductDetailFragment extends BaseFragment{
 
     @Override
     public void onPause() {
-        save(null);
+        save();
         super.onPause();
     }
 
@@ -82,11 +86,22 @@ public class ProductDetailFragment extends BaseFragment{
                         product.department.getId()));
             btnSellPrice.setText(Number.floatToStringAsPrice(product.productSellPrice, false));
             spnProductMeasure.setSelection(product.productMeasureUnit);
+            if (product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL){
+                chkProductType.setChecked(true);
+            }else{
+                chkProductType.setChecked(false);
+            }
+
+            if (product.madeOnSell == Product.PRODUCT_MADE_AND_SELL){
+                chkMadeOnSale.setChecked(true);
+            }else{
+                chkMadeOnSale.setChecked(false);
+            }
         }
+
     }
 
-    @OnClick(R.id.btn_save)
-    public void save(View view){
+    public void save(){
         product.productName = edtProductName.getText().toString();
         mProductPresenter.saveProduct(product);
     }
@@ -131,6 +146,36 @@ public class ProductDetailFragment extends BaseFragment{
     @Override
     protected void init() {
         super.init();
+        chkProductType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    product.productType = Product.PRODUCT_TYPE_BUY_AND_SELL;
+                    product.madeOnSell = Product.PRODUCT_MADE_AND_STORE;
+                    chkMadeOnSale.setChecked(false);
+                    chkMadeOnSale.setEnabled(false);
+                }else{
+                    product.productType = Product.PRODUCT_TYPE_MADE;
+                    chkMadeOnSale.setEnabled(true);
+                }
+
+            }
+        });
+
+        chkMadeOnSale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    product.madeOnSell = Product.PRODUCT_MADE_AND_SELL;
+                    btnProductRemaining.setText(getString(R.string.without_inv));
+                    btnProductRemaining.setEnabled(false);
+                }else{
+                    btnProductRemaining.setText(Number.floatToStringAsNumber(product.productRemaining));
+                    btnProductRemaining.setEnabled(true);
+                    product.madeOnSell = Product.PRODUCT_MADE_AND_STORE;
+                }
+            }
+        });
         reload();
         spnProductMeasure.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
                 MeasurePicker.getEntries(getResources())));

@@ -1,4 +1,4 @@
-package com.go.kchin.model.database;
+package com.go.kchin.model;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,11 +6,12 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.go.kchin.R;
-import com.go.kchin.model.PurchaseOrder;
+import com.go.kchin.adapters.QuickSaleAdapter;
+import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.model.database.Sale;
+import com.go.kchin.model.database.SaleTicket;
 import com.go.kchin.util.dialog.number.Number;
-import com.google.common.collect.Table;
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -27,6 +28,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -53,7 +55,7 @@ public class PDFBuilder {
         document.add(subTitle(fmt.print(date)));
 
         //Blank space
-        document.add(Chunk.NEWLINE);
+        document.add(new Paragraph("\n"));
 
         //Create the table
         PdfPTable table = new PdfPTable(2);
@@ -68,7 +70,11 @@ public class PDFBuilder {
         }
 
         document.add(table);
-        //TODO: Continue here!
+
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("End of document."));
+
+        document.close();
         return file;
 
     }
@@ -100,10 +106,12 @@ public class PDFBuilder {
         PdfPCell cell1 = new PdfPCell();
         cell1.setPhrase(new Phrase(cell1Arg, font));
         cell1.setBorderColorBottom(BaseColor.LIGHT_GRAY);
+        cell1.setBorder(Rectangle.BOTTOM);
         PdfPCell cell2 = new PdfPCell();
         cell2.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell2.setPhrase(new Phrase(cell2Arg, font));
         cell2.setBorderColorBottom(BaseColor.LIGHT_GRAY);
+        cell2.setBorder(Rectangle.BOTTOM);
         return new PdfPCell[]{cell1, cell2};
     }
 
@@ -116,4 +124,82 @@ public class PDFBuilder {
         return file;
     }
 
+    public static File buildSalesReport(Context context, String fileName, QuickSaleAdapter adapter,
+                                        Resources res, MainMVP.QuickReportPresenterOps presenter,
+                                        DateTime dateTime)
+            throws IOException, DocumentException {
+        Document document = new Document();
+        File file = new File (getReportsStorageDir("kchin_reports").getPath(),fileName);
+        PdfWriter.getInstance(document, new FileOutputStream(file));
+        document.open();
+
+        //Title
+        document.add(title(res.getString(R.string.sale_report)));
+
+        //Date
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd, MMMM, yyyy");
+        document.add(subTitle(fmt.print(dateTime)));
+
+        //Blank space
+        document.add(new Paragraph("\n"));
+
+        //Create the table
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        table.setWidths(new int[]{10,3});
+
+        //Populate the Table
+
+        //Total sales
+        PdfPCell[] totalSalesCells = twoColumnRow(res.getString(R.string.total_sales),
+                adapter.getTotalSales());
+        table.addCell(totalSalesCells[0]); table.addCell(totalSalesCells[1]);
+
+        //Purchases and expenses
+        PdfPCell[] purchasesCells = twoColumnRow(res.getString(R.string.purchases),
+                adapter.getTotalPurchases());
+        table.addCell(purchasesCells[0]); table.addCell(purchasesCells[1]);
+
+        //Total earnings
+        PdfPCell[] totalCells = twoColumnRow(res.getString(R.string.total_earnings),
+                adapter.getTotalEarnings());
+        table.addCell(totalCells[0]); table.addCell(totalCells[1]);
+
+
+        document.add(new Paragraph("\n"));
+
+        document.add(table);
+
+        document.add(new Paragraph("\n"));
+
+        //Details on sales
+        document.add(subTitle(res.getString(R.string.recorded_ticket_id)+": "+
+                adapter.getFormattedTickets()));
+
+        PdfPTable detailSalesTable = new PdfPTable(2);
+        detailSalesTable.setWidthPercentage(100);
+
+        //Build details on sales
+        final List<SaleTicket> saleTickets = presenter.getDaySaleTickets(dateTime);
+        for (SaleTicket saleTicket : saleTickets){
+            PdfPCell headerCell[] = twoColumnRow(res.getString(R.string.ticket_id) +
+                    " "+String.valueOf(saleTicket.getId()),
+                    Number.floatToStringAsPrice(saleTicket.saleTotal, true));
+            detailSalesTable.addCell(headerCell[0]);
+            detailSalesTable.addCell(headerCell[1]);
+            List<Sale> sales = presenter.getSalesInTicket(saleTicket);
+            for (Sale sale : sales){
+                PdfPCell itemCells[] = twoColumnRow(sale.product.productName,
+                        Number.floatToStringAsPrice(sale.saleTotal, true));
+                detailSalesTable.addCell(itemCells[0]);
+                detailSalesTable.addCell(itemCells[1]);
+            }
+        }
+        document.add(detailSalesTable);
+
+        document.add(new Paragraph("End of document."));
+
+        document.close();
+        return file;
+    }
 }

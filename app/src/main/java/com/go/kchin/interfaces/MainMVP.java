@@ -207,6 +207,10 @@ public interface MainMVP {
          * id of the sale
          */
         long[] getRecordedTicketsIdRange(DateTime date);
+
+        List<SaleTicket> getDaySaleTickets(DateTime time);
+
+        List<Sale> getSalesInTicket(SaleTicket saleTicket);
     }
 
     interface SalesPresenterOps {
@@ -457,7 +461,6 @@ public interface MainMVP {
     }
 
     interface PurchasesPresenterOps {
-
         List<PurchaseOrder> getDepletedProducts();
         List<PurchaseOrder> getDepletedMaterial();
         List<PurchaseOrder> getAllDepletedArticles();

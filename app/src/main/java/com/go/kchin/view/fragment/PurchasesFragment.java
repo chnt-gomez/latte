@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,20 +13,24 @@ import android.widget.ListView;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.PurchaseListAdapter;
+import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.MailBuilder;
-import com.go.kchin.model.database.PDFBuilder;
+import com.go.kchin.model.PDFBuilder;
 import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.util.dialog.loader.Loader;
 import com.itextpdf.text.DocumentException;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.io.File;
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.R.attr.id;
 
 
 /**
@@ -37,6 +41,7 @@ public class PurchasesFragment extends BaseFragment implements AdapterView.OnIte
 
     private MainMVP.PurchasesPresenterOps mPurchasesPresenter;
     private PurchaseListAdapter adapter;
+    private File pdfFIle;
 
     @BindView(R.id.lv_inventory)
     ListView listView;
@@ -52,13 +57,7 @@ public class PurchasesFragment extends BaseFragment implements AdapterView.OnIte
 
     @OnClick(R.id.btn_send)
     public void onSendClick(View v) {
-        try {
-            sendToMail();
-        }catch(DocumentException de){
-
-        }catch(IOException e){
-
-        }
+        buildPdf();
     }
 
     private void sendToMail() throws IOException, DocumentException {
@@ -73,6 +72,54 @@ public class PurchasesFragment extends BaseFragment implements AdapterView.OnIte
                 Uri.fromFile(PDFBuilder.buildPurchaseOrder(getContext(), "new.pdf",
                         mPurchasesPresenter.getAllDepletedArticles(), getResources())));
         startActivity(shareIntent);
+    }
+
+    private void buildPdf(){
+        Loader loader = new Loader(new LoaderRequiredOps() {
+
+            @Override
+            public void onPreLoad() {
+                Dialogs.buildLoadingDialog(getContext(), getString(R.string.building_pdf)).
+                        show();
+            }
+
+            @Override
+            public void onLoad() {
+
+                try {
+                     pdfFIle = PDFBuilder.buildPurchaseOrder(getContext(), buildPdfName(),
+                            mPurchasesPresenter.getAllDepletedArticles(), getResources());
+                }catch (DocumentException e){
+
+                }catch (IOException e){
+
+                }
+            }
+
+            @Override
+            public void onDoneLoading() {
+                Dialogs.dismiss();
+                if (pdfFIle != null){
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(pdfFIle), "application/pdf");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onSearch(String query) {
+
+            }
+        });
+        loader.execute();
+
+    }
+
+    private String buildPdfName() {
+        DateTimeFormatter dtf = DateTimeFormat.forPattern("dd_MM_yyyy_HH_mm");
+        DateTime dateTime = DateTime.now();
+        return dtf.print(dateTime)+getString(R.string.purchase)+(".pdf");
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.go.kchin.util.dialog.loader.Loader;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,20 +32,25 @@ public class DetailedQuickReport extends BaseFragment {
     private QuickReportAdapter adapter;
     private MainMVP.DetailedReportPresenterOps mReportPresenter;
 
-    public static DetailedQuickReport newInstance(){
+    private static final String DATE_TIME = "date_time";
+
+    public static DetailedQuickReport newInstance(DateTime dateTime){
         DetailedQuickReport fragment = new DetailedQuickReport();
         Bundle args = new Bundle();
         args.putInt(LAYOUT_RES_ID, R.layout.fragment_detailed_report);
+        args.putLong(DATE_TIME, dateTime.getMillis());
         fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onLoad() {
         super.onLoad();
+        DateTime dateTime = new DateTime(getArguments().getLong(DATE_TIME));
         HashMap<SaleTicket, List<Sale>> expandableHashMap = new HashMap<>();
         // First get the SaleTickets
-        final List<SaleTicket> tickets = mReportPresenter.getDaySaleTickets(DateTime.now());
+        final List<SaleTicket> tickets = mReportPresenter.getDaySaleTickets(dateTime);
         //From each saleTicker, get all the tickets;
         for (SaleTicket st : tickets){
             List<Sale> sales = new ArrayList<>();
