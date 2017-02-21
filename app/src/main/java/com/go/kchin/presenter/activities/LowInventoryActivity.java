@@ -12,7 +12,7 @@ import java.util.List;
  * Created by MAV1GA on 16/02/2017.
  */
 
-public class PurchaseOrdersActivity extends BaseActivity implements MainMVP.PurchasesPresenterOps {
+public class LowInventoryActivity extends BaseActivity implements MainMVP.LowInventoryOps {
 
     @Override
     protected void init() {

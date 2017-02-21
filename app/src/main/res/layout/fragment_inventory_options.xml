@@ -8,7 +8,7 @@
     <Button
         android:text="@string/products"
         android:layout_width="match_parent"
-        android:background="@color/colorAccent"
+        android:background="@drawable/selector"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:id="@+id/btn_see_products" />
@@ -21,7 +21,7 @@
     <Button
         android:text="@string/materials"
         android:layout_width="match_parent"
-        android:background="@color/colorAccent"
+        android:background="@drawable/selector"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:id="@+id/btn_see_materials" />
@@ -33,7 +33,7 @@
     <Button
         android:text="@string/departments"
         android:layout_width="match_parent"
-        android:background="@color/colorAccent"
+        android:background="@drawable/selector"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:id="@+id/btn_see_departments" />
@@ -43,23 +43,23 @@
         android:layout_height="@dimen/activity_default_margin_small" />
 
     <Button
-        android:text="@string/purchase_orders"
+        android:text="@string/low_inventory"
         android:layout_width="match_parent"
-        android:background="@color/colorAccent"
+        android:background="@drawable/selector"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_purchase_orders" />
+        android:id="@+id/btn_low_inventory" />
 
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_default_margin_small"/>
 
     <Button
-        android:text="@string/inventory_adjustments"
+        android:text="@string/purchases"
         android:layout_width="match_parent"
-        android:background="@color/colorAccent"
+        android:background="@drawable/selector"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_inventory_adjustments" />
+        android:id="@+id/btn_purchases_report" />
 
 </LinearLayout>

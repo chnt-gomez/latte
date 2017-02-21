@@ -74,7 +74,10 @@
             android:label="@string/title_activity_settings"
             android:configChanges = "orientation"
             android:screenOrientation = "portrait"/>
-        <activity android:name=".presenter.activities.PurchaseOrdersActivity"
+        <activity android:name=".presenter.activities.LowInventoryActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".presenter.activities.PurchasesReportActivity"
             android:configChanges = "orientation"
             android:screenOrientation = "portrait"/>
     </application>

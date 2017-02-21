@@ -102,6 +102,14 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
         });
         saleAdapter = new SaleAdapter(getContext(), R.layout.row_sell_item, new ArrayList<Sale>());
         saleListView.setAdapter(saleAdapter);
+        saleListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                saleAdapter.remove(saleAdapter.getItem(position));
+                txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
+                return true;
+            }
+        });
         txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
     }
 

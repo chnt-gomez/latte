@@ -65,7 +65,7 @@
             android:drawableEnd="@drawable/ic_done_white_24dp"
             android:textAlignment="center"
             android:text="@string/apply"
-            android:background="@color/colorAccent"
+            android:background="@drawable/selector"
             android:gravity="center"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"

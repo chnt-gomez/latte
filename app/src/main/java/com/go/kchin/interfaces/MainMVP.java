@@ -10,6 +10,7 @@ import com.go.kchin.model.database.Combo;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Recipe;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
@@ -91,6 +92,12 @@ public interface MainMVP {
         Product findProduct(long productId);
 
         List<Product> getAllProducts(String query);
+    }
+
+    interface PurchasesPresenterOps{
+
+        List<PurchaseOperation> getPurchases(DateTime dateTime);
+
     }
 
     interface ProductPresenterOps{
@@ -434,6 +441,8 @@ public interface MainMVP {
 
         List<Sale> getSalesInTicket(SaleTicket ticket);
 
+        List<PurchaseOperation> getPurchases(DateTime dateTime);
+
         /**
          * Sales operations -----------------------------------------------
          */
@@ -469,7 +478,7 @@ public interface MainMVP {
 
     }
 
-    interface PurchasesPresenterOps {
+    interface LowInventoryOps {
         List<PurchaseOrder> getDepletedProducts();
         List<PurchaseOrder> getDepletedMaterial();
         List<PurchaseOrder> getAllDepletedArticles();

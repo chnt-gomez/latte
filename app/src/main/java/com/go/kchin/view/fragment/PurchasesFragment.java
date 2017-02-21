@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,7 +38,7 @@ import butterknife.OnClick;
 
 public class PurchasesFragment extends BaseFragment implements AdapterView.OnItemClickListener{
 
-    private MainMVP.PurchasesPresenterOps mPurchasesPresenter;
+    private MainMVP.LowInventoryOps mPurchasesPresenter;
     private PurchaseListAdapter adapter;
     private File pdfFIle;
 
@@ -137,7 +136,7 @@ public class PurchasesFragment extends BaseFragment implements AdapterView.OnIte
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mPurchasesPresenter = (MainMVP.PurchasesPresenterOps) context;
+        mPurchasesPresenter = (MainMVP.LowInventoryOps) context;
     }
 
     @Override

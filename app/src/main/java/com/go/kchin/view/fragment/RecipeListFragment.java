@@ -76,6 +76,8 @@ public class RecipeListFragment extends BaseFragment implements AdapterView.OnIt
                 mProductPresenter.getRecipe(getArguments().getLong(PRODUCT_ID)));
     }
 
+
+
     @OnClick(R.id.btn_add)
     public void addToRecipe(View view){
         mPresenter.moveToFragment(BuildRecipeFragment.newInstance(getArguments().getLong(PRODUCT_ID)));

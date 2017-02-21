@@ -84,5 +84,6 @@ public class PickDepartmentFragment extends BaseFragment implements AdapterView.
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mProductPresenter.pickDepartment(
                 getArguments().getLong(PRODUCT_ID), adapter.getItem(position));
+        getFragmentManager().popBackStack();
     }
 }

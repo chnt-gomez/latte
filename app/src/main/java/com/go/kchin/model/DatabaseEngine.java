@@ -9,6 +9,7 @@ import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.model.database.ProductsInCombo;
+import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Recipe;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
@@ -65,14 +66,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void updateMaterial(Material newMaterialParams) {
-        Material material = Material.findById(Material.class, newMaterialParams.getId());
-        material.materialMeasure = newMaterialParams.materialMeasure;
-        material.materialName = newMaterialParams.materialName;
-        material.materialPurchaseCost = newMaterialParams.materialPurchaseCost;
-        material.materialRemaining = newMaterialParams.materialRemaining;
-        material.materialStatus = newMaterialParams.materialStatus;
-        material.save();
-        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
+        newMaterialParams.save();
+        //mPresenter.on(mPresenter.getStringResource(R.string.saved));
     }
 
     @Override
@@ -125,7 +120,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void updateProduct(Product product) {
         product.save();
-        mPresenter.onOperationSuccess(R.string.saved);
+        //mPresenter.onOperationSuccess(R.string.saved);
     }
 
     @Override
@@ -382,6 +377,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public List<Sale> getSalesInTicket(SaleTicket ticket){
         String ticketId = String.valueOf(ticket.getId());
         return Sale.find(Sale.class, "sale_ticket = ?", ticketId );
+    }
+
+    @Override
+    public List<PurchaseOperation> getPurchases(DateTime dateTime) {
+       return PurchaseOperation.listAll(PurchaseOperation.class);
     }
 
     private static String formatForQuery(String rawQuery){

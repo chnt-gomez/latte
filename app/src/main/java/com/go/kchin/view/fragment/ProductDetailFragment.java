@@ -28,7 +28,6 @@ import butterknife.OnClick;
 public class ProductDetailFragment extends BaseFragment{
 
     private final static String PRODUCT_ID = "product_id";
-
     private Product product;
     private MainMVP.ProductPresenterOps mProductPresenter;
 
@@ -107,8 +106,14 @@ public class ProductDetailFragment extends BaseFragment{
         }
     }
 
+    @Override
+    public void onOperationSuccesfull(String message) {
+        reload();
+    }
+
     public void save(){
         product.productName = edtProductName.getText().toString();
+        product.productMeasureUnit = spnProductMeasure.getSelectedItemPosition();
         mProductPresenter.saveProduct(product);
     }
 
