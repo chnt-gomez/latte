@@ -97,8 +97,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         return Material.find(Material.class, "material_name LIKE ?", "%"+formatedSearchQuery+"%");
     }
 
-    @Override
-    public List<Material> getRecipeFromProduct(long productId) {
+    public List<Material> getMaterialsFromProduct(long productId) {
         return Material.findWithQuery(
                 Material.class, mPresenter.getStringResource(R.string.q_get_recipe_from_product),
                 String.valueOf(productId));
@@ -110,6 +109,10 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         recipe.MaterialAmount = newAmount;
         recipe.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
+    }
+
+    private List<Recipe> getRecipeListFromProduct(long productId){
+        return Recipe.find(Recipe.class, "product = ?", String.valueOf(productId));
     }
 
     @Override
@@ -146,6 +149,13 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public void buyProduct(long productId, float purchaseAmount) {
         Product product = Product.findById(Product.class, productId);
         product.productRemaining += purchaseAmount;
+        if (product.madeOnSell == Product.PRODUCT_MADE_AND_STORE){
+            for(Recipe r : getRecipeListFromProduct(product.getId())){
+                Material m = r.material;
+                m.materialRemaining -= (r.MaterialAmount*purchaseAmount);
+                m.save();
+            }
+        }
         product.save();
         mPresenter.onOperationSuccess(R.string.operation_complete);
     }
@@ -268,7 +278,6 @@ public class DatabaseEngine implements MainMVP.ModelOps{
                     return;
                 }
         }
-
         ticket.saleTotal = total;
         ticket.vendor = "Toad";
         ticket.save();
@@ -276,11 +285,26 @@ public class DatabaseEngine implements MainMVP.ModelOps{
             s.saleTicket = ticket;
             s.save();
             if (mPreferencePresenter.isActiveTracking()) {
+                if (s.product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL ||
+                        s.product.madeOnSell == Product.PRODUCT_MADE_AND_STORE)
                 s.product.productRemaining -= s.productAmount;
                 s.product.save();
             }
+            if (s.product.madeOnSell == Product.PRODUCT_MADE_AND_SELL){
+                if (!mPreferencePresenter.isAllowingDepletedProduction())
+                for (Recipe r : getRecipeListFromProduct(s.product.getId())){
+                    Material m = r.material;
+                    if (r.MaterialAmount > m.materialRemaining &&
+                            !mPreferencePresenter.isAllowingDepletedProduction()) {
+                        mPresenter.onOperationError(mPresenter.getStringResource(R.string.not_enough_material));
+                        return;
+                    }
+                        m.materialRemaining -= r.MaterialAmount;
+                        m.save();
+                }
+            }
         }
-        mPresenter.onOperationSuccess("Sale applied");
+        mPresenter.onOperationSuccess(R.string.sale_applied);
     }
 
     @Override
@@ -339,6 +363,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         material.materialRemaining += arg;
         material.save();
         mPresenter.onOperationSuccess(R.string.operation_complete);
+    }
+
+    @Override
+    public List<Recipe> getRecipeFromProduct(long productId) {
+        return getRecipeListFromProduct(productId);
     }
 
     @Override

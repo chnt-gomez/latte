@@ -17,6 +17,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text|textPersonName"
                 android:ems="10"
+                android:enabled="false"
                 android:textAlignment="center"
                 android:id="@+id/edt_product_name"/>
 
@@ -39,11 +40,12 @@
                 android:paddingStart="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@drawable/selector"
                 android:drawablePadding="4dp"
                 android:textColor="@android:color/white"
                 android:drawableEnd="@drawable/ic_description_white_24dp"
                 android:text="@string/recipe"
+                android:enabled="false"
                 android:id="@+id/btn_see_recipe" />
             <include layout="@layout/include_space_4dp"/>
 
@@ -54,20 +56,15 @@
                 android:paddingStart="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@drawable/selector"
                 android:drawablePadding="4dp"
+                android:enabled="false"
                 android:textColor="@android:color/white"
                 android:drawableEnd="@drawable/ic_shopping_basket_white_24dp"
                 android:text="@string/combos"
                 android:id="@+id/btn_see_package" />
 
             <include layout="@layout/include_space_8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:text="@string/product_settings"/>
 
             <include layout="@layout/include_space_8dp"/>
 
@@ -98,6 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:enabled="false"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/chk_product_type" />
             </RelativeLayout>
@@ -131,6 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:enabled="false"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/chk_is_made_on_sale" />
             </RelativeLayout>
@@ -142,8 +141,9 @@
                 android:paddingStart="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@drawable/selector"
                 android:drawablePadding="4dp"
+                android:enabled="false"
                 android:textColor="@android:color/white"
                 android:drawableEnd="@drawable/ic_playlist_add_check_white_24dp"
                 android:text="@string/inventory_adjustments"

@@ -113,4 +113,9 @@
     <string name="made_when_sold">Made when sold</string>
     <string name="made_when_sold_summary">If marked, the materials in the inventory will adjust only after selling one. Mark this if the product cannot be stored and needs to be made every time you sell one</string>
     <string name="without_inv">No inventory</string>
+    <string name="set_new_amount">Set amount</string>
+    <string name="administration_amount_change">This change will not generate a purchase operation</string>
+    <string name="product_made_on_sell">Product made on sale</string>
+    <string name="not_enough_material">Not enough materials to produce a product</string>
+    <string name="sale_applied">Sale applied</string>
 </resources>

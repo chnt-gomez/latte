@@ -41,6 +41,8 @@ public class ProductDetailFragment extends BaseFragment{
     @BindView(R.id.btn_see_package)Button btnPackages;
     @BindView(R.id.chk_product_type)CheckBox chkProductType;
     @BindView(R.id.chk_is_made_on_sale)CheckBox chkMadeOnSale;
+    @BindView(R.id.btn_edit) FloatingActionButton btnEdit;
+    @BindView(R.id.btn_inventory_adjustments) Button btnInventoryAdjustements;
 
     public static ProductDetailFragment newInstance(long productId){
         ProductDetailFragment fragment = new ProductDetailFragment();
@@ -55,6 +57,11 @@ public class ProductDetailFragment extends BaseFragment{
     public void onPause() {
         save();
         super.onPause();
+    }
+
+    @OnClick(R.id.btn_edit)
+    public void onEditClick(View v){
+        onRequestEdit();
     }
 
     @Override
@@ -98,7 +105,6 @@ public class ProductDetailFragment extends BaseFragment{
                 chkMadeOnSale.setChecked(false);
             }
         }
-
     }
 
     public void save(){
@@ -137,15 +143,27 @@ public class ProductDetailFragment extends BaseFragment{
         Dialogs.newFloatDialog(getContext(), getString(R.string.buy_more), null, new RequiredDialogOps.NewFloatOps(){
             @Override
             public void onNewFloat(float arg) {
-                product.productRemaining += arg;
+                mProductPresenter.buyMore(product.getId(), arg);
                 btnProductRemaining.setText(Number.floatToStringAsNumber(product.productRemaining));
             }
         }).show();
     }
 
     @Override
+    protected void enableEditMode() {
+        super.enableEditMode();
+        btnEdit.setVisibility(View.GONE);
+        if (product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL)
+            chkMadeOnSale.setEnabled(false);
+    }
+
+    @Override
     protected void init() {
         super.init();
+        spnProductMeasure.setEnabled(false);
+        addToEditListener(edtProductName, spnProductMeasure, btnProductDepartment, btnRecipe,
+                btnSellPrice, chkMadeOnSale, chkProductType, btnInventoryAdjustements);
+
         chkProductType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -158,7 +176,6 @@ public class ProductDetailFragment extends BaseFragment{
                     product.productType = Product.PRODUCT_TYPE_MADE;
                     chkMadeOnSale.setEnabled(true);
                 }
-
             }
         });
 
@@ -179,5 +196,17 @@ public class ProductDetailFragment extends BaseFragment{
         reload();
         spnProductMeasure.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
                 MeasurePicker.getEntries(getResources())));
+    }
+
+    @OnClick(R.id.btn_inventory_adjustments)
+    public void onAdjustmentsClick(View v){
+        Dialogs.newFloatDialog(getContext(), getString(R.string.set_new_amount), getString(R.string.administration_amount_change), new RequiredDialogOps.NewFloatOps() {
+            @Override
+            public void onNewFloat(float arg) {
+                product.productRemaining = arg;
+                save();
+                reload();
+            }
+        }).show();
     }
 }

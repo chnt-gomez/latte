@@ -17,7 +17,7 @@
             android:textColor="@android:color/white"
             android:drawableEnd="@drawable/ic_add_shopping_cart_white_24dp"
             android:textAlignment="center"
-            android:background="@color/colorAccent"
+            android:background="@drawable/selector"
             android:gravity="center"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"

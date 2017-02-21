@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/spn_product_unit"
+        android:enabled="false"
         android:layout_weight="1"/>
 
     <Button
@@ -17,7 +18,7 @@
         android:textColor="@android:color/white"
         android:drawableEnd="@drawable/ic_add_shopping_cart_white_24dp"
         android:textAlignment="center"
-        android:background="@color/colorAccent"
+        android:background="@drawable/selector"
         android:gravity="center"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"

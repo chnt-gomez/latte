@@ -3,6 +3,7 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,13 @@ import android.widget.TextView;
 import com.go.kchin.R;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.util.dialog.Dialogs;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import butterknife.ButterKnife;
 
 /**
@@ -23,10 +30,12 @@ import butterknife.ButterKnife;
  */
 
 public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, View.OnClickListener,
-        LoaderRequiredOps{
+        LoaderRequiredOps, RequiredDialogOps.RequiredPasswordOps{
 
     protected View view;
     protected MainMVP.PresenterOps mPresenter;
+    private List<View> editListenerItems;
+
 
 
     protected final static String LAYOUT_RES_ID = "layout_res_id";
@@ -41,6 +50,21 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
                     }
                 }
         ).show();
+    }
+
+    protected void onRequestEdit(){
+        if (isPasswordProtected()) {
+            Dialogs.newPasswordDialog(getContext(), getString(R.string.password),
+                    getString(R.string.content_protected_summary), this ).show();
+        }else{
+            enableEditMode();
+        }
+    }
+
+    protected void enableEditMode() {
+        for (View v : editListenerItems){
+            v.setEnabled(true);
+        }
     }
 
     @Override
@@ -146,4 +170,58 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     }
 
+    protected void addToEditListener(View ... v){
+        if (editListenerItems == null){
+            editListenerItems = new ArrayList<>();
+        }
+        Collections.addAll(editListenerItems, v);
+    }
+
+    protected boolean isPasswordProtected() {
+        return PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getBoolean("protect_with_password", false);
+    }
+
+    protected boolean isAllowingDepletedStokSales() {
+        return PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getBoolean("allow_depleted_sales", false);
+    }
+
+    protected boolean isAllowingDepletedProduction() {
+        return PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getBoolean("allow_depleted_production", false);
+    }
+
+    protected boolean isActiveTracking() {
+        return PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getBoolean("active_tracking", false);
+    }
+
+    protected String getBusinessName() {
+        return PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getString("business_name", null);
+    }
+
+    protected String getAdministratorName() {
+        return PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getString("username", null);
+    }
+
+    protected  boolean authorize(String password) {
+        return false;
+    }
+
+    @Override
+    public void isAuthorized(boolean isAuthorized) {
+        if (isAuthorized) {
+            enableEditMode();
+        }else{
+            showError(getString(R.string.unauthorized));
+        }
+    }
+
+    @Override
+    public void recoverPassword() {
+
+    }
 }

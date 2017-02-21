@@ -3,9 +3,11 @@
     <color name="colorPrimary">#83adc7</color>
     <color name="colorPrimaryDark">#5787a5</color>
     <color name="colorAccent">#0cc4f7</color>
+    <color name="colorAccentLight">#80ddf7</color>
     <color name="colorError">#ff7f7f</color>
     <color name="colorWarning">#fff5a0</color>
     <color name="colorDarkGrayBlue">#1c2430</color>
     <color name="colorDarkGray">#313338</color>
     <color name="colorDefaultText">#808080</color>
+    <color name="colorDisabled">#808080</color>
 </resources>

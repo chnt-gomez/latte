@@ -2,6 +2,7 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,6 +20,8 @@ import com.go.kchin.util.dialog.number.Number;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.R.attr.id;
 
 /**
  * Created by MAV1GA on 11/01/2017.
@@ -39,6 +42,12 @@ public class MaterialDetailFragment extends BaseFragment {
 
     @BindView(R.id.btn_material_amount)
     Button btnMaterialAmount;
+
+    @BindView(R.id.btn_inventory_adjustments)
+    Button btnInventoryAdjustements;
+
+    @BindView(R.id.btn_edit)
+    FloatingActionButton btnEdit;
 
     public static MaterialDetailFragment newInstance(long materialId){
         MaterialDetailFragment fragment = new MaterialDetailFragment();
@@ -61,12 +70,33 @@ public class MaterialDetailFragment extends BaseFragment {
         super.onDetach();
     }
 
+    @OnClick (R.id.btn_inventory_adjustments)
+    public void onAdjustmentsClick(View v){
+        Dialogs.newFloatDialog(getContext(), getString(R.string.set_new_amount), getString(R.string.administration_amount_change), new RequiredDialogOps.NewFloatOps() {
+            @Override
+            public void onNewFloat(float arg) {
+                material.materialRemaining = arg;
+                save();
+                reload();
+            }
+        }).show();
+    }
+
     @Override
     protected void init() {
         super.init();
+        spnMaterialUnit.setEnabled(false);
         spnMaterialUnit.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_dropdown_item, MeasurePicker.getEntries(getResources())));
+        addToEditListener(spnMaterialUnit, edtMaterialName, btnInventoryAdjustements);
         reload();
+    }
+
+    @Override
+    protected void enableEditMode() {
+        super.enableEditMode();
+        btnEdit.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -75,8 +105,12 @@ public class MaterialDetailFragment extends BaseFragment {
         material = mMaterialPresenter.getMaterial(getArguments().getLong(MATERIAL_ID));
     }
 
-    @OnClick(R.id.btn_save)
-    public void save(View view){
+    @OnClick(R.id.btn_edit)
+    public void onEditClick(View view){
+        onRequestEdit();
+    }
+
+    private void save(){
         material.materialName = edtMaterialName.getText().toString();
         material.materialMeasure = spnMaterialUnit.getSelectedItemPosition();
         mMaterialPresenter.save(material);
@@ -109,8 +143,7 @@ public class MaterialDetailFragment extends BaseFragment {
 
     @Override
     public void onPause() {
-        save(null);
+        save();
         super.onPause();
-
     }
 }

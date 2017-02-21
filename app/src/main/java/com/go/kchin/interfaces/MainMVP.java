@@ -2,6 +2,7 @@ package com.go.kchin.interfaces;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
 import com.go.kchin.model.PurchaseOrder;
@@ -9,6 +10,7 @@ import com.go.kchin.model.database.Combo;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.Recipe;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
 import com.go.kchin.presenter.activities.BaseActivity;
@@ -37,6 +39,7 @@ public interface MainMVP {
         void showError(String msg);
         void onOperationError(String msg, long rowId);
         void search(String query);
+
 
         //All other ops
     }
@@ -121,11 +124,15 @@ public interface MainMVP {
          */
         void pickDepartment(long aLong, Department item);
 
-        List<Material> getRecipe(long aLong);
+        List<Recipe> getRecipe(long aLong);
 
         List<Material> getAllMaterials();
 
         void addMaterialToProductRecipe(long aLong, Material item);
+
+        void buyMore(long productId, float arg);
+
+        void setRecipeMaterialAmount(long recipeId, float amount);
     }
 
     interface DepartmentsPresenterOps {
@@ -282,7 +289,7 @@ public interface MainMVP {
          *
          * @param productId Product Id reference
          */
-        List<Material> getRecipeFromProduct(long productId);
+        List<Material> getMaterialsFromProduct(long productId);
 
         /**
          * Updates the actual amount of Material used in a Recipe
@@ -445,6 +452,8 @@ public interface MainMVP {
         List<PurchaseOrder> getAllDepletedArticles();
 
         void buyMaterial(long purchaseId, float arg);
+
+        List<Recipe> getRecipeFromProduct(long productId);
     }
 
 

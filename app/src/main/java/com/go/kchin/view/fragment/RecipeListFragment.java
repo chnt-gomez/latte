@@ -4,11 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.MaterialListAdapter;
+import com.go.kchin.adapters.RecipeListAdapter;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.interfaces.RequiredDialogOps;
+import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.util.dialog.loader.Loader;
 
 import butterknife.BindView;
@@ -18,12 +22,12 @@ import butterknife.OnClick;
  * Created by MAV1GA on 26/01/2017.
  */
 
-public class RecipeListFragment extends BaseFragment {
+public class RecipeListFragment extends BaseFragment implements AdapterView.OnItemClickListener{
 
 
 
     private static final String PRODUCT_ID = "product_id";
-    private MaterialListAdapter adapter;
+    private RecipeListAdapter adapter;
     private MainMVP.ProductPresenterOps mProductPresenter;
 
     @BindView(R.id.lv_inventory)
@@ -44,6 +48,7 @@ public class RecipeListFragment extends BaseFragment {
     @Override
     protected void init() {
         super.init();
+        listView.setOnItemClickListener(this);
         reload();
     }
 
@@ -67,7 +72,7 @@ public class RecipeListFragment extends BaseFragment {
     @Override
     public void onLoad() {
         super.onLoad();
-        adapter = new MaterialListAdapter(getContext(), R.layout.row_material_item,
+        adapter = new RecipeListAdapter(getContext(), R.layout.row_material_item,
                 mProductPresenter.getRecipe(getArguments().getLong(PRODUCT_ID)));
     }
 
@@ -80,5 +85,15 @@ public class RecipeListFragment extends BaseFragment {
     public void onDoneLoading() {
         super.onDoneLoading();
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+        Dialogs.newFloatDialog(getContext(), getString(R.string.set_new_amount), null, new RequiredDialogOps.NewFloatOps() {
+            @Override
+            public void onNewFloat(float arg) {
+                mProductPresenter.setRecipeMaterialAmount(adapter.getItem(position).getId(), arg);
+            }
+        }).show();
     }
 }

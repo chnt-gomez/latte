@@ -6,6 +6,7 @@ import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.Recipe;
 import com.go.kchin.view.fragment.ProductDetailFragment;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     }
 
     @Override
-    public List<Material> getRecipe(long aLong) {
+    public List<Recipe> getRecipe(long aLong) {
         return mModel.getRecipeFromProduct(aLong);
     }
 
@@ -71,5 +72,15 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     @Override
     public void addMaterialToProductRecipe(long aLong, Material item) {
         mModel.addMaterialToRecipe(aLong, item);
+    }
+
+    @Override
+    public void buyMore(long productId, float arg) {
+        mModel.buyProduct(productId, arg);
+    }
+
+    @Override
+    public void setRecipeMaterialAmount(long recipeId, float amount) {
+        mModel.updateRecipe(recipeId, amount);
     }
 }
