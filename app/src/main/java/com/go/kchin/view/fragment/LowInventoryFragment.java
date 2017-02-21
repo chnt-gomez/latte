@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.go.kchin.R;
-import com.go.kchin.adapters.PurchaseListAdapter;
+import com.go.kchin.adapters.LowInventoryAdapter;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
@@ -36,18 +36,18 @@ import butterknife.OnClick;
  * Created by MAV1GA on 16/02/2017.
  */
 
-public class PurchasesFragment extends BaseFragment implements AdapterView.OnItemClickListener{
+public class LowInventoryFragment extends BaseFragment implements AdapterView.OnItemClickListener{
 
     private MainMVP.LowInventoryOps mPurchasesPresenter;
-    private PurchaseListAdapter adapter;
+    private LowInventoryAdapter adapter;
     private File pdfFIle;
 
     @BindView(R.id.lv_inventory)
     ListView listView;
 
 
-    public static PurchasesFragment newIstance(){
-        PurchasesFragment fragment = new PurchasesFragment();
+    public static LowInventoryFragment newIstance(){
+        LowInventoryFragment fragment = new LowInventoryFragment();
         Bundle args = new Bundle();
         args.putInt(LAYOUT_RES_ID, R.layout.fragment_purchases);
         fragment.setArguments(args);
@@ -148,7 +148,7 @@ public class PurchasesFragment extends BaseFragment implements AdapterView.OnIte
     @Override
     public void onLoad() {
         super.onLoad();
-        adapter = new PurchaseListAdapter(getContext(), R.layout.row_product_item,
+        adapter = new LowInventoryAdapter(getContext(), R.layout.row_product_item,
                 mPurchasesPresenter.getAllDepletedArticles());
     }
 

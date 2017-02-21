@@ -18,10 +18,10 @@ import java.util.List;
  * Created by MAV1GA on 16/02/2017.
  */
 
-public class PurchaseListAdapter extends ArrayAdapter<PurchaseOrder>{
+public class LowInventoryAdapter extends ArrayAdapter<PurchaseOrder>{
 
 
-    public PurchaseListAdapter(Context context, int resource, List<PurchaseOrder> objects) {
+    public LowInventoryAdapter(Context context, int resource, List<PurchaseOrder> objects) {
         super(context, resource, objects);
     }
 

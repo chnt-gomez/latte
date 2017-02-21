@@ -4,7 +4,7 @@ import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.PurchaseOrder;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
-import com.go.kchin.view.fragment.PurchasesFragment;
+import com.go.kchin.view.fragment.LowInventoryFragment;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class LowInventoryActivity extends BaseActivity implements MainMVP.LowInv
     @Override
     protected void init() {
         super.init();
-        attachFragment(PurchasesFragment.newIstance());
+        attachFragment(LowInventoryFragment.newIstance());
     }
 
     @Override
