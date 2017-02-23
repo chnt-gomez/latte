@@ -89,7 +89,7 @@
     <string name="product_made_on_sell">Producto elaborado tras venta</string>
     <string name="product_name">Nombre del producto</string>
     <string name="product_settings">Configuración del producto</string>
-    <string name="protect_with_password">Proteger con con contraseña</string>
+    <string name="protect_with_password">Proteger con contraseña</string>
     <string name="protect_with_password_summary">Cuando esté seleccionado, la aplicacion no te permitira hacer cambios en los ajustes o hacer modificaciones en el inventario sin la contraseña. Deshabilite esta opción si solamente tu utilizas la aplicación.</string>
     <string name="purchase">Compra</string>
     <string name="purchases">Compras y gastos</string>
@@ -118,10 +118,10 @@
     <string name="title_product_details">Detalle del producto</string>
     <string name="title_sale">Nueva venta</string>
     <string name="department_list_empty">Puedes crear departamentos para ordenar mejor tus productos. Usa el botón \'Departamento\' en el detalle del producto para asignarlo.</string>
-    <string name="low_inventory_empty_list">Cuando los productos o materiales se encuentren en números bajos aparecerán aqui. Usa esta lista para comprar más y reabastecer tus inventarios.</string>
-    <string name="material_list_empty">Los materiales son necesarios para crear algunos productos. Puedes añadir más materiales aqui y usar el botón de \'Receta\' en el detalle de un producto para crear una receta.</string>
-    <string name="product_list_empty">Empieza por añadir nuevos productos usando el botón en la esquina inferior derecha. Todos tus productos aparecerán aqui.</string>
-    <string name="purchases_list_empty">No se encontraron operaciones de compra. Selecciona el dia con el botón del calendario en el menú para ver operaciones pasadas.</string>
+    <string name="low_inventory_empty_list">Cuando los productos o materiales se encuentren en números bajos aparecerán aquí. Usa esta lista para comprar más y reabastecer tus inventarios.</string>
+    <string name="material_list_empty">Los materiales son necesarios para crear algunos productos. Puedes añadir más materiales aquí y usar el botón de \'Receta\' en el detalle de un producto para crear una receta.</string>
+    <string name="product_list_empty">Empieza por añadir nuevos productos usando el botón en la esquina inferior derecha. Todos tus productos aparecerán aquí.</string>
+    <string name="purchases_list_empty">No se encontraron operaciones de compra. Selecciona el día con el botón del calendario en el menú para ver operaciones pasadas.</string>
     <string name="sell_empty_list">Sin productos para vender. Dirígete a la sección de productos y crea más para empezar a venderlos.</string>
     <string name="change_price_warning">Cambiar el precio podría afectar tu reporte de ventas. Recomendamos que apliques el cambio una vez guardado tu reporte del día.</string>
     <string name="product_recipe">Receta del producto</string>

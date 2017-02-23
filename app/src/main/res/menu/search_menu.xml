@@ -7,6 +7,7 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:iconifiedByDefault="false"
         app:actionViewClass="android.support.v7.widget.SearchView" />
+    <!-- Will be added later -->
     <item android:id="@+id/filter"
         android:title="@string/filter"
         android:icon="@drawable/ic_filter_list_white_24dp"

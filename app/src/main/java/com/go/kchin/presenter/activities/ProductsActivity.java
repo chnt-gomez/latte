@@ -46,8 +46,6 @@ public class ProductsActivity extends BaseActivity implements MainMVP.ProductsPr
             searchView.setSubmitButtonEnabled(true);
             searchView.setOnQueryTextListener(this);
 
-        }else{
-            Log.w(getClass().getSimpleName(), "Search view is null");
         }
         return true;
     }

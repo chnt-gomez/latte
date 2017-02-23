@@ -7,17 +7,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tomatoe"
         android:id="@+id/txt_material_name"/>
 
     <TextView
-        android:text="Piece"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_material_unit" />
 
     <TextView
-        android:text="$ 0.25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_material_amount"/>
