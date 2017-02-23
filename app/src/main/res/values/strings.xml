@@ -1,31 +1,19 @@
 <resources>
-    <string name="app_name">Kchin</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">Main2Activity</string>
-
-    <string-array name="drawer_items">
-        <item>Inventory</item>
-        <item>Sales</item>
-        <item>Reports</item>
-        <item>Settings</item>
-    </string-array>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name" translatable="false">Go Sales</string>
     <string name="title_activity_home">Start</string>
-
     <string name="action_settings">Settings</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
     <string name="ok">Ok</string>
     <string name="new_product">New Product</string>
-    <string name="material_saved">New material saved!</string>
+    <string name="material_saved">New Material saved</string>
     <string name="saved">Saved</string>
     <string name="active">Active now</string>
     <string name="deactivated">Deactivated</string>
-    <string name="product_saved">New product saved</string>
+    <string name="product_saved">New Product saved</string>
     <string name="combo_saved">New combo saved</string>
     <string name="new_department">New Department</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="department_saved">New Department saved</string>
     <string name="see">See</string>
     <string name="nav_sales">Sales</string>
@@ -34,11 +22,11 @@
     <string name="added_to_kart">Added to kart</string>
     <string name="cannot_apply_void_sale">Cannot apply a void sale!</string>
     <string name="today_total">Today\'s sales</string>
-    <string name="day_sale_total">Day sale total:</string>
+    <string name="day_sale_total">Day sale total</string>
     <string name="see_details">See details</string>
     <string name="measure_piece">Piece</string>
     <string name="measure_kg">Kg</string>
-    <string name="measure_g">Gram</string>
+    <string name="measure_g">Grams</string>
     <string name="measure_lb">Lb</string>
     <string name="measure_lt">Lt</string>
     <string name="measure_oz">Oz</string>
@@ -46,6 +34,100 @@
     <string name="coming_soon">Coming soon</string>
     <string name="edit_price">Edit price</string>
     <string name="buy_more">Buy more</string>
+    <string name="price_hint" translatable="false">$ 0.00</string>
+    <string name="keep_track">Keep track on sale</string>
+    <string name="active_tracking">Disable tracking</string>
+    <string name="search_title">Search</string>
+    <string name="search">Search…</string>
+    <string name="filter">Filter</string>
+    <string name="department">Department</string>
+    <string name="sales">Sales</string>
+    <string name="inventory">Inventory</string>
+    <string name="description_inventory_card">Keep track of Products and Materials. Create new products from you current Materials or purchase more. Sort them by Department to figure out your best items.</string>
+    <string name="description_sales_card">Start recording your sales to see how your bisness perform</string>
+    <string name="reports">Sales report</string>
+    <string name="description_reports_card">Generate your sales report or check previous ones to see how your business is growing with Go Sales.</string>
+    <string name="products">Products</string>
+    <string name="materials">Materials</string>
+    <string name="departments">Departments</string>
+    <string name="purchase_orders">Purchase orders</string>
+    <string name="inventory_adjustments">Inventory adjustments</string>
+    <string name="material_name">Material name</string>
+    <string name="measure">Measure</string>
+    <string name="amount_hint" translatable="false">0.00</string>
+    <string name="department_name">Department name</string>
+    <string name="sale_price">Sale price</string>
+    <string name="product_name">Product name</string>
+    <string name="recipe">Recipe</string>
+    <string name="combos">Combos</string>
+    <string name="title_activity_settings">Settings</string>
 
-
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="my_business_name">My business</string>
+    <string name="admin_name">Administrator name</string>
+    <string name="busines_name">Business name</string>
+    <string name="inventory_settings">Inventory settings</string>
+    <string name="allow_depleted_sales">Allow depleted stock sales</string>
+    <string name="allow_depleted_sales_summary">If marked, the app will allow you to sell products even when you dont have any more in the inventory.</string>
+    <string name="allow_depleted_production">Allow production without materials</string>
+    <string name="allow_depleted_production_summary">If marked, the app will allow you to produce more products even when one or more of it\'s materials required are depleted.</string>
+    <string name="active_tracking_summary">If marked, most of the operations that affect the inventories will not make any changes in the stocks.</string>
+    <string name="administration_settings">Administrative setting</string>
+    <string name="protect_with_password">Protect with password</string>
+    <string name="protect_with_password_summary">If marked, the app won\'t be able to modify the settings, inventory or cancel sales without the administrator password. Disable this if only you operate the app.</string>
+    <string name="password">Administrator password</string>
+    <string name="content_protected">Content protected</string>
+    <string name="content_protected_summary">This content is protected by the administrator. Please use the administrator password</string>
+    <string name="unauthorized" >Not authorized</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="recover_password">Coming soon</string>
+    <string name="too_few_in_stock_to_sell">Not enough in stock to sell</string>
+    <string name="operation_complete">Operation successful</string>
+    <string name="new_purchase_order">New purchase order</string>
+    <string name="purchase">Purchase</string>
+    <string name="pdf_created_succesfuly">PDF created successfully</string>
+    <string name="building_pdf">Building pdf…</string>
+    <string name="total_sales">Total sales</string>
+    <string name="purchases">Purchases and expenses</string>
+    <string name="total_earnings">Total earnings</string>
+    <string name="recorded_ticket_id">Recorded tickets id</string>
+    <string name="date">Date</string>
+    <string name="sale_report">Sale</string>
+    <string name="ticket_id">Ticket id</string>
+    <string name="cannot_travel_in_time">Cannot travel in time yet</string>
+    <string name="product_settings">Product settings</string>
+    <string name="buy_and_sell_product">Buy and sell product</string>
+    <string name="buy_and_sell_product_summary">Use this when you buy this product from a provider and sell it to your customers</string>
+    <string name="made_when_sold">Made when sold</string>
+    <string name="made_when_sold_summary">Mark this if the product cannot be stored and needs to be made every time you sell it</string>
+    <string name="without_inv">No inventory</string>
+    <string name="set_new_amount">Set amount</string>
+    <string name="administration_amount_change">This change will not generate a purchase operation</string>
+    <string name="product_made_on_sell">Product made on sale</string>
+    <string name="not_enough_material">Not enough materials to produce a product</string>
+    <string name="sale_applied">Sale applied</string>
+    <string name="low_inventory">Low inventory</string>
+    <string name="items_purchased">Items purchased</string>
+    <string name="amount_paid">Amount paid</string>
+    <string name="end_of_document">End of document</string>
+    <string name="total_purchases">Total purchases</string>
+    <string name="title_departments">Departments</string>
+    <string name="start">Start</string>
+    <string name="title_low_inventory">Low inventory</string>
+    <string name="title_material_detail">Material detail</string>
+    <string name="title_materials_list">Materials</string>
+    <string name="title_product_details">Product details</string>
+    <string name="products_list">Products</string>
+    <string name="title_day_report">Day report</string>
+    <string name="title_sale">New sale</string>
+    <string name="product_list_empty">Start by adding products using the button to your bottom right. All of your products will be listed here.</string>
+    <string name="material_list_empty">Materials are needed to create some products. You can add more materials here and then use the \'Recipe\' button in the product detail to create a recipe.</string>
+    <string name="department_list_empty">You can create departments to sort better your products. Use the \'Department\' button in the product detail to assign it to one.</string>
+    <string name="low_inventory_empty_list">When products or materials are in low numbers or depleted they will be listed here. Use this list to buy more and replenish your stocks.</string>
+    <string name="purchases_list_empty">No purchases found. Select the day with the calendar option in the menu to see past purchases.</string>
+    <string name="sell_empty_list">No products to sell. Go to the \'Products\' section and create products to start selling.</string>
+    <string name="change_price_warning">Changing the price could affect your sales report. We recommend you to change only after saving your day report.</string>
+    <string name="product_recipe" >Product\'s recipe</string>
+    <string name="recipe_list_empty">Add the materials used to produce or sell this product. Depending on the product\'s configuration, the added materials will deplete when you sell it or produce it.</string>
+    <string name="select_material">Select material</string>
 </resources>

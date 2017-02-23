@@ -2,6 +2,7 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -24,13 +25,16 @@ public class PickDepartmentFragment extends BaseFragment implements AdapterView.
     @BindView(R.id.lv_inventory)
     ListView listView;
 
+    @BindView(R.id.btn_add)
+    FloatingActionButton btnAdd;
+
     private DepartmentListAdapter adapter;
     private MainMVP.ProductPresenterOps mProductPresenter;
 
     public static PickDepartmentFragment newInstance(long productId){
         PickDepartmentFragment fragment = new PickDepartmentFragment();
         Bundle args = new Bundle();
-        args.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory);
+        args.putInt(LAYOUT_RES_ID, R.layout.fragment_department_list);
         args.putLong(PRODUCT_ID, productId);
         fragment.setArguments(args);
         return fragment;
@@ -53,6 +57,7 @@ public class PickDepartmentFragment extends BaseFragment implements AdapterView.
     @Override
     protected void init() {
         super.init();
+        btnAdd.setVisibility(View.GONE);
         reload();
         listView.setOnItemClickListener(this);
     }
@@ -79,5 +84,6 @@ public class PickDepartmentFragment extends BaseFragment implements AdapterView.
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mProductPresenter.pickDepartment(
                 getArguments().getLong(PRODUCT_ID), adapter.getItem(position));
+        getFragmentManager().popBackStack();
     }
 }

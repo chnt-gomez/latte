@@ -2,10 +2,12 @@ package com.go.kchin.presenter.activities;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.DatabaseEngine;
@@ -16,7 +18,7 @@ import com.go.kchin.view.fragment.BaseFragment;
  */
 
 public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredPresenterOps,
-        MainMVP.PresenterOps{
+        MainMVP.PresenterOps, MainMVP.PreferenceAccess{
 
     protected MainMVP.ModelOps mModel;
     protected MainMVP.RequiredViewOps mView;
@@ -32,10 +34,11 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     protected void onResume() {
         super.onResume();
         if (mModel != null){
-           mModel.onConfigurationChanged(this);
+           mModel.onConfigurationChanged(this, this);
         }
 
     }
+
 
     @Override
     public void onOperationSuccess(String message, long rowId) {
@@ -49,7 +52,7 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
 
     @Override
     public void onOperationSuccess(int resource) {
-        mView.showMessage(resource);
+        mView.onOperationSuccesfull(getStringResource(resource));
     }
 
     @Override
@@ -60,6 +63,11 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     @Override
     public String getStringResource(int stringResource) {
         return getResources().getString(stringResource);
+    }
+
+    @Override
+    public SharedPreferences getSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     protected void init() {
@@ -95,4 +103,44 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         mView = fragment;
     }
 
+    @Override
+    public void setActivityTitle(String title) {
+        setTitle(title);
+    }
+
+
+    @Override
+    public boolean ifPasswordProtected() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("protect_with_password", false);
+    }
+
+    @Override
+    public boolean isAllowingDepletedStokSales() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("allow_depleted_sales", false);
+    }
+
+    @Override
+    public boolean isAllowingDepletedProduction() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("allow_depleted_production", false);
+    }
+
+    @Override
+    public String getBusinessName() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("business_name", null);
+    }
+
+    @Override
+    public String getAdministratorName() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("username", null);
+    }
+
+    @Override
+    public boolean authorize(String password) {
+        return false;
+    }
 }

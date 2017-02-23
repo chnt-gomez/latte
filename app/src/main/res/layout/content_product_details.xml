@@ -1,70 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_default_margin_small"
-    tools:showIn="@layout/fragment_product_detail">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
+        <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Product name:"
-        android:labelFor="@+id/edt_product_name"
-        android:id="@+id/textView" />
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_default_margin_small"
+        tools:showIn="@layout/fragment_product_detail">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text|textPersonName"
-        android:ems="10"
-        android:textAlignment="center"
-        android:id="@+id/edt_product_name"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPersonName"
+                android:ems="10"
+                android:enabled="false"
+                android:textAlignment="center"
+                android:id="@+id/edt_product_name"/>
 
-    <include layout="@layout/include_space_4dp"/>
+            <include layout="@layout/include_space_4dp"/>
 
-    <include layout="@layout/include_product_amount"/>
+            <include layout="@layout/include_product_amount"/>
 
-    <include layout="@layout/include_space_4dp"/>
+            <include layout="@layout/include_space_4dp"/>
 
-    <include layout="@layout/include_product_sale_price"/>
+            <include layout="@layout/include_product_sale_price"/>
 
-    <include layout="@layout/include_space_4dp"/>
+            <include layout="@layout/include_space_4dp"/>
 
-    <include layout="@layout/include_product_department"/>
+            <include layout="@layout/include_product_department"/>
 
-    <include layout="@layout/include_space_4dp"/>
+            <include layout="@layout/include_space_4dp"/>
 
-    <Button
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:drawablePadding="4dp"
-        android:textColor="@android:color/white"
-        android:drawableEnd="@drawable/ic_description_white_24dp"
-        android:text="See recipe"
-        android:id="@+id/btn_see_recipe" />
-    <include layout="@layout/include_space_4dp"/>
-
-    <Button
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:drawablePadding="4dp"
-        android:textColor="@android:color/white"
-        android:drawableEnd="@drawable/ic_shopping_basket_white_24dp"
-        android:text="Packages"
-        android:id="@+id/btn_see_package" />
+            <Button
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector"
+                android:drawablePadding="4dp"
+                android:textColor="@android:color/white"
+                android:drawableEnd="@drawable/ic_description_white_24dp"
+                android:text="@string/recipe"
+                android:enabled="false"
+                android:id="@+id/btn_see_recipe" />
+            <include layout="@layout/include_space_4dp"/>
 
 
-    <include layout="@layout/include_space_8dp"/>
 
-    <include layout="@layout/include_space_4dp"/>
+            <Button
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector"
+                android:drawablePadding="4dp"
+                android:enabled="false"
+                android:textColor="@android:color/white"
+                android:drawableEnd="@drawable/ic_shopping_basket_white_24dp"
+                android:text="@string/combos"
+                android:id="@+id/btn_see_package" />
 
+            <include layout="@layout/include_space_8dp"/>
 
-</LinearLayout>
+            <include layout="@layout/include_space_8dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/txt_product_type"
+                    android:layout_alignParentTop="true"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/buy_and_sell_product"/>
+
+                <TextView
+                    android:layout_below="@+id/txt_product_type"
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buy_and_sell_product_summary"
+                    android:layout_toStartOf="@+id/chk_product_type" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:enabled="false"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/chk_product_type" />
+            </RelativeLayout>
+
+            <include layout="@layout/include_space_8dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/txt_buy_sell"
+                    android:layout_alignParentTop="true"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/made_when_sold"/>
+
+                <TextView
+                    android:layout_below="@+id/txt_buy_sell"
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/made_when_sold_summary"
+                    android:layout_toStartOf="@+id/chk_is_made_on_sale" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:enabled="false"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/chk_is_made_on_sale" />
+            </RelativeLayout>
+
+            <include layout="@layout/include_space_8dp"/>
+
+            <Button
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector"
+                android:drawablePadding="4dp"
+                android:enabled="false"
+                android:textColor="@android:color/white"
+                android:drawableEnd="@drawable/ic_playlist_add_check_white_24dp"
+                android:text="@string/inventory_adjustments"
+                android:id="@+id/btn_inventory_adjustments" />
+            <include layout="@layout/include_space_4dp"/>
+
+        </LinearLayout>
+</ScrollView>

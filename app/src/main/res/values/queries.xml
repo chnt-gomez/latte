@@ -12,7 +12,7 @@
         Product.Id = ?
     </string>
 
-    <string name="q_get_products_from_material" >
+    <string name="q_get_products_from_material" translatable="false">
         SELECT * FROM Product, Recipe, Material WHERE
         Recipe.Id = Product.Id AND Recipe.Id = Material.Id AND
         Material.Id = ?

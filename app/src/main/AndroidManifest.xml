@@ -2,37 +2,84 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.go.kchin">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
+        android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.orm.SugarApp">
+        android:theme="@style/AppTheme">
 
-        <meta-data android:name="DATABASE" android:value="kchin.db" />
-        <meta-data android:name="VERSION" android:value="2" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.go.kchin.model.database"/>
+        <meta-data
+            android:name="DATABASE"
+            android:value="kchin.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.go.kchin.model.database" />
 
         <activity
             android:name=".presenter.activities.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".presenter.activities.ProductsActivity"/>
-        <activity android:name=".presenter.activities.ProductActivity"/>
-        <activity android:name=".presenter.activities.DepartmentsActivity"/>
-        <activity android:name=".presenter.activities.MaterialsActivity" />
-        <activity android:name=".presenter.activities.MaterialActivity"/>
-        <activity android:name=".presenter.activities.SaleActivity"/>
-        <activity android:name=".presenter.activities.QuickReportActivity"/>
+        <activity android:name=".presenter.activities.ProductsActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait">
+            <meta-data
+                android:name="searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity android:name=".presenter.activities.ProductActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".presenter.activities.DepartmentsActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".presenter.activities.MaterialsActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity android:name=".presenter.activities.MaterialActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".presenter.activities.SaleActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait">
+            <meta-data
+                android:name="searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:name=".presenter.activities.QuickReportActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait"/>
+        <activity
+            android:name=".presenter.activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".presenter.activities.LowInventoryActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".presenter.activities.PurchasesReportActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait"/>
     </application>
 
 </manifest>

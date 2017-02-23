@@ -8,4 +8,5 @@ public interface LoaderRequiredOps {
     void onPreLoad();
     void onLoad();
     void onDoneLoading();
+    void onSearch(String query);
 }

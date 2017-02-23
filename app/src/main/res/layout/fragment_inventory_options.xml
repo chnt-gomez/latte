@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_default_margin_small">
+
+
+    <Button
+        android:text="@string/products"
+        android:layout_width="match_parent"
+        android:background="@drawable/selector"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_see_products" />
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_default_margin_small" />
+
+
+    <Button
+        android:text="@string/materials"
+        android:layout_width="match_parent"
+        android:background="@drawable/selector"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_see_materials" />
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_default_margin_small" />
+
+    <Button
+        android:text="@string/departments"
+        android:layout_width="match_parent"
+        android:background="@drawable/selector"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_see_departments" />
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_default_margin_small" />
+
+    <Button
+        android:text="@string/low_inventory"
+        android:layout_width="match_parent"
+        android:background="@drawable/selector"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_low_inventory" />
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_default_margin_small"/>
+
+    <Button
+        android:text="@string/purchases"
+        android:layout_width="match_parent"
+        android:background="@drawable/selector"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_purchases_report" />
+
+</LinearLayout>

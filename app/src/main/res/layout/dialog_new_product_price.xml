@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_default_margin_small"
         android:background="@color/colorWarning"
-        android:text="Changing the product sale price will affect current sales report. Consider this action only after today's cut or after saving a partial day report."/>
+        android:text="@string/change_price_warning"/>
 
     <include layout="@layout/include_space_4dp"/>
 

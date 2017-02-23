@@ -17,9 +17,6 @@ public class Material extends SugarRecord {
     public float materialRemaining;
     public float materialPurchaseCost;
     public int materialStatus;
-
-    List<Recipe> getRecipes(){
-        return Recipe.find(Recipe.class, "material = ?", getId().toString());
-    }
+    public int materialIndicator;
 
 }

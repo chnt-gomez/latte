@@ -1,28 +1,56 @@
 package com.go.kchin.view.fragment;
 
+import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.QuickSaleAdapter;
+import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.model.PDFBuilder;
+import com.go.kchin.model.database.Sale;
+import com.go.kchin.model.database.SaleTicket;
 import com.go.kchin.presenter.activities.QuickReportActivity;
+import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.util.dialog.loader.Loader;
 import com.go.kchin.util.dialog.number.Number;
+import com.itextpdf.text.DocumentException;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.R.attr.permission;
+import static com.go.kchin.R.string.date;
+import static com.go.kchin.R.string.sales;
 
 /**
  * Created by MAV1GA on 24/01/2017.
  */
 
-public class QuickReportFragment extends BaseFragment {
+public class QuickReportFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener{
 
     @BindView(R.id.txt_sale_total)
     TextView txtSaleTotal;
@@ -39,8 +67,9 @@ public class QuickReportFragment extends BaseFragment {
     @BindView(R.id.btn_date)
     Button btnDate;
 
-    @BindView(R.id.btn_see_details)
-    Button btnSeeDetails;
+
+    private File pdfFile;
+    private DateTime currentDateTime = null;
 
     private MainMVP.QuickReportPresenterOps mReportPresenter;
     private QuickSaleAdapter adapter;
@@ -56,22 +85,25 @@ public class QuickReportFragment extends BaseFragment {
     @Override
     protected void init() {
         super.init();
+        currentDateTime = DateTime.now();
         adapter = new QuickSaleAdapter();
         reload();
     }
 
     @Override
     public void onLoad() {
+
         super.onLoad();
 
+
         adapter.setTotalSales(Number.floatToStringAsPrice(
-                mReportPresenter.getDaySaleTotal(DateTime.now()),false));
+                mReportPresenter.getDaySaleTotal(currentDateTime),false));
         adapter.setTotalPurchases(Number.floatToStringAsPrice(
-                mReportPresenter.getDayPurchasesTotal(DateTime.now()),false));
+                mReportPresenter.getDayPurchasesTotal(currentDateTime),false));
         adapter.setTotalEarnings(Number.floatToStringAsPrice(
-                mReportPresenter.getNetEarnings(DateTime.now()), false));
-        adapter.setTicketIds(mReportPresenter.getRecordedTicketsIdRange(DateTime.now()));
-        adapter.setDate(DateTime.now());
+                mReportPresenter.getNetEarnings(currentDateTime), false));
+        adapter.setTicketIds(mReportPresenter.getRecordedTicketsIdRange(currentDateTime));
+        adapter.setDate(currentDateTime);
 
     }
 
@@ -81,9 +113,20 @@ public class QuickReportFragment extends BaseFragment {
         updateView();
     }
 
+    @OnClick(R.id.btn_date)
+    public void onDatePickClick(View v){
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        // Create a new instance of DatePickerDialog and return it
+        new DatePickerDialog(getActivity(), this, year, month, day).show();
+    }
+
     @OnClick(R.id.btn_see_details)
     public void moveToDetail(View view){
-       mPresenter.moveToFragment(DetailedQuickReport.newInstance());
+       mPresenter.moveToFragment(DetailedQuickReport.newInstance(currentDateTime));
     }
 
     private void updateView() {
@@ -92,6 +135,75 @@ public class QuickReportFragment extends BaseFragment {
         btnDate.setText(adapter.getFormattedDate());
         txtSaleTickets.setText(adapter.getFormattedTickets());
         txtTotalEarnings.setText(adapter.getTotalEarnings());
+    }
+
+
+    @OnClick(R.id.btn_save_pdf)
+    public void onPdfClick(View v){
+
+        buildPdf();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void buildPdf() {
+        Loader loader = new Loader(new LoaderRequiredOps() {
+
+            @Override
+            public void onPreLoad() {
+                Dialogs.buildLoadingDialog(getContext(), getString(R.string.building_pdf)).
+                        show();
+            }
+
+            @Override
+            public void onLoad() {
+
+                try {
+                    pdfFile = PDFBuilder.buildSalesReport(getContext(), buildPdfName(),
+                            adapter, getResources(), mReportPresenter, currentDateTime);
+                } catch (DocumentException e) {
+
+                } catch (IOException e) {
+
+                }
+            }
+
+            @Override
+            public void onDoneLoading() {
+                Dialogs.dismiss();
+                if (pdfFile != null) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onSearch(String query) {
+
+            }
+        });
+
+        if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            loader.execute();
+        }else {
+            requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+    }
+
+    @Override
+    public void onPermissionGranted() {
+        super.onPermissionGranted();
+    }
+
+    private String buildPdfName() {
+        DateTimeFormatter dtf = DateTimeFormat.forPattern("dd_MM_yyyy_HH_mm");
+        return dtf.print(currentDateTime)+getString(R.string.sale_report)+(".pdf");
     }
 
     private void reload() {
@@ -110,4 +222,21 @@ public class QuickReportFragment extends BaseFragment {
         mReportPresenter = null;
         super.onDetach();
     }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        DateTime date = new DateTime(year, monthOfYear+1, dayOfMonth,
+                DateTime.now().getHourOfDay(), DateTime.now().getMinuteOfHour());
+        reloadWithDate(date);
+    }
+
+    private void reloadWithDate(DateTime date) {
+        currentDateTime = date;
+        if (currentDateTime.getMillis() > DateTime.now().getMillis()){
+            showMessage(R.string.cannot_travel_in_time);
+            currentDateTime = DateTime.now();
+        }
+        reload();
+    }
+
 }

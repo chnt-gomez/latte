@@ -2,6 +2,7 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -56,9 +57,15 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
         return fragment;
     }
 
-    private void reload(){
+    private void reload(@Nullable String query){
         final Loader loader = new Loader(this);
-        loader.execute();
+        loader.execute(query);
+    }
+
+    @Override
+    public void onOperationSuccesfull(String message, @Nullable long rowId) {
+        super.onOperationSuccesfull(message, rowId);
+        updateListView();
     }
 
     @Override
@@ -67,11 +74,14 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
         mSalesPresenter = (MainMVP.SalesPresenterOps)context;
     }
 
+
+
     @Override
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
-        reload();
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
+        reload(null);
         listView.setOnItemClickListener(this);
         slideLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -81,7 +91,6 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                Log.d(getClass().getSimpleName(), "Panel changed from "+previousState.name() +" To "+newState.name());
                 if (newState == SlidingUpPanelLayout.PanelState.EXPANDED){
                     txtTotal.setCompoundDrawablesWithIntrinsicBounds
                             (R.drawable.ic_attach_money_white_24dp, 0, R.drawable.ic_keyboard_arrow_down_white_24dp, 0);
@@ -94,8 +103,18 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
         });
         saleAdapter = new SaleAdapter(getContext(), R.layout.row_sell_item, new ArrayList<Sale>());
         saleListView.setAdapter(saleAdapter);
+        saleListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                saleAdapter.remove(saleAdapter.getItem(position));
+                txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
+                return true;
+            }
+        });
         txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
     }
+
+
 
     @Override
     public void onOperationSuccesfull(String message) {
@@ -107,12 +126,19 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
             saleAdapter.clear();
             txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
         }
+        reload(null);
     }
 
     @Override
     public void onLoad() {
         productListAdapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
                 mSalesPresenter.getProducts());
+    }
+
+    @Override
+    public void onSearch(String query) {
+        productListAdapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
+                mSalesPresenter.getAllProducts(query));
     }
 
     @Override
@@ -147,5 +173,11 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
         saleAdapter.add(sale);
         txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
         showMessage(R.string.added_to_kart);
+    }
+
+    @Override
+    public void search(String query) {
+        super.search(query);
+        reload(query);
     }
 }

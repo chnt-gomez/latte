@@ -3,6 +3,7 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +16,7 @@ import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.presenter.activities.MaterialActivity;
 import com.go.kchin.util.dialog.Dialogs;
-
+import com.go.kchin.util.dialog.loader.Loader;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -34,7 +35,7 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
     public static MaterialListFragment newInstance(){
         MaterialListFragment fragment = new MaterialListFragment();
         Bundle args = new Bundle();
-        args.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory);
+        args.putInt(LAYOUT_RES_ID, R.layout.fragment_material_list);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,7 +43,7 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
     @Override
     public void onNewMaterial(Material material) {
         mMaterialsPresenter.newMaterial(material);
-        reload();
+        reload(null);
     }
 
     @Override
@@ -57,7 +58,11 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
         super.onDetach();
     }
 
-
+    @Override
+    public void search(@Nullable String query) {
+        super.search(query);
+        reload(query);
+    }
 
     @OnClick(R.id.btn_add)
     public void newMaterial(View view){
@@ -69,7 +74,7 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
-        reload();
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -91,13 +96,43 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
         startActivity(intent);
     }
 
-    private void reload(){
+    @Override
+    public void onResume() {
+        super.onResume();
+        reload(null);
+    }
+
+    private void reload(@Nullable String query){
+
+        final Loader loader = new Loader(this);
+        loader.execute(query);
+
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
         adapter = new MaterialListAdapter(getContext(), R.layout.row_material_item,
-                mMaterialsPresenter.getAllMaterials());
-        if (listView != null) {
+            mMaterialsPresenter.getAllMaterials());
+    }
+
+    @Override
+    public void onSearch(String query) {
+        adapter = new MaterialListAdapter(getContext(), R.layout.row_material_item,
+                mMaterialsPresenter.getMaterials(query));
+    }
+
+    @Override
+    public void onDoneLoading() {
+        super.onDoneLoading();
+        updateListView();
+    }
+
+    private void updateListView() {
+        if(adapter != null && listView != null){
             listView.setAdapter(adapter);
         }else{
-            throw new RuntimeException("Either adapter or listview is not correctly initialized");
+            throw new RuntimeException("Either the Adapter or ListView is not correctly initialized");
         }
     }
 }

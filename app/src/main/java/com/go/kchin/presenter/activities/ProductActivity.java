@@ -2,10 +2,13 @@ package com.go.kchin.presenter.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.Recipe;
 import com.go.kchin.view.fragment.ProductDetailFragment;
 
 import java.util.List;
@@ -22,6 +25,7 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_product_details);
     }
 
     @Override
@@ -59,7 +63,7 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     }
 
     @Override
-    public List<Material> getRecipe(long aLong) {
+    public List<Recipe> getRecipe(long aLong) {
         return mModel.getRecipeFromProduct(aLong);
     }
 
@@ -71,5 +75,15 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     @Override
     public void addMaterialToProductRecipe(long aLong, Material item) {
         mModel.addMaterialToRecipe(aLong, item);
+    }
+
+    @Override
+    public void buyMore(long productId, float arg, float cost) {
+        mModel.buyProduct(productId, arg, cost);
+    }
+
+    @Override
+    public void setRecipeMaterialAmount(long recipeId, float amount) {
+        mModel.updateRecipe(recipeId, amount);
     }
 }

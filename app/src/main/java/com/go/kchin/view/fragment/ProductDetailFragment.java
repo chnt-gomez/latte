@@ -1,29 +1,25 @@
 package com.go.kchin.view.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
+import com.go.kchin.model.SimplePurchase;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.util.dialog.MeasurePicker;
 import com.go.kchin.util.dialog.loader.Loader;
 import com.go.kchin.util.dialog.number.Number;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -43,7 +39,10 @@ public class ProductDetailFragment extends BaseFragment{
     @BindView(R.id.btn_sale_price)Button btnSellPrice;
     @BindView(R.id.btn_see_recipe)Button btnRecipe;
     @BindView(R.id.btn_see_package)Button btnPackages;
-    @BindView(R.id.btn_save)FloatingActionButton btnSave;
+    @BindView(R.id.chk_product_type)CheckBox chkProductType;
+    @BindView(R.id.chk_is_made_on_sale)CheckBox chkMadeOnSale;
+    @BindView(R.id.btn_edit) FloatingActionButton btnEdit;
+    @BindView(R.id.btn_inventory_adjustments) Button btnInventoryAdjustements;
 
     public static ProductDetailFragment newInstance(long productId){
         ProductDetailFragment fragment = new ProductDetailFragment();
@@ -52,6 +51,24 @@ public class ProductDetailFragment extends BaseFragment{
         arguments.putLong(PRODUCT_ID, productId);
         fragment.setArguments(arguments);
         return fragment;
+    }
+
+    @Override
+    public void onPause() {
+        save();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.setActivityTitle(getString(R.string.title_product_details));
+        reload();
+    }
+
+    @OnClick(R.id.btn_edit)
+    public void onEditClick(View v){
+        onRequestEdit();
     }
 
     @Override
@@ -64,8 +81,6 @@ public class ProductDetailFragment extends BaseFragment{
         Loader loader = new Loader(this);
         loader.execute();
     }
-
-
 
     @Override
     public void onLoad() {
@@ -85,11 +100,28 @@ public class ProductDetailFragment extends BaseFragment{
                         product.department.getId()));
             btnSellPrice.setText(Number.floatToStringAsPrice(product.productSellPrice, false));
             spnProductMeasure.setSelection(product.productMeasureUnit);
+            if (product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL){
+                chkProductType.setChecked(true);
+            }else{
+                chkProductType.setChecked(false);
+            }
+
+            if (product.madeOnSell == Product.PRODUCT_MADE_AND_SELL){
+                chkMadeOnSale.setChecked(true);
+            }else{
+                chkMadeOnSale.setChecked(false);
+            }
         }
     }
 
-    @OnClick(R.id.btn_save)
-    public void save(View view){
+    @Override
+    public void onOperationSuccesfull(String message) {
+        reload();
+    }
+
+    public void save(){
+        product.productName = edtProductName.getText().toString();
+        product.productMeasureUnit = spnProductMeasure.getSelectedItemPosition();
         mProductPresenter.saveProduct(product);
     }
 
@@ -121,20 +153,72 @@ public class ProductDetailFragment extends BaseFragment{
 
     @OnClick(R.id.btn_product_amount)
     public void buyMore(View view){
-        Dialogs.newFloatDialog(getContext(), getString(R.string.buy_more), null, new RequiredDialogOps.NewFloatOps(){
+        Dialogs.newPurchaseDialog(getContext(), getString(R.string.buy_more), null, new RequiredDialogOps.RequiredNewPurchaseOps(){
             @Override
-            public void onNewFloat(float arg) {
-                product.productRemaining += arg;
-                btnProductRemaining.setText(Number.floatToStringAsNumber(product.productRemaining));
+            public void onNewPurchase(SimplePurchase arg) {
+                mProductPresenter.buyMore(product.getId(), arg.getPurchasedItems(), arg.getPurchaseAmount());
+                reload();
             }
         }).show();
     }
 
     @Override
+    protected void enableEditMode() {
+        super.enableEditMode();
+        btnEdit.setVisibility(View.GONE);
+        if (product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL)
+            chkMadeOnSale.setEnabled(false);
+    }
+
+    @Override
     protected void init() {
         super.init();
-        reload();
+        spnProductMeasure.setEnabled(false);
+        addToEditListener(edtProductName, spnProductMeasure, btnProductDepartment, btnRecipe,
+                btnSellPrice, chkMadeOnSale, chkProductType, btnInventoryAdjustements);
+
+        chkProductType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    product.productType = Product.PRODUCT_TYPE_BUY_AND_SELL;
+                    product.madeOnSell = Product.PRODUCT_MADE_AND_STORE;
+                    chkMadeOnSale.setChecked(false);
+                    chkMadeOnSale.setEnabled(false);
+                }else{
+                    product.productType = Product.PRODUCT_TYPE_MADE;
+                    chkMadeOnSale.setEnabled(true);
+                }
+            }
+        });
+
+        chkMadeOnSale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    product.madeOnSell = Product.PRODUCT_MADE_AND_SELL;
+                    btnProductRemaining.setText(getString(R.string.without_inv));
+                    btnProductRemaining.setEnabled(false);
+                }else{
+                    btnProductRemaining.setText(Number.floatToStringAsNumber(product.productRemaining));
+                    btnProductRemaining.setEnabled(true);
+                    product.madeOnSell = Product.PRODUCT_MADE_AND_STORE;
+                }
+            }
+        });
         spnProductMeasure.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
                 MeasurePicker.getEntries(getResources())));
+    }
+
+    @OnClick(R.id.btn_inventory_adjustments)
+    public void onAdjustmentsClick(View v){
+        Dialogs.newFloatDialog(getContext(), getString(R.string.set_new_amount), getString(R.string.administration_amount_change), new RequiredDialogOps.NewFloatOps() {
+            @Override
+            public void onNewFloat(float arg) {
+                product.productRemaining = arg;
+                save();
+                reload();
+            }
+        }).show();
     }
 }

@@ -14,6 +14,7 @@ public class Sale extends SugarRecord {
 
     public SaleTicket saleTicket;
 
+    public String saleConcept;
     public float productAmount;
     public float saleTotal;
 

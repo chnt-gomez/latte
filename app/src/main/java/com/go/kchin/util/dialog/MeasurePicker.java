@@ -1,10 +1,6 @@
 package com.go.kchin.util.dialog;
-
-import android.content.Context;
 import android.content.res.Resources;
-
 import com.go.kchin.R;
-import com.go.kchin.interfaces.MainMVP;
 
 /**
  * Created by MAV1GA on 25/01/2017.

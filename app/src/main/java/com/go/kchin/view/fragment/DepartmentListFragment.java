@@ -32,7 +32,7 @@ public class DepartmentListFragment extends BaseFragment implements
     public static DepartmentListFragment newInstance(){
         DepartmentListFragment fragment = new DepartmentListFragment();
         Bundle args = new Bundle();
-        args.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory);
+        args.putInt(LAYOUT_RES_ID, R.layout.fragment_department_list);
         fragment.setArguments(args);
         return fragment;
     }

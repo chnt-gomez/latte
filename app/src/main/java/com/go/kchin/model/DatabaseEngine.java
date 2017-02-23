@@ -9,12 +9,14 @@ import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.model.database.ProductsInCombo;
+import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Recipe;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +28,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     private static DatabaseEngine instance;
 
     private static MainMVP.RequiredPresenterOps mPresenter;
+    private static MainMVP.PreferenceAccess mPreferencePresenter;
 
     public static DatabaseEngine getInstance(MainMVP.RequiredPresenterOps presenter){
         if (instance == null){
@@ -33,14 +36,13 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         }
         instance.setPresenter(presenter);
         return instance;
-
-
-
     }
 
     private void setPresenter(MainMVP.RequiredPresenterOps presenter){
         mPresenter = presenter;
     }
+
+    private void setPreferencesPresenter(MainMVP.PreferenceAccess presenter) { mPreferencePresenter = presenter;}
 
     private DatabaseEngine (){}
 
@@ -63,14 +65,9 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public void updateMaterial(long materialId, Material newMaterialParams) {
-        Material material = Material.findById(Material.class, materialId);
-        material.materialMeasure = newMaterialParams.materialMeasure;
-        material.materialName = newMaterialParams.materialName;
-        material.materialPurchaseCost = newMaterialParams.materialPurchaseCost;
-        material.materialRemaining = newMaterialParams.materialRemaining;
-        material.materialStatus = newMaterialParams.materialStatus;
-        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
+    public void updateMaterial(Material newMaterialParams) {
+        newMaterialParams.save();
+        //mPresenter.on(mPresenter.getStringResource(R.string.saved));
     }
 
     @Override
@@ -90,7 +87,12 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public List<Material> getRecipeFromProduct(long productId) {
+    public List<Material> getMaterials(String query) {
+        String formatedSearchQuery = formatForQuery(query);
+        return Material.find(Material.class, "material_name LIKE ?", "%"+formatedSearchQuery+"%");
+    }
+
+    public List<Material> getMaterialsFromProduct(long productId) {
         return Material.findWithQuery(
                 Material.class, mPresenter.getStringResource(R.string.q_get_recipe_from_product),
                 String.valueOf(productId));
@@ -104,8 +106,13 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
 
+    private List<Recipe> getRecipeListFromProduct(long productId){
+        return Recipe.find(Recipe.class, "product = ?", String.valueOf(productId));
+    }
+
     @Override
     public void addProduct(Product newProduct) {
+        newProduct.productType = Product.PRODUCT_TYPE_BUY_AND_SELL;
         final long operationId =newProduct.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.product_saved),
                 operationId);
@@ -114,7 +121,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void updateProduct(Product product) {
         product.save();
-        mPresenter.onOperationSuccess(R.string.saved);
+        //mPresenter.onOperationSuccess(R.string.saved);
     }
 
     @Override
@@ -124,7 +131,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         recipe.product = getProduct(aLong);
         recipe.material = item;
         recipe.save();
-        mPresenter.onOperationSuccess("Saved");
+        mPresenter.onOperationSuccess(R.string.saved);
     }
 
     @Override
@@ -132,6 +139,31 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         Product product = Product.findById(Product.class, aLong);
         product.department = item;
         updateProduct(product);
+    }
+
+    @Override
+    public void buyProduct(long productId, float purchaseAmount, float purchaseCost) {
+        Product product = Product.findById(Product.class, productId);
+        product.productRemaining += purchaseAmount;
+        if (product.madeOnSell == Product.PRODUCT_MADE_AND_STORE){
+            for(Recipe r : getRecipeListFromProduct(product.getId())){
+                Material m = r.material;
+                m.materialRemaining -= (r.MaterialAmount*purchaseAmount);
+                m.save();
+            }
+        }
+        product.save();
+
+        //Now lets save to the purchases
+
+        PurchaseOperation operation = new PurchaseOperation();
+        operation.purchaseItems = purchaseAmount;
+        operation.purchaseConcept = product.productName;
+        operation.purchaseDateTime = DateTime.now().getMillis();
+        operation.purchaseAmount = purchaseCost;
+        operation.save();
+
+        //mPresenter.onOperationSuccess(R.string.operation_complete);
     }
 
     @Override
@@ -144,6 +176,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         return Product.findWithQuery(Product.class, mPresenter.
                 getStringResource(R.string.q_get_products_in_combo),
                 String.valueOf(comboId));
+
     }
 
     @Override
@@ -160,12 +193,23 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public List<Department> getAllDepartments() {
-        return Department.listAll(Department.class);
+        List<Department> items = Department.listAll(Department.class);
+        for (Department d : items){
+            d.productsInDepartment = getProductsInDepartment(d.getId());
+        }
+        return items;
     }
 
     @Override
     public Department getDepartment(long departmentId) {
-        return Department.findById(Department.class, departmentId);
+        Department department = Department.findById(Department.class, departmentId);
+        department.productsInDepartment = getProductsInDepartment(departmentId);
+        return department;
+    }
+
+    private long getProductsInDepartment(long departmentId) {
+        return Product.count(Product.class, "department = ?",
+                new String[]{String.valueOf(departmentId)});
     }
 
     @Override
@@ -173,6 +217,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         newDepartment.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.department_saved));
     }
+
+
 
     @Override
     public void updateDepartment(long departmentId, Department department) {
@@ -217,8 +263,6 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         arg.combo = Combo.findById(Combo.class, comboId);
         arg.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
-
-
     }
 
     @Override
@@ -232,17 +276,50 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         float total = 0.0f;
         for (Sale s : currentSale){
             total += s.saleTotal;
+            if(!mPreferencePresenter.isAllowingDepletedStokSales())
+                if (s.product.productRemaining < s.productAmount){
+                    mPresenter.onOperationError(mPresenter.getStringResource(R.string.too_few_in_stock_to_sell));
+                    return;
+                }
         }
-
         ticket.saleTotal = total;
         ticket.vendor = "Toad";
         ticket.save();
-        for (Sale s : currentSale){
+        for (Sale s : currentSale) {
             s.saleTicket = ticket;
-            Log.d(getClass().getSimpleName(), "Sale saved to ticket: "+s.product+" -> "+ticket.getId() );
             s.save();
+
+            if (s.product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL ||
+                    s.product.madeOnSell == Product.PRODUCT_MADE_AND_STORE)
+                s.product.productRemaining -= s.productAmount;
+            s.product.save();
+
+            if (s.product.madeOnSell == Product.PRODUCT_MADE_AND_SELL) {
+
+                if (canMake(s.product)) {
+                    for (Recipe r : getRecipeListFromProduct(s.product.getId())) {
+                        Material m = r.material;
+                        m.materialRemaining -= r.MaterialAmount;
+                        m.save();
+                    }
+                } else {
+                    mPresenter.onOperationError(
+                            mPresenter.getStringResource(R.string.not_enough_material));
+                }
+            }
         }
-        mPresenter.onOperationSuccess("Sale applied");
+        mPresenter.onOperationSuccess(R.string.sale_applied);
+    }
+
+    private boolean canMake(Product product){
+        if (mPreferencePresenter.isAllowingDepletedProduction())
+            return true;
+        for (Recipe r : getRecipeListFromProduct(product.getId())){
+            Material m = r.material;
+            if (r.MaterialAmount > m.materialRemaining)
+                return false;
+        }
+        return true;
     }
 
     @Override
@@ -252,8 +329,70 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter) {
+    public void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter, MainMVP.PreferenceAccess
+                                       preferencePresenter) {
         instance.setPresenter(presenter);
+        instance.setPreferencesPresenter(preferencePresenter);
+
+    }
+
+    @Override
+    public List<Product> getProducts(String query) {
+        String formatedSearchQuery = formatForQuery(query);
+        return Product.find(Product.class, "product_name LIKE ?", "%"+formatedSearchQuery+"%");
+    }
+
+    @Override
+    public List<DepletedItem> getDepletedMaterials() {
+        List<Material> materialItems = getAllMaterials();
+        List<DepletedItem> purchaseList = new ArrayList<>();
+        for (Material m : materialItems){
+            if (m.materialRemaining <= 10 )
+                purchaseList.add(DepletedItem.fromMaterial(m));
+        }
+        return purchaseList;
+    }
+
+    @Override
+    public List<DepletedItem> getDepletedProducts() {
+        List<Product> productlItems = getAllProducts();
+        List<DepletedItem> purchaseList = new ArrayList<>();
+        for (Product p : productlItems){
+            if (p.productRemaining <= 10 )
+                purchaseList.add(DepletedItem.fromProduct(p));
+        }
+        return purchaseList;
+    }
+
+    @Override
+    public List<DepletedItem> getAllDepletedArticles() {
+        List<DepletedItem> purchaseList = new ArrayList<>();
+        purchaseList.addAll(getDepletedMaterials());
+        purchaseList.addAll(getDepletedProducts());
+        return purchaseList;
+    }
+
+    @Override
+    public void buyMaterial(long purchaseId, float arg, float purchaseCost) {
+        Material material = Material.findById(Material.class, purchaseId);
+        material.materialRemaining += arg;
+        material.save();
+
+        //Add it to purchases
+
+        PurchaseOperation operation = new PurchaseOperation();
+        operation.purchaseItems = arg;
+        operation.purchaseConcept = material.materialName;
+        operation.purchaseAmount = purchaseCost;
+        operation.purchaseDateTime = DateTime.now().getMillis();
+        operation.save();
+
+        mPresenter.onOperationSuccess(R.string.operation_complete);
+    }
+
+    @Override
+    public List<Recipe> getRecipeFromProduct(long productId) {
+        return getRecipeListFromProduct(productId);
     }
 
     @Override
@@ -268,5 +407,18 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public List<Sale> getSalesInTicket(SaleTicket ticket){
         String ticketId = String.valueOf(ticket.getId());
         return Sale.find(Sale.class, "sale_ticket = ?", ticketId );
+    }
+
+    @Override
+    public List<PurchaseOperation> getPurchases(DateTime dateTime) {
+        String millsAtMorning = String.valueOf(dateTime.withTimeAtStartOfDay().getMillis());
+        String millsAtMidnight = String.valueOf(dateTime.plusDays(1).withTimeAtStartOfDay().getMillis());
+        String params[] = {millsAtMorning, millsAtMidnight};
+        return PurchaseOperation.find(PurchaseOperation.class, "purchase_date_time > ? and purchase_date_time < ?",
+                params);
+    }
+
+    private static String formatForQuery(String rawQuery){
+        return rawQuery.replace(" ", "%");
     }
 }

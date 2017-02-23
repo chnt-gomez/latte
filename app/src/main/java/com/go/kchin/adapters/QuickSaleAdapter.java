@@ -61,6 +61,13 @@ public class QuickSaleAdapter {
     }
 
     public String getFormattedTickets() {
-        return String.valueOf(ticketIds[0]+ " - "+ticketIds[1]);
+        if (ticketIds[0] != -1) {
+            if (ticketIds[1] != -1){
+                return String.valueOf(ticketIds[0]+ " - "+ticketIds[1]);
+            }
+            return String.valueOf(ticketIds[0]);
+        }else{
+            return " -- - --";
+        }
     }
 }

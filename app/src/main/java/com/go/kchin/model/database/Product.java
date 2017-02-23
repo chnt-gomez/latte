@@ -1,6 +1,7 @@
 package com.go.kchin.model.database;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.util.List;
 
@@ -14,72 +15,32 @@ public class Product extends SugarRecord {
 
     public String productName;
     public float productRemaining;
-    public int productMeasureType;
     public int productMeasureUnit;
     public float productSellPrice;
     public int productStatus;
     public float productPurchaseCost;
+    public int productType;
+    public int madeOnSell;
+    public int productIndicator;
+
+    @Ignore
+    public static final int PRODUCT_TYPE_BUY_AND_SELL = 1;
+
+    @Ignore
+    public static final int PRODUCT_TYPE_MADE = 0;
+
+    @Ignore
+    public static final int PRODUCT_MADE_AND_STORE = 0;
+
+    @Ignore
+    public static final int PRODUCT_MADE_AND_SELL = 1;
+
 
     public Department department;
 
-    List<Material> getRecipe(){
-        return Material.find(Material.class, "product = ?", getId().toString());
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public float getProductRemaining() {
-        return productRemaining;
-    }
-
-    public void setProductRemaining(float productRemaining) {
-        this.productRemaining = productRemaining;
-    }
-
-    public int getProductMeasureType() {
-        return productMeasureType;
-    }
-
-    public void setProductMeasureType(int productMeasureType) {
-        this.productMeasureType = productMeasureType;
-    }
-
-    public int getProductMeasureUnit() {
-        return productMeasureUnit;
-    }
-
-    public void setProductMeasureUnit(int productMeasureUnit) {
-        this.productMeasureUnit = productMeasureUnit;
-    }
-
-    public float getProductSellPrice() {
-        return productSellPrice;
-    }
 
     public void setProductSellPrice(float productSellPrice) {
         this.productSellPrice = productSellPrice;
-    }
-
-    public int getProductStatus() {
-        return productStatus;
-    }
-
-    public void setProductStatus(int productStatus) {
-        this.productStatus = productStatus;
-    }
-
-    public float getProductPurchaseCost() {
-        return productPurchaseCost;
-    }
-
-    public void setProductPurchaseCost(float productPurchaseCost) {
-        this.productPurchaseCost = productPurchaseCost;
     }
 
     public String getDepartmentName() {

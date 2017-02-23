@@ -1,15 +1,17 @@
 package com.go.kchin.interfaces;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
+import com.go.kchin.model.DepletedItem;
 import com.go.kchin.model.database.Combo;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.PurchaseOperation;
+import com.go.kchin.model.database.Recipe;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
-import com.go.kchin.presenter.activities.BaseActivity;
 import com.go.kchin.view.fragment.BaseFragment;
 
 import org.joda.time.DateTime;
@@ -34,6 +36,8 @@ public interface MainMVP {
         void showMessage(int resourceString);
         void showError(String msg);
         void onOperationError(String msg, long rowId);
+        void search(String query);
+
 
         //All other ops
     }
@@ -47,6 +51,7 @@ public interface MainMVP {
         void moveToActivity(Class activity, Bundle args);
         void moveToFragment(BaseFragment fragment);
         void setViewLayer(MainMVP.RequiredViewOps fragment);
+        void setActivityTitle(String title);
     }
 
     /**
@@ -60,6 +65,7 @@ public interface MainMVP {
         void onOperationSuccess(int resource);
         void onOperationError(String message);
         String getStringResource(int stringResource);
+        SharedPreferences getSharedPreferences();
         //Any other returning operation
     }
 
@@ -82,6 +88,16 @@ public interface MainMVP {
          * @param productId Product Id reference
          */
         Product findProduct(long productId);
+
+        List<Product> getAllProducts(String query);
+    }
+
+    interface PurchasesPresenterOps{
+
+        List<PurchaseOperation> getPurchases(DateTime dateTime);
+
+        float getTotalPurchases(DateTime dateTime);
+
     }
 
     interface ProductPresenterOps{
@@ -115,11 +131,15 @@ public interface MainMVP {
          */
         void pickDepartment(long aLong, Department item);
 
-        List<Material> getRecipe(long aLong);
+        List<Recipe> getRecipe(long aLong);
 
         List<Material> getAllMaterials();
 
         void addMaterialToProductRecipe(long aLong, Material item);
+
+        void buyMore(long productId, float arg, float cost);
+
+        void setRecipeMaterialAmount(long recipeId, float amount);
     }
 
     interface DepartmentsPresenterOps {
@@ -138,6 +158,8 @@ public interface MainMVP {
          */
         List<Material> getAllMaterials();
 
+        List<Material> getMaterials(String query);
+
         /**
          * Saves a new Material
          * @param material Material object reference
@@ -153,6 +175,13 @@ public interface MainMVP {
          * @param materialId Material Id reference
          */
         Material getMaterial(long materialId);
+
+        /**
+         * Saves the actual state of the Material object
+         */
+        void save(Material material);
+
+        void buyMore(long materialId, float materialAmount, float purchaseCost);
 
     }
 
@@ -194,6 +223,10 @@ public interface MainMVP {
          * id of the sale
          */
         long[] getRecordedTicketsIdRange(DateTime date);
+
+        List<SaleTicket> getDaySaleTickets(DateTime time);
+
+        List<Sale> getSalesInTicket(SaleTicket saleTicket);
     }
 
     interface SalesPresenterOps {
@@ -201,6 +234,8 @@ public interface MainMVP {
         void applyCurrentSale(List<Sale> sale);
 
         List<Product> getProducts();
+
+        List<Product> getAllProducts(String query);
 
         /**
          * Converts a product into a sale and adds it to the Current Sale adapter
@@ -240,10 +275,9 @@ public interface MainMVP {
         /**
          * Updates the parameters of a Material
          *
-         * @param materialId        Material id reference
          * @param newMaterialParams new Material parameters
          */
-        void updateMaterial(long materialId, Material newMaterialParams);
+        void updateMaterial(Material newMaterialParams);
 
         /**
          * Sets the status of the Material to active
@@ -264,12 +298,18 @@ public interface MainMVP {
          *
          * @param productId Product Id reference
          */
-        List<Material> getRecipeFromProduct(long productId);
+        List<Material> getMaterialsFromProduct(long productId);
 
         /**
          * Updates the actual amount of Material used in a Recipe
          */
         void updateRecipe(long recipeId, float newAmount);
+
+
+        /**
+         * Searches and returns any material related to the query
+         */
+        List<Material> getMaterials(String query);
 
 
         /**
@@ -323,6 +363,11 @@ public interface MainMVP {
          * @param item  Department reference
          */
         void setProductDepartment(long aLong, Department item);
+
+        /**
+         * Buys and generates a buy record for products
+         */
+        void buyProduct(long productId, float purchaseAmount, float purchaseCost);
 
         /**
          * Department operations ----------------------------------------
@@ -398,6 +443,8 @@ public interface MainMVP {
 
         List<Sale> getSalesInTicket(SaleTicket ticket);
 
+        List<PurchaseOperation> getPurchases(DateTime dateTime);
+
         /**
          * Sales operations -----------------------------------------------
          */
@@ -405,11 +452,38 @@ public interface MainMVP {
 
         void onDestroy();
 
-        void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter);
+        void onConfigurationChanged(MainMVP.RequiredPresenterOps presenter, MainMVP.PreferenceAccess
+                                    sPreferencesPresenter);
 
 
+        List<Product> getProducts(String query);
 
+        List<DepletedItem> getDepletedMaterials();
+        List<DepletedItem> getDepletedProducts();
+        List<DepletedItem> getAllDepletedArticles();
+
+        void buyMaterial(long purchaseId, float arg, float purchaseCost);
+
+        List<Recipe> getRecipeFromProduct(long productId);
     }
 
 
+    interface PreferenceAccess {
+
+        boolean ifPasswordProtected();
+        boolean isAllowingDepletedStokSales();
+        boolean isAllowingDepletedProduction();
+        String getBusinessName();
+        String getAdministratorName();
+        boolean authorize(String password);
+
+    }
+
+    interface LowInventoryOps {
+        List<DepletedItem> getDepletedProducts();
+        List<DepletedItem> getDepletedMaterial();
+        List<DepletedItem> getAllDepletedArticles();
+
+        void purchase(DepletedItem item, float arg, float cost);
+    }
 }

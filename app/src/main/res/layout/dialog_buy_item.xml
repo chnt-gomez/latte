@@ -4,10 +4,31 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_default_margin_small">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/items_purchased"/>
+
     <EditText
+        android:hint="@string/amount_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:textAlignment="viewEnd"
         android:id="@+id/edt_item_amount" />
+
+    <include layout="@layout/include_space_8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/amount_paid" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:textAlignment="viewEnd"
+        android:id="@+id/edt_amount_paid" />
+
+
 </LinearLayout>

@@ -10,8 +10,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Material name:"
-        android:labelFor="@+id/edt_product_name"
+        android:text="@string/material_name"
+        android:labelFor="@+id/edt_material_name"
         android:id="@+id/textView" />
 
     <EditText
@@ -19,88 +19,32 @@
         android:layout_height="wrap_content"
         android:inputType="text|textPersonName"
         android:ems="10"
+        android:enabled="false"
         android:textAlignment="center"
-        android:id="@+id/edt_product_name"/>
+        android:id="@+id/edt_material_name"/>
 
     <include layout="@layout/include_space_4dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Measure and amount:"
+        android:text="@string/measure"
         android:labelFor="@+id/edt_material_unit"/>
 
     <include layout="@layout/include_material_amount"/>
 
     <include layout="@layout/include_space_8dp"/>
 
-    <TextView
-        android:text="Material details"
-        android:textSize="18sp"
-        android:padding="8dp"
-        android:drawableStart="@drawable/ic_timeline_white_24dp"
-        android:background="@color/colorPrimary"
-        android:drawablePadding="4dp"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/white"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_material_details" />
-    <include layout="@layout/include_space_4dp"/>
-    <include layout="@layout/include_material_market_price"/>
-    <include layout="@layout/include_space_4dp"/>
-
     <Button
-        android:id="@+id/btn_related_products"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
+        android:text="@string/inventory_adjustments"
+        android:drawableEnd="@drawable/ic_playlist_add_check_white_24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:drawablePadding="4dp"
+        android:enabled="false"
+        android:padding="@dimen/activity_default_margin_small"
         android:textColor="@android:color/white"
-        android:text="Related products"
-        android:drawableEnd="@drawable/ic_search_white_24dp"/>
-    <include layout="@layout/include_space_8dp"/>
+        android:background="@drawable/selector"
+        android:id="@+id/btn_inventory_adjustments" />
 
-    <include layout="@layout/include_space_4dp"/>
-
-    <TextView
-        android:text="Material settings"
-        android:textSize="18sp"
-        android:padding="8dp"
-        android:drawableStart="@drawable/ic_settings_white_24dp"
-        android:background="@color/colorPrimary"
-        android:drawablePadding="4dp"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/white"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_material_settings"/>
-
-    <LinearLayout
-        android:id="@+id/ll_material_settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/txt_material_settings">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Inventory track"
-                android:layout_weight="2"/>
-            <CheckBox
-                android:textAlignment="center"
-                android:id="@+id/chk_inventory_track"
-                android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:layout_width="match_parent"/>
-        </LinearLayout>
-    </LinearLayout>
 
 </LinearLayout>

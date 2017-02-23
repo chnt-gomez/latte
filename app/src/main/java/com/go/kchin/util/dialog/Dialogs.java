@@ -4,9 +4,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ListViewCompat;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +22,11 @@ import android.widget.TextView;
 import com.go.kchin.R;
 import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.RequiredDialogOps;
+import com.go.kchin.model.SimplePurchase;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.util.dialog.number.Number;
 
@@ -60,9 +65,9 @@ public class Dialogs {
     /**
      * Builds a dialog to create a new Product.
      * @param context The Activity reference
-     * @param message A message reference
+     * @param title A title reference
      */
-    public static Dialog newProductDialog(Context context, String message,
+    public static Dialog newProductDialog(Context context, String title,
                                           final RequiredDialogOps.RequiredNewProductOps callback){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -73,11 +78,11 @@ public class Dialogs {
         productMeasure.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item,
                 MeasurePicker.getEntries(context.getResources())));
         builder.setView(dialogView).
+                setTitle(title).
                 setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Product product = new Product();
-
                         product.productName = productName.getText().toString();
                         product.productSellPrice = Number.stringToFloat(productSellPrice.getText().toString());
                         product.productMeasureUnit = productMeasure.getSelectedItemPosition();
@@ -91,14 +96,15 @@ public class Dialogs {
     /**
      * Builds a dialog to create a new Department
      * @param context Activity reference
-     * @param message Message reference
+     * @param title A title reference
      */
-    public static Dialog newDepartmentDialog(Context context, String message,
+    public static Dialog newDepartmentDialog(Context context, String title,
                                            final RequiredDialogOps.RequiredNewDepartmentOps callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         final View dialogView = inflater.inflate(R.layout.dialog_new_department , null);
         builder.setView(dialogView).
+                setTitle(title).
                 setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -127,23 +133,23 @@ public class Dialogs {
     }
 
 
-    public static Dialog newMaterialDialog(Context context, String message,
+    public static Dialog newMaterialDialog(Context context, String title,
                                            final RequiredDialogOps.RequiredNewMaterialOps callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         final View dialogView = inflater.inflate(R.layout.dialog_new_material , null);
+        final EditText edtMaterialName = (EditText)dialogView.findViewById(R.id.edt_material_name);
+        final Spinner spnMaterialMeasure = (Spinner)dialogView.findViewById(R.id.spn_material_unit);
+        spnMaterialMeasure.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item,
+                MeasurePicker.getEntries(context.getResources())));
         builder.setView(dialogView).
+                setTitle(title).
                 setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Material material = new Material();
-                        final EditText edtMaterialName = (EditText)dialogView.findViewById(R.id.edt_material_name);
-                        final Spinner spnMaterialMeasure = (Spinner)dialogView.findViewById(R.id.spn_material_unit);
-                        final EditText edtMaterialCost = (EditText)dialogView.findViewById(R.id.edt_material_cost);
                         material.materialName = edtMaterialName.getText().toString();
                         material.materialMeasure = spnMaterialMeasure.getSelectedItemPosition();
-                        material.materialPurchaseCost = Number.stringToFloat(
-                                edtMaterialCost.getText().toString());
                         callback.onNewMaterial(material);
                     }
                 });
@@ -151,7 +157,7 @@ public class Dialogs {
         return instance;
     }
 
-    public static Dialog newApplySaleDialog(final Context context, String message, final List<Sale> sales,
+    public static Dialog newApplySaleDialog(final Context context, String title, final List<Sale> sales,
                                           final RequiredDialogOps.RequiredNewSaleOps callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -166,6 +172,7 @@ public class Dialogs {
         }
         edtTotal.setText(Number.floatToStringAsPrice(total, false));
         builder.setView(dialogView).
+                setTitle(title).
                 setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -201,11 +208,105 @@ public class Dialogs {
                 catch(NumberFormatException e){
                     Log.w(getClass().getSimpleName(), "Invalid format");
                 }
-
                 callback.onNewFloat(amount);
             }
         });
         instance = builder.create();
         return instance;
     }
+
+    public static Dialog newFloatMoneyDialog(final Context context, String title, String message,
+                                        final RequiredDialogOps.NewFloatOps callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if (title != null)
+            builder.setTitle(title);
+        if(message != null)
+            builder.setMessage(message);
+        final View dialogView = inflater.inflate(R.layout.dialog_float_amount , null);
+        builder.setView(dialogView);
+        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EditText edtAmount = (EditText)dialogView.findViewById(R.id.edt_amount);
+                edtAmount.setHint("$0.00");
+                float amount = 0.0f;
+                try{amount = Float.valueOf(edtAmount.getText().toString());}
+                catch(NumberFormatException e){
+                    Log.w(getClass().getSimpleName(), "Invalid format");
+                }
+                callback.onNewFloat(amount);
+            }
+        });
+        instance = builder.create();
+        return instance;
+    }
+
+    public static Dialog newPasswordDialog(final Context context, String title, String message,
+                                           final RequiredDialogOps.RequiredPasswordOps callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if(title != null)
+            builder.setTitle(title);
+        if(message != null){
+            builder.setMessage(message);
+        }
+        final View dialogView = inflater.inflate(R.layout.dialog_password, null);
+        builder.setView(dialogView);
+        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EditText edtPassword = (EditText)dialogView.findViewById(R.id.edt_password);
+                String password = edtPassword.getText().toString();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                    if (prefs != null && prefs.contains("password")) {
+                        if (password.equals(prefs.getString("password", null))) {
+                            callback.isAuthorized(true);
+                        } else {
+                            callback.isAuthorized(false);
+                        }
+
+                    }
+                    //TODO: what happens it there is not a password set?!
+                }
+
+        });
+        builder.setNegativeButton(context.getString(R.string.forgot_password), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                callback.recoverPassword();
+            }
+        });
+        instance = builder.create();
+        return instance;
+    }
+
+    public static Dialog newPurchaseDialog(final Context context, String title, String message,
+                                           final RequiredDialogOps.RequiredNewPurchaseOps callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if(title != null)
+            builder.setTitle(title);
+        if(message != null){
+            builder.setMessage(message);
+        }
+        final View dialogView = inflater.inflate(R.layout.dialog_buy_item, null);
+        builder.setView(dialogView);
+        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EditText edtItems = (EditText)dialogView.findViewById(R.id.edt_item_amount);
+                EditText edtCost = (EditText)dialogView.findViewById(R.id.edt_amount_paid);
+                SimplePurchase purchase = new SimplePurchase();
+                purchase.setPurchasedItems(Number.stringToFloat(edtItems.getText().toString()));
+                purchase.setPurchaseAmount(Number.stringToFloat(edtCost.getText().toString()));
+                callback.onNewPurchase(purchase);
+
+            }
+
+        });
+        instance = builder.create();
+        return instance;
+    }
+
 }

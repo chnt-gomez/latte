@@ -3,8 +3,8 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -32,14 +32,14 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     public static ProductListFragment newInstance(){
         ProductListFragment fragment = new ProductListFragment();
         Bundle arguments = new Bundle();
-        arguments.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory );
+        arguments.putInt(LAYOUT_RES_ID, R.layout.fragment_product_list );
         fragment.setArguments(arguments);
         return fragment;
     }
 
-    private void reload(){
+    private void reload(@Nullable String query){
         final Loader loader = new Loader(this);
-        loader.execute();
+        loader.execute(query);
     }
 
     @Override
@@ -62,7 +62,13 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     @Override
     public void onResume() {
         super.onResume();
-        reload();
+        reload(null);
+    }
+
+    @Override
+    public void search(String query) {
+        super.search(query);
+        reload(query);
     }
 
     @Override
@@ -75,6 +81,7 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
         FloatingActionButton btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
         addToClickListener(btnAdd);
         listView.setOnItemClickListener(this);
@@ -86,12 +93,19 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
                 mProductsPresenter.getAllProducts());
 
+
     }
 
     @Override
     public void onDoneLoading() {
         super.onDoneLoading();
         updateListView();
+    }
+
+    @Override
+    public void onSearch(String query) {
+        adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
+                mProductsPresenter.getAllProducts(query));
     }
 
     private void seeDetail(long productId){
@@ -108,6 +122,18 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         }else{
             throw new RuntimeException("Either the Adapter or ListView is not correctly initialized");
         }
+    }
+
+    @Override
+    public void onOperationSuccesfull(String message, @Nullable long rowId) {
+        super.onOperationSuccesfull(message, rowId);
+        reload(null);
+    }
+
+    @Override
+    public void onOperationSuccesfull(String message) {
+        super.onOperationSuccesfull(message);
+        reload(null);
     }
 
     @Override
