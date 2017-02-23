@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.go.kchin.R;
-import com.go.kchin.model.PurchaseOrder;
+import com.go.kchin.model.DepletedItem;
 import com.go.kchin.util.dialog.number.Number;
 
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
  * Created by MAV1GA on 16/02/2017.
  */
 
-public class LowInventoryAdapter extends ArrayAdapter<PurchaseOrder>{
+public class LowInventoryAdapter extends ArrayAdapter<DepletedItem>{
 
 
-    public LowInventoryAdapter(Context context, int resource, List<PurchaseOrder> objects) {
+    public LowInventoryAdapter(Context context, int resource, List<DepletedItem> objects) {
         super(context, resource, objects);
     }
 
@@ -37,7 +37,7 @@ public class LowInventoryAdapter extends ArrayAdapter<PurchaseOrder>{
         //TextView txtPurchaseRemaining = (TextView)view.findViewById(R.id.txt_product_remaining);
         TextView txtPurchaseRemaining = (TextView)view.findViewById(R.id.txt_product_sale_price);
 
-        String purchaseName = getItem(position).getPurchaseName();
+        String purchaseName = getItem(position).getItemName();
         String purchaseRemaining = Number.floatToStringAsNumber(getItem(position).getExistences());
 
         txtPurchaseName.setText(purchaseName);

@@ -17,6 +17,7 @@ import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.MailBuilder;
 import com.go.kchin.model.PDFBuilder;
+import com.go.kchin.model.SimplePurchase;
 import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.util.dialog.loader.Loader;
 import com.itextpdf.text.DocumentException;
@@ -160,11 +161,11 @@ public class LowInventoryFragment extends BaseFragment implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        Dialogs.newFloatDialog(getContext(), getString(R.string.buy_more), null, new RequiredDialogOps.NewFloatOps() {
+        Dialogs.newPurchaseDialog(getContext(), getString(R.string.buy_more), null, new RequiredDialogOps.RequiredNewPurchaseOps() {
             @Override
-            public void onNewFloat(float arg) {
-
-                mPurchasesPresenter.purchase(adapter.getItem(position), arg);
+            public void onNewPurchase(SimplePurchase purchase) {
+                mPurchasesPresenter.purchase(adapter.getItem(position), purchase.getPurchasedItems(),
+                        purchase.getPurchaseAmount());
             }
         }).show();
     }

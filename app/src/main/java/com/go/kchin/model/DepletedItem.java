@@ -7,12 +7,12 @@ import com.go.kchin.model.database.Product;
  * Created by MAV1GA on 16/02/2017.
  */
 
-public class PurchaseOrder {
+public class DepletedItem {
 
     private Class classType;
     private long purchaseId;
     private float existences;
-    private String purchaseName;
+    private String itemName;
 
     public Class getClassType() {
         return classType;
@@ -38,27 +38,27 @@ public class PurchaseOrder {
         this.existences = existences;
     }
 
-    public String getPurchaseName() {
-        return purchaseName;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setPurchaseName(String purchaseName) {
-        this.purchaseName = purchaseName;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public static PurchaseOrder fromMaterial(Material m) {
-        PurchaseOrder pOrder = new PurchaseOrder();
+    public static DepletedItem fromMaterial(Material m) {
+        DepletedItem pOrder = new DepletedItem();
         pOrder.setClassType(m.getClass());
-        pOrder.setPurchaseName(m.materialName);
+        pOrder.setItemName(m.materialName);
         pOrder.setExistences(m.materialRemaining);
         pOrder.setPurchaseId(m.getId());
         return pOrder;
     }
 
-    public static PurchaseOrder fromProduct(Product p){
-        PurchaseOrder pOrder = new PurchaseOrder();
+    public static DepletedItem fromProduct(Product p){
+        DepletedItem pOrder = new DepletedItem();
         pOrder.setClassType(p.getClass());
-        pOrder.setPurchaseName(p.productName);
+        pOrder.setItemName(p.productName);
         pOrder.setExistences(p.productRemaining);
         pOrder.setPurchaseId(p.getId());
         return pOrder;

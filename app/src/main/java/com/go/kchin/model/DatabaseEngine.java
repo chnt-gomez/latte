@@ -17,6 +17,7 @@ import com.go.kchin.model.database.SaleTicket;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -112,6 +113,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void addProduct(Product newProduct) {
+        newProduct.productType = Product.PRODUCT_TYPE_BUY_AND_SELL;
         final long operationId =newProduct.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.product_saved),
                 operationId);
@@ -141,7 +143,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public void buyProduct(long productId, float purchaseAmount) {
+    public void buyProduct(long productId, float purchaseAmount, float purchaseCost) {
         Product product = Product.findById(Product.class, productId);
         product.productRemaining += purchaseAmount;
         if (product.madeOnSell == Product.PRODUCT_MADE_AND_STORE){
@@ -152,7 +154,17 @@ public class DatabaseEngine implements MainMVP.ModelOps{
             }
         }
         product.save();
-        mPresenter.onOperationSuccess(R.string.operation_complete);
+
+        //Now lets save to the purchases
+
+        PurchaseOperation operation = new PurchaseOperation();
+        operation.purchaseItems = purchaseAmount;
+        operation.purchaseConcept = product.productName;
+        operation.purchaseDateTime = DateTime.now().getMillis();
+        operation.purchaseAmount = purchaseCost;
+        operation.save();
+
+        //mPresenter.onOperationSuccess(R.string.operation_complete);
     }
 
     @Override
@@ -323,40 +335,50 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public List<PurchaseOrder> getDepletedMaterials() {
+    public List<DepletedItem> getDepletedMaterials() {
         List<Material> materialItems = getAllMaterials();
-        List<PurchaseOrder> purchaseList = new ArrayList<>();
+        List<DepletedItem> purchaseList = new ArrayList<>();
         for (Material m : materialItems){
             if (m.materialRemaining <= 10 )
-                purchaseList.add(PurchaseOrder.fromMaterial(m));
+                purchaseList.add(DepletedItem.fromMaterial(m));
         }
         return purchaseList;
     }
 
     @Override
-    public List<PurchaseOrder> getDepletedProducts() {
+    public List<DepletedItem> getDepletedProducts() {
         List<Product> productlItems = getAllProducts();
-        List<PurchaseOrder> purchaseList = new ArrayList<>();
+        List<DepletedItem> purchaseList = new ArrayList<>();
         for (Product p : productlItems){
             if (p.productRemaining <= 10 )
-                purchaseList.add(PurchaseOrder.fromProduct(p));
+                purchaseList.add(DepletedItem.fromProduct(p));
         }
         return purchaseList;
     }
 
     @Override
-    public List<PurchaseOrder> getAllDepletedArticles() {
-        List<PurchaseOrder> purchaseList = new ArrayList<>();
+    public List<DepletedItem> getAllDepletedArticles() {
+        List<DepletedItem> purchaseList = new ArrayList<>();
         purchaseList.addAll(getDepletedMaterials());
         purchaseList.addAll(getDepletedProducts());
         return purchaseList;
     }
 
     @Override
-    public void buyMaterial(long purchaseId, float arg) {
+    public void buyMaterial(long purchaseId, float arg, float purchaseCost) {
         Material material = Material.findById(Material.class, purchaseId);
         material.materialRemaining += arg;
         material.save();
+
+        //Add it to purchases
+
+        PurchaseOperation operation = new PurchaseOperation();
+        operation.purchaseItems = arg;
+        operation.purchaseConcept = material.materialName;
+        operation.purchaseAmount = purchaseCost;
+        operation.purchaseDateTime = DateTime.now().getMillis();
+        operation.save();
+
         mPresenter.onOperationSuccess(R.string.operation_complete);
     }
 

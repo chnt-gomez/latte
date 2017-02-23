@@ -2,10 +2,8 @@ package com.go.kchin.interfaces;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 
-import com.go.kchin.model.PurchaseOrder;
+import com.go.kchin.model.DepletedItem;
 import com.go.kchin.model.database.Combo;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
@@ -14,7 +12,6 @@ import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Recipe;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
-import com.go.kchin.presenter.activities.BaseActivity;
 import com.go.kchin.view.fragment.BaseFragment;
 
 import org.joda.time.DateTime;
@@ -137,7 +134,7 @@ public interface MainMVP {
 
         void addMaterialToProductRecipe(long aLong, Material item);
 
-        void buyMore(long productId, float arg);
+        void buyMore(long productId, float arg, float cost);
 
         void setRecipeMaterialAmount(long recipeId, float amount);
     }
@@ -180,6 +177,8 @@ public interface MainMVP {
          * Saves the actual state of the Material object
          */
         void save(Material material);
+
+        void buyMore(long materialId, float materialAmount, float purchaseCost);
 
     }
 
@@ -365,7 +364,7 @@ public interface MainMVP {
         /**
          * Buys and generates a buy record for products
          */
-        void buyProduct(long productId, float purchaseAmount);
+        void buyProduct(long productId, float purchaseAmount, float purchaseCost);
 
         /**
          * Department operations ----------------------------------------
@@ -456,11 +455,11 @@ public interface MainMVP {
 
         List<Product> getProducts(String query);
 
-        List<PurchaseOrder> getDepletedMaterials();
-        List<PurchaseOrder> getDepletedProducts();
-        List<PurchaseOrder> getAllDepletedArticles();
+        List<DepletedItem> getDepletedMaterials();
+        List<DepletedItem> getDepletedProducts();
+        List<DepletedItem> getAllDepletedArticles();
 
-        void buyMaterial(long purchaseId, float arg);
+        void buyMaterial(long purchaseId, float arg, float purchaseCost);
 
         List<Recipe> getRecipeFromProduct(long productId);
     }
@@ -479,10 +478,10 @@ public interface MainMVP {
     }
 
     interface LowInventoryOps {
-        List<PurchaseOrder> getDepletedProducts();
-        List<PurchaseOrder> getDepletedMaterial();
-        List<PurchaseOrder> getAllDepletedArticles();
+        List<DepletedItem> getDepletedProducts();
+        List<DepletedItem> getDepletedMaterial();
+        List<DepletedItem> getAllDepletedArticles();
 
-        void purchase(PurchaseOrder item, float arg);
+        void purchase(DepletedItem item, float arg, float cost);
     }
 }

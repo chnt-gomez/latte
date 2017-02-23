@@ -1,5 +1,6 @@
 package com.go.kchin.interfaces;
 
+import com.go.kchin.model.SimplePurchase;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
@@ -56,5 +57,11 @@ public interface RequiredDialogOps {
         void isAuthorized(boolean isAuthorized);
 
         void recoverPassword();
+    }
+
+    interface RequiredNewPurchaseOps {
+
+        void onNewPurchase(SimplePurchase purchase);
+
     }
 }

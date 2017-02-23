@@ -28,7 +28,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -40,7 +39,7 @@ import java.util.List;
 public class PDFBuilder {
 
     public static File buildPurchaseOrder(Context context, String fileName,
-                                          List<PurchaseOrder> orders, Resources res) throws DocumentException, IOException{
+                                          List<DepletedItem> orders, Resources res) throws DocumentException, IOException{
         Document document = new Document();
         File file = new File (getReportsStorageDir("kchin_reports").getPath(),fileName);
         PdfWriter.getInstance(document, new FileOutputStream(file));
@@ -63,8 +62,8 @@ public class PDFBuilder {
         table.setWidths(new int[]{10,1});
 
         //Populate the Table
-        for (PurchaseOrder p : orders){
-            PdfPCell[] cells = twoColumnRow(p.getPurchaseName(), Number.floatToStringAsNumber(p.getExistences()));
+        for (DepletedItem p : orders){
+            PdfPCell[] cells = twoColumnRow(p.getItemName(), Number.floatToStringAsNumber(p.getExistences()));
                 table.addCell(cells[0]);
                 table.addCell(cells[1]);
         }

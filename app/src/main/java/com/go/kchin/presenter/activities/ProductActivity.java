@@ -75,8 +75,8 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     }
 
     @Override
-    public void buyMore(long productId, float arg) {
-        mModel.buyProduct(productId, arg);
+    public void buyMore(long productId, float arg, float cost) {
+        mModel.buyProduct(productId, arg, cost);
     }
 
     @Override

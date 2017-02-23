@@ -9,7 +9,7 @@ import com.orm.SugarRecord;
 public class PurchaseOperation extends SugarRecord {
 
     public String purchaseConcept;
-    public int purchaseItems;
+    public float purchaseItems;
     public float purchaseAmount;
     public long purchaseDateTime;
 

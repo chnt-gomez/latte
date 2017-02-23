@@ -119,4 +119,6 @@
     <string name="not_enough_material">Not enough materials to produce a product</string>
     <string name="sale_applied">Sale applied</string>
     <string name="low_inventory">Low inventory</string>
+    <string name="items_purchased">Items purchased</string>
+    <string name="amount_paid">Amount paid</string>
 </resources>

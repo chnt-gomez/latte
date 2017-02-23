@@ -1,7 +1,7 @@
 package com.go.kchin.presenter.activities;
 
 import com.go.kchin.interfaces.MainMVP;
-import com.go.kchin.model.PurchaseOrder;
+import com.go.kchin.model.DepletedItem;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.view.fragment.LowInventoryFragment;
@@ -21,28 +21,28 @@ public class LowInventoryActivity extends BaseActivity implements MainMVP.LowInv
     }
 
     @Override
-    public List<PurchaseOrder> getDepletedProducts() {
+    public List<DepletedItem> getDepletedProducts() {
         return mModel.getDepletedProducts();
     }
 
     @Override
-    public List<PurchaseOrder> getDepletedMaterial() {
+    public List<DepletedItem> getDepletedMaterial() {
         return mModel.getDepletedMaterials();
     }
 
     @Override
-    public List<PurchaseOrder> getAllDepletedArticles() {
+    public List<DepletedItem> getAllDepletedArticles() {
         return mModel.getAllDepletedArticles();
     }
 
     @Override
-    public void purchase(PurchaseOrder item, float arg) {
+    public void purchase(DepletedItem item, float arg, float cost) {
         if (item.getClassType() == Product.class){
-            mModel.buyProduct(item.getPurchaseId(), arg);
+            mModel.buyProduct(item.getPurchaseId(), arg, cost);
             return;
         }
         if (item.getClassType() == Material.class){
-            mModel.buyMaterial(item.getPurchaseId(), arg);
+            mModel.buyMaterial(item.getPurchaseId(), arg, cost);
         }
     }
 }

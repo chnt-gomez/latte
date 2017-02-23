@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
+import com.go.kchin.model.SimplePurchase;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.util.dialog.MeasurePicker;
@@ -145,11 +146,11 @@ public class ProductDetailFragment extends BaseFragment{
 
     @OnClick(R.id.btn_product_amount)
     public void buyMore(View view){
-        Dialogs.newFloatDialog(getContext(), getString(R.string.buy_more), null, new RequiredDialogOps.NewFloatOps(){
+        Dialogs.newPurchaseDialog(getContext(), getString(R.string.buy_more), null, new RequiredDialogOps.RequiredNewPurchaseOps(){
             @Override
-            public void onNewFloat(float arg) {
-                mProductPresenter.buyMore(product.getId(), arg);
-                btnProductRemaining.setText(Number.floatToStringAsNumber(product.productRemaining));
+            public void onNewPurchase(SimplePurchase arg) {
+                mProductPresenter.buyMore(product.getId(), arg.getPurchasedItems(), arg.getPurchaseAmount());
+                reload();
             }
         }).show();
     }

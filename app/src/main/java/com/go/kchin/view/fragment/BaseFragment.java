@@ -154,7 +154,7 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     @Override
     public void onPreLoad() {
-        Dialogs.buildLoadingDialog(getContext(), "Loading...").show();
+        Dialogs.buildLoadingDialog(getContext(), getResources().getString(R.string.loading)).show();
     }
 
     @Override

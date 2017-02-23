@@ -35,4 +35,9 @@ public class MaterialActivity extends BaseActivity implements MainMVP.MaterialPr
     public void save(Material material) {
         mModel.updateMaterial(material);
     }
+
+    @Override
+    public void buyMore(long materialId, float materialAmount, float purchaseCost) {
+        mModel.buyMaterial(materialId, materialAmount, purchaseCost);
+    }
 }

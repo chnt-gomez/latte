@@ -22,9 +22,11 @@ import android.widget.TextView;
 import com.go.kchin.R;
 import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.RequiredDialogOps;
+import com.go.kchin.model.SimplePurchase;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.util.dialog.number.Number;
 
@@ -274,6 +276,34 @@ public class Dialogs {
             public void onClick(DialogInterface dialog, int which) {
                 callback.recoverPassword();
             }
+        });
+        instance = builder.create();
+        return instance;
+    }
+
+    public static Dialog newPurchaseDialog(final Context context, String title, String message,
+                                           final RequiredDialogOps.RequiredNewPurchaseOps callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if(title != null)
+            builder.setTitle(title);
+        if(message != null){
+            builder.setMessage(message);
+        }
+        final View dialogView = inflater.inflate(R.layout.dialog_buy_item, null);
+        builder.setView(dialogView);
+        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EditText edtItems = (EditText)dialogView.findViewById(R.id.edt_item_amount);
+                EditText edtCost = (EditText)dialogView.findViewById(R.id.edt_amount_paid);
+                SimplePurchase purchase = new SimplePurchase();
+                purchase.setPurchasedItems(Number.stringToFloat(edtItems.getText().toString()));
+                purchase.setPurchaseAmount(Number.stringToFloat(edtCost.getText().toString()));
+                callback.onNewPurchase(purchase);
+
+            }
+
         });
         instance = builder.create();
         return instance;

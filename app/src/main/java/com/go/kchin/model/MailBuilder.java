@@ -2,7 +2,6 @@ package com.go.kchin.model;
 
 
 import com.go.kchin.R;
-import com.google.common.io.Resources;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
 
 public class MailBuilder {
 
-    public static String buildPurchaseOrder(List<PurchaseOrder> item, String storeName,
+    public static String buildPurchaseOrder(List<DepletedItem> item, String storeName,
                                             String date, android.content.res.Resources res){
         StringBuilder sb = new StringBuilder();
         sb.append("<h3 color='#1c2430'>").append(res.getString(R.string.purchase_orders)).append("<h3>");
