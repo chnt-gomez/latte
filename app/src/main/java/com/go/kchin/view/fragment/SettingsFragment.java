@@ -7,6 +7,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.preference.PreferenceManager;
 
 import com.go.kchin.R;
 
@@ -28,6 +29,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     private void init(PreferenceGroup pg){
+        boolean isEnabled = getPreferenceScreen().getSharedPreferences().getBoolean("protect_with_password", false);
+        getPreferenceScreen().findPreference("password").setEnabled(isEnabled);
         for (int i=0; i<pg.getPreferenceCount(); ++i){
             Preference p = pg.getPreference(i);
             if (p instanceof PreferenceGroup){
@@ -36,6 +39,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 setSummary(p);
             }
         }
+
     }
 
     public void setSummary(Preference pref) {
@@ -53,6 +57,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         setSummary(findPreference(key));
+        boolean isEnabled = sharedPreferences.getBoolean("protect_with_password", false);
+        getPreferenceScreen().findPreference("password").setEnabled(isEnabled);
     }
 
     @Override

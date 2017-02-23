@@ -1,11 +1,16 @@
 package com.go.kchin.view.fragment;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -37,6 +42,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static android.R.attr.permission;
 import static com.go.kchin.R.string.date;
 import static com.go.kchin.R.string.sales;
 
@@ -134,7 +140,13 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
 
     @OnClick(R.id.btn_save_pdf)
     public void onPdfClick(View v){
+
         buildPdf();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void buildPdf() {
@@ -152,9 +164,9 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
                 try {
                     pdfFile = PDFBuilder.buildSalesReport(getContext(), buildPdfName(),
                             adapter, getResources(), mReportPresenter, currentDateTime);
-                }catch (DocumentException e){
+                } catch (DocumentException e) {
 
-                }catch (IOException e){
+                } catch (IOException e) {
 
                 }
             }
@@ -162,7 +174,7 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
             @Override
             public void onDoneLoading() {
                 Dialogs.dismiss();
-                if (pdfFile != null){
+                if (pdfFile != null) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -175,7 +187,18 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
 
             }
         });
-        loader.execute();
+
+        if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            loader.execute();
+        }else {
+            requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+    }
+
+    @Override
+    public void onPermissionGranted() {
+        super.onPermissionGranted();
     }
 
     private String buildPdfName() {

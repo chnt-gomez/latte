@@ -1,12 +1,17 @@
 package com.go.kchin.view.fragment;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +41,8 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     protected MainMVP.PresenterOps mPresenter;
     private List<View> editListenerItems;
 
+    protected static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+
 
 
     protected final static String LAYOUT_RES_ID = "layout_res_id";
@@ -50,6 +57,28 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
                     }
                 }
         ).show();
+    }
+
+    protected boolean hasPermission(String permission){
+        return ContextCompat.checkSelfPermission(getActivity(),
+                permission)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    protected void requestPermission(String permission, int requestCode){
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{permission},
+                requestCode);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            onPermissionGranted();
+        }else{
+            onPermissionDenied();
+        }
     }
 
     protected void onRequestEdit(){
@@ -222,6 +251,14 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     @Override
     public void recoverPassword() {
+
+    }
+
+    public void onPermissionDenied() {
+
+    }
+
+    public void onPermissionGranted(){
 
     }
 }

@@ -39,7 +39,7 @@ public class RecipeListFragment extends BaseFragment implements AdapterView.OnIt
     public static RecipeListFragment newInstance(long productId){
         RecipeListFragment fragment = new RecipeListFragment();
         Bundle arguments = new Bundle();
-        arguments.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory);
+        arguments.putInt(LAYOUT_RES_ID, R.layout.fragment_product_recipe);
         arguments.putLong(PRODUCT_ID, productId);
         fragment.setArguments(arguments);
         return fragment;
@@ -49,6 +49,7 @@ public class RecipeListFragment extends BaseFragment implements AdapterView.OnIt
     protected void init() {
         super.init();
         listView.setOnItemClickListener(this);
+        mPresenter.setActivityTitle(getString(R.string.product_recipe));
         reload();
     }
 

@@ -26,6 +26,12 @@
             android:id="@+id/lv_inventory">
         </ListView>
 
+        <TextView android:id="@android:id/empty"
+            android:padding="@dimen/activity_default_margin_big"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/purchases_list_empty"/>
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -2,6 +2,8 @@ package com.go.kchin.presenter.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.view.fragment.MaterialDetailFragment;
@@ -14,9 +16,12 @@ public class MaterialActivity extends BaseActivity implements MainMVP.MaterialPr
 
     public static final String MATERIAL_ID = "material_id";
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_material_detail);
     }
 
     @Override

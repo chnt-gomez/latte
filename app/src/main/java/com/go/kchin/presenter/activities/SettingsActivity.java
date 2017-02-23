@@ -6,6 +6,8 @@ import com.go.kchin.view.fragment.SettingsFragment;
 
 public class SettingsActivity extends BaseActivity {
 
+
+
     @Override
     protected void init() {
         super.init();

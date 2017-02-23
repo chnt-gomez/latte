@@ -18,6 +18,7 @@ public class HomeActivity extends BaseActivity implements RequiredDialogOps.Requ
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.start);
     }
 
     @Override

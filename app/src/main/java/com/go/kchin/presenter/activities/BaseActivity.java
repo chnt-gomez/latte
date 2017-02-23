@@ -103,6 +103,11 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         mView = fragment;
     }
 
+    @Override
+    public void setActivityTitle(String title) {
+        setTitle(title);
+    }
+
 
     @Override
     public boolean ifPasswordProtected() {
@@ -120,12 +125,6 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     public boolean isAllowingDepletedProduction() {
         return PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean("allow_depleted_production", false);
-    }
-
-    @Override
-    public boolean isActiveTracking() {
-        return PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("active_tracking", false);
     }
 
     @Override

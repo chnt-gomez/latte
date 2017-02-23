@@ -21,6 +21,7 @@ public class Product extends SugarRecord {
     public float productPurchaseCost;
     public int productType;
     public int madeOnSell;
+    public int productIndicator;
 
     @Ignore
     public static final int PRODUCT_TYPE_BUY_AND_SELL = 1;

@@ -28,6 +28,12 @@
             android:id="@+id/lv_inventory">
         </ListView>
 
+        <TextView android:id="@android:id/empty"
+            android:padding="@dimen/activity_default_margin_big"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/sell_empty_list"/>
+
     </LinearLayout>
 
     <LinearLayout

@@ -17,7 +17,6 @@ import com.go.kchin.model.database.SaleTicket;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -264,8 +263,6 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         arg.combo = Combo.findById(Combo.class, comboId);
         arg.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
-
-
     }
 
     @Override
@@ -288,30 +285,41 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         ticket.saleTotal = total;
         ticket.vendor = "Toad";
         ticket.save();
-        for (Sale s : currentSale){
+        for (Sale s : currentSale) {
             s.saleTicket = ticket;
             s.save();
-            if (mPreferencePresenter.isActiveTracking()) {
-                if (s.product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL ||
-                        s.product.madeOnSell == Product.PRODUCT_MADE_AND_STORE)
+
+            if (s.product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL ||
+                    s.product.madeOnSell == Product.PRODUCT_MADE_AND_STORE)
                 s.product.productRemaining -= s.productAmount;
-                s.product.save();
-            }
-            if (s.product.madeOnSell == Product.PRODUCT_MADE_AND_SELL){
-                if (!mPreferencePresenter.isAllowingDepletedProduction())
-                for (Recipe r : getRecipeListFromProduct(s.product.getId())){
-                    Material m = r.material;
-                    if (r.MaterialAmount > m.materialRemaining &&
-                            !mPreferencePresenter.isAllowingDepletedProduction()) {
-                        mPresenter.onOperationError(mPresenter.getStringResource(R.string.not_enough_material));
-                        return;
-                    }
+            s.product.save();
+
+            if (s.product.madeOnSell == Product.PRODUCT_MADE_AND_SELL) {
+
+                if (canMake(s.product)) {
+                    for (Recipe r : getRecipeListFromProduct(s.product.getId())) {
+                        Material m = r.material;
                         m.materialRemaining -= r.MaterialAmount;
                         m.save();
+                    }
+                } else {
+                    mPresenter.onOperationError(
+                            mPresenter.getStringResource(R.string.not_enough_material));
                 }
             }
         }
         mPresenter.onOperationSuccess(R.string.sale_applied);
+    }
+
+    private boolean canMake(Product product){
+        if (mPreferencePresenter.isAllowingDepletedProduction())
+            return true;
+        for (Recipe r : getRecipeListFromProduct(product.getId())){
+            Material m = r.material;
+            if (r.MaterialAmount > m.materialRemaining)
+                return false;
+        }
+        return true;
     }
 
     @Override
@@ -403,7 +411,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public List<PurchaseOperation> getPurchases(DateTime dateTime) {
-       return PurchaseOperation.listAll(PurchaseOperation.class);
+        String millsAtMorning = String.valueOf(dateTime.withTimeAtStartOfDay().getMillis());
+        String millsAtMidnight = String.valueOf(dateTime.plusDays(1).withTimeAtStartOfDay().getMillis());
+        String params[] = {millsAtMorning, millsAtMidnight};
+        return PurchaseOperation.find(PurchaseOperation.class, "purchase_date_time > ? and purchase_date_time < ?",
+                params);
     }
 
     private static String formatForQuery(String rawQuery){

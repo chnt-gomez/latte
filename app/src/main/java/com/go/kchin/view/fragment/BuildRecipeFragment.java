@@ -2,6 +2,7 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,10 +34,16 @@ public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnI
     public static BuildRecipeFragment newInstance(long productId){
         BuildRecipeFragment fragment = new BuildRecipeFragment();
         Bundle args = new Bundle();
-        args.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory);
+        args.putInt(LAYOUT_RES_ID, R.layout.fragment_material_list);
         args.putLong(PRODUCT_ID, productId);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.setActivityTitle(getString(R.string.select_material));
     }
 
     @Override

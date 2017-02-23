@@ -17,9 +17,6 @@
         <CheckBoxPreference android:title="@string/allow_depleted_production"
             android:summary="@string/allow_depleted_production_summary"
             android:key="allow_depleted_production"/>
-        <CheckBoxPreference android:title="@string/active_tracking"
-            android:summary="@string/active_tracking_summary"
-            android:key="active_tracking"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/administration_settings">

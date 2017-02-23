@@ -2,6 +2,8 @@ package com.go.kchin.presenter.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
@@ -23,6 +25,7 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_product_details);
     }
 
     @Override

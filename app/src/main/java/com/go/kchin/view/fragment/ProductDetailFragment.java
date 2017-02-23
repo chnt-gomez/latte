@@ -59,6 +59,13 @@ public class ProductDetailFragment extends BaseFragment{
         super.onPause();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.setActivityTitle(getString(R.string.title_product_details));
+        reload();
+    }
+
     @OnClick(R.id.btn_edit)
     public void onEditClick(View v){
         onRequestEdit();
@@ -199,7 +206,6 @@ public class ProductDetailFragment extends BaseFragment{
                 }
             }
         });
-        reload();
         spnProductMeasure.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
                 MeasurePicker.getEntries(getResources())));
     }

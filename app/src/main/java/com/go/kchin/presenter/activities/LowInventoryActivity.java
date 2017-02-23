@@ -1,5 +1,9 @@
 package com.go.kchin.presenter.activities;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.DepletedItem;
 import com.go.kchin.model.database.Material;
@@ -13,6 +17,12 @@ import java.util.List;
  */
 
 public class LowInventoryActivity extends BaseActivity implements MainMVP.LowInventoryOps {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTitle(R.string.title_low_inventory);
+    }
 
     @Override
     protected void init() {

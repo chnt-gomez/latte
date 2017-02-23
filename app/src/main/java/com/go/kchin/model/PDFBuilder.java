@@ -1,13 +1,18 @@
 package com.go.kchin.model;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
-
 import com.go.kchin.R;
+import com.go.kchin.adapters.PurchasesAdapter;
 import com.go.kchin.adapters.QuickSaleAdapter;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
 import com.go.kchin.util.dialog.number.Number;
@@ -22,11 +27,9 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,6 +43,7 @@ public class PDFBuilder {
 
     public static File buildPurchaseOrder(Context context, String fileName,
                                           List<DepletedItem> orders, Resources res) throws DocumentException, IOException{
+
         Document document = new Document();
         File file = new File (getReportsStorageDir("kchin_reports").getPath(),fileName);
         PdfWriter.getInstance(document, new FileOutputStream(file));
@@ -196,9 +200,76 @@ public class PDFBuilder {
         }
         document.add(detailSalesTable);
 
-        document.add(new Paragraph("End of document."));
+        document.add(new Paragraph(res.getString(R.string.end_of_document)));
 
         document.close();
         return file;
+    }
+
+    public static File buildPurchasesReport(Context context, String fileName, PurchasesAdapter adapter,
+                                            Resources res, MainMVP.PurchasesPresenterOps
+                                                    purchasesPresenter, DateTime currentDateTime)
+            throws IOException, DocumentException{
+        Document document = new Document();
+        File file = new File (getReportsStorageDir("kchin_reports").getPath(), fileName);
+        PdfWriter.getInstance(document, new FileOutputStream(file));
+        document.open();
+
+        document.add(title(res.getString(R.string.purchases)));
+
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd, MMMM, yyyy");
+        document.add(subTitle(fmt.print(currentDateTime)));
+
+        document.add(new Paragraph("\n"));
+
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        table.setWidths(new int[]{10,3});
+
+        PdfPCell[] totalSalesCells = twoColumnRow(res.getString(R.string.total_purchases),
+                Number.floatToStringAsPrice(purchasesPresenter.getTotalPurchases(currentDateTime),true));
+        table.addCell(totalSalesCells[0]); table.addCell(totalSalesCells[1]);
+
+        document.add(table);
+
+        document.add(new Paragraph("\n"));
+
+        PdfPTable detailPurchasesTable = new PdfPTable(3);
+        detailPurchasesTable.setWidthPercentage(100);
+        detailPurchasesTable.setWidths(new int[]{2, 8 , 3});
+
+        for (PurchaseOperation op : purchasesPresenter.getPurchases(currentDateTime)){
+            PdfPCell headerCell[] = threeColumnRow(Number.floatToStringAsNumber(op.purchaseItems),
+                    op.purchaseConcept, Number.floatToStringAsPrice(op.purchaseAmount, true));
+            detailPurchasesTable.addCell(headerCell[0]);
+            detailPurchasesTable.addCell(headerCell[1]);
+            detailPurchasesTable.addCell(headerCell[2]);
+
+        }
+        document.add(detailPurchasesTable);
+
+        document.add(new Paragraph(res.getString(R.string.end_of_document)));
+
+        document.close();
+        return file;
+    }
+
+    private static PdfPCell[] threeColumnRow(String arg1, String arg2, String arg3) {
+        Font font = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.GRAY);
+        PdfPCell cell1 = new PdfPCell();
+        cell1.setPhrase(new Phrase(arg1, font));
+        cell1.setBorderColorBottom(BaseColor.LIGHT_GRAY);
+        cell1.setBorder(Rectangle.BOTTOM);
+        PdfPCell cell2 = new PdfPCell();
+        cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2.setPhrase(new Phrase(arg2, font));
+        cell2.setBorderColorBottom(BaseColor.LIGHT_GRAY);
+        cell2.setBorder(Rectangle.BOTTOM);
+        PdfPCell cell3 = new PdfPCell();
+        cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell3.setPhrase(new Phrase(arg3, font));
+        cell3.setBorderColorBottom(BaseColor.LIGHT_GRAY);
+        cell3.setBorder(Rectangle.BOTTOM);
+        return new PdfPCell[]{cell1, cell2, cell3};
     }
 }

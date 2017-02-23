@@ -1,5 +1,6 @@
 package com.go.kchin.view.fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -112,7 +113,11 @@ public class LowInventoryFragment extends BaseFragment implements AdapterView.On
 
             }
         });
-        loader.execute();
+        if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            loader.execute();
+        else
+            requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
 
     }
 
@@ -130,6 +135,7 @@ public class LowInventoryFragment extends BaseFragment implements AdapterView.On
     private void reload(@Nullable String query){
         final Loader loader = new Loader(this);
         listView.setOnItemClickListener(this);
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
         loader.execute(query);
 
     }

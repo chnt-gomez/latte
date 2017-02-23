@@ -17,5 +17,6 @@ public class Material extends SugarRecord {
     public float materialRemaining;
     public float materialPurchaseCost;
     public int materialStatus;
+    public int materialIndicator;
 
 }

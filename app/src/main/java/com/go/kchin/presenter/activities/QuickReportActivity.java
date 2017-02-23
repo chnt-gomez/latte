@@ -1,6 +1,11 @@
 package com.go.kchin.presenter.activities;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
 import com.go.kchin.view.fragment.DetailedQuickReport;
@@ -16,6 +21,13 @@ import java.util.List;
 
 public class QuickReportActivity extends BaseActivity implements MainMVP.DetailedReportPresenterOps,
         MainMVP.QuickReportPresenterOps {
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTitle(R.string.title_day_report);
+    }
 
     @Override
     protected void init() {
@@ -44,7 +56,11 @@ public class QuickReportActivity extends BaseActivity implements MainMVP.Detaile
 
     @Override
     public float getDayPurchasesTotal(DateTime date) {
-        return 0.0f;
+        float total = 0f;
+        for (PurchaseOperation purchase : mModel.getPurchases(date)){
+            total += purchase.purchaseAmount;
+        }
+        return total;
     }
 
     @Override

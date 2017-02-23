@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,7 +32,7 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     public static ProductListFragment newInstance(){
         ProductListFragment fragment = new ProductListFragment();
         Bundle arguments = new Bundle();
-        arguments.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory );
+        arguments.putInt(LAYOUT_RES_ID, R.layout.fragment_product_list );
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -82,6 +81,7 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
         FloatingActionButton btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
         addToClickListener(btnAdd);
         listView.setOnItemClickListener(this);
@@ -92,6 +92,7 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         super.onLoad();
         adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
                 mProductsPresenter.getAllProducts());
+
 
     }
 
@@ -126,13 +127,13 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     @Override
     public void onOperationSuccesfull(String message, @Nullable long rowId) {
         super.onOperationSuccesfull(message, rowId);
-        updateListView();
+        reload(null);
     }
 
     @Override
     public void onOperationSuccesfull(String message) {
         super.onOperationSuccesfull(message);
-        updateListView();
+        reload(null);
     }
 
     @Override

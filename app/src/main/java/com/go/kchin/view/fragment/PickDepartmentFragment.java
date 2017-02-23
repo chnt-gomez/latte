@@ -34,7 +34,7 @@ public class PickDepartmentFragment extends BaseFragment implements AdapterView.
     public static PickDepartmentFragment newInstance(long productId){
         PickDepartmentFragment fragment = new PickDepartmentFragment();
         Bundle args = new Bundle();
-        args.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory);
+        args.putInt(LAYOUT_RES_ID, R.layout.fragment_department_list);
         args.putLong(PRODUCT_ID, productId);
         fragment.setArguments(args);
         return fragment;

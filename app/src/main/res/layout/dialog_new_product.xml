@@ -6,7 +6,7 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:hint="Product name"
+        android:hint="@string/product_name"
         android:layout_height="wrap_content"
         android:id="@+id/edt_product_name"/>
 

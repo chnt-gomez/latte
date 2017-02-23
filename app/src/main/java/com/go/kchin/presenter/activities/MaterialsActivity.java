@@ -29,6 +29,7 @@ public class MaterialsActivity extends BaseActivity implements MainMVP.Materials
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_materials_list);
     }
 
     @Override

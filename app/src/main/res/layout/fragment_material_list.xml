@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,10 +10,10 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_picture_as_pdf_white_24dp"
+        app:srcCompat="@drawable/ic_add_white_24dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_default_margin_big"
-        android:id="@+id/btn_send" />
+        android:id="@+id/btn_add" />
 
     <LinearLayout
         android:layout_height="match_parent"
@@ -29,7 +30,7 @@
             android:padding="@dimen/activity_default_margin_big"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/low_inventory_empty_list"/>
+            android:text="@string/material_list_empty"/>
 
     </LinearLayout>
 

@@ -35,7 +35,7 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
     public static MaterialListFragment newInstance(){
         MaterialListFragment fragment = new MaterialListFragment();
         Bundle args = new Bundle();
-        args.putInt(LAYOUT_RES_ID, R.layout.fragment_inventory);
+        args.putInt(LAYOUT_RES_ID, R.layout.fragment_material_list);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,6 +74,7 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

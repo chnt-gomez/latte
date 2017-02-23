@@ -51,6 +51,7 @@ public interface MainMVP {
         void moveToActivity(Class activity, Bundle args);
         void moveToFragment(BaseFragment fragment);
         void setViewLayer(MainMVP.RequiredViewOps fragment);
+        void setActivityTitle(String title);
     }
 
     /**
@@ -94,6 +95,8 @@ public interface MainMVP {
     interface PurchasesPresenterOps{
 
         List<PurchaseOperation> getPurchases(DateTime dateTime);
+
+        float getTotalPurchases(DateTime dateTime);
 
     }
 
@@ -470,7 +473,6 @@ public interface MainMVP {
         boolean ifPasswordProtected();
         boolean isAllowingDepletedStokSales();
         boolean isAllowingDepletedProduction();
-        boolean isActiveTracking();
         String getBusinessName();
         String getAdministratorName();
         boolean authorize(String password);
