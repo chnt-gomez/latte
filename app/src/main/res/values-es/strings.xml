@@ -88,7 +88,7 @@
     <string name="sale_applied">Venta aplicada</string>
     <string name="sale_price">Precio de venta</string>
     <string name="sale_report">Venta</string>
-    <string name="set_new_amount">FIjar cantidad</string>
+    <string name="set_new_amount">Fijar cantidad</string>
     <string name="ticket_id">Folio de ticket</string>
     <string name="title_activity_settings">Ajustes</string>
     <string name="too_few_in_stock_to_sell">No hay suficientes para vender</string>

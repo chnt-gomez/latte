@@ -25,16 +25,11 @@ public class Product extends SugarRecord {
     public int productIndicator;
 
     @Ignore
-    public static final int PRODUCT_TYPE_BUY_AND_SELL = 1;
+    public static final int PRODUCT_TYPE_STORED = 1;
 
     @Ignore
-    public static final int PRODUCT_TYPE_MADE = 0;
+    public static final int PRODUCT_TYPE_MADE_ON_SALE = 0;
 
-    @Ignore
-    public static final int PRODUCT_MADE_AND_STORE = 0;
-
-    @Ignore
-    public static final int PRODUCT_MADE_AND_SELL = 1;
 
 
     public Department department;

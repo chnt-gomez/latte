@@ -118,4 +118,13 @@
     <string name="recipe_list_empty">Add the materials used to produce or sell this product. Depending on the product\'s configuration, the added materials will deplete when you sell it or produce it.</string>
     <string name="select_material">Select material</string>
     <string name="new_material">New material</string>
+    <string name="product_type_buy_and_sell">Buy and sell</string>
+    <string name="product_type_buy_and_sell_summary">This product is purchased and re-sold</string>
+    <string name="product_type_stored">Stored product</string>
+    <string name="product_type_stored_summary">This product can be stored in the inventory after its purchased or made.</string>
+    <string name="product_type_not_stored">Product made on sale</string>
+    <string name="product_type_not_stored_summary">This product cannot be stored and it\'s made when sold</string>
+    <string name="duplicate_product">A product with the same name already exists</string>
+    <string name="duplicate_material">A material with the same name already exists</string>
+    <string name="cannot_make_product">Can\'t produce this kind of product</string>
 </resources>

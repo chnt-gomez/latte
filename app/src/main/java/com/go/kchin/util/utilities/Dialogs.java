@@ -181,7 +181,7 @@ public class Dialogs {
 
     public static Dialog newFloatDialog(final Context context, String title, String message,
                                         final RequiredDialogOps.NewFloatOps callback){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         LayoutInflater inflater = LayoutInflater.from(context);
         if (title != null)
             builder.setTitle(title);

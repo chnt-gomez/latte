@@ -44,18 +44,18 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         String productPrice = NFormatter.floatToStringAsPrice(getItem(position).productSellPrice, true);
 
         txtProductName.setText(productName);
-        if (getItem(position).productType == Product.PRODUCT_TYPE_BUY_AND_SELL ||
-                getItem(position).madeOnSell == Product.PRODUCT_MADE_AND_STORE) {
+        if (getItem(position).productType == Product.PRODUCT_TYPE_BUY_AND_SELL) {
             txtProductRemaining.setText(productRemaining);
         }else{
-            txtProductRemaining.setText(R.string.product_made_on_sell);
+            txtProductRemaining.setText(R.string.without_inv);
         }
         txtProductPrice.setText(productPrice);
 
         /**
          * Coloring
          */
-        if (getItem(position).productRemaining <= 0){
+        if (getItem(position).productRemaining <= 0 &&
+                getItem(position).productType == Product.PRODUCT_TYPE_BUY_AND_SELL){
             txtProductRemaining.setTextColor(Color.parseColor("#ff7f7f"));
         }else{
             txtProductRemaining.setTextColor(Color.parseColor("#808080"));

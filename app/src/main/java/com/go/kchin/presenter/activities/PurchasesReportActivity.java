@@ -40,7 +40,7 @@ public class PurchasesReportActivity extends BaseActivity implements MainMVP.Pur
         float total = 0f;
         for (PurchaseOperation p : getPurchases(dateTime))
         {
-            total =+ p.purchaseAmount;
+            total += p.purchaseAmount;
         }
         return total;
     }
