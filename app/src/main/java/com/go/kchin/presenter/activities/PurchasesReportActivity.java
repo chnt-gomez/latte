@@ -7,12 +7,10 @@ import android.view.MenuItem;
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.PurchaseOperation;
-import com.go.kchin.util.dialog.Dialogs;
 import com.go.kchin.view.fragment.PurchaseListFragment;
 
 import org.joda.time.DateTime;
 
-import java.util.Date;
 import java.util.List;
 
 /**

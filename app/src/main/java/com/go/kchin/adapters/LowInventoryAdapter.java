@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import com.go.kchin.R;
 import com.go.kchin.model.DepletedItem;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.NFormatter;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class LowInventoryAdapter extends ArrayAdapter<DepletedItem>{
         TextView txtPurchaseRemaining = (TextView)view.findViewById(R.id.txt_product_sale_price);
 
         String purchaseName = getItem(position).getItemName();
-        String purchaseRemaining = Number.floatToStringAsNumber(getItem(position).getExistences());
+        String purchaseRemaining = NFormatter.floatToStringAsNumber(getItem(position).getExistences());
 
         txtPurchaseName.setText(purchaseName);
         txtPurchaseRemaining.setText(purchaseRemaining);

@@ -1,4 +1,4 @@
-package com.go.kchin.util.dialog;
+package com.go.kchin.util.utilities;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.ListViewCompat;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +24,7 @@ import com.go.kchin.model.SimplePurchase;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.model.database.Product;
-import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Sale;
-import com.go.kchin.util.dialog.number.Number;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -69,14 +63,11 @@ public class Dialogs {
      */
     public static Dialog newProductDialog(Context context, String title,
                                           final RequiredDialogOps.RequiredNewProductOps callback){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         LayoutInflater inflater = LayoutInflater.from(context);
         final View dialogView = inflater.inflate(R.layout.dialog_new_product, null);
         final EditText productName = (EditText)dialogView.findViewById(R.id.edt_product_name);
         final EditText productSellPrice = (EditText)dialogView.findViewById(R.id.edt_product_sale_price);
-        final Spinner productMeasure = (Spinner)dialogView.findViewById(R.id.spn_product_unit);
-        productMeasure.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item,
-                MeasurePicker.getEntries(context.getResources())));
         builder.setView(dialogView).
                 setTitle(title).
                 setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -84,8 +75,7 @@ public class Dialogs {
                     public void onClick(DialogInterface dialog, int which) {
                         Product product = new Product();
                         product.productName = productName.getText().toString();
-                        product.productSellPrice = Number.stringToFloat(productSellPrice.getText().toString());
-                        product.productMeasureUnit = productMeasure.getSelectedItemPosition();
+                        product.productSellPrice = NFormatter.stringToFloat(productSellPrice.getText().toString());
                         callback.onNewProduct(product);
                     }
                 });
@@ -100,7 +90,7 @@ public class Dialogs {
      */
     public static Dialog newDepartmentDialog(Context context, String title,
                                            final RequiredDialogOps.RequiredNewDepartmentOps callback) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         LayoutInflater inflater = LayoutInflater.from(context);
         final View dialogView = inflater.inflate(R.layout.dialog_new_department , null);
         builder.setView(dialogView).
@@ -135,7 +125,7 @@ public class Dialogs {
 
     public static Dialog newMaterialDialog(Context context, String title,
                                            final RequiredDialogOps.RequiredNewMaterialOps callback) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         LayoutInflater inflater = LayoutInflater.from(context);
         final View dialogView = inflater.inflate(R.layout.dialog_new_material , null);
         final EditText edtMaterialName = (EditText)dialogView.findViewById(R.id.edt_material_name);
@@ -159,7 +149,7 @@ public class Dialogs {
 
     public static Dialog newApplySaleDialog(final Context context, String title, final List<Sale> sales,
                                           final RequiredDialogOps.RequiredNewSaleOps callback) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         LayoutInflater inflater = LayoutInflater.from(context);
         final View dialogView = inflater.inflate(R.layout.dialog_confirm_sale , null);
         final ListView lv = (ListView)dialogView.findViewById(R.id.lv_sale);
@@ -170,7 +160,7 @@ public class Dialogs {
         for (Sale s : sales){
             total += s.saleTotal;
         }
-        edtTotal.setText(Number.floatToStringAsPrice(total, false));
+        edtTotal.setText(NFormatter.floatToStringAsPrice(total, false));
         builder.setView(dialogView).
                 setTitle(title).
                 setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
@@ -217,7 +207,7 @@ public class Dialogs {
 
     public static Dialog newFloatMoneyDialog(final Context context, String title, String message,
                                         final RequiredDialogOps.NewFloatOps callback){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         LayoutInflater inflater = LayoutInflater.from(context);
         if (title != null)
             builder.setTitle(title);
@@ -244,7 +234,7 @@ public class Dialogs {
 
     public static Dialog newPasswordDialog(final Context context, String title, String message,
                                            final RequiredDialogOps.RequiredPasswordOps callback) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         LayoutInflater inflater = LayoutInflater.from(context);
         if(title != null)
             builder.setTitle(title);
@@ -283,7 +273,7 @@ public class Dialogs {
 
     public static Dialog newPurchaseDialog(final Context context, String title, String message,
                                            final RequiredDialogOps.RequiredNewPurchaseOps callback){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         LayoutInflater inflater = LayoutInflater.from(context);
         if(title != null)
             builder.setTitle(title);
@@ -298,8 +288,8 @@ public class Dialogs {
                 EditText edtItems = (EditText)dialogView.findViewById(R.id.edt_item_amount);
                 EditText edtCost = (EditText)dialogView.findViewById(R.id.edt_amount_paid);
                 SimplePurchase purchase = new SimplePurchase();
-                purchase.setPurchasedItems(Number.stringToFloat(edtItems.getText().toString()));
-                purchase.setPurchaseAmount(Number.stringToFloat(edtCost.getText().toString()));
+                purchase.setPurchasedItems(NFormatter.stringToFloat(edtItems.getText().toString()));
+                purchase.setPurchaseAmount(NFormatter.stringToFloat(edtCost.getText().toString()));
                 callback.onNewPurchase(purchase);
 
             }

@@ -8,12 +8,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.go.kchin.R;
-import com.go.kchin.adapters.MaterialListAdapter;
 import com.go.kchin.adapters.RecipeListAdapter;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
-import com.go.kchin.util.dialog.Dialogs;
-import com.go.kchin.util.dialog.loader.Loader;
+import com.go.kchin.util.utilities.Dialogs;
+import com.go.kchin.util.utilities.Loader;
 
 import butterknife.BindView;
 import butterknife.OnClick;

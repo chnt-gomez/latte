@@ -1,6 +1,5 @@
 package com.go.kchin.view.fragment;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,7 @@ import com.go.kchin.R;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
-import com.go.kchin.util.dialog.Dialogs;
+import com.go.kchin.util.utilities.Dialogs;
 
 import java.util.ArrayList;
 import java.util.Collections;

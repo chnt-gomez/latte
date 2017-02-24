@@ -113,6 +113,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void addProduct(Product newProduct) {
         newProduct.productType = Product.PRODUCT_TYPE_BUY_AND_SELL;
+        newProduct.productMeasureUnit = Product.MEASURE_PIECE;
         final long operationId =newProduct.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.product_saved),
                 operationId);

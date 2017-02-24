@@ -2,7 +2,6 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,7 +10,7 @@ import android.widget.ListView;
 import com.go.kchin.R;
 import com.go.kchin.adapters.MaterialListAdapter;
 import com.go.kchin.interfaces.MainMVP;
-import com.go.kchin.util.dialog.loader.Loader;
+import com.go.kchin.util.utilities.Loader;
 
 import butterknife.BindView;
 

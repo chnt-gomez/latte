@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.go.kchin.R;
 import com.go.kchin.model.database.Recipe;
-import com.go.kchin.util.dialog.MeasurePicker;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.MeasurePicker;
+import com.go.kchin.util.utilities.NFormatter;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
 
         txtMaterialName.setText(recipe.material.materialName);
         txtMaterialUnit.setText(MeasurePicker.getString(getContext().getResources(), recipe.material.materialMeasure));
-        txtMaterialAmount.setText(Number.floatToStringAsNumber(recipe.MaterialAmount));
+        txtMaterialAmount.setText(NFormatter.floatToStringAsNumber(recipe.MaterialAmount));
 
         return view;
     }

@@ -4,13 +4,9 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,12 +17,9 @@ import com.go.kchin.adapters.QuickSaleAdapter;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.PDFBuilder;
-import com.go.kchin.model.database.Sale;
-import com.go.kchin.model.database.SaleTicket;
-import com.go.kchin.presenter.activities.QuickReportActivity;
-import com.go.kchin.util.dialog.Dialogs;
-import com.go.kchin.util.dialog.loader.Loader;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.Dialogs;
+import com.go.kchin.util.utilities.Loader;
+import com.go.kchin.util.utilities.NFormatter;
 import com.itextpdf.text.DocumentException;
 
 import org.joda.time.DateTime;
@@ -36,15 +29,9 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.R.attr.permission;
-import static com.go.kchin.R.string.date;
-import static com.go.kchin.R.string.sales;
 
 /**
  * Created by MAV1GA on 24/01/2017.
@@ -96,11 +83,11 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
         super.onLoad();
 
 
-        adapter.setTotalSales(Number.floatToStringAsPrice(
+        adapter.setTotalSales(NFormatter.floatToStringAsPrice(
                 mReportPresenter.getDaySaleTotal(currentDateTime),false));
-        adapter.setTotalPurchases(Number.floatToStringAsPrice(
+        adapter.setTotalPurchases(NFormatter.floatToStringAsPrice(
                 mReportPresenter.getDayPurchasesTotal(currentDateTime),false));
-        adapter.setTotalEarnings(Number.floatToStringAsPrice(
+        adapter.setTotalEarnings(NFormatter.floatToStringAsPrice(
                 mReportPresenter.getNetEarnings(currentDateTime), false));
         adapter.setTicketIds(mReportPresenter.getRecordedTicketsIdRange(currentDateTime));
         adapter.setDate(currentDateTime);

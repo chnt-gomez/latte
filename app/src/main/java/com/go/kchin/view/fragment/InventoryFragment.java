@@ -5,9 +5,9 @@ import android.view.View;
 
 import com.go.kchin.R;
 import com.go.kchin.presenter.activities.DepartmentsActivity;
+import com.go.kchin.presenter.activities.LowInventoryActivity;
 import com.go.kchin.presenter.activities.MaterialsActivity;
 import com.go.kchin.presenter.activities.ProductsActivity;
-import com.go.kchin.presenter.activities.LowInventoryActivity;
 import com.go.kchin.presenter.activities.PurchasesReportActivity;
 
 import butterknife.OnClick;

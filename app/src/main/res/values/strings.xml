@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Go Sales</string>
-    <string name="title_activity_home">Start</string>
     <string name="action_settings">Settings</string>
-    <string name="navigation_drawer_open">Open</string>
-    <string name="navigation_drawer_close">Close</string>
     <string name="ok">OK</string>
     <string name="new_product">New Product</string>
     <string name="material_saved">New Material saved</string>
@@ -16,13 +13,11 @@
     <string name="loading">Loading…</string>
     <string name="department_saved">New Department saved</string>
     <string name="see">See</string>
-    <string name="nav_sales">Sales</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
     <string name="added_to_kart">Added to kart</string>
     <string name="cannot_apply_void_sale">Cannot apply a void sale!</string>
     <string name="today_total">Today\'s sales</string>
-    <string name="day_sale_total">Day sale total</string>
     <string name="see_details">See details</string>
     <string name="measure_piece">Piece</string>
     <string name="measure_kg">Kg</string>
@@ -34,9 +29,6 @@
     <string name="coming_soon">Coming soon</string>
     <string name="edit_price">Edit price</string>
     <string name="buy_more">Buy more</string>
-    <string name="price_hint" translatable="false">$ 0.00</string>
-    <string name="keep_track">Keep track on sale</string>
-    <string name="active_tracking">Disable tracking</string>
     <string name="search_title">Search</string>
     <string name="search">Search…</string>
     <string name="filter">Filter</string>
@@ -62,7 +54,6 @@
     <string name="combos">Combos</string>
     <string name="title_activity_settings">Settings</string>
 
-    <string name="pref_title_vibrate">Vibrate</string>
     <string name="my_business_name">My business</string>
     <string name="admin_name">Administrator name</string>
     <string name="busines_name">Business name</string>
@@ -71,7 +62,6 @@
     <string name="allow_depleted_sales_summary">If marked, the app will allow you to sell products even when you dont have any more in the inventory.</string>
     <string name="allow_depleted_production">Allow production without materials</string>
     <string name="allow_depleted_production_summary">If marked, the app will allow you to produce more products even when one or more of it\'s materials required are depleted.</string>
-    <string name="active_tracking_summary">If marked, most of the operations that affect the inventories will not make any changes in the stocks.</string>
     <string name="administration_settings">Administrative setting</string>
     <string name="protect_with_password">Protect with password</string>
     <string name="protect_with_password_summary">If marked, the app won\'t be able to modify the settings, inventory or cancel sales without the administrator password. Disable this if only you operate the app.</string>
@@ -85,7 +75,6 @@
     <string name="operation_complete">Operation successful</string>
     <string name="new_purchase_order">New purchase order</string>
     <string name="purchase">Purchase</string>
-    <string name="pdf_created_succesfuly">PDF created successfully</string>
     <string name="building_pdf">Building pdf…</string>
     <string name="total_sales">Total sales</string>
     <string name="purchases">Purchases and expenses</string>
@@ -95,7 +84,6 @@
     <string name="sale_report">Sale</string>
     <string name="ticket_id">Ticket id</string>
     <string name="cannot_travel_in_time">Cannot travel in time yet</string>
-    <string name="product_settings">Product settings</string>
     <string name="buy_and_sell_product">Buy and sell product</string>
     <string name="buy_and_sell_product_summary">Use this when you buy this product from a provider and sell it to your customers</string>
     <string name="made_when_sold">Made when sold</string>
@@ -126,8 +114,8 @@
     <string name="low_inventory_empty_list">When products or materials are in low numbers or depleted they will be listed here. Use this list to buy more and replenish your stocks.</string>
     <string name="purchases_list_empty">No purchases found. Select the day with the calendar option in the menu to see past purchases.</string>
     <string name="sell_empty_list">No products to sell. Go to the \'Products\' section and create products to start selling.</string>
-    <string name="change_price_warning">Changing the price could affect your sales report. We recommend you to change only after saving your day report.</string>
     <string name="product_recipe" >Product\'s recipe</string>
     <string name="recipe_list_empty">Add the materials used to produce or sell this product. Depending on the product\'s configuration, the added materials will deplete when you sell it or produce it.</string>
     <string name="select_material">Select material</string>
+    <string name="new_material">New material</string>
 </resources>

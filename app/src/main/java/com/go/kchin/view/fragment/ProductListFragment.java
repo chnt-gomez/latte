@@ -8,14 +8,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.presenter.activities.ProductActivity;
-import com.go.kchin.util.dialog.Dialogs;
-import com.go.kchin.util.dialog.loader.Loader;
+import com.go.kchin.util.utilities.Dialogs;
+import com.go.kchin.util.utilities.Loader;
 
 /**
  * Created by MAV1GA on 09/01/2017.

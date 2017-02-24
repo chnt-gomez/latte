@@ -13,14 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ListView;
+
 import com.go.kchin.R;
 import com.go.kchin.adapters.PurchasesAdapter;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.PDFBuilder;
-import com.go.kchin.util.dialog.Dialogs;
-import com.go.kchin.util.dialog.loader.Loader;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.Dialogs;
+import com.go.kchin.util.utilities.Loader;
+import com.go.kchin.util.utilities.NFormatter;
 import com.itextpdf.text.DocumentException;
 
 import org.joda.time.DateTime;
@@ -30,6 +31,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -109,7 +111,7 @@ public class PurchaseListFragment extends BaseFragment implements DatePickerDial
             currentDateTime = DateTime.now();
         DateTimeFormatter dtf = DateTimeFormat.forPattern("dd, MMMM");
 
-        mPresenter.setActivityTitle(Number.floatToStringAsPrice(totalPurchases, true)
+        mPresenter.setActivityTitle(NFormatter.floatToStringAsPrice(totalPurchases, true)
                 + " - " +dtf.print(currentDateTime)  );
     }
 

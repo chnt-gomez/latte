@@ -3,7 +3,6 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.go.kchin.R;
@@ -11,7 +10,7 @@ import com.go.kchin.adapters.DepartmentListAdapter;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Department;
-import com.go.kchin.util.dialog.Dialogs;
+import com.go.kchin.util.utilities.Dialogs;
 
 import butterknife.BindView;
 import butterknife.OnClick;

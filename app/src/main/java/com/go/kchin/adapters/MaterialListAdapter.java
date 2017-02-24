@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-
 import com.go.kchin.R;
 import com.go.kchin.model.database.Material;
-import com.go.kchin.util.dialog.MeasurePicker;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.MeasurePicker;
+import com.go.kchin.util.utilities.NFormatter;
 
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class MaterialListAdapter extends ArrayAdapter<Material> {
 
         txtMaterialName.setText(material.materialName);
         txtMaterialUnit.setText(MeasurePicker.getString(getContext().getResources(),material.materialMeasure));
-        txtMaterialAmount.setText(Number.floatToStringAsNumber(material.materialRemaining));
+        txtMaterialAmount.setText(NFormatter.floatToStringAsNumber(material.materialRemaining));
 
         if (material.materialRemaining <= 0){
             txtMaterialAmount.setTextColor(Color.parseColor("#ff7f7f"));

@@ -10,15 +10,17 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.SimplePurchase;
 import com.go.kchin.model.database.Product;
-import com.go.kchin.util.dialog.Dialogs;
-import com.go.kchin.util.dialog.MeasurePicker;
-import com.go.kchin.util.dialog.loader.Loader;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.Dialogs;
+import com.go.kchin.util.utilities.Loader;
+import com.go.kchin.util.utilities.MeasurePicker;
+import com.go.kchin.util.utilities.NFormatter;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -93,12 +95,12 @@ public class ProductDetailFragment extends BaseFragment{
         super.onDoneLoading();
         if (product != null){
             edtProductName.setText(product.productName);
-            btnProductRemaining.setText(Number.floatToStringAsNumber(product.productRemaining));
+            btnProductRemaining.setText(NFormatter.floatToStringAsNumber(product.productRemaining));
             btnProductDepartment.setText(product.getDepartmentName());
             if (product.department != null)
                 btnProductDepartment.setText(mProductPresenter.getDepartmentNameFromProduct(
                         product.department.getId()));
-            btnSellPrice.setText(Number.floatToStringAsPrice(product.productSellPrice, false));
+            btnSellPrice.setText(NFormatter.floatToStringAsPrice(product.productSellPrice, false));
             spnProductMeasure.setSelection(product.productMeasureUnit);
             if (product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL){
                 chkProductType.setChecked(true);
@@ -146,7 +148,7 @@ public class ProductDetailFragment extends BaseFragment{
             @Override
             public void onNewFloat(float arg) {
                 product.setProductSellPrice(arg);
-                btnSellPrice.setText(Number.floatToStringAsPrice(arg, false));
+                btnSellPrice.setText(NFormatter.floatToStringAsPrice(arg, false));
             }
         }).show();
     }
@@ -200,7 +202,7 @@ public class ProductDetailFragment extends BaseFragment{
                     btnProductRemaining.setText(getString(R.string.without_inv));
                     btnProductRemaining.setEnabled(false);
                 }else{
-                    btnProductRemaining.setText(Number.floatToStringAsNumber(product.productRemaining));
+                    btnProductRemaining.setText(NFormatter.floatToStringAsNumber(product.productRemaining));
                     btnProductRemaining.setEnabled(true);
                     product.madeOnSell = Product.PRODUCT_MADE_AND_STORE;
                 }

@@ -1,6 +1,7 @@
-package com.go.kchin.util.dialog.loader;
+package com.go.kchin.util.utilities;
 
 import android.os.AsyncTask;
+
 import com.go.kchin.interfaces.LoaderRequiredOps;
 
 /**

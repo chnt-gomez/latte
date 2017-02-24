@@ -2,7 +2,6 @@
 <resources>
     <string name="action_settings">Ajustes</string>
     <string name="active">Ahora activo</string>
-    <string name="active_tracking">Deshabilitar conteo</string>
     <string name="added_to_kart">Añadido al carrito</string>
     <string name="apply">Aplicar</string>
     <string name="buy_more">Comprar más</string>
@@ -10,7 +9,6 @@
     <string name="cannot_apply_void_sale">Imposible aplicar ventas vacías</string>
     <string name="combo_saved">Nuevo combo guardado</string>
     <string name="coming_soon">Próximamente</string>
-    <string name="day_sale_total">Total de ventas del día</string>
     <string name="deactivated">Desactivado</string>
     <string name="department">Departamento</string>
     <string name="department_saved">Nuevo Departamento guardado</string>
@@ -20,7 +18,6 @@
     <string name="edit_price">Editar precio</string>
     <string name="filter">Filtrar</string>
     <string name="inventory">Inventario</string>
-    <string name="keep_track">Actualizar tras vender</string>
     <string name="loading">Cargando…</string>
     <string name="material_saved">Nuevo Material guardado</string>
     <string name="measure_g">Gramos</string>
@@ -30,9 +27,6 @@
     <string name="measure_non_specified">No especificado</string>
     <string name="measure_oz">Onza</string>
     <string name="measure_piece">Pieza</string>
-    <string name="nav_sales">Ventas</string>
-    <string name="navigation_drawer_close">Cerrar</string>
-    <string name="navigation_drawer_open">Abrir</string>
     <string name="new_department">Nuevo Departamento</string>
     <string name="new_product">Nuevo Producto</string>
     <string name="ok">Aceptar</string>
@@ -44,14 +38,12 @@
     <string name="search_title">Buscar</string>
     <string name="see">Ver</string>
     <string name="see_details">Ver detalles</string>
-    <string name="title_activity_home">Inicio</string>
     <string name="today_total">Ventas de hoy</string>
     <string name="departments">Departamentos</string>
     <string name="inventory_adjustments">Ajustes de inventario</string>
     <string name="materials">Materiales</string>
     <string name="products">Productos</string>
     <string name="purchase_orders">Ordenes de compra</string>
-    <string name="active_tracking_summary">Cuando esté seleccionado, la mayoría de las operaciones que afectan los inventarios no causarán ningún cambio en las existencias.</string>
     <string name="admin_name">Nombre del administrador</string>
     <string name="administration_amount_change">Este cambio no generará una operación de compra</string>
     <string name="administration_settings">Configuración de administración</string>
@@ -84,11 +76,8 @@
     <string name="not_enough_material">Sin materiales para elaborar producto</string>
     <string name="operation_complete">Operación exitosa</string>
     <string name="password">Contraseña del administrador</string>
-    <string name="pdf_created_succesfuly">PDF creado exitosamente</string>
-    <string name="pref_title_vibrate">Vibrar</string>
     <string name="product_made_on_sell">Producto elaborado tras venta</string>
     <string name="product_name">Nombre del producto</string>
-    <string name="product_settings">Configuración del producto</string>
     <string name="protect_with_password">Proteger con contraseña</string>
     <string name="protect_with_password_summary">Cuando esté seleccionado, la aplicacion no te permitira hacer cambios en los ajustes o hacer modificaciones en el inventario sin la contraseña. Deshabilite esta opción si solamente tu utilizas la aplicación.</string>
     <string name="purchase">Compra</string>
@@ -123,7 +112,6 @@
     <string name="product_list_empty">Empieza por añadir nuevos productos usando el botón en la esquina inferior derecha. Todos tus productos aparecerán aquí.</string>
     <string name="purchases_list_empty">No se encontraron operaciones de compra. Selecciona el día con el botón del calendario en el menú para ver operaciones pasadas.</string>
     <string name="sell_empty_list">Sin productos para vender. Dirígete a la sección de productos y crea más para empezar a venderlos.</string>
-    <string name="change_price_warning">Cambiar el precio podría afectar tu reporte de ventas. Recomendamos que apliques el cambio una vez guardado tu reporte del día.</string>
     <string name="product_recipe">Receta del producto</string>
     <string name="recipe_list_empty">Añade los materiales necesarios para producir este articulo. Dependiendo de la configuración del producto, los materiales añadidos se irán agotando conforme se produzca o venda.</string>
     <string name="select_material">Selecciona los materiales</string>

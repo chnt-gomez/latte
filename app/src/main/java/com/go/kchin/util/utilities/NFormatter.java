@@ -1,4 +1,4 @@
-package com.go.kchin.util.dialog.number;
+package com.go.kchin.util.utilities;
 
 import android.util.Log;
 
@@ -8,13 +8,13 @@ import java.util.Locale;
  * Created by MAV1GA on 10/01/2017.
  */
 
-public class Number {
+public class NFormatter {
 
     public static float stringToFloat (String s){
         try{
             return Float.valueOf(s);
         }catch(Exception e){
-            Log.w("Number Format!", s+" is not a float number! Returning 0.0 instead");
+            Log.w("NFormatter Format!", s+" is not a float number! Returning 0.0 instead");
             return 0.0f;
         }
     }
@@ -23,7 +23,7 @@ public class Number {
         try{
             return String.format(Locale.US, "%.3f", f);
         }catch (Exception e){
-            Log.w("Number format!", f+ "cannot be converted to String format: $ #.##");
+            Log.w("NFormatter format!", f+ "cannot be converted to String format: $ #.##");
             return String.valueOf(f);
         }
     }
@@ -32,7 +32,7 @@ public class Number {
         try{
             return withPriceTag ? String.format(Locale.US, "$ %.2f", f) : String.format(Locale.US, "%.2f", f);
         }catch (Exception e){
-            Log.w("Number format!", f+ "cannot be converted to String format: $ #.##");
+            Log.w("NFormatter format!", f+ "cannot be converted to String format: $ #.##");
             return String.valueOf(f);
         }
     }

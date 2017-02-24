@@ -10,10 +10,9 @@ import android.widget.ListView;
 import com.go.kchin.R;
 import com.go.kchin.adapters.DepartmentListAdapter;
 import com.go.kchin.interfaces.MainMVP;
-import com.go.kchin.util.dialog.loader.Loader;
+import com.go.kchin.util.utilities.Loader;
 
 import butterknife.BindView;
-import butterknife.OnItemClick;
 
 /**
  * Created by MAV1GA on 26/01/2017.

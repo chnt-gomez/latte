@@ -2,13 +2,12 @@ package com.go.kchin.presenter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.go.kchin.R;
 import com.go.kchin.interfaces.RequiredDialogOps;
-import com.go.kchin.util.dialog.Dialogs;
+import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.view.fragment.HomeFragment;
 
 
