@@ -121,11 +121,6 @@ public class ProductDetailFragment extends BaseFragment{
         super.onDoneLoading();
     }
 
-    @Override
-    public void onOperationSuccesfull(String message) {
-        reload();
-    }
-
     public void save(){
         product.productName = edtProductName.getText().toString();
         product.productMeasureUnit = spnProductMeasure.getSelectedItemPosition();
@@ -164,7 +159,6 @@ public class ProductDetailFragment extends BaseFragment{
             @Override
             public void onNewPurchase(SimplePurchase arg) {
                 mProductPresenter.buyMore(product.getId(), arg.getPurchasedItems(), arg.getPurchaseAmount());
-                reload();
             }
         }).show();
     }
@@ -172,7 +166,7 @@ public class ProductDetailFragment extends BaseFragment{
     @Override
     protected void enableEditMode() {
         super.enableEditMode();
-        if (product.productType != Product.PRODUCT_TYPE_MADE_ON_SALE) {
+        if (product.productType == Product.PRODUCT_TYPE_MADE_ON_SALE) {
             btnProductRemaining.setEnabled(false);
         }
         btnEdit.setVisibility(View.GONE);
@@ -193,12 +187,14 @@ public class ProductDetailFragment extends BaseFragment{
                 product.productType = Product.PRODUCT_TYPE_STORED;
                 btnProductRemaining.setEnabled(true);
                 btnProductRemaining.setText(NFormatter.floatToStringAsNumber(product.productRemaining));
+
             }else{
                 product.productType = Product.PRODUCT_TYPE_MADE_ON_SALE;
                 txtProductTypeSummary.setText(R.string.product_type_not_stored_summary);
                 btnProductRemaining.setEnabled(false);
                 btnProductRemaining.setText(getString(R.string.without_inv));
             }
+               save();
            }
        });
         spnProductMeasure.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
@@ -212,7 +208,6 @@ public class ProductDetailFragment extends BaseFragment{
             public void onNewFloat(float arg) {
                 product.productRemaining = arg;
                 save();
-                reload();
             }
         }).show();
     }

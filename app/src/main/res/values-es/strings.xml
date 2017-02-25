@@ -138,4 +138,6 @@
     <string name="pref_title_vibrate">Vibrar</string>
     <string name="product_settings">Configuración del producto</string>
     <string name="title_activity_home">Inicio</string>
+    <string name="assign_department">Asignar a departamento</string>
+    <string name="stock_too_low">No hay suficientes para vender</string>
 </resources>

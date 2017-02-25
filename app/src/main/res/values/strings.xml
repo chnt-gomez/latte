@@ -59,7 +59,7 @@
     <string name="busines_name">Business name</string>
     <string name="inventory_settings">Inventory settings</string>
     <string name="allow_depleted_sales">Allow depleted stock sales</string>
-    <string name="allow_depleted_sales_summary">If marked, the app will allow you to sell products even when you dont have any more in the inventory.</string>
+    <string name="allow_depleted_sales_summary">If marked, the app will allow you to sell products even when you don\'t have any more in the inventory.</string>
     <string name="allow_depleted_production">Allow production without materials</string>
     <string name="allow_depleted_production_summary">If marked, the app will allow you to produce more products even when one or more of it\'s materials required are depleted.</string>
     <string name="administration_settings">Administrative setting</string>
@@ -140,4 +140,6 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="product_settings">Product settings</string>
     <string name="title_activity_home">Start</string>
+    <string name="assign_department">Assign department</string>
+    <string name="stock_too_low">Not enough in stock to sell</string>
 </resources>

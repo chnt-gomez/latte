@@ -54,9 +54,16 @@ public class PickDepartmentFragment extends BaseFragment implements AdapterView.
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.setActivityTitle(getString(R.string.assign_department));
+    }
+
+    @Override
     protected void init() {
         super.init();
         btnAdd.setVisibility(View.GONE);
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
         reload();
         listView.setOnItemClickListener(this);
     }
