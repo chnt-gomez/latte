@@ -4,15 +4,10 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:padding="@dimen/activity_default_margin_small"
     tools:showIn="@layout/fragment_material_detail">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/material_name"
-        android:labelFor="@+id/edt_material_name"
-        android:id="@+id/textView" />
 
     <EditText
         android:layout_width="match_parent"
@@ -24,12 +19,6 @@
         android:id="@+id/edt_material_name"/>
 
     <include layout="@layout/include_space_4dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/measure"
-        android:labelFor="@+id/edt_material_unit"/>
 
     <include layout="@layout/include_material_amount"/>
 

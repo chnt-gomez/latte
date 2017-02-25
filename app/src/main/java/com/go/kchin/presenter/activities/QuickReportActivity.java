@@ -8,7 +8,6 @@ import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
-import com.go.kchin.view.fragment.DetailedQuickReport;
 import com.go.kchin.view.fragment.QuickReportFragment;
 
 import org.joda.time.DateTime;

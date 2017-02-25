@@ -49,6 +49,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void addMaterial(Material newMaterial) {
+        if ((Material.find(Material.class, "material_name = ?", newMaterial.materialName)).
+                size() != 0){
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_material));
+            return;
+        }
         final long operationId = newMaterial.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.material_saved),
                 operationId);
@@ -66,6 +71,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void updateMaterial(Material newMaterialParams) {
+        if ((Material.find(Material.class, "material_name = ?", newMaterialParams.materialName)).
+                size() > 1){
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_material));
+            return;
+        }
         newMaterialParams.save();
         //mPresenter.on(mPresenter.getStringResource(R.string.saved));
     }
@@ -112,7 +122,16 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void addProduct(Product newProduct) {
-        newProduct.productType = Product.PRODUCT_TYPE_BUY_AND_SELL;
+
+        //Make sure the Product does not exists yet
+
+        if ( (Product.find(Product.class, "product_name = ?", newProduct.productName).size() != 0)){
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_product));
+            return;
+        }
+
+        newProduct.productType = Product.PRODUCT_TYPE_STORED;
+        newProduct.productMeasureUnit = Product.MEASURE_PIECE;
         final long operationId =newProduct.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.product_saved),
                 operationId);
@@ -120,19 +139,31 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void updateProduct(Product product) {
+        if ( (Product.find(Product.class, "product_name = ?", product.productName).size() > 1)){
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_product));
+            return;
+        }
         product.save();
         //mPresenter.onOperationSuccess(R.string.saved);
     }
 
     @Override
-    public void addMaterialToRecipe(long aLong, Material item) {
+    public void addMaterialToRecipe(long productId, Material item) {
+        for (Recipe r : getRecipeFromProduct(productId)){
+            if (r.material.getId() == item.getId()){
+                mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_recipe));
+                return;
+            }
+        }
         Recipe recipe = new Recipe();
         recipe.MaterialAmount = 1.0f;
-        recipe.product = getProduct(aLong);
+        recipe.product = getProduct(productId);
         recipe.material = item;
         recipe.save();
-        mPresenter.onOperationSuccess(R.string.saved);
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.added_to_recipe), 0);
     }
+
+
 
     @Override
     public void setProductDepartment(long aLong, Department item) {
@@ -145,12 +176,15 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public void buyProduct(long productId, float purchaseAmount, float purchaseCost) {
         Product product = Product.findById(Product.class, productId);
         product.productRemaining += purchaseAmount;
-        if (product.madeOnSell == Product.PRODUCT_MADE_AND_STORE){
+        if (product.madeOnSell == Product.PRODUCT_TYPE_STORED){
             for(Recipe r : getRecipeListFromProduct(product.getId())){
                 Material m = r.material;
                 m.materialRemaining -= (r.MaterialAmount*purchaseAmount);
                 m.save();
             }
+        }else{
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.cannot_make_product));
+            return;
         }
         product.save();
 
@@ -289,12 +323,13 @@ public class DatabaseEngine implements MainMVP.ModelOps{
             s.saleTicket = ticket;
             s.save();
 
-            if (s.product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL ||
-                    s.product.madeOnSell == Product.PRODUCT_MADE_AND_STORE)
-                s.product.productRemaining -= s.productAmount;
-            s.product.save();
+            if (s.product.productType == Product.PRODUCT_TYPE_MADE_ON_SALE) {
 
-            if (s.product.madeOnSell == Product.PRODUCT_MADE_AND_SELL) {
+                s.product.productRemaining -= s.productAmount;
+                s.product.save();
+            }
+
+            if (s.product.madeOnSell == Product.PRODUCT_TYPE_MADE_ON_SALE) {
 
                 if (canMake(s.product)) {
                     for (Recipe r : getRecipeListFromProduct(s.product.getId())) {
@@ -355,7 +390,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public List<DepletedItem> getDepletedProducts() {
-        List<Product> productlItems = getAllProducts();
+        List<Product> productlItems = Product.find(Product.class, "product_type = ? " +
+                "AND product_remaining <= ?", "1", "10");
         List<DepletedItem> purchaseList = new ArrayList<>();
         for (Product p : productlItems){
             if (p.productRemaining <= 10 )

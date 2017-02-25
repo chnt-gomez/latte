@@ -18,7 +18,6 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:text="Price"
             android:layout_width="0dp"
             android:gravity="end"
             android:layout_weight="1"

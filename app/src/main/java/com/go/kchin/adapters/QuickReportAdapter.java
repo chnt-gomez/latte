@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
 import com.go.kchin.R;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.NFormatter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +80,7 @@ public class QuickReportAdapter extends BaseExpandableListAdapter{
         }
         TextView txtTicketTotal = (TextView)convertView.findViewById(R.id.txt_sale_ticket);
         if (header != null){
-            txtTicketTotal.setText(Number.floatToStringAsPrice(header.saleTotal, true));
+            txtTicketTotal.setText(NFormatter.floatToStringAsPrice(header.saleTotal, true));
         }
         TextView txtTicketId = (TextView)convertView.findViewById(R.id.txt_sale_id);
         txtTicketId.setText("Sale: "+header.getId());

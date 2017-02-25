@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import com.go.kchin.R;
 import com.go.kchin.model.database.Sale;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.NFormatter;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -57,7 +56,7 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
 
         txtProductName.setText(sale.product.productName);
         txtProductUnit.setText("1");
-        txtProductPrice.setText(Number.floatToStringAsPrice(sale.saleTotal, true));
+        txtProductPrice.setText(NFormatter.floatToStringAsPrice(sale.saleTotal, true));
 
         return view;
 

@@ -1,5 +1,7 @@
-package com.go.kchin.util.dialog;
+package com.go.kchin.util.utilities;
+
 import android.content.res.Resources;
+
 import com.go.kchin.R;
 
 /**

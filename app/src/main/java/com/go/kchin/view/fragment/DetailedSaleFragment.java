@@ -1,12 +1,12 @@
 package com.go.kchin.view.fragment;
 
 import android.os.Bundle;
-import com.go.kchin.R;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
 import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
+
+import com.go.kchin.R;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import butterknife.BindView;
 
@@ -15,9 +15,6 @@ import butterknife.BindView;
  */
 
 public class DetailedSaleFragment extends BaseFragment {
-
-    @BindView(R.id.gird_view)
-    GridView girdView;
 
     @BindView(R.id.sliding_layout)
     SlidingUpPanelLayout slideLayout;

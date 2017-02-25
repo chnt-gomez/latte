@@ -3,7 +3,6 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,12 +15,11 @@ import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.model.database.Sale;
-import com.go.kchin.util.dialog.loader.Loader;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.Loader;
+import com.go.kchin.util.utilities.NFormatter;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -107,11 +105,11 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 saleAdapter.remove(saleAdapter.getItem(position));
-                txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
+                txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
                 return true;
             }
         });
-        txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
+        txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
     }
 
 
@@ -124,7 +122,7 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
                 slideLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
             saleAdapter.clear();
-            txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
+            txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
         }
         reload(null);
     }
@@ -171,7 +169,7 @@ public class SellProductFragment extends BaseFragment implements AdapterView.OnI
         sale.productAmount = 1.0f;
         sale.saleTotal = item.productSellPrice * sale.productAmount;
         saleAdapter.add(sale);
-        txtTotal.setText(Number.floatToStringAsPrice(saleAdapter.getTotal(), false));
+        txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
         showMessage(R.string.added_to_kart);
     }
 

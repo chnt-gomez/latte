@@ -1,13 +1,10 @@
 package com.go.kchin.model;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
+
 import com.go.kchin.R;
 import com.go.kchin.adapters.PurchasesAdapter;
 import com.go.kchin.adapters.QuickSaleAdapter;
@@ -15,7 +12,7 @@ import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.PurchaseOperation;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.NFormatter;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -27,9 +24,11 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -67,7 +66,7 @@ public class PDFBuilder {
 
         //Populate the Table
         for (DepletedItem p : orders){
-            PdfPCell[] cells = twoColumnRow(p.getItemName(), Number.floatToStringAsNumber(p.getExistences()));
+            PdfPCell[] cells = twoColumnRow(p.getItemName(), NFormatter.floatToStringAsNumber(p.getExistences()));
                 table.addCell(cells[0]);
                 table.addCell(cells[1]);
         }
@@ -187,13 +186,13 @@ public class PDFBuilder {
         for (SaleTicket saleTicket : saleTickets){
             PdfPCell headerCell[] = twoColumnRow(res.getString(R.string.ticket_id) +
                     " "+String.valueOf(saleTicket.getId()),
-                    Number.floatToStringAsPrice(saleTicket.saleTotal, true));
+                    NFormatter.floatToStringAsPrice(saleTicket.saleTotal, true));
             detailSalesTable.addCell(headerCell[0]);
             detailSalesTable.addCell(headerCell[1]);
             List<Sale> sales = presenter.getSalesInTicket(saleTicket);
             for (Sale sale : sales){
                 PdfPCell itemCells[] = twoColumnRow(sale.product.productName,
-                        Number.floatToStringAsPrice(sale.saleTotal, true));
+                        NFormatter.floatToStringAsPrice(sale.saleTotal, true));
                 detailSalesTable.addCell(itemCells[0]);
                 detailSalesTable.addCell(itemCells[1]);
             }
@@ -227,7 +226,7 @@ public class PDFBuilder {
         table.setWidths(new int[]{10,3});
 
         PdfPCell[] totalSalesCells = twoColumnRow(res.getString(R.string.total_purchases),
-                Number.floatToStringAsPrice(purchasesPresenter.getTotalPurchases(currentDateTime),true));
+                NFormatter.floatToStringAsPrice(purchasesPresenter.getTotalPurchases(currentDateTime),true));
         table.addCell(totalSalesCells[0]); table.addCell(totalSalesCells[1]);
 
         document.add(table);
@@ -239,8 +238,8 @@ public class PDFBuilder {
         detailPurchasesTable.setWidths(new int[]{2, 8 , 3});
 
         for (PurchaseOperation op : purchasesPresenter.getPurchases(currentDateTime)){
-            PdfPCell headerCell[] = threeColumnRow(Number.floatToStringAsNumber(op.purchaseItems),
-                    op.purchaseConcept, Number.floatToStringAsPrice(op.purchaseAmount, true));
+            PdfPCell headerCell[] = threeColumnRow(NFormatter.floatToStringAsNumber(op.purchaseItems),
+                    op.purchaseConcept, NFormatter.floatToStringAsPrice(op.purchaseAmount, true));
             detailPurchasesTable.addCell(headerCell[0]);
             detailPurchasesTable.addCell(headerCell[1]);
             detailPurchasesTable.addCell(headerCell[2]);

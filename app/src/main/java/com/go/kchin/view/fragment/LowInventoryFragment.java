@@ -19,8 +19,8 @@ import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.MailBuilder;
 import com.go.kchin.model.PDFBuilder;
 import com.go.kchin.model.SimplePurchase;
-import com.go.kchin.util.dialog.Dialogs;
-import com.go.kchin.util.dialog.loader.Loader;
+import com.go.kchin.util.utilities.Dialogs;
+import com.go.kchin.util.utilities.Loader;
 import com.itextpdf.text.DocumentException;
 
 import org.joda.time.DateTime;

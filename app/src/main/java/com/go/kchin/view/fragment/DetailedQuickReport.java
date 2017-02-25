@@ -9,12 +9,11 @@ import com.go.kchin.adapters.QuickReportAdapter;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
-import com.go.kchin.util.dialog.loader.Loader;
+import com.go.kchin.util.utilities.Loader;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 

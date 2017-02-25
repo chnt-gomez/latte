@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import com.go.kchin.R;
 import com.go.kchin.model.database.Department;
-import com.go.kchin.util.dialog.number.Number;
 
 import java.util.List;
 

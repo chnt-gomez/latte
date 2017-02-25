@@ -1,7 +1,6 @@
 package com.go.kchin.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 
 import com.go.kchin.R;
 import com.go.kchin.model.database.PurchaseOperation;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.NFormatter;
 
 import java.util.List;
 
@@ -41,9 +40,9 @@ public class PurchasesAdapter extends ArrayAdapter<PurchaseOperation> {
         PurchaseOperation operation = getItem(position);
 
         if (operation != null){
-            txtAmount.setText(Number.floatToStringAsNumber(operation.purchaseItems));
+            txtAmount.setText(NFormatter.floatToStringAsNumber(operation.purchaseItems));
             txtItemName.setText(operation.purchaseConcept);
-            txtPurchaseCost.setText(Number.floatToStringAsPrice(operation.purchaseAmount, true));
+            txtPurchaseCost.setText(NFormatter.floatToStringAsPrice(operation.purchaseAmount, true));
         }
 
         return view;

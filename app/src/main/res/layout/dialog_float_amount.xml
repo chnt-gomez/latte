@@ -7,7 +7,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="viewEnd"
         android:inputType="numberDecimal"
-        android:hint="@string/amount_hint"
+        android:hint="@string/set_new_amount"
         android:id="@+id/edt_amount"/>
 </LinearLayout>

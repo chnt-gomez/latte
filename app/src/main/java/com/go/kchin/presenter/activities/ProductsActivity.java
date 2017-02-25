@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +14,7 @@ import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.view.fragment.ProductListFragment;
+
 import java.util.List;
 
 
@@ -46,8 +46,6 @@ public class ProductsActivity extends BaseActivity implements MainMVP.ProductsPr
             searchView.setSubmitButtonEnabled(true);
             searchView.setOnQueryTextListener(this);
 
-        }else{
-            Log.w(getClass().getSimpleName(), "Search view is null");
         }
         return true;
     }

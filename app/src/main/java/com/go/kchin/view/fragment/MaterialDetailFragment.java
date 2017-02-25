@@ -14,15 +14,13 @@ import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.SimplePurchase;
 import com.go.kchin.model.database.Material;
-import com.go.kchin.util.dialog.Dialogs;
-import com.go.kchin.util.dialog.MeasurePicker;
-import com.go.kchin.util.dialog.loader.Loader;
-import com.go.kchin.util.dialog.number.Number;
+import com.go.kchin.util.utilities.Dialogs;
+import com.go.kchin.util.utilities.Loader;
+import com.go.kchin.util.utilities.MeasurePicker;
+import com.go.kchin.util.utilities.NFormatter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.R.attr.id;
 
 /**
  * Created by MAV1GA on 11/01/2017.
@@ -121,7 +119,7 @@ public class MaterialDetailFragment extends BaseFragment {
     public void onDoneLoading() {
         super.onDoneLoading();
         edtMaterialName.setText(material.materialName);
-        btnMaterialAmount.setText(Number.floatToStringAsNumber(material.materialRemaining));
+        btnMaterialAmount.setText(NFormatter.floatToStringAsNumber(material.materialRemaining));
         spnMaterialUnit.setSelection(material.materialMeasure);
 
     }

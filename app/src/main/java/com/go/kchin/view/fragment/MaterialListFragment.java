@@ -15,8 +15,9 @@ import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Material;
 import com.go.kchin.presenter.activities.MaterialActivity;
-import com.go.kchin.util.dialog.Dialogs;
-import com.go.kchin.util.dialog.loader.Loader;
+import com.go.kchin.util.utilities.Dialogs;
+import com.go.kchin.util.utilities.Loader;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -66,7 +67,7 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
 
     @OnClick(R.id.btn_add)
     public void newMaterial(View view){
-        Dialogs.newMaterialDialog(getContext(), null, this).show();
+        Dialogs.newMaterialDialog(getContext(), getString(R.string.new_material), this).show();
     }
 
 

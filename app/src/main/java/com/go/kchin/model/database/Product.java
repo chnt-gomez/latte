@@ -3,13 +3,14 @@ package com.go.kchin.model.database;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-import java.util.List;
-
 /**
  * Created by MAV1GA on 06/01/2017.
  */
 
 public class Product extends SugarRecord {
+
+    @Ignore
+    public static final int MEASURE_PIECE = 0;
 
     public Product(){}
 
@@ -24,16 +25,11 @@ public class Product extends SugarRecord {
     public int productIndicator;
 
     @Ignore
-    public static final int PRODUCT_TYPE_BUY_AND_SELL = 1;
+    public static final int PRODUCT_TYPE_STORED = 1;
 
     @Ignore
-    public static final int PRODUCT_TYPE_MADE = 0;
+    public static final int PRODUCT_TYPE_MADE_ON_SALE = 0;
 
-    @Ignore
-    public static final int PRODUCT_MADE_AND_STORE = 0;
-
-    @Ignore
-    public static final int PRODUCT_MADE_AND_SELL = 1;
 
 
     public Department department;

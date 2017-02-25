@@ -12,15 +12,7 @@
 
     <include layout="@layout/include_space_4dp"/>
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/activity_default_margin_small"
-            android:id="@+id/spn_product_unit"/>
-
-    <include layout="@layout/include_space_4dp"/>
-
-        <EditText
+    <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
