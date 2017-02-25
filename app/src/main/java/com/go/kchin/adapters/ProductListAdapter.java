@@ -44,7 +44,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         String productPrice = NFormatter.floatToStringAsPrice(getItem(position).productSellPrice, true);
 
         txtProductName.setText(productName);
-        if (getItem(position).productType == Product.PRODUCT_TYPE_BUY_AND_SELL) {
+        if (getItem(position).productType == Product.PRODUCT_TYPE_STORED) {
             txtProductRemaining.setText(productRemaining);
         }else{
             txtProductRemaining.setText(R.string.without_inv);
@@ -55,7 +55,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
          * Coloring
          */
         if (getItem(position).productRemaining <= 0 &&
-                getItem(position).productType == Product.PRODUCT_TYPE_BUY_AND_SELL){
+                getItem(position).productType == Product.PRODUCT_TYPE_STORED){
             txtProductRemaining.setTextColor(Color.parseColor("#ff7f7f"));
         }else{
             txtProductRemaining.setTextColor(Color.parseColor("#808080"));

@@ -115,4 +115,17 @@
     <string name="product_recipe">Receta del producto</string>
     <string name="recipe_list_empty">Añade los materiales necesarios para producir este articulo. Dependiendo de la configuración del producto, los materiales añadidos se irán agotando conforme se produzca o venda.</string>
     <string name="select_material">Selecciona los materiales</string>
+    <string name="added_to_recipe">Añadido a la receta</string>
+    <string name="amount_recipe_summary">Indique la cantidad usada del material para la receta del producto</string>
+    <string name="cannot_make_product">No fué posible creas mas de este producto</string>
+    <string name="duplicate_material">Ya existe un material con el mismo nombre</string>
+    <string name="duplicate_product">Ya existe un producto con el mismo nombre</string>
+    <string name="duplicate_recipe">El material ya existe en la receta del producto</string>
+    <string name="new_material">Nuevo material</string>
+    <string name="product_type_buy_and_sell">Compra-venta</string>
+    <string name="product_type_buy_and_sell_summary">Este producto es comprado y re-vendido</string>
+    <string name="product_type_not_stored">Producto elabroado tras venta</string>
+    <string name="product_type_not_stored_summary">Este producto no puede ser almacenado y debe ser producido cuando se vende.</string>
+    <string name="product_type_stored">Producto almacenable</string>
+    <string name="product_type_stored_summary">Este producto se puede almacenar una vez que ha sido comprado o hecho.</string>
 </resources>

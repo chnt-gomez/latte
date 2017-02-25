@@ -58,6 +58,7 @@ public class DepartmentListFragment extends BaseFragment implements
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
         reload();
     }
 

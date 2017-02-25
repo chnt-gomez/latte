@@ -72,7 +72,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void updateMaterial(Material newMaterialParams) {
         if ((Material.find(Material.class, "material_name = ?", newMaterialParams.materialName)).
-                size() != 0){
+                size() > 1){
             mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_material));
             return;
         }
@@ -139,7 +139,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void updateProduct(Product product) {
-        if ( (Product.find(Product.class, "product_name = ?", product.productName).size() != 0)){
+        if ( (Product.find(Product.class, "product_name = ?", product.productName).size() > 1)){
             mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_product));
             return;
         }
@@ -148,14 +148,22 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     @Override
-    public void addMaterialToRecipe(long aLong, Material item) {
+    public void addMaterialToRecipe(long productId, Material item) {
+        for (Recipe r : getRecipeFromProduct(productId)){
+            if (r.material.getId() == item.getId()){
+                mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_recipe));
+                return;
+            }
+        }
         Recipe recipe = new Recipe();
         recipe.MaterialAmount = 1.0f;
-        recipe.product = getProduct(aLong);
+        recipe.product = getProduct(productId);
         recipe.material = item;
         recipe.save();
-        mPresenter.onOperationSuccess(R.string.saved);
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.added_to_recipe), 0);
     }
+
+
 
     @Override
     public void setProductDepartment(long aLong, Department item) {

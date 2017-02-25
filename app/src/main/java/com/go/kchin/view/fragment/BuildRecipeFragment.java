@@ -50,6 +50,7 @@ public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnI
         super.init();
         btnAdd.setVisibility(FloatingActionButton.GONE);
         listView.setOnItemClickListener(this);
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
         reload();
     }
 

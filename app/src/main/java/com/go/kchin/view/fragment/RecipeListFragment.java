@@ -2,6 +2,7 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,6 +49,7 @@ public class RecipeListFragment extends BaseFragment implements AdapterView.OnIt
     protected void init() {
         super.init();
         listView.setOnItemClickListener(this);
+        listView.setEmptyView(view.findViewById(android.R.id.empty));
         mPresenter.setActivityTitle(getString(R.string.product_recipe));
         reload();
     }
@@ -84,6 +86,16 @@ public class RecipeListFragment extends BaseFragment implements AdapterView.OnIt
     }
 
     @Override
+    protected void onOperationResultClick(long rowId) {
+        getFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onOperationSuccesfull(String message, @Nullable long rowId) {
+        super.onOperationSuccesfull(message, rowId);
+    }
+
+    @Override
     public void onDoneLoading() {
         super.onDoneLoading();
         listView.setAdapter(adapter);
@@ -91,10 +103,11 @@ public class RecipeListFragment extends BaseFragment implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        Dialogs.newFloatDialog(getContext(), getString(R.string.set_new_amount), null, new RequiredDialogOps.NewFloatOps() {
+        Dialogs.newFloatDialog(getContext(), getString(R.string.set_new_amount), getString(R.string.amount_recipe_summary), new RequiredDialogOps.NewFloatOps() {
             @Override
             public void onNewFloat(float arg) {
                 mProductPresenter.setRecipeMaterialAmount(adapter.getItem(position).getId(), arg);
+                reload();
             }
         }).show();
     }

@@ -107,7 +107,7 @@ public class ProductDetailFragment extends BaseFragment{
                 btnProductDepartment.setText(mProductPresenter.getDepartmentNameFromProduct(
                         product.department.getId()));
             spnProductMeasure.setSelection(product.productMeasureUnit);
-            if (product.productType == Product.PRODUCT_TYPE_BUY_AND_SELL){
+            if (product.productType == Product.PRODUCT_TYPE_STORED){
                 swProductType.setChecked(true);
                 txtProductTypeSummary.setText(getString(R.string.product_type_stored_summary));
 
@@ -172,7 +172,7 @@ public class ProductDetailFragment extends BaseFragment{
     @Override
     protected void enableEditMode() {
         super.enableEditMode();
-        if (product.productType != Product.PRODUCT_TYPE_BUY_AND_SELL) {
+        if (product.productType != Product.PRODUCT_TYPE_MADE_ON_SALE) {
             btnProductRemaining.setEnabled(false);
         }
         btnEdit.setVisibility(View.GONE);
@@ -190,11 +190,11 @@ public class ProductDetailFragment extends BaseFragment{
            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked){
                 txtProductTypeSummary.setText(R.string.product_type_stored_summary);
-                product.productType = Product.PRODUCT_TYPE_BUY_AND_SELL;
+                product.productType = Product.PRODUCT_TYPE_STORED;
                 btnProductRemaining.setEnabled(true);
                 btnProductRemaining.setText(NFormatter.floatToStringAsNumber(product.productRemaining));
             }else{
-                product.productType = Product.PRODUCT_TYPE_MADE;
+                product.productType = Product.PRODUCT_TYPE_MADE_ON_SALE;
                 txtProductTypeSummary.setText(R.string.product_type_not_stored_summary);
                 btnProductRemaining.setEnabled(false);
                 btnProductRemaining.setText(getString(R.string.without_inv));
