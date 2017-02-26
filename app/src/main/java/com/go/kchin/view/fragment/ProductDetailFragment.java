@@ -97,6 +97,12 @@ public class ProductDetailFragment extends BaseFragment{
     }
 
     @Override
+    public void onOperationSuccesfull(String message) {
+        super.onOperationSuccesfull(message);
+        reload();
+    }
+
+    @Override
     public void onDoneLoading() {
         if (product != null){
             btnSellPrice.setText(NFormatter.floatToStringAsPrice(product.productSellPrice, false));

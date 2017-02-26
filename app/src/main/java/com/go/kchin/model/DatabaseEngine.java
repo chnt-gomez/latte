@@ -112,6 +112,10 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public void updateRecipe(long recipeId, float newAmount) {
         Recipe recipe = Recipe.findById(Recipe.class, recipeId);
         recipe.MaterialAmount = newAmount;
+        if (newAmount == 0){
+            recipe.delete();
+            return;
+        }
         recipe.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
@@ -175,21 +179,23 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void buyProduct(long productId, float purchaseAmount, float purchaseCost) {
         Product product = Product.findById(Product.class, productId);
-        product.productRemaining += purchaseAmount;
-        if (product.productType == Product.PRODUCT_TYPE_STORED){
-            if(canMake(product)) {
-                for (Recipe r : getRecipeListFromProduct(product.getId())) {
-                    Material m = r.material;
-                    m.materialRemaining -= (r.MaterialAmount * purchaseAmount);
-                    m.save();
-                }
-            }else {
-                mPresenter.onOperationError(mPresenter.getStringResource(R.string.not_enough_material));
-            }
-        }else{
+        if (product.productType == Product.PRODUCT_TYPE_MADE_ON_SALE){
             mPresenter.onOperationError(mPresenter.getStringResource(R.string.cannot_make_product));
             return;
         }
+
+        if(!canMake(product)) {
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.not_enough_material));
+            return;
+        }
+
+        for (Recipe r : getRecipeListFromProduct(product.getId())) {
+            Material m = r.material;
+            m.materialRemaining -= (r.MaterialAmount * purchaseAmount);
+            m.save();
+        }
+
+        product.productRemaining += purchaseAmount;
         product.save();
 
         //Now lets save to the purchases
@@ -347,22 +353,24 @@ public class DatabaseEngine implements MainMVP.ModelOps{
             if (s.product.productType == Product.PRODUCT_TYPE_STORED) {
                 s.product.productRemaining -= s.productAmount;
                 s.product.save();
-            }
-            for (Recipe r : getRecipeListFromProduct(s.product.getId())) {
-                Material m = r.material;
-                m.materialRemaining -= r.MaterialAmount;
-                m.save();
+            }else {
+                for (Recipe r : getRecipeListFromProduct(s.product.getId())) {
+                    Material m = r.material;
+                    m.materialRemaining -= r.MaterialAmount;
+                    m.save();
+                }
             }
         }
         mPresenter.onOperationSuccess(R.string.sale_applied);
     }
 
     private boolean canMake(Product product){
-        if (mPreferencePresenter.isAllowingDepletedProduction())
+        if (mPreferencePresenter.isAllowingDepletedProduction() || product.productType ==
+                Product.PRODUCT_TYPE_STORED)
             return true;
         for (Recipe r : getRecipeListFromProduct(product.getId())){
             Material m = r.material;
-            if (r.MaterialAmount > m.materialRemaining)
+            if (r.MaterialAmount >= m.materialRemaining)
                 return false;
         }
         return true;

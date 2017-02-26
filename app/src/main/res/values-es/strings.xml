@@ -116,7 +116,7 @@
     <string name="recipe_list_empty">Añade los materiales necesarios para producir este articulo. Dependiendo de la configuración del producto, los materiales añadidos se irán agotando conforme se produzca o venda.</string>
     <string name="select_material">Selecciona los materiales</string>
     <string name="added_to_recipe">Añadido a la receta</string>
-    <string name="amount_recipe_summary">Indique la cantidad usada del material para la receta del producto</string>
+    <string name="amount_recipe_summary">Indique la cantidad usada del material para la receta del producto. Use 0 (cero) para eliminar el material de la receta.</string>
     <string name="cannot_make_product">No fué posible creas mas de este producto</string>
     <string name="duplicate_material">Ya existe un material con el mismo nombre</string>
     <string name="duplicate_product">Ya existe un producto con el mismo nombre</string>
