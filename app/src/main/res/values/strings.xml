@@ -36,7 +36,7 @@
     <string name="sales">Sales</string>
     <string name="inventory">Inventory</string>
     <string name="description_inventory_card">Keep track of Products and Materials. Create new products from you current Materials or purchase more. Sort them by Department to figure out your best items.</string>
-    <string name="description_sales_card">Start recording your sales to see how your bisness perform</string>
+    <string name="description_sales_card">Start recording your sales to see how your business perform</string>
     <string name="reports">Sales report</string>
     <string name="description_reports_card">Generate your sales report or check previous ones to see how your business is growing with Go Sales.</string>
     <string name="products">Products</string>

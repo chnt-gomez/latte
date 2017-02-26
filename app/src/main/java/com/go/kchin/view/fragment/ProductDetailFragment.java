@@ -214,6 +214,7 @@ public class ProductDetailFragment extends BaseFragment{
             public void onNewFloat(float arg) {
                 product.productRemaining = arg;
                 save();
+                reload();
             }
         }).show();
     }
