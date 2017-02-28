@@ -117,7 +117,7 @@
     <string name="product_recipe" >Product\'s recipe</string>
     <string name="recipe_list_empty">Add the materials used to produce or sell this product. Depending on the product\'s configuration, the added materials will deplete when you sell it or produce it.</string>
     <string name="select_material">Select material</string>
-    <string name="new_material">New material</string>
+    <string name="new_material">New Material</string>
     <string name="product_type_buy_and_sell">Buy and sell</string>
     <string name="product_type_buy_and_sell_summary">This product is purchased and re-sold</string>
     <string name="product_type_stored">Stored product</string>
@@ -130,7 +130,7 @@
     <string name="duplicate_recipe">The material already exists in the product\'s recipe</string>
     <string name="added_to_recipe">Added to recipe</string>
     <string name="amount_recipe_summary">Set the material amount in the recipe for the product. Set it to 0 (zero) to delete it from the recipe.</string>
-    <string name="active_tracking">Stop tracking</string>
+    <string name="active_tracking">Disable tracking</string>
     <string name="active_tracking_summary">If marked, most of the operations that affect inventories will not change their existences.</string>
     <string name="change_price_warning">Changing the price could affect your sales report. We recommend you to apply this change once you have printed your sales report.</string>
     <string name="nav_sales">Sales</string>
