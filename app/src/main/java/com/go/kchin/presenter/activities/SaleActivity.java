@@ -10,14 +10,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.go.kchin.R;
+import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.model.database.Sale;
-import com.go.kchin.view.fragment.SellProductFragment;
+import com.go.kchin.util.utilities.NFormatter;
+import com.go.kchin.view.fragment.DepartmentGridFragment;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by MAV1GA on 18/01/2017.
@@ -25,17 +38,70 @@ import java.util.List;
 
 public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenterOps, SearchView.OnQueryTextListener{
 
+    @BindView(R.id.sliding_layout)
+    SlidingUpPanelLayout slideLayout;
+
+    @BindView(R.id.txt_sale_total)
+    TextView txtTotal;
+
+    @BindView(R.id.btn_apply_sale)
+    Button btnApplySale;
+
+    @BindView(R.id.lv_sale)
+    ListView saleListView;
+
+    private SaleAdapter saleAdapter;
+
+    @Override
+    public void onOperationSuccess(String message) {
+
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.sale_activity);
+        ButterKnife.bind(this);
         setTitle(R.string.title_sale);
+
+        slideLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                if (newState == SlidingUpPanelLayout.PanelState.EXPANDED){
+                    txtTotal.setCompoundDrawablesWithIntrinsicBounds
+                            (R.drawable.ic_attach_money_white_24dp, 0, R.drawable.ic_keyboard_arrow_down_white_24dp, 0);
+                }
+                if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED){
+                    txtTotal.setCompoundDrawablesWithIntrinsicBounds
+                            (R.drawable.ic_attach_money_white_24dp, 0, R.drawable.ic_keyboard_arrow_up_white_24dp, 0);
+                }
+            }
+        });
+
+
+
+        saleAdapter = new SaleAdapter(this, R.layout.row_sell_item, new ArrayList<Sale>());
+        saleListView.setAdapter(saleAdapter);
+        saleListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                saleAdapter.remove(saleAdapter.getItem(position));
+                txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
+                return true;
+            }
+        });
+        txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
     }
 
     @Override
     protected void init() {
         super.init();
-        attachFragment(SellProductFragment.newInstance());
+        attachFragment(DepartmentGridFragment.newInstance());
     }
 
     @Override
@@ -77,6 +143,21 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
     @Override
     public List<Product> getAllProducts(String query) {
         return mModel.getProducts(query);
+    }
+
+    @Override
+    public List<Department> getDepartments() {
+        return mModel.getAllDepartments();
+    }
+
+    @Override
+    public List<Product> getProductsInDepartment(long departmentId) {
+        return mModel.getProductsFromDepartment(departmentId);
+    }
+
+    @Override
+    public List<Product> getProducts(long departmentId, String query) {
+        return mModel.getProductsFromDepartment(departmentId, query);
     }
 
     @Override

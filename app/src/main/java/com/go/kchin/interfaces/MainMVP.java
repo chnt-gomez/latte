@@ -237,10 +237,9 @@ public interface MainMVP {
 
         List<Product> getAllProducts(String query);
 
-        /**
-         * Converts a product into a sale and adds it to the Current Sale adapter
-         * @param product Product object reference
-         */
+        List<Department> getDepartments();
+        List<Product> getProductsInDepartment(long departmentId);
+        List<Product> getProducts(long departmentId, String query);
     }
 
     /**
@@ -465,6 +464,11 @@ public interface MainMVP {
         void buyMaterial(long purchaseId, float arg, float purchaseCost);
 
         List<Recipe> getRecipeFromProduct(long productId);
+
+        List<Product> getProductsFromDepartment(long departmentId);
+
+        List<Product> getProductsFromDepartment(long departmentId, String query);
+
     }
 
 

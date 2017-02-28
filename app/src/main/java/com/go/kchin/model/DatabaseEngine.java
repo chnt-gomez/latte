@@ -173,7 +173,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public void setProductDepartment(long aLong, Department item) {
         Product product = Product.findById(Product.class, aLong);
         product.department = item;
-        updateProduct(product);
+        product.save();
+        mPresenter.onOperationSuccess(R.string.saved);
     }
 
     @Override
@@ -453,6 +454,17 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public List<Recipe> getRecipeFromProduct(long productId) {
         return getRecipeListFromProduct(productId);
+    }
+
+    @Override
+    public List<Product> getProductsFromDepartment(long departmentId) {
+        return Product.find(Product.class, "department = ?", String.valueOf(departmentId));
+    }
+
+    @Override
+    public List<Product> getProductsFromDepartment(long departmentId, String query) {
+        String formatedSearchQuery = formatForQuery(query);
+        return Product.find(Product.class, "material_name LIKE ?", "%"+formatedSearchQuery+"%");
     }
 
     @Override
