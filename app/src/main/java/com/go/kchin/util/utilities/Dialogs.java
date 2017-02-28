@@ -122,7 +122,6 @@ public class Dialogs {
         }
     }
 
-
     public static Dialog newMaterialDialog(Context context, String title,
                                            final RequiredDialogOps.RequiredNewMaterialOps callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);

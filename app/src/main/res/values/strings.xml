@@ -36,7 +36,7 @@
     <string name="sales">Sales</string>
     <string name="inventory">Inventory</string>
     <string name="description_inventory_card">Keep track of Products and Materials. Create new products from you current Materials or purchase more. Sort them by Department to figure out your best items.</string>
-    <string name="description_sales_card">Start recording your sales to see how your bisness perform</string>
+    <string name="description_sales_card">Start recording your sales to see how your business perform</string>
     <string name="reports">Sales report</string>
     <string name="description_reports_card">Generate your sales report or check previous ones to see how your business is growing with Go Sales.</string>
     <string name="products">Products</string>
@@ -59,7 +59,7 @@
     <string name="busines_name">Business name</string>
     <string name="inventory_settings">Inventory settings</string>
     <string name="allow_depleted_sales">Allow depleted stock sales</string>
-    <string name="allow_depleted_sales_summary">If marked, the app will allow you to sell products even when you dont have any more in the inventory.</string>
+    <string name="allow_depleted_sales_summary">If marked, the app will allow you to sell products even when you don\'t have any more in the inventory.</string>
     <string name="allow_depleted_production">Allow production without materials</string>
     <string name="allow_depleted_production_summary">If marked, the app will allow you to produce more products even when one or more of it\'s materials required are depleted.</string>
     <string name="administration_settings">Administrative setting</string>
@@ -117,7 +117,7 @@
     <string name="product_recipe" >Product\'s recipe</string>
     <string name="recipe_list_empty">Add the materials used to produce or sell this product. Depending on the product\'s configuration, the added materials will deplete when you sell it or produce it.</string>
     <string name="select_material">Select material</string>
-    <string name="new_material">New material</string>
+    <string name="new_material">New Material</string>
     <string name="product_type_buy_and_sell">Buy and sell</string>
     <string name="product_type_buy_and_sell_summary">This product is purchased and re-sold</string>
     <string name="product_type_stored">Stored product</string>
@@ -129,8 +129,8 @@
     <string name="cannot_make_product">Can\'t produce this kind of product</string>
     <string name="duplicate_recipe">The material already exists in the product\'s recipe</string>
     <string name="added_to_recipe">Added to recipe</string>
-    <string name="amount_recipe_summary">Set the material amount in the recipe for the product</string>
-    <string name="active_tracking">Stop tracking</string>
+    <string name="amount_recipe_summary">Set the material amount in the recipe for the product. Set it to 0 (zero) to delete it from the recipe.</string>
+    <string name="active_tracking">Disable tracking</string>
     <string name="active_tracking_summary">If marked, most of the operations that affect inventories will not change their existences.</string>
     <string name="change_price_warning">Changing the price could affect your sales report. We recommend you to apply this change once you have printed your sales report.</string>
     <string name="nav_sales">Sales</string>
@@ -140,4 +140,6 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="product_settings">Product settings</string>
     <string name="title_activity_home">Start</string>
+    <string name="assign_department">Assign department</string>
+    <string name="stock_too_low">Not enough in stock to sell</string>
 </resources>

@@ -103,7 +103,8 @@ public class RecipeListFragment extends BaseFragment implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        Dialogs.newFloatDialog(getContext(), getString(R.string.set_new_amount), getString(R.string.amount_recipe_summary), new RequiredDialogOps.NewFloatOps() {
+        Dialogs.newFloatDialog(getContext(), getString(R.string.set_new_amount),
+                getString(R.string.amount_recipe_summary), new RequiredDialogOps.NewFloatOps() {
             @Override
             public void onNewFloat(float arg) {
                 mProductPresenter.setRecipeMaterialAmount(adapter.getItem(position).getId(), arg);

@@ -79,6 +79,11 @@ public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnI
     }
 
     @Override
+    protected void onOperationResultClick(long rowId) {
+        getFragmentManager().popBackStack();
+    }
+
+    @Override
     public void onDetach() {
         mProductPresenter = null;
         super.onDetach();

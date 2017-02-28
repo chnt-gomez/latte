@@ -112,6 +112,10 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public void updateRecipe(long recipeId, float newAmount) {
         Recipe recipe = Recipe.findById(Recipe.class, recipeId);
         recipe.MaterialAmount = newAmount;
+        if (newAmount == 0){
+            recipe.delete();
+            return;
+        }
         recipe.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
@@ -175,17 +179,23 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void buyProduct(long productId, float purchaseAmount, float purchaseCost) {
         Product product = Product.findById(Product.class, productId);
-        product.productRemaining += purchaseAmount;
-        if (product.madeOnSell == Product.PRODUCT_TYPE_STORED){
-            for(Recipe r : getRecipeListFromProduct(product.getId())){
-                Material m = r.material;
-                m.materialRemaining -= (r.MaterialAmount*purchaseAmount);
-                m.save();
-            }
-        }else{
+        if (product.productType == Product.PRODUCT_TYPE_MADE_ON_SALE){
             mPresenter.onOperationError(mPresenter.getStringResource(R.string.cannot_make_product));
             return;
         }
+
+        if(!canMake(product)) {
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.not_enough_material));
+            return;
+        }
+
+        for (Recipe r : getRecipeListFromProduct(product.getId())) {
+            Material m = r.material;
+            m.materialRemaining -= (r.MaterialAmount * purchaseAmount);
+            m.save();
+        }
+
+        product.productRemaining += purchaseAmount;
         product.save();
 
         //Now lets save to the purchases
@@ -197,7 +207,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         operation.purchaseAmount = purchaseCost;
         operation.save();
 
-        //mPresenter.onOperationSuccess(R.string.operation_complete);
+        mPresenter.onOperationSuccess(R.string.operation_complete);
     }
 
     @Override
@@ -299,22 +309,40 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
 
+    private boolean isValidSale(List<Sale> currentSale){
+        for (Sale s : currentSale){
+            if (!hasEnoughToSell(s)){
+                mPresenter.onOperationError(mPresenter.getStringResource(R.string.stock_too_low));
+                return false;
+            }
+            if (!canMake(s.product)){
+                mPresenter.onOperationError(mPresenter.getStringResource(R.string.not_enough_material));
+                return false;
+            }
+
+        }
+        return true;
+    }
+
     @Override
     public void applySale(List<Sale> currentSale) {
+
+
+
         if (currentSale.size() == 0){
             mPresenter.onOperationError(mPresenter.getStringResource(R.string.cannot_apply_void_sale));
             return;
         }
+
+        if (!isValidSale(currentSale)){
+            return;
+        }
+
         SaleTicket ticket = new SaleTicket();
         ticket.dateTime = DateTime.now().getMillis();
         float total = 0.0f;
         for (Sale s : currentSale){
             total += s.saleTotal;
-            if(!mPreferencePresenter.isAllowingDepletedStokSales())
-                if (s.product.productRemaining < s.productAmount){
-                    mPresenter.onOperationError(mPresenter.getStringResource(R.string.too_few_in_stock_to_sell));
-                    return;
-                }
         }
         ticket.saleTotal = total;
         ticket.vendor = "Toad";
@@ -322,24 +350,14 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         for (Sale s : currentSale) {
             s.saleTicket = ticket;
             s.save();
-
-            if (s.product.productType == Product.PRODUCT_TYPE_MADE_ON_SALE) {
-
+            if (s.product.productType == Product.PRODUCT_TYPE_STORED) {
                 s.product.productRemaining -= s.productAmount;
                 s.product.save();
-            }
-
-            if (s.product.madeOnSell == Product.PRODUCT_TYPE_MADE_ON_SALE) {
-
-                if (canMake(s.product)) {
-                    for (Recipe r : getRecipeListFromProduct(s.product.getId())) {
-                        Material m = r.material;
-                        m.materialRemaining -= r.MaterialAmount;
-                        m.save();
-                    }
-                } else {
-                    mPresenter.onOperationError(
-                            mPresenter.getStringResource(R.string.not_enough_material));
+            }else {
+                for (Recipe r : getRecipeListFromProduct(s.product.getId())) {
+                    Material m = r.material;
+                    m.materialRemaining -= r.MaterialAmount;
+                    m.save();
                 }
             }
         }
@@ -347,14 +365,20 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     private boolean canMake(Product product){
-        if (mPreferencePresenter.isAllowingDepletedProduction())
+        if (mPreferencePresenter.isAllowingDepletedProduction() || product.productType ==
+                Product.PRODUCT_TYPE_STORED)
             return true;
         for (Recipe r : getRecipeListFromProduct(product.getId())){
             Material m = r.material;
-            if (r.MaterialAmount > m.materialRemaining)
+            if (r.MaterialAmount >= m.materialRemaining)
                 return false;
         }
         return true;
+    }
+
+    private boolean hasEnoughToSell(Sale sale){
+        return mPreferencePresenter.isAllowingDepletedProduction() || sale.product.productRemaining >= sale.productAmount
+                || sale.product.productType == Product.PRODUCT_TYPE_MADE_ON_SALE;
     }
 
     @Override
