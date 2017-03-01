@@ -126,10 +126,10 @@ public interface MainMVP {
 
         /**
          * Updates the current Product with a new Department
-         * @param aLong Product id reference
+         * @param productId Product id reference
          * @param item Department object reference
          */
-        void pickDepartment(long aLong, Department item);
+        void pickDepartment(long productId, Department item);
 
         List<Recipe> getRecipe(long aLong);
 

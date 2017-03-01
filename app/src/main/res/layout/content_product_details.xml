@@ -17,8 +17,9 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text|textPersonName"
+                android:inputType="text"
                 android:ems="10"
+                android:imeOptions="actionDone"
                 android:enabled="false"
                 android:textAlignment="center"
                 android:id="@+id/edt_product_name"/>
