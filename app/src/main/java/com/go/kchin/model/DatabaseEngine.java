@@ -137,6 +137,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         newProduct.productType = Product.PRODUCT_TYPE_STORED;
         newProduct.productMeasureUnit = Product.MEASURE_PIECE;
         final long operationId =newProduct.save();
+
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.product_saved),
                 operationId);
     }
@@ -166,8 +167,6 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         recipe.save();
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.added_to_recipe), 0);
     }
-
-
 
     @Override
     public void setProductDepartment(long aLong, Department item) {
@@ -458,6 +457,16 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public List<Product> getProductsFromDepartment(long departmentId) {
+        if (departmentId == -1){
+            List<Product> allProducts = Product.listAll(Product.class);
+            List<Product> pWithoutDepartment = new ArrayList<>();
+            for (Product p : allProducts){
+                if (p.department == null)
+                    pWithoutDepartment.add(p);
+            }
+            return pWithoutDepartment;
+        }
+
         return Product.find(Product.class, "department = ?", String.valueOf(departmentId));
     }
 
@@ -465,6 +474,17 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     public List<Product> getProductsFromDepartment(long departmentId, String query) {
         String formatedSearchQuery = formatForQuery(query);
         return Product.find(Product.class, "material_name LIKE ?", "%"+formatedSearchQuery+"%");
+    }
+
+    @Override
+    public void setProductInventory(long productId, float arg) {
+        Product p = Product.findById(Product.class, productId);
+        if (p != null){
+            p.productRemaining = arg;
+            p.save();
+            mPresenter.onOperationSuccess(R.string.operation_complete);
+        }
+
     }
 
     @Override

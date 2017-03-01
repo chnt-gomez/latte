@@ -1,6 +1,7 @@
 package com.go.kchin.view.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -13,8 +14,10 @@ import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
 import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.model.database.Sale;
+import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.Loader;
 import com.go.kchin.util.utilities.NFormatter;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -28,7 +31,8 @@ import butterknife.OnClick;
  * Created by MAV1GA on 18/01/2017.
  */
 
-public class SellProductFromDepartmentFragment extends BaseFragment implements AdapterView.OnItemClickListener{
+public class SellProductFromDepartmentFragment extends BaseFragment implements
+        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
 
     private ProductListAdapter productListAdapter;
     private MainMVP.SalesPresenterOps mSalesPresenter;
@@ -68,6 +72,7 @@ public class SellProductFromDepartmentFragment extends BaseFragment implements A
         departmentId = getArguments().getLong(DEPARTMENT_GROUP);
         reload(null);
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
 
     }
 
@@ -85,10 +90,22 @@ public class SellProductFromDepartmentFragment extends BaseFragment implements A
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        addToCurrentSale(productListAdapter.getItem(position));
+        addToCurrentSale(productListAdapter.getItem(position), 1.0f);
     }
-    private void addToCurrentSale(Product item) {
-        showMessage(R.string.added_to_kart);
+    private void addToCurrentSale(Product item, float productAmount) {
+        mSalesPresenter.addToCurrentSale(item, productAmount);
+    }
+
+    @Override
+    public boolean onItemLongClick(final AdapterView<?> adapterView, View view, int i, long l) {
+        final int position = i;
+        Dialogs.newFloatDialog(getContext(), getString(R.string.add_many), null, new RequiredDialogOps.NewFloatOps() {
+            @Override
+            public void onNewFloat(float arg) {
+                addToCurrentSale(productListAdapter.getItem(position), arg);
+            }
+        }).show();
+        return true;
     }
 
 }

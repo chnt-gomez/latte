@@ -142,4 +142,6 @@
     <string name="title_activity_home">Start</string>
     <string name="assign_department">Assign department</string>
     <string name="stock_too_low">Not enough in stock to sell</string>
+    <string name="no_department">Without department</string>
+    <string name="add_many">Add many</string>
 </resources>

@@ -140,6 +140,9 @@ public interface MainMVP {
         void buyMore(long productId, float arg, float cost);
 
         void setRecipeMaterialAmount(long recipeId, float amount);
+
+        void setInventory(long productId, float arg);
+
     }
 
     interface DepartmentsPresenterOps {
@@ -240,6 +243,8 @@ public interface MainMVP {
         List<Department> getDepartments();
         List<Product> getProductsInDepartment(long departmentId);
         List<Product> getProducts(long departmentId, String query);
+
+        void addToCurrentSale(Product item, float productAmount);
     }
 
     /**
@@ -469,6 +474,7 @@ public interface MainMVP {
 
         List<Product> getProductsFromDepartment(long departmentId, String query);
 
+        void setProductInventory(long productId, float arg);
     }
 
 

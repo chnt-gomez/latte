@@ -65,12 +65,6 @@ public class ProductDetailFragment extends BaseFragment{
     }
 
     @Override
-    public void onPause() {
-        save();
-        super.onPause();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mPresenter.setActivityTitle(getString(R.string.title_product_details));
@@ -131,9 +125,10 @@ public class ProductDetailFragment extends BaseFragment{
     }
 
     public void save(){
-        product.productName = edtProductName.getText().toString();
-        product.productMeasureUnit = spnProductMeasure.getSelectedItemPosition();
-        mProductPresenter.saveProduct(product);
+        Product newProduct = mProductPresenter.getProduct(product.getId());
+        newProduct.productName = edtProductName.getText().toString();
+        newProduct.productMeasureUnit = spnProductMeasure.getSelectedItemPosition();
+        mProductPresenter.saveProduct(newProduct);
     }
 
     @OnClick(R.id.btn_product_department)
@@ -185,13 +180,23 @@ public class ProductDetailFragment extends BaseFragment{
     protected void init() {
         super.init();
         spnProductMeasure.setEnabled(false);
+        spnProductMeasure.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                save();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         edtProductName.setOnEditorActionListener(new EditText.OnEditorActionListener(){
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     save();
-                    return true;
                 }
                 return false;
             }
@@ -227,9 +232,7 @@ public class ProductDetailFragment extends BaseFragment{
         Dialogs.newFloatDialog(getContext(), getString(R.string.set_new_amount), getString(R.string.administration_amount_change), new RequiredDialogOps.NewFloatOps() {
             @Override
             public void onNewFloat(float arg) {
-                product.productRemaining = arg;
-                save();
-                reload();
+                mProductPresenter.setInventory(product.getId(), arg);
             }
         }).show();
     }

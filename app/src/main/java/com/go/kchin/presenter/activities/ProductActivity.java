@@ -86,4 +86,9 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     public void setRecipeMaterialAmount(long recipeId, float amount) {
         mModel.updateRecipe(recipeId, amount);
     }
+
+    @Override
+    public void setInventory(long productId, float arg) {
+        mModel.setProductInventory(productId, arg);
+    }
 }

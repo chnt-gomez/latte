@@ -9,6 +9,7 @@ import android.widget.GridView;
 import com.go.kchin.R;
 import com.go.kchin.adapters.DepartmentGridAdapter;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.model.database.Department;
 import com.go.kchin.util.utilities.Loader;
 
 import butterknife.BindView;
@@ -64,6 +65,11 @@ public class DepartmentGridFragment extends BaseFragment implements AdapterView.
         super.onLoad();
         adapter = new DepartmentGridAdapter(getActivity(), R.layout.gird_department_item_layout,
                 mSalesPresenter.getDepartments());
+        //Create the fake departament
+        Department fakeDepartment = new Department();
+        fakeDepartment.departmentName = getString(R.string.no_department);
+        fakeDepartment.setId((long) -1);
+        adapter.add(fakeDepartment);
     }
 
     @Override

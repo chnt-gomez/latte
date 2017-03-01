@@ -55,7 +55,7 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
         Sale sale = getItem(position);
 
         txtProductName.setText(sale.product.productName);
-        txtProductUnit.setText("1");
+        txtProductUnit.setText(NFormatter.floatToStringAsNumber(sale.productAmount));
         txtProductPrice.setText(NFormatter.floatToStringAsPrice(sale.saleTotal, true));
 
         return view;

@@ -31,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by MAV1GA on 18/01/2017.
@@ -44,9 +45,6 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
     @BindView(R.id.txt_sale_total)
     TextView txtTotal;
 
-    @BindView(R.id.btn_apply_sale)
-    Button btnApplySale;
-
     @BindView(R.id.lv_sale)
     ListView saleListView;
 
@@ -54,7 +52,9 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
 
     @Override
     public void onOperationSuccess(String message) {
-
+        mView.showMessage(message);
+        saleAdapter.clear();
+        txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
     }
 
     @Override
@@ -130,6 +130,11 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         return true;
     }
 
+    @OnClick(R.id.btn_apply_sale)
+    public void onApplyClick(View v){
+        applyCurrentSale(saleAdapter.getAll());
+    }
+
     @Override
     public void applyCurrentSale(List<Sale> currentSale) {
         mModel.applySale(currentSale);
@@ -158,6 +163,25 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
     @Override
     public List<Product> getProducts(long departmentId, String query) {
         return mModel.getProductsFromDepartment(departmentId, query);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (slideLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED)
+            slideLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        else
+            super.onBackPressed();
+    }
+
+    @Override
+    public void addToCurrentSale(Product item, float amount) {
+        Sale sale = new Sale();
+        sale.product = item;
+        sale.productAmount = amount;
+        sale.saleConcept = item.productName;
+        sale.saleTotal = item.productSellPrice * amount;
+        saleAdapter.add(sale);
+        txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
     }
 
     @Override
