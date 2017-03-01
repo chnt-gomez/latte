@@ -39,6 +39,12 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
         return total;
     }
 
+    @Override
+    public void clear() {
+        items.clear();
+        super.clear();
+    }
+
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

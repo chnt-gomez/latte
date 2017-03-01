@@ -58,6 +58,13 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
     }
 
     @Override
+    public void onOperationSuccess(int resource) {
+        super.onOperationSuccess(resource);
+        saleAdapter.clear();
+        txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sale_activity);
