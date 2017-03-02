@@ -178,23 +178,25 @@ public class PDFBuilder {
         document.add(subTitle(res.getString(R.string.recorded_ticket_id)+": "+
                 adapter.getFormattedTickets()));
 
-        PdfPTable detailSalesTable = new PdfPTable(2);
+        PdfPTable detailSalesTable = new PdfPTable(3);
         detailSalesTable.setWidthPercentage(100);
+        detailSalesTable.setWidths(new int[]{2, 8 , 3});
 
         //Build details on sales
         final List<SaleTicket> saleTickets = presenter.getDaySaleTickets(dateTime);
         for (SaleTicket saleTicket : saleTickets){
-            PdfPCell headerCell[] = twoColumnRow(res.getString(R.string.ticket_id) +
-                    " "+String.valueOf(saleTicket.getId()),
-                    NFormatter.floatToStringAsPrice(saleTicket.saleTotal, true));
+            PdfPCell headerCell[] = threeColumnRow(res.getString(R.string.ticket_id),
+                   null, String.valueOf(saleTicket.getId()));
             detailSalesTable.addCell(headerCell[0]);
             detailSalesTable.addCell(headerCell[1]);
+            detailSalesTable.addCell(headerCell[2]);
             List<Sale> sales = presenter.getSalesInTicket(saleTicket);
             for (Sale sale : sales){
-                PdfPCell itemCells[] = twoColumnRow(sale.product.productName,
-                        NFormatter.floatToStringAsPrice(sale.saleTotal, true));
+                PdfPCell itemCells[] = threeColumnRow(NFormatter.floatToStringAsNumber(sale.productAmount),
+                        sale.saleConcept, NFormatter.floatToStringAsPrice(sale.saleTotal, true));
                 detailSalesTable.addCell(itemCells[0]);
                 detailSalesTable.addCell(itemCells[1]);
+                detailSalesTable.addCell(itemCells[2]);
             }
         }
         document.add(detailSalesTable);
@@ -254,6 +256,12 @@ public class PDFBuilder {
     }
 
     private static PdfPCell[] threeColumnRow(String arg1, String arg2, String arg3) {
+        if (arg1 == null)
+            arg1 = "";
+        if(arg2 == null)
+            arg2 = "";
+        if(arg3 == null)
+            arg3 = "";
         Font font = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.GRAY);
         PdfPCell cell1 = new PdfPCell();
         cell1.setPhrase(new Phrase(arg1, font));

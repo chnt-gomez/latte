@@ -1,31 +1,20 @@
 package com.go.kchin.view.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import com.go.kchin.R;
 import com.go.kchin.adapters.ProductListAdapter;
-import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Product;
-import com.go.kchin.model.database.Sale;
 import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.Loader;
-import com.go.kchin.util.utilities.NFormatter;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
-import java.util.ArrayList;
-
 import butterknife.BindView;
-import butterknife.OnClick;
+
 
 /**
  * Created by MAV1GA on 18/01/2017.

@@ -9,6 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.go.kchin.R;
+import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Sale;
 import com.go.kchin.model.database.SaleTicket;
 import com.go.kchin.util.utilities.NFormatter;
@@ -96,8 +97,16 @@ public class QuickReportAdapter extends BaseExpandableListAdapter{
             convertView = layoutInflater.inflate(R.layout.row_sell_item, null);
         }
         TextView child = (TextView)convertView.findViewById(R.id.txt_sell_name);
+        TextView amount = (TextView) convertView.findViewById(R.id.txt_sell_unit);
+        TextView price = (TextView)convertView.findViewById(R.id.txt_sell_sale_price);
         child.setText(childSale.product.productName);
-        child.setTextColor(Color.BLACK);
+
+        child.setTextColor(Color.parseColor("#808080"));
+        amount.setTextColor(Color.parseColor("#808080"));
+        price.setTextColor(Color.parseColor("#808080"));
+
+        amount.setText(NFormatter.floatToStringAsNumber(childSale.productAmount));
+        price.setText(NFormatter.floatToStringAsPrice(childSale.saleTotal, true));
         return convertView;
     }
 
