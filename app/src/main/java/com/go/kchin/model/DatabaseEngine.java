@@ -513,4 +513,8 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     private static String formatForQuery(String rawQuery){
         return rawQuery.replace(" ", "%");
     }
+
+    public static void prepare() {
+        instance = new DatabaseEngine();
+    }
 }

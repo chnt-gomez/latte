@@ -23,4 +23,12 @@
         <item name="android:background">@android:color/white</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="IntroTheme" parent="Theme.AppCompat.NoActionBar"/>
+
+
+
 </resources>

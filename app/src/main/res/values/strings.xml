@@ -144,4 +144,14 @@
     <string name="stock_too_low">Not enough in stock to sell</string>
     <string name="no_department">Without department</string>
     <string name="add_many">Add many</string>
+    <string name="welcome_to_go_sales">Welcome to Go Sales!</string>
+    <string name="welcome_summary">Take a moment to discover the amazing features Go Sales can do to help your business grow.</string>
+    <string name="intro_app">Go Sales</string>
+    <string name="intro_app_summary">Go Sales is a Point of Sale to keep record of your sales, your inventories and your expenses records.</string>
+    <string name="intro_products">Create Products</string>
+    <string name="intro_products_summary">In Go Sales, you must create Products to sell them. Each product has it\'s own price and settings. </string>
+    <string name="intro_materials">Use Materials too</string>
+    <string name="intro_materials_summary">Your Products, as in real life, can be made of Materials. In Go Sales you can create Materials and use them in each Product\'s recipe.</string>
+    <string name="intro_sales">Start Selling</string>
+    <string name="intro_sales_summary">Whenever you sell, your inventories will slowly deplete. Go Sales takes care of this automatically so you can focus in your reports.</string>
 </resources>
