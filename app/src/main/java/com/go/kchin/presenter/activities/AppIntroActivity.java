@@ -4,6 +4,7 @@ package com.go.kchin.presenter.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
@@ -45,7 +46,8 @@ public class AppIntroActivity extends AppIntro{
     }
 
     private void onContinue(){
-        getPreferences(MODE_PRIVATE).edit().putBoolean("has_completed_intro", true).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putBoolean("has_completed_intro", true).apply();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         this.finish();

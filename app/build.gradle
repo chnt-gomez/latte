@@ -36,4 +36,5 @@ dependencies {
     compile 'com.itextpdf:itextg:5.5.10'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.github.paolorotolo:appintro:4.1.0'
+    compile 'com.github.amlcurran.showcaseview:library:5.4.3'
 }

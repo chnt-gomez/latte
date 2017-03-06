@@ -2,6 +2,7 @@ package com.go.kchin.presenter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -25,7 +26,8 @@ public class Splash extends AppCompatActivity {
         DatabaseEngine.prepare();
 
         Intent intent;
-        if (getPreferences(MODE_PRIVATE).getBoolean("has_completed_intro", false)) {
+        if (PreferenceManager.getDefaultSharedPreferences(this).
+                getBoolean("has_completed_intro", false)){
             intent = new Intent(this, HomeActivity.class);
         }else{
             intent = new Intent(this, AppIntroActivity.class);
