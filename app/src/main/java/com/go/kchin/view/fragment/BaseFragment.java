@@ -1,6 +1,7 @@
 package com.go.kchin.view.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,10 +13,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.go.kchin.R;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
@@ -33,15 +38,13 @@ import butterknife.ButterKnife;
  */
 
 public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, View.OnClickListener,
-        LoaderRequiredOps, RequiredDialogOps.RequiredPasswordOps{
+        LoaderRequiredOps, RequiredDialogOps.RequiredPasswordOps, OnShowcaseEventListener{
 
     protected View view;
     protected MainMVP.PresenterOps mPresenter;
     private List<View> editListenerItems;
 
     protected static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
-
-
 
     protected final static String LAYOUT_RES_ID = "layout_res_id";
 
@@ -57,6 +60,15 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
         ).show();
     }
 
+    protected RelativeLayout.LayoutParams getTutorialLayoutParams(){
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        lps.setMargins(margin, margin, margin, margin);
+        return lps;
+    }
+
     protected boolean hasPermission(String permission){
         return ContextCompat.checkSelfPermission(getActivity(),
                 permission)
@@ -67,6 +79,20 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{permission},
                 requestCode);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        onTutorialRequired();
+    }
+
+    protected void onTutorialRequired(){
+
+    }
+
+    protected SharedPreferences getPrefs(){
+        return PreferenceManager.getDefaultSharedPreferences(getContext());
     }
 
     @Override
@@ -257,6 +283,26 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     }
 
     public void onPermissionGranted(){
+
+    }
+
+    @Override
+    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+
+    }
+
+    @Override
+    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+
+    }
+
+    @Override
+    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+    }
+
+    @Override
+    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
 
     }
 }

@@ -27,8 +27,13 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
-    <style name="IntroTheme" parent="Theme.AppCompat.NoActionBar"/>
+    <style name="IntroTheme" parent="Theme.AppCompat.NoActionBar"/>.
 
-
+    <style name="CustomShowcaseTheme" parent="">
+        <item name="sv_backgroundColor">#dd1c2430</item>
+        <item name="sv_showcaseColor">#1c2430</item>
+        <item name="sv_buttonText">Hide</item>
+        <item name="sv_tintButtonColor">false</item>
+    </style>
 
 </resources>

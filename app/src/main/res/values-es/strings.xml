@@ -142,4 +142,17 @@
     <string name="stock_too_low">No hay suficientes para vender</string>
     <string name="no_department">Sin departamento</string>
     <string name="add_many">Añadir muchos</string>
+    <string name="tutorial_hf_step0_title">Empezemos con un Producto</string>
+    <string name="welcome_summary">Tómate un segundo para descubrir las fantásticas cosas que Go Sales puede hacer para ayudar a tu negocio a crecer</string>
+    <string name="welcome_to_go_sales">Bienvenido a Go Sales!</string>
+    <string name="skip">OMITIR</string>
+    <string name="intro_app">Go Sales</string>
+    <string name="intro_app_summary">Go Sales es un punto de venta para registrar tus ventas, inventarios y registros de gastos.</string>
+    <string name="intro_materials">Con Materiales también</string>
+    <string name="intro_materials_summary">Tus Productos, como en la vida real, pueden ser elaborados con Materiales. En Go Sales puedes crear Materiales y usarlos en cada receta del Producto.</string>
+    <string name="intro_products">Crea Productos</string>
+    <string name="intro_products_summary">En Go Sales debes crear Productos para poder venderlos. Cada producto tiene su propio precio y características.</string>
+    <string name="tutorial_hf_step0_summary">Go Sales tiene 3 secciones diferentes. En cada seccion podrás hacer cosas diferentes. En la sección de Inventatio podrás crear, editar o eliminar Productos y Materiales. Vamos a crear un nuevo Producto para empezar a Vender.</string>
+    <string name="intro_sales">Empieza a vender</string>
+    <string name="intro_sales_summary">Cada que hagas una venta, tus inventarios se irán agotando lentamente. Go Sales se ocupa de todo esto automáticamente de manera que te concentres en tus reportes.</string>
 </resources>

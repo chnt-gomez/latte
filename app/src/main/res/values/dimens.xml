@@ -6,4 +6,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="slider_size">42dp</dimen>
+
+    <dimen name="custom_showcase_width">96dip</dimen>
+    <dimen name="custom_showcase_height">48dip</dimen>
 </resources>

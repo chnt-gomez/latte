@@ -6,4 +6,5 @@
     <color name="colorAccentLight">#80ddf7</color>
     <color name="colorDarkGrayBlue">#1c2430</color>
     <color name="colorDisabled">#808080</color>
+    <color name="colorEraser">#b91c2430</color>
 </resources>
