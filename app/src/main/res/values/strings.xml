@@ -2,6 +2,7 @@
     <string name="app_name" translatable="false">Go Sales</string>
     <string name="action_settings">Settings</string>
     <string name="ok">OK</string>
+    <string name="next">NEXT</string>
     <string name="new_product">New Product</string>
     <string name="material_saved">New Material saved</string>
     <string name="saved">Saved</string>
@@ -154,7 +155,7 @@
     <string name="intro_materials_summary">Your Products, as in real life, can be made of Materials. In Go Sales you can create Materials and use them in each Product\'s recipe.</string>
     <string name="intro_sales">Start selling</string>
     <string name="intro_sales_summary">Whenever you sell, your inventories will slowly deplete. Go Sales takes care of this automatically so you can focus in your reports.</string>
-    <string name="tutorial_hf_step0_title">Let\'s start with a Product</string>
-    <string name="tutorial_hf_step0_summary">Go Sales has 3 different sections. In each section you will be able to do different stuff. In the Inventory section you will be able to create, edit or delete Products and Materials. Let\'s create a new Product to start Selling.</string>
+    <string name="tutorial_hf_step0_title">This is the Start screen</string>
+    <string name="tutorial_hf_step0_summary">Go Sales has 3 sections. In each section you will be able to do different stuff. To start selling you must create a new Product. Let\\\'s try it now.</string>
     <string name="skip">SKIP</string>
 </resources>

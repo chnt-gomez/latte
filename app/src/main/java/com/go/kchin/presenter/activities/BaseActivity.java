@@ -33,6 +33,8 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         init();
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -109,6 +111,18 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     @Override
     public void setActivityTitle(String title) {
         setTitle(title);
+    }
+
+    @Override
+    public void hideActionBar() {
+        if(getSupportActionBar() != null)
+            getSupportActionBar().hide();
+    }
+
+    @Override
+    public void restoreActionBar() {
+        if(getSupportActionBar() != null)
+            getSupportActionBar().show();
     }
 
 

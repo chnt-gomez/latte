@@ -10,7 +10,7 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.go.kchin.R;
 import com.go.kchin.presenter.activities.QuickReportActivity;
 import com.go.kchin.presenter.activities.SaleActivity;
-import com.go.kchin.util.utilities.SquareShowcaseView;
+import com.go.kchin.util.utilities.TutorialBuilder;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,30 +44,40 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void onTutorialRequired() {
         super.onTutorialRequired();
+        mPresenter.hideActionBar();
 
         if (!getPrefs().getBoolean(TUTORIAL_COMPLETE, false)){
-            switch (getPrefs().getInt(TUTORIAL_STEP, 0)){
-                case 0:
-                    //Start with adding a new Product. Hide all Other buttons or Disable them.
-                    ViewTarget target = new ViewTarget(R.id.cv_inventory, getActivity());
-                    new ShowcaseView.Builder(getActivity())
-                            .withMaterialShowcase()
-                            .setTarget(target)
-                            .setContentTitle(R.string.tutorial_hf_step0_title)
-                            .setContentText(R.string.tutorial_hf_step0_summary)
-                            .setStyle(R.style.CustomShowcaseTheme)
-                            .setShowcaseEventListener(this)
-                            .build().show();
-                    break;
-            }
+            TutorialBuilder tutorialBuilder = new TutorialBuilder(this);
+            tutorialBuilder.start(getActivity());
         }
 
+    }
+
+    @Override
+    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+        super.onShowcaseViewHide(showcaseView);
+        mPresenter.restoreActionBar();
     }
 
     @Override
     protected void init() {
         super.init();
 
+    }
+
+    @Override
+    public void onMoveToStep(int step, ShowcaseView showcaseView) {
+        switch (step){
+            case 0:
+                sv.setContentTitle(getString(R.string.tutorial_hf_step0_title));
+                sv.setContentText(getString(R.string.tutorial_hf_step0_summary));
+                break;
+            case 1:
+                sv.setContentTitle(getString(R.string.tutorial_hf_step0_title));
+                sv.setContentText(getString(R.string.tutorial_hf_step0_summary));
+                sv.setTarget(new ViewTarget(R.id.cv_inventory, getActivity()));
+                break;
+        }
     }
 
     @OnClick(R.id.btn_sell)

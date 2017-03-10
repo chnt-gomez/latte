@@ -29,10 +29,10 @@
 
     <style name="IntroTheme" parent="Theme.AppCompat.NoActionBar"/>.
 
-    <style name="CustomShowcaseTheme" parent="">
-        <item name="sv_backgroundColor">#dd1c2430</item>
+    <style name="CustomShowcaseTheme">
+        <item name="sv_backgroundColor">#cc1c2430</item>
         <item name="sv_showcaseColor">#1c2430</item>
-        <item name="sv_buttonText">Hide</item>
+        <item name="sv_buttonText">@string/next</item>
         <item name="sv_tintButtonColor">false</item>
     </style>
 

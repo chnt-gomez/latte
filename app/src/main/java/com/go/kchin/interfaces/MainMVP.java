@@ -52,6 +52,8 @@ public interface MainMVP {
         void moveToFragment(BaseFragment fragment);
         void setViewLayer(MainMVP.RequiredViewOps fragment);
         void setActivityTitle(String title);
+        void hideActionBar();
+        void restoreActionBar();
     }
 
     /**

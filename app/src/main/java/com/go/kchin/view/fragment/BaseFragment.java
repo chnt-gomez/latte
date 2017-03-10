@@ -25,6 +25,7 @@ import com.go.kchin.R;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
+import com.go.kchin.interfaces.TutorialService;
 import com.go.kchin.util.utilities.Dialogs;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ import butterknife.ButterKnife;
  */
 
 public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, View.OnClickListener,
-        LoaderRequiredOps, RequiredDialogOps.RequiredPasswordOps, OnShowcaseEventListener{
+        LoaderRequiredOps, RequiredDialogOps.RequiredPasswordOps, OnShowcaseEventListener, TutorialService{
 
     protected View view;
     protected MainMVP.PresenterOps mPresenter;
@@ -303,6 +304,11 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     @Override
     public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public void onMoveToStep(int step, ShowcaseView showcaseView) {
 
     }
 }
