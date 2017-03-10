@@ -158,4 +158,8 @@
     <string name="tutorial_hf_step0_title">This is the Start screen</string>
     <string name="tutorial_hf_step0_summary">Go Sales has 3 sections. In each section you will be able to do different stuff. To start selling you must create a new Product. Let\\\'s try it now.</string>
     <string name="skip">SKIP</string>
+    <string name="tutorial_hf_step1_title">Tap on the Inventory section</string>
+    <string name="help">Help</string>
+    <string name="got_it">Got it</string>
+    <string name="showcase_ask_for_help">Hello. If you ever need help you can always tap on the \'Help\' icon to see usefull help for the current screen.</string>
 </resources>

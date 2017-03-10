@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
+import android.view.MenuItem;
 
-import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
-import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.DatabaseEngine;
@@ -21,7 +19,7 @@ import com.go.kchin.view.fragment.BaseFragment;
  */
 
 public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredPresenterOps,
-        MainMVP.PresenterOps, MainMVP.PreferenceAccess, OnShowcaseEventListener{
+        MainMVP.PresenterOps, MainMVP.PreferenceAccess{
 
     protected MainMVP.ModelOps mModel;
     protected MainMVP.RequiredViewOps mView;
@@ -33,7 +31,14 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         init();
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_help){
+            mView.onShowTutorial();
+            return true;
+        }
+        return false;
+    }
 
     @Override
     protected void onResume() {
@@ -161,23 +166,4 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         return false;
     }
 
-    @Override
-    public void onShowcaseViewHide(ShowcaseView showcaseView) {
-
-    }
-
-    @Override
-    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
-
-    }
-
-    @Override
-    public void onShowcaseViewShow(ShowcaseView showcaseView) {
-
-    }
-
-    @Override
-    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
-
-    }
 }

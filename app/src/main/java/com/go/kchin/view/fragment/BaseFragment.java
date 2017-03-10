@@ -13,19 +13,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
-import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.go.kchin.R;
 import com.go.kchin.interfaces.LoaderRequiredOps;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
-import com.go.kchin.interfaces.TutorialService;
 import com.go.kchin.util.utilities.Dialogs;
 
 import java.util.ArrayList;
@@ -39,7 +34,7 @@ import butterknife.ButterKnife;
  */
 
 public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, View.OnClickListener,
-        LoaderRequiredOps, RequiredDialogOps.RequiredPasswordOps, OnShowcaseEventListener, TutorialService{
+        LoaderRequiredOps, RequiredDialogOps.RequiredPasswordOps{
 
     protected View view;
     protected MainMVP.PresenterOps mPresenter;
@@ -80,16 +75,6 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{permission},
                 requestCode);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        onTutorialRequired();
-    }
-
-    protected void onTutorialRequired(){
-
     }
 
     protected SharedPreferences getPrefs(){
@@ -158,6 +143,11 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     @Override
     public void search(String query) {
+
+    }
+
+    @Override
+    public void onShowTutorial() {
 
     }
 
@@ -287,28 +277,4 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     }
 
-    @Override
-    public void onShowcaseViewHide(ShowcaseView showcaseView) {
-
-    }
-
-    @Override
-    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
-
-    }
-
-    @Override
-    public void onShowcaseViewShow(ShowcaseView showcaseView) {
-
-    }
-
-    @Override
-    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onMoveToStep(int step, ShowcaseView showcaseView) {
-
-    }
 }

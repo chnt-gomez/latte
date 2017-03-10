@@ -37,6 +37,7 @@ public interface MainMVP {
         void showError(String msg);
         void onOperationError(String msg, long rowId);
         void search(String query);
+        void onShowTutorial();
 
 
         //All other ops

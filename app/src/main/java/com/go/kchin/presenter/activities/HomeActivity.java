@@ -2,14 +2,17 @@ package com.go.kchin.presenter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.go.kchin.R;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.view.fragment.HomeFragment;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 
 public class HomeActivity extends BaseActivity implements RequiredDialogOps.RequiredPasswordOps{
@@ -20,10 +23,13 @@ public class HomeActivity extends BaseActivity implements RequiredDialogOps.Requ
         setTitle(R.string.start);
     }
 
+
+
     @Override
     protected void init() {
         super.init();
         attachFragment(HomeFragment.newInstance());
+
     }
 
     @Override
@@ -42,8 +48,8 @@ public class HomeActivity extends BaseActivity implements RequiredDialogOps.Requ
                         .show();
             }else{
                 startActivity(new Intent(this, SettingsActivity.class));
+                return true;
             }
-
         }
         return super.onOptionsItemSelected(item);
     }
