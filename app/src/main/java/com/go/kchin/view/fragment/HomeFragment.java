@@ -7,6 +7,7 @@ import com.go.kchin.R;
 import com.go.kchin.presenter.activities.QuickReportActivity;
 import com.go.kchin.presenter.activities.SaleActivity;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 08/02/2017.
@@ -29,7 +30,25 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void onShowTutorial() {
-        super.onShowTutorial();
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        if (view.findViewById(R.id.cv_inventory) != null){
+
+
+            sequence.addSequenceItem(buildSquareView(R.id.cv_sales,
+                    "Aquí puedes llevar a cabo tus ventas", getString(R.string.got_it)));
+            sequence.addSequenceItem(buildSquareView(R.id.cv_inventory,
+                    "En el inventario puedes crear productos, modificarlos y revisar sus detalles. También " +
+                            "están los Materiales y los reportes de los invenrarios bajos.",
+                    getString(R.string.got_it)));
+            sequence.addSequenceItem(buildSquareView(R.id.cv_reports, "Todas tus ventas realizadas " +
+                    "están registradas en los Reportes de Venta. Si lo deseas, también puedes imprimir " +
+                    "en formato PDF los reportes", getString(R.string.got_it)));
+            sequence.start();
+        }
+
+        if (view.findViewById(R.id.btn_see_products) != null){
+            //TODO: continuar con los tutoriales para los otros metodos.
+        }
     }
 
     @Override

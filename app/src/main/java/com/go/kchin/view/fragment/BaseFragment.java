@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by MAV1GA on 06/01/2017.
@@ -185,6 +186,32 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
         if (view != null){
             ButterKnife.bind(this, view);
         }
+    }
+
+    protected MaterialShowcaseView buildView(int viewId,
+                                             @Nullable String description,
+                                             @Nullable String dismissText){
+
+        return new MaterialShowcaseView.Builder(getActivity())
+                .setTarget(view.findViewById(viewId))
+                .setDismissText(dismissText)
+                .setContentText(description)
+                .setMaskColour(ContextCompat.getColor(getContext(),
+                        R.color.colorDarkGrayBlue))
+                .build();
+    }
+
+    protected MaterialShowcaseView buildSquareView(int viewId,
+                                             @Nullable String description,
+                                             @Nullable String dismissText){
+        return new MaterialShowcaseView.Builder(getActivity())
+                .setTarget(view.findViewById(viewId))
+                .setDismissText(dismissText)
+                .setContentText(description)
+                .withRectangleShape()
+                .setMaskColour(ContextCompat.getColor(getContext(),
+                        R.color.colorDarkGrayBlue))
+                .build();
     }
 
     @Override

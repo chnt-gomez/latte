@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -13,6 +14,9 @@ import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.model.DatabaseEngine;
 import com.go.kchin.view.fragment.BaseFragment;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.target.ViewTarget;
 
 /**
  * Created by MAV1GA on 06/01/2017.
@@ -84,6 +88,10 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         if (mModel == null) {
             mModel = DatabaseEngine.getInstance(this);
         }
+    }
+
+    protected void onNeedTutorial(){
+
     }
 
 
@@ -165,5 +173,6 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     public boolean authorize(String password) {
         return false;
     }
+
 
 }

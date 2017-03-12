@@ -12,7 +12,9 @@ import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.view.fragment.HomeFragment;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 
 public class HomeActivity extends BaseActivity implements RequiredDialogOps.RequiredPasswordOps{
@@ -29,6 +31,11 @@ public class HomeActivity extends BaseActivity implements RequiredDialogOps.Requ
     protected void init() {
         super.init();
         attachFragment(HomeFragment.newInstance());
+    }
+
+    @Override
+    protected void onNeedTutorial() {
+        // Get the screen with the id
 
     }
 
