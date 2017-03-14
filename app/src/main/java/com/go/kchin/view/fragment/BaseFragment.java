@@ -189,26 +189,24 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     }
 
     protected MaterialShowcaseView buildView(int viewId,
-                                             @Nullable String description,
-                                             @Nullable String dismissText){
+                                             @Nullable String description){
 
         return new MaterialShowcaseView.Builder(getActivity())
                 .setTarget(view.findViewById(viewId))
-                .setDismissText(dismissText)
                 .setContentText(description)
+                .setDismissOnTouch(true)
                 .setMaskColour(ContextCompat.getColor(getContext(),
                         R.color.colorDarkGrayBlue))
                 .build();
     }
 
     protected MaterialShowcaseView buildSquareView(int viewId,
-                                             @Nullable String description,
-                                             @Nullable String dismissText){
+                                             @Nullable String description){
         return new MaterialShowcaseView.Builder(getActivity())
                 .setTarget(view.findViewById(viewId))
-                .setDismissText(dismissText)
                 .setContentText(description)
                 .withRectangleShape()
+                .setDismissOnTouch(true)
                 .setMaskColour(ContextCompat.getColor(getContext(),
                         R.color.colorDarkGrayBlue))
                 .build();

@@ -11,6 +11,7 @@ import com.go.kchin.presenter.activities.ProductsActivity;
 import com.go.kchin.presenter.activities.PurchasesReportActivity;
 
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 09/02/2017.
@@ -51,6 +52,21 @@ public class InventoryFragment extends BaseFragment {
         mPresenter.moveToActivity(PurchasesReportActivity.class, null);
     }
 
-
-
+    @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        if (view.findViewById(R.id.btn_see_products) != null){
+            sequence.addSequenceItem(buildSquareView(R.id.btn_see_products,
+                    "Crea o modifica tus Productos."));
+            sequence.addSequenceItem(buildSquareView(R.id.btn_see_materials,
+                    "Aquí podrás crear Materiales y modificarlos."));
+            sequence.addSequenceItem(buildSquareView(R.id.btn_see_departments,
+                    "Para organizar mejor tus Productos, puedes crear Departamentos."));
+            sequence.addSequenceItem(buildSquareView(R.id.btn_low_inventory,
+                    "Cuando tus inventarios estén por agotarse, los podrás revisar aqui."));
+            sequence.addSequenceItem(buildSquareView(R.id.btn_purchases_report,
+                    "Todas las compras que realices las podrás consultar aquí."));
+            sequence.start();
+        }
+    }
 }

@@ -31,24 +31,16 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onShowTutorial() {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        if (view.findViewById(R.id.cv_inventory) != null){
 
 
             sequence.addSequenceItem(buildSquareView(R.id.cv_sales,
-                    "Aquí puedes llevar a cabo tus ventas", getString(R.string.got_it)));
+                    "Aquí puedes llevar a cabo tus ventas"));
             sequence.addSequenceItem(buildSquareView(R.id.cv_inventory,
-                    "En el inventario puedes crear productos, modificarlos y revisar sus detalles. También " +
-                            "están los Materiales y los reportes de los invenrarios bajos.",
-                    getString(R.string.got_it)));
-            sequence.addSequenceItem(buildSquareView(R.id.cv_reports, "Todas tus ventas realizadas " +
-                    "están registradas en los Reportes de Venta. Si lo deseas, también puedes imprimir " +
-                    "en formato PDF los reportes", getString(R.string.got_it)));
+                    "En el inventario puedes crear Productos y Materiales, modificarlos y revisar " +
+                            "sus existencias."));
+            sequence.addSequenceItem(buildSquareView(R.id.cv_reports, "Puedes revisar tus ventas y " +
+                    "compras realizadas en el día."));
             sequence.start();
-        }
-
-        if (view.findViewById(R.id.btn_see_products) != null){
-            //TODO: continuar con los tutoriales para los otros metodos.
-        }
     }
 
     @Override
