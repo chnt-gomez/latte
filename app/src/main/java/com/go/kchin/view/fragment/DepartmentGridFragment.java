@@ -13,6 +13,7 @@ import com.go.kchin.model.database.Department;
 import com.go.kchin.util.utilities.Loader;
 
 import butterknife.BindView;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by vicente on 19/02/17.
@@ -32,6 +33,26 @@ public class DepartmentGridFragment extends BaseFragment implements AdapterView.
         args.putInt(LAYOUT_RES_ID, R.layout.fragment_department_sell);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onShowTutorial() {
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        if(mSalesPresenter.isShowingTicket()){
+            sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelView(), "Para eliminar un producto del ticket " +
+                    "manten presionado el elemento."));
+            sequence.start();
+            return;
+        }
+        sequence.addSequenceItem(buildView(R.id.txt_department_name,
+                "Tus productos están ordenados por departamento para encontrarlos más rapido."));
+        sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelView(),
+                "Cuando agregues un producto, el total de la venta se acumulará."));
+        sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelButton(),
+                "Cuando la venta esté completa, usa el botón de aplicar para registrarla."));
+        sequence.start();
+
     }
 
     @Override

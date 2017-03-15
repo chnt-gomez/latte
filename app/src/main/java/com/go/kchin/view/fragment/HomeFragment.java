@@ -32,7 +32,6 @@ public class HomeFragment extends BaseFragment {
     public void onShowTutorial() {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
 
-
             sequence.addSequenceItem(buildSquareView(R.id.cv_sales,
                     "Aquí puedes llevar a cabo tus ventas"));
             sequence.addSequenceItem(buildSquareView(R.id.cv_inventory,

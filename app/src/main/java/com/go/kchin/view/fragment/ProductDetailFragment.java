@@ -31,6 +31,7 @@ import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 09/01/2017.
@@ -122,6 +123,31 @@ public class ProductDetailFragment extends BaseFragment{
             }
         }
         super.onDoneLoading();
+    }
+
+    @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        sequence.addSequenceItem(buildSquareView(R.id.edt_product_name, "Éste es el nombre del Producto. "));
+        sequence.addSequenceItem(buildSquareView(R.id.spn_product_unit, "Esta es a unidad de Medida. Sirve para identificar cómo " +
+                "se almacena el producto y cómo interactúa con tu inventario."));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_product_amount, "Las existencias en el inventario están aquí. " +
+                "Dependiendo de la configuración del producto puedes comprar más con este botón y generar una Operación de Compra."));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_sale_price, "El precio de venta final. " +
+                "Cuando vendas este producto se incrementarán las ganancias usando esta cifra"));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_product_department, "Usa este botón para asignar este Producto a un Departamnto " +
+                "existente"));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_see_recipe, "Puedes usar el botón de receta para configurar los Materiales que son necesarios " +
+                "para vender o crear este Producto."));
+        sequence.addSequenceItem(buildView(R.id.chk_is_made_on_sale, "Puedes configurar el Producto de acuerdo a las " +
+                "necesidades de tu negocio"));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_inventory_adjustments, "Si en algún momento haz perdido el control del inventario, " +
+                "puedes modificar sus existencias sin generar Operaciones de Compra."));
+        if (btnEdit.getVisibility() != View.GONE) {
+            sequence.addSequenceItem(buildView(R.id.btn_edit, "Por seguridad, no se puede modificar el Producto a menos que selecciones el botón de " +
+                    "'Editar'. Los cambios se guardarán automáticamente."));
+        }
+        sequence.start();
     }
 
     public void save(){

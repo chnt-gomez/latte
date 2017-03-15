@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.go.kchin.R;
@@ -36,6 +38,13 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.simple_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_help){
             mView.onShowTutorial();
@@ -52,7 +61,6 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
         }
 
     }
-
 
     @Override
     public void onOperationSuccess(String message, long rowId) {

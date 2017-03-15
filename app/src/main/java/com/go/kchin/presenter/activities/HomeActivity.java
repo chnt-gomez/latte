@@ -25,8 +25,6 @@ public class HomeActivity extends BaseActivity implements RequiredDialogOps.Requ
         setTitle(R.string.start);
     }
 
-
-
     @Override
     protected void init() {
         super.init();

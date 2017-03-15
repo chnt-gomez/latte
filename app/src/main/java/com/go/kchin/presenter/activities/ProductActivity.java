@@ -2,6 +2,7 @@ package com.go.kchin.presenter.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Menu;
 
 import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
@@ -35,6 +36,7 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
             attachFragment(ProductDetailFragment.newInstance(getIntent().getExtras().getLong(PRODUCT_ID)));
         }
     }
+
 
     @Override
     public Product getProduct(final long id) {
@@ -78,6 +80,11 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     }
 
     @Override
+    public void addMaterialToProductRecipe(long productId, long materialId) {
+        mModel.addMaterialToRecipe(productId, materialId);
+    }
+
+    @Override
     public void buyMore(long productId, float arg, float cost) {
         mModel.buyProduct(productId, arg, cost);
     }
@@ -90,5 +97,10 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     @Override
     public void setInventory(long productId, float arg) {
         mModel.setProductInventory(productId, arg);
+    }
+
+    @Override
+    public void addMaterial(Material newMaterial) {
+        mModel.addMaterial(newMaterial);
     }
 }

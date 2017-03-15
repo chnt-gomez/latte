@@ -18,6 +18,8 @@ import com.go.kchin.presenter.activities.ProductActivity;
 import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.Loader;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+
 /**
  * Created by MAV1GA on 09/01/2017.
  */
@@ -58,6 +60,17 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
                         this).show();
                 break;
         }
+    }
+
+    @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        sequence.addSequenceItem(buildView(R.id.btn_add, "Add more products with the 'Add' button"));
+        if (view.findViewById(R.id.txt_product_name) != null){
+            sequence.addSequenceItem(buildView(R.id.txt_product_name, "Para ver o editar un Producto, tócalo en la lista"));
+        }
+        sequence.start();
+
     }
 
     @Override

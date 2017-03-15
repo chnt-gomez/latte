@@ -2,6 +2,7 @@ package com.go.kchin.interfaces;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import com.go.kchin.model.DepletedItem;
 import com.go.kchin.model.database.Combo;
@@ -140,11 +141,15 @@ public interface MainMVP {
 
         void addMaterialToProductRecipe(long aLong, Material item);
 
+        void addMaterialToProductRecipe(long productId, long materialId);
+
         void buyMore(long productId, float arg, float cost);
 
         void setRecipeMaterialAmount(long recipeId, float amount);
 
         void setInventory(long productId, float arg);
+
+        void addMaterial(Material newMaterial);
 
     }
 
@@ -247,6 +252,11 @@ public interface MainMVP {
         List<Product> getProductsInDepartment(long departmentId);
         List<Product> getProducts(long departmentId, String query);
 
+        View getSlidingPanelView();
+        View getSlidingPanelButton();
+
+        boolean isShowingTicket();
+
         void addToCurrentSale(Product item, float productAmount);
     }
 
@@ -319,6 +329,7 @@ public interface MainMVP {
         List<Material> getMaterials(String query);
 
 
+
         /**
          * Products Operations --------------------------------------
          */
@@ -363,6 +374,7 @@ public interface MainMVP {
 
         void addMaterialToRecipe(long aLong, Material item);
 
+        void addMaterialToRecipe(long productId, long materialId);
         /**
          * Sets a Department reference of a Product
          *

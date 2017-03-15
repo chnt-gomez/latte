@@ -20,6 +20,7 @@ import com.go.kchin.util.utilities.Loader;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 11/01/2017.
@@ -82,6 +83,17 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
                 seeDetail(adapter.getItem(position).getId());
             }
         });
+    }
+
+    @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        if (view.findViewById(R.id.txt_material_name) != null){
+            sequence.addSequenceItem(buildView(R.id.txt_material_name, "Todos los materiales aparecen aquí. " +
+                    "Toca uno para acceder a sus detalles y editarlo"));
+        }
+        sequence.addSequenceItem(buildView(R.id.btn_add, "Puedes crear más con el botón."));
+        sequence.start();
     }
 
     @Override

@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
@@ -55,15 +56,6 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
                     }
                 }
         ).show();
-    }
-
-    protected RelativeLayout.LayoutParams getTutorialLayoutParams(){
-        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        lps.setMargins(margin, margin, margin, margin);
-        return lps;
     }
 
     protected boolean hasPermission(String permission){
@@ -149,7 +141,6 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     @Override
     public void onShowTutorial() {
-
     }
 
     @Override
@@ -206,6 +197,30 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
                 .setTarget(view.findViewById(viewId))
                 .setContentText(description)
                 .withRectangleShape()
+                .setDismissOnTouch(true)
+                .setMaskColour(ContextCompat.getColor(getContext(),
+                        R.color.colorDarkGrayBlue))
+                .build();
+    }
+
+    protected MaterialShowcaseView buildSquareView(View view,
+                                                   @Nullable String description){
+        return new MaterialShowcaseView.Builder(getActivity())
+                .setTarget(view)
+                .setContentText(description)
+                .withRectangleShape()
+                .setDismissOnTouch(true)
+                .setMaskColour(ContextCompat.getColor(getContext(),
+                        R.color.colorDarkGrayBlue))
+                .build();
+    }
+
+    protected MaterialShowcaseView buildView(View view,
+                                             @Nullable String description){
+
+        return new MaterialShowcaseView.Builder(getActivity())
+                .setTarget(view)
+                .setContentText(description)
                 .setDismissOnTouch(true)
                 .setMaskColour(ContextCompat.getColor(getContext(),
                         R.color.colorDarkGrayBlue))

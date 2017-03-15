@@ -57,6 +57,8 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
     }
 
+
+
     @Override
     public void onOperationSuccess(int resource) {
         super.onOperationSuccess(resource);
@@ -110,6 +112,8 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         super.init();
         attachFragment(DepartmentGridFragment.newInstance());
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -170,6 +174,21 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
     @Override
     public List<Product> getProducts(long departmentId, String query) {
         return mModel.getProductsFromDepartment(departmentId, query);
+    }
+
+    @Override
+    public View getSlidingPanelView() {
+        return findViewById(R.id.txt_sale_total);
+    }
+
+    @Override
+    public View getSlidingPanelButton() {
+        return findViewById(R.id.btn_apply_sale);
+    }
+
+    @Override
+    public boolean isShowingTicket() {
+        return slideLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED;
     }
 
     @Override

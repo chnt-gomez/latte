@@ -2,7 +2,11 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -10,15 +14,21 @@ import android.widget.ListView;
 import com.go.kchin.R;
 import com.go.kchin.adapters.MaterialListAdapter;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.interfaces.RequiredDialogOps;
+import com.go.kchin.model.database.Material;
+import com.go.kchin.model.database.Product;
+import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.Loader;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 26/01/2017.
  */
 
-public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnItemClickListener, RequiredDialogOps.RequiredNewMaterialOps {
 
     @BindView(R.id.lv_inventory)
     ListView listView;
@@ -40,15 +50,33 @@ public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnI
     }
 
     @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        final String p = mProductPresenter.getProduct(getArguments().getLong(PRODUCT_ID)).productName;
+
+        if (view.findViewById(R.id.txt_material_name) != null) {
+            sequence.addSequenceItem(buildView(R.id.txt_material_name, "Todos los Materiales disponibles se " +
+                    "enlistarán aqui. Tóca uno para añadirlo a la receta de " + p));
+        }
+        sequence.addSequenceItem(buildView(R.id.btn_add, "Para tu comodidad, puedes crear Materiales nuevos en esta pantalla."));
+
+        sequence.start();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mPresenter.setActivityTitle(getString(R.string.select_material));
     }
 
+    @OnClick(R.id.btn_add)
+    public void addNewMaterial(View v){
+        Dialogs.newMaterialDialog(getContext(), getString(R.string.new_material), this).show();
+    }
+
     @Override
     protected void init() {
         super.init();
-        btnAdd.setVisibility(FloatingActionButton.GONE);
         listView.setOnItemClickListener(this);
         listView.setEmptyView(view.findViewById(android.R.id.empty));
         reload();
@@ -66,6 +94,8 @@ public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnI
                 mProductPresenter.getAllMaterials());
     }
 
+
+
     @Override
     public void onDoneLoading() {
         super.onDoneLoading();
@@ -80,7 +110,20 @@ public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnI
 
     @Override
     protected void onOperationResultClick(long rowId) {
-        getFragmentManager().popBackStack();
+        mProductPresenter.addMaterialToProductRecipe(getArguments().getLong(PRODUCT_ID), rowId);
+    }
+
+    @Override
+    public void onOperationSuccesfull(String message, @Nullable final long rowId) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction(
+                R.string.add, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOperationResultClick(rowId);
+                    }
+                }
+        ).show();
+        reload();
     }
 
     @Override
@@ -94,4 +137,11 @@ public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnI
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mProductPresenter.addMaterialToProductRecipe(getArguments().getLong(PRODUCT_ID), adapter.getItem(position));
     }
+
+    @Override
+    public void onNewMaterial(Material material) {
+        mProductPresenter.addMaterial(material);
+    }
+
+
 }

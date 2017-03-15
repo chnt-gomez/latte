@@ -165,7 +165,13 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         recipe.product = getProduct(productId);
         recipe.material = item;
         recipe.save();
-        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.added_to_recipe), 0);
+        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.added_to_recipe));
+    }
+
+    @Override
+    public void addMaterialToRecipe(long productId, long materialId) {
+        Material m = getMaterialFromId(materialId);
+        addMaterialToRecipe(productId, m);
     }
 
     @Override

@@ -21,6 +21,7 @@ import com.go.kchin.util.utilities.NFormatter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 11/01/2017.
@@ -102,6 +103,21 @@ public class MaterialDetailFragment extends BaseFragment {
     public void onLoad() {
         super.onLoad();
         material = mMaterialPresenter.getMaterial(getArguments().getLong(MATERIAL_ID));
+    }
+
+    @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        sequence.addSequenceItem(buildSquareView(R.id.edt_material_name, "Este es el nombre del Material."));
+        sequence.addSequenceItem(buildSquareView(R.id.spn_material_unit, "Puedes cambiar la unidad de medida."));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_material_amount, "Estas son las existencias. Con este botón puedes comprar más y generar " +
+                "una Operación de Compra."));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_inventory_adjustments, "Si deseas ajustar las existencias sin generar Operaciones de " +
+                "Compra, usa éste botón."));
+        if (view.findViewById(R.id.btn_edit).getVisibility() != View.GONE) {
+            sequence.addSequenceItem(buildView(R.id.btn_edit, "Por seguridad, debes desbloquear la vista antes de poder editarla."));
+        }
+        sequence.start();
     }
 
     @OnClick(R.id.btn_edit)
