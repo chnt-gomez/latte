@@ -48,4 +48,9 @@ public class DepartmentsActivity extends BaseActivity implements MainMVP.Departm
     public void addProductToDepartment(long productId, long departmentId) {
 
     }
+
+    @Override
+    public void updateDepartmentName(long departmentId, String newName) {
+        mModel.renameDepartment(departmentId, newName);
+    }
 }

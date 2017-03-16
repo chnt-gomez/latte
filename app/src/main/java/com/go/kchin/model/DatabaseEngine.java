@@ -279,6 +279,18 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.saved));
     }
 
+    @Override
+    public void renameDepartment(long departmentId, String departmentName) {
+        if (Department.find(Department.class, "department_name = ?", departmentName).size() >= 1){
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.already_exists_department));
+        }else{
+            Department department = Department.findById(Department.class, departmentId);
+            department.departmentName = departmentName;
+            department.save();
+            mPresenter.onOperationSuccess(R.string.saved);
+        }
+    }
+
 
     @Override
     public List<Combo> getAllCombos() {

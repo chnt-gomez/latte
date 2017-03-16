@@ -105,6 +105,8 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
             }
         });
         txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
+
+
     }
 
     @Override
@@ -125,18 +127,13 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView =
                 (SearchView) MenuItemCompat.getActionView(searchItem);
-        if (searchView != null) {
-            searchView.setSearchableInfo(
-                    searchManager.getSearchableInfo(getComponentName()));
-            searchView.setSubmitButtonEnabled(true);
-            searchView.setOnQueryTextListener(this);
 
-        } else {
-            Log.w(getClass().getSimpleName(), "SEARCH VIEW IS NULL");
-        }
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(this);
 
-        menu.findItem(R.id.filter).setVisible(false);
-        invalidateOptionsMenu();
+
 
         return true;
     }

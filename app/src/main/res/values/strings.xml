@@ -163,4 +163,6 @@
     <string name="got_it">Got it</string>
     <string name="showcase_ask_for_help">Hello. If you ever need help you can always tap on the \'Help\' icon to see usefull help for the current screen.</string>
     <string name="add">Add</string>
+    <string name="already_exists_department">Department already exists</string>
+    <string name="change_name">Change name</string>
 </resources>

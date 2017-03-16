@@ -298,4 +298,31 @@ public class Dialogs {
         return instance;
     }
 
+    public static Dialog newStringDialog(final Context context, String title, String message,
+                                         final RequiredDialogOps.RequiredNewStringDialog callback,
+                                         @Nullable final String hint) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if(title != null)
+            builder.setTitle(title);
+        if(message != null){
+            builder.setMessage(message);
+        }
+        final View dialogView = inflater.inflate(R.layout.dialog_new_string, null);
+        final EditText edtItems = (EditText)dialogView.findViewById(R.id.edt_new_string);
+        if(hint != null)
+            edtItems.setHint(hint);
+        builder.setView(dialogView);
+        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                callback.onNewString(edtItems.getText().toString());
+
+            }
+
+        });
+        instance = builder.create();
+        return instance;
+    }
 }

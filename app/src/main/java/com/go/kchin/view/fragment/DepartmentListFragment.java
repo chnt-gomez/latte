@@ -3,6 +3,8 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.go.kchin.R;
@@ -14,13 +16,14 @@ import com.go.kchin.util.utilities.Dialogs;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 10/01/2017.
  */
 
 public class DepartmentListFragment extends BaseFragment implements
-        RequiredDialogOps.RequiredNewDepartmentOps{
+        RequiredDialogOps.RequiredNewDepartmentOps, AdapterView.OnItemClickListener{
 
     @BindView(R.id.btn_add)FloatingActionButton btnAdd;
 
@@ -55,10 +58,26 @@ public class DepartmentListFragment extends BaseFragment implements
     }
 
     @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        if (view.findViewById(R.id.txt_department_name) != null){
+            sequence.addSequenceItem(buildView(R.id.txt_department_name, "Los Departamentos se usan para " +
+                    "clasificar mejor tus Productos."));
+            sequence.addSequenceItem(buildView(R.id.txt_department_products_amount, "Puedes ver cuántos productos están " +
+                    "categorizados en un Departamento."));
+            sequence.addSequenceItem(buildView(R.id.txt_department_name, "Puedes cambiar el nombre de un Departamento " +
+                    "seleccionándolo en la lista."));
+        }
+        sequence.addSequenceItem(buildView(R.id.btn_add, "Siempre puedes crear nuevos Departamentos."));
+        sequence.start();
+    }
+
+    @Override
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
         listView.setEmptyView(view.findViewById(android.R.id.empty));
+        listView.setOnItemClickListener(this);
         reload();
     }
 
@@ -80,6 +99,21 @@ public class DepartmentListFragment extends BaseFragment implements
     @Override
     public void onNewDepartment(Department department) {
         mDepartmentsPresenter.addDepartment(department);
+    }
+
+    @Override
+    public void onOperationSuccesfull(String message) {
+        super.onOperationSuccesfull(message);
         reload();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+        Dialogs.newStringDialog(getContext(), getString(R.string.change_name), null, new RequiredDialogOps.RequiredNewStringDialog() {
+            @Override
+            public void onNewString(String newString) {
+                    mDepartmentsPresenter.updateDepartmentName(adapter.getItem(position).getId(), newString);
+            }
+        }, adapter.getItem(position).departmentName).show();
     }
 }

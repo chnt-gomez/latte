@@ -8,16 +8,6 @@
         app:iconifiedByDefault="false"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <!-- Will be added later -->
-    <item android:id="@+id/filter"
-        android:title="@string/filter"
-        android:icon="@drawable/ic_filter_list_white_24dp"
-        app:showAsAction="always"
-        app:iconifiedByDefault="true">
-        <menu>
-            <item android:title="@string/department"
-                android:id="@+id/filter_department"/>
-        </menu>
-    </item>
     <item android:id="@+id/action_help"
         android:orderInCategory="101"
         android:title="@string/help"

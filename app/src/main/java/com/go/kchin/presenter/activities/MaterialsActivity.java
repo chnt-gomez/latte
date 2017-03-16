@@ -47,18 +47,14 @@ public class MaterialsActivity extends BaseActivity implements MainMVP.Materials
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView =
                 (SearchView) MenuItemCompat.getActionView(searchItem);
-        if(searchView != null) {
-            searchView.setSearchableInfo(
-                    searchManager.getSearchableInfo(getComponentName()));
-            searchView.setSubmitButtonEnabled(true);
-            searchView.setOnQueryTextListener(this);
 
-        }else{
-            Log.w(getClass().getSimpleName(), "SEARCH VIEW IS NULL");
-        }
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(this);
 
-        menu.findItem(R.id.filter).setVisible(false);
-        invalidateOptionsMenu();
+
+
 
         return true;
     }

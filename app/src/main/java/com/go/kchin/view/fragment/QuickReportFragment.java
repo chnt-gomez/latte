@@ -32,6 +32,7 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 24/01/2017.
@@ -67,6 +68,21 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
         args.putInt(LAYOUT_RES_ID, R.layout.fragment_quick_report);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        sequence.addSequenceItem(buildSquareView(R.id.txt_sale_total, "Este es el total de ventas del día."));
+        sequence.addSequenceItem(buildSquareView(R.id.txt_total_purchases, "Todas las Ordenes de Compra sumarán el total aquí."));
+        sequence.addSequenceItem(buildSquareView(R.id.txt_total_earnings, "El gran total. Esta es tu ganancia del día."));
+        sequence.addSequenceItem(buildSquareView(R.id.txt_sale_ticket, "Todos los tickets de venta realizados tienen un folio. Los folios te " +
+                "permiten rastrear las ventas que realicesy ver sus detalles."));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_date, "Puedes seleccionar la fecha que desees para revisar reportes pasados."));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_see_details, "La mejor manera de revisar las cuentas es ver los detalles de tu " +
+                "venta. No se te escapará ni un detalle."));
+        sequence.addSequenceItem(buildView(R.id.btn_save_pdf, "También puedes exportar esta información para imprimirla o simplemente guardarla."));
+        sequence.start();
     }
 
     @Override
@@ -123,7 +139,6 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
         txtSaleTickets.setText(adapter.getFormattedTickets());
         txtTotalEarnings.setText(adapter.getTotalEarnings());
     }
-
 
     @OnClick(R.id.btn_save_pdf)
     public void onPdfClick(View v){

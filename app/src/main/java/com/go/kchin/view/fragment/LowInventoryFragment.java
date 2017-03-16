@@ -32,6 +32,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 
 /**
@@ -56,23 +57,27 @@ public class LowInventoryFragment extends BaseFragment implements AdapterView.On
         return fragment;
     }
 
+    @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        if (view.findViewById(R.id.txt_product_name) != null){
+            sequence.addSequenceItem(buildView(R.id.txt_product_name, "Cuando tus inventarios estén por agotarse, "+
+            "se enlistarán automaticamente aquí"));
+            sequence.addSequenceItem(buildView(R.id.txt_product_sale_price, "Puedes ver las existencias de cada " +
+                    "Producto o Material enlistado"));
+            sequence.addSequenceItem(buildView(R.id.txt_product_name, "Si lo deseas, puedes realizar Operaciones de " +
+                    "Compra directamente aqui seleccionando el Producto o Material que desees reabastecer."));
+        }
+        sequence.addSequenceItem(buildView(R.id.btn_send, "Puedes exportar un archivo con toda esta información para " +
+                "imprimirlo o guardarlo en el dispositivo."));
+        sequence.start();
+    }
+
+
+
     @OnClick(R.id.btn_send)
     public void onSendClick(View v) {
         buildPdf();
-    }
-
-    private void sendToMail() throws IOException, DocumentException {
-        final Intent shareIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.new_purchase_order));
-        shareIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                Html.fromHtml(MailBuilder.buildPurchaseOrder(null, "store", "10/25/2017",
-                        getResources())));
-        shareIntent.putExtra(
-                Intent.EXTRA_STREAM,
-                Uri.fromFile(PDFBuilder.buildPurchaseOrder(getContext(), "new.pdf",
-                        mPurchasesPresenter.getAllDepletedArticles(), getResources())));
-        startActivity(shareIntent);
     }
 
     private void buildPdf(){
@@ -181,5 +186,6 @@ public class LowInventoryFragment extends BaseFragment implements AdapterView.On
         super.onOperationSuccesfull(message);
         reload(null);
     }
+
 
 }

@@ -34,6 +34,7 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 21/02/2017.
@@ -57,6 +58,21 @@ public class PurchaseListFragment extends BaseFragment implements DatePickerDial
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    @Override
+    public void onShowTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
+        if (view.findViewById(R.id.txt_item_name) != null){
+            sequence.addSequenceItem(buildView(R.id.txt_item_name, "Cuando se reabasteces tus inventarios " +
+                    "se genera una Orden de Compra y se enlista aqui."));
+            sequence.addSequenceItem(buildView(R.id.txt_items_amount, "La orden de compra especifíca el número " +
+                    "de articulos o cantidad comprada."));
+            sequence.addSequenceItem(buildView(R.id.txt_purchase_amount, "El monto total se restará del total de ventas del día."));
+        }
+        sequence.addSequenceItem(buildView(R.id.btn_pdf, "Puedes exportar esta información en un archivo para " +
+                "imprimirla o guardarla."));
+        sequence.start();
+    }
+
     public static PurchaseListFragment newInstance(){
         PurchaseListFragment fragment = new PurchaseListFragment();
         Bundle args = new Bundle();
@@ -67,8 +83,13 @@ public class PurchaseListFragment extends BaseFragment implements DatePickerDial
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
         if (item.getItemId() == R.id.action_date){
             pickDate();
+            return true;
+        }
+        if (item.getItemId() == R.id.action_help){
+            onShowTutorial();
             return true;
         }
         return false;

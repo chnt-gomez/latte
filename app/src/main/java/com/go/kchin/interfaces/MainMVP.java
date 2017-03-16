@@ -159,6 +159,7 @@ public interface MainMVP {
         Department getDepartment(long departmentId);
         void addDepartment(Department department);
         void addProductToDepartment(long productId, long departmentId);
+        void updateDepartmentName(long departmentId, String newName);
 
     }
 
@@ -419,6 +420,8 @@ public interface MainMVP {
          */
         void updateDepartment(long departmentId, Department department);
 
+
+        void renameDepartment(long departmentId, String departmentName);
         /**
          * Combo operations
          */

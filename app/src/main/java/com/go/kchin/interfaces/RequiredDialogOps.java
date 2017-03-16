@@ -61,4 +61,10 @@ public interface RequiredDialogOps {
         void onNewPurchase(SimplePurchase purchase);
 
     }
+
+    interface RequiredNewStringDialog {
+
+        void onNewString(String newString);
+
+    }
 }
