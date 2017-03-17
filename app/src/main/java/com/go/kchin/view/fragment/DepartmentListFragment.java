@@ -61,14 +61,15 @@ public class DepartmentListFragment extends BaseFragment implements
     public void onShowTutorial() {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
         if (view.findViewById(R.id.txt_department_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_department_name, "Los Departamentos se usan para " +
-                    "clasificar mejor tus Productos."));
-            sequence.addSequenceItem(buildView(R.id.txt_department_products_amount, "Puedes ver cuántos productos están " +
-                    "categorizados en un Departamento."));
-            sequence.addSequenceItem(buildView(R.id.txt_department_name, "Puedes cambiar el nombre de un Departamento " +
-                    "seleccionándolo en la lista."));
+            sequence.addSequenceItem(buildView(R.id.txt_department_name,
+                    R.string.tutorials_department_list_1));
+            sequence.addSequenceItem(buildView(R.id.txt_department_products_amount,
+                    R.string.tutorials_department_list_2));
+            sequence.addSequenceItem(buildView(R.id.txt_department_name,
+                    R.string.tutorials_department_list_3));
         }
-        sequence.addSequenceItem(buildView(R.id.btn_add, "Siempre puedes crear nuevos Departamentos."));
+        sequence.addSequenceItem(buildView(R.id.btn_add,
+                R.string.tutorials_department_list_4));
         sequence.start();
     }
 

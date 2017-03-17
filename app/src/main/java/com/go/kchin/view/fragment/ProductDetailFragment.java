@@ -128,13 +128,14 @@ public class ProductDetailFragment extends BaseFragment{
     @Override
     public void onShowTutorial() {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        sequence.addSequenceItem(buildSquareView(R.id.edt_product_name, "Éste es el nombre del Producto. "));
-        sequence.addSequenceItem(buildSquareView(R.id.spn_product_unit, "Esta es a unidad de Medida. Sirve para identificar cómo " +
-                "se almacena el producto y cómo interactúa con tu inventario."));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_product_amount, "Las existencias en el inventario están aquí. " +
-                "Dependiendo de la configuración del producto puedes comprar más con este botón y generar una Operación de Compra."));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_sale_price, "El precio de venta final. " +
-                "Cuando vendas este producto se incrementarán las ganancias usando esta cifra"));
+        sequence.addSequenceItem(buildSquareView(R.id.edt_product_name,
+                R.string.tutorials_product_detail_1));
+        sequence.addSequenceItem(buildSquareView(R.id.spn_product_unit,
+                R.string.tutorials_product_details_2));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_product_amount,
+                R.string.tutorials_product_details_3));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_sale_price,
+                R.string.tutorials_product_details_4));
         sequence.addSequenceItem(buildSquareView(R.id.btn_product_department, "Usa este botón para asignar este Producto a un Departamnto " +
                 "existente"));
         sequence.addSequenceItem(buildSquareView(R.id.btn_see_recipe, "Puedes usar el botón de receta para configurar los Materiales que son necesarios " +

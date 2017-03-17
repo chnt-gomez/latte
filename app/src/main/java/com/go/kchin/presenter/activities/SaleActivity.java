@@ -57,8 +57,6 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
     }
 
-
-
     @Override
     public void onOperationSuccess(int resource) {
         super.onOperationSuccess(resource);

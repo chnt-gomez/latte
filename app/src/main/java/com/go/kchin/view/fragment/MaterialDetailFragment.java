@@ -108,14 +108,17 @@ public class MaterialDetailFragment extends BaseFragment {
     @Override
     public void onShowTutorial() {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        sequence.addSequenceItem(buildSquareView(R.id.edt_material_name, "Este es el nombre del Material."));
-        sequence.addSequenceItem(buildSquareView(R.id.spn_material_unit, "Puedes cambiar la unidad de medida."));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_material_amount, "Estas son las existencias. Con este botón puedes comprar más y generar " +
-                "una Operación de Compra."));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_inventory_adjustments, "Si deseas ajustar las existencias sin generar Operaciones de " +
-                "Compra, usa éste botón."));
+        sequence.addSequenceItem(buildSquareView(R.id.edt_material_name,
+                R.string.tutorials_material_detail_1));
+        sequence.addSequenceItem(buildSquareView(R.id.spn_material_unit,
+                R.string.tutorials_material_detail_2));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_material_amount,
+                R.string.tutorials_materials_detail_3));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_inventory_adjustments,
+                R.string.tutorials_materials_detail_4));
         if (view.findViewById(R.id.btn_edit).getVisibility() != View.GONE) {
-            sequence.addSequenceItem(buildView(R.id.btn_edit, "Por seguridad, debes desbloquear la vista antes de poder editarla."));
+            sequence.addSequenceItem(buildView(R.id.btn_edit,
+                R.string.tutorials_materials_detail_5));
         }
         sequence.start();
     }

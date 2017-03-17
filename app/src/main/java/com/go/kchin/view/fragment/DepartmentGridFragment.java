@@ -40,17 +40,17 @@ public class DepartmentGridFragment extends BaseFragment implements AdapterView.
 
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
         if(mSalesPresenter.isShowingTicket()){
-            sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelView(), "Para eliminar un producto del ticket " +
-                    "manten presionado el elemento."));
+            sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelView(),
+                    R.string.tutorials_department_sale_1));
             sequence.start();
             return;
         }
         sequence.addSequenceItem(buildView(R.id.txt_department_name,
-                "Tus productos están ordenados por departamento para encontrarlos más rapido."));
+                R.string.tutorials_department_sale_2));
         sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelView(),
-                "Cuando agregues un producto, el total de la venta se acumulará."));
+                R.string.tutorials_department_sale_3));
         sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelButton(),
-                "Cuando la venta esté completa, usa el botón de aplicar para registrarla."));
+                R.string.tutorials_department_sale_4));
         sequence.start();
 
     }

@@ -57,15 +57,15 @@ public class InventoryFragment extends BaseFragment {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
         if (view.findViewById(R.id.btn_see_products) != null){
             sequence.addSequenceItem(buildSquareView(R.id.btn_see_products,
-                    "Crea o modifica tus Productos."));
+                    R.string.tutorials_inventory_1));
             sequence.addSequenceItem(buildSquareView(R.id.btn_see_materials,
-                    "Aquí podrás crear Materiales y modificarlos."));
+                    R.string.tutorials_inventory_2));
             sequence.addSequenceItem(buildSquareView(R.id.btn_see_departments,
-                    "Para organizar mejor tus Productos, puedes crear Departamentos."));
+                    R.string.tutorials_inventory_3));
             sequence.addSequenceItem(buildSquareView(R.id.btn_low_inventory,
-                    "Cuando tus inventarios estén por agotarse, los podrás revisar aqui."));
+                    R.string.tutorials_inventory_4));
             sequence.addSequenceItem(buildSquareView(R.id.btn_purchases_report,
-                    "Todas las compras que realices las podrás consultar aquí."));
+                    R.string.tutorials_inventory_5));
             sequence.start();
         }
     }
