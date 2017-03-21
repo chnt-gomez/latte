@@ -62,11 +62,14 @@ public class PurchaseListFragment extends BaseFragment implements DatePickerDial
     public void onShowTutorial() {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
         if (view.findViewById(R.id.txt_item_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_item_name, "Cuando se reabasteces tus inventarios " +
-                    "se genera una Orden de Compra y se enlista aqui."));
-            sequence.addSequenceItem(buildView(R.id.txt_items_amount, "La orden de compra especifíca el número " +
-                    "de articulos o cantidad comprada."));
-            sequence.addSequenceItem(buildView(R.id.txt_purchase_amount, "El monto total se restará del total de ventas del día."));
+            sequence.addSequenceItem(buildView(R.id.txt_item_name,
+                    R.string.tutorials_purchases_1));
+            sequence.addSequenceItem(buildView(R.id.txt_items_amount,
+                    R.string.tutorials_purchases_2));
+
+            sequence.addSequenceItem(buildView(R.id.txt_purchase_amount,
+                    R.string.tutorials_purchases_3));
+                    "El monto total se restará del total de ventas del día."));
         }
         sequence.addSequenceItem(buildView(R.id.btn_pdf, "Puedes exportar esta información en un archivo para " +
                 "imprimirla o guardarla."));

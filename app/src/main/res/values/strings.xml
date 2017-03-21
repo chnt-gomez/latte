@@ -199,4 +199,13 @@
     <string name="tutorials_product_details_2">This is the measure.</string>
     <string name="tutorials_product_details_3">This is the Product\'s stock. Use this button to Buy or Produce more of it.</string>
     <string name="tutorials_product_details_4">Sale price. This is how much you charge for the Product.</string>
+    <string name="tutorials_product_details_5">Use this button to assign this Product to a Department.</string>
+    <string name="tutorials_product_details_6">You can use the Recipe button to confgue the required Materials to Produce or Sell this Product.</string>
+    <string name="tutorials_product_details_7">You can configure the Product to fit your business needs.</string>
+    <string name="tutorials_product_details_8">If you ever lose controll over your Inventory, you can edit their stocks without generating Purchase Operations.</string>
+    <string name="tutorials_product_details_9">For security reasons, the Product cannot be edited unless you tap on the \'Edit\' button. All changes will be saved automatically.</string>
+    <string name="tutorials_products_1">Add more Products with the \'Add\' button</string>
+    <string name="tutorials_products_2">To See or Edit a Product, tap it on the list.</string>
+    <string name="tutorials_purchases_1">When you re-stock your Inventories, a Purchase Order will be generated and will be listed here.</string>
+    <string name="tutorials_purchases_2">The Purchase Order specifies the quantity of purchased items.</string>
 </resources>

@@ -136,17 +136,17 @@ public class ProductDetailFragment extends BaseFragment{
                 R.string.tutorials_product_details_3));
         sequence.addSequenceItem(buildSquareView(R.id.btn_sale_price,
                 R.string.tutorials_product_details_4));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_product_department, "Usa este botón para asignar este Producto a un Departamnto " +
-                "existente"));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_see_recipe, "Puedes usar el botón de receta para configurar los Materiales que son necesarios " +
-                "para vender o crear este Producto."));
-        sequence.addSequenceItem(buildView(R.id.chk_is_made_on_sale, "Puedes configurar el Producto de acuerdo a las " +
-                "necesidades de tu negocio"));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_inventory_adjustments, "Si en algún momento haz perdido el control del inventario, " +
-                "puedes modificar sus existencias sin generar Operaciones de Compra."));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_product_department,
+                R.string.tutorials_product_details_5));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_see_recipe,
+                R.string.tutorials_product_details_6));
+        sequence.addSequenceItem(buildView(R.id.chk_is_made_on_sale,
+                R.string.tutorials_product_details_7));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_inventory_adjustments,
+                R.string.tutorials_product_details_8));
         if (btnEdit.getVisibility() != View.GONE) {
-            sequence.addSequenceItem(buildView(R.id.btn_edit, "Por seguridad, no se puede modificar el Producto a menos que selecciones el botón de " +
-                    "'Editar'. Los cambios se guardarán automáticamente."));
+            sequence.addSequenceItem(buildView(R.id.btn_edit,
+                    R.string.tutorials_product_details_9));
         }
         sequence.start();
     }

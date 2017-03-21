@@ -65,9 +65,11 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     @Override
     public void onShowTutorial() {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        sequence.addSequenceItem(buildView(R.id.btn_add, "Add more products with the 'Add' button"));
+        sequence.addSequenceItem(buildView(R.id.btn_add,
+                R.string.tutorials_products_1));
         if (view.findViewById(R.id.txt_product_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_product_name, "Para ver o editar un Producto, tócalo en la lista"));
+            sequence.addSequenceItem(buildView(R.id.txt_product_name,
+                    R.string.tutorials_products_2));
         }
         sequence.start();
 
