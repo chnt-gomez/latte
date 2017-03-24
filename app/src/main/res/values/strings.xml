@@ -208,4 +208,6 @@
     <string name="tutorials_products_2">To See or Edit a Product, tap it on the list.</string>
     <string name="tutorials_purchases_1">When you re-stock your Inventories, a Purchase Order will be generated and will be listed here.</string>
     <string name="tutorials_purchases_2">The Purchase Order specifies the quantity of purchased items.</string>
+    <string name="tutorials_purchases_3">The total amount will rest the day\'s total.</string>
+    <string name="tutorials_purchases_4">You can export this information in a file to print it or save it.</string>
 </resources>

@@ -69,10 +69,9 @@ public class PurchaseListFragment extends BaseFragment implements DatePickerDial
 
             sequence.addSequenceItem(buildView(R.id.txt_purchase_amount,
                     R.string.tutorials_purchases_3));
-                    "El monto total se restará del total de ventas del día."));
         }
-        sequence.addSequenceItem(buildView(R.id.btn_pdf, "Puedes exportar esta información en un archivo para " +
-                "imprimirla o guardarla."));
+        sequence.addSequenceItem(buildView(R.id.btn_pdf,
+                R.string.tutorials_purchases_4));
         sequence.start();
     }
 
