@@ -210,4 +210,12 @@
     <string name="tutorials_purchases_2">The Purchase Order specifies the quantity of purchased items.</string>
     <string name="tutorials_purchases_3">The total amount will rest the day\'s total.</string>
     <string name="tutorials_purchases_4">You can export this information in a file to print it or save it.</string>
+    <string name="tutorials_report_1">This is Day\'s total.</string>
+    <string name="tutorials_report_2">All Purchase Orders will add up here.</string>
+    <string name="tutorials_report_3">Grand total. This is your net earnings.</string>
+    <string name="tutorials_report_4">All your Sales have Tickets. The Tickets will allow you to track the day\'s Sales and see their details.</string>
+    <string name="tutorials_report_5">You can change the date to check previous reports.</string>
+    <string name="tutorials_report_6">The best way to check your Sales is by seeing the details. You won\'t miss a thing.</string>
+    <string name="tutorials_report_7">You can also export this inormation to print it or just save it.</string>
+    <string name="tutorials_recipes_1">Products can use Materials to built or produce.</string>
 </resources>

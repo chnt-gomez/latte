@@ -73,15 +73,20 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
     @Override
     public void onShowTutorial() {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        sequence.addSequenceItem(buildSquareView(R.id.txt_sale_total, "Este es el total de ventas del día."));
-        sequence.addSequenceItem(buildSquareView(R.id.txt_total_purchases, "Todas las Ordenes de Compra sumarán el total aquí."));
-        sequence.addSequenceItem(buildSquareView(R.id.txt_total_earnings, "El gran total. Esta es tu ganancia del día."));
-        sequence.addSequenceItem(buildSquareView(R.id.txt_sale_ticket, "Todos los tickets de venta realizados tienen un folio. Los folios te " +
-                "permiten rastrear las ventas que realicesy ver sus detalles."));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_date, "Puedes seleccionar la fecha que desees para revisar reportes pasados."));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_see_details, "La mejor manera de revisar las cuentas es ver los detalles de tu " +
-                "venta. No se te escapará ni un detalle."));
-        sequence.addSequenceItem(buildView(R.id.btn_save_pdf, "También puedes exportar esta información para imprimirla o simplemente guardarla."));
+        sequence.addSequenceItem(buildSquareView(R.id.txt_sale_total,
+                R.string.tutorials_report_1));
+        sequence.addSequenceItem(buildSquareView(R.id.txt_total_purchases,
+                R.string.tutorials_report_2));
+        sequence.addSequenceItem(buildSquareView(R.id.txt_total_earnings,
+                R.string.tutorials_report_3));
+        sequence.addSequenceItem(buildSquareView(R.id.txt_sale_ticket,
+                R.string.tutorials_report_4));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_date,
+                R.string.tutorials_report_5));
+        sequence.addSequenceItem(buildSquareView(R.id.btn_see_details,
+                R.string.tutorials_report_6));
+        sequence.addSequenceItem(buildView(R.id.btn_save_pdf,
+                R.string.tutorials_report_7));
         sequence.start();
     }
 

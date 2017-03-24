@@ -125,8 +125,8 @@ public class RecipeListFragment extends BaseFragment implements AdapterView.OnIt
         super.onShowTutorial();
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
         if(view.findViewById(R.id.txt_material_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_material_name, "Los Productos pueden usar Materiales para construirse o " +
-                    "producirse."));
+            sequence.addSequenceItem(buildView(R.id.txt_material_name,
+                    R.string.tutorials_recipes_1));
             sequence.addSequenceItem(buildView(R.id.txt_material_amount, "Puedes especificar la cantidad de Material usado para " +
                     "que tus inventarios se ajusten automáticamente tras Vender, Producir o Comprar más del Producto"));
         }
