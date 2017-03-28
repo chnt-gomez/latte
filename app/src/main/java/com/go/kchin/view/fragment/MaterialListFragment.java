@@ -86,18 +86,6 @@ public class MaterialListFragment extends BaseFragment implements RequiredDialog
     }
 
     @Override
-    public void onShowTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        if (view.findViewById(R.id.txt_material_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_material_name,
-                    R.string.tutorials_materials_1));
-        }
-        sequence.addSequenceItem(buildView(R.id.btn_add,
-                R.string.tutorials_materials_2));
-        sequence.start();
-    }
-
-    @Override
     protected void onOperationResultClick(long rowId) {
         seeDetail(rowId);
     }

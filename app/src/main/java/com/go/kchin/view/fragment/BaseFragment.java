@@ -147,6 +147,7 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     public void onResume() {
         super.onResume();
         mPresenter.setViewLayer(this);
+        onShowTutorial();
     }
 
     protected void onOperationResultClick(long rowId){}

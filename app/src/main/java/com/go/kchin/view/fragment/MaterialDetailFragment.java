@@ -105,24 +105,6 @@ public class MaterialDetailFragment extends BaseFragment {
         material = mMaterialPresenter.getMaterial(getArguments().getLong(MATERIAL_ID));
     }
 
-    @Override
-    public void onShowTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        sequence.addSequenceItem(buildSquareView(R.id.edt_material_name,
-                R.string.tutorials_material_detail_1));
-        sequence.addSequenceItem(buildSquareView(R.id.spn_material_unit,
-                R.string.tutorials_material_detail_2));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_material_amount,
-                R.string.tutorials_materials_detail_3));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_inventory_adjustments,
-                R.string.tutorials_materials_detail_4));
-        if (view.findViewById(R.id.btn_edit).getVisibility() != View.GONE) {
-            sequence.addSequenceItem(buildView(R.id.btn_edit,
-                R.string.tutorials_materials_detail_5));
-        }
-        sequence.start();
-    }
-
     @OnClick(R.id.btn_edit)
     public void onEditClick(View view){
         onRequestEdit();

@@ -71,26 +71,6 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
     }
 
     @Override
-    public void onShowTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        sequence.addSequenceItem(buildSquareView(R.id.txt_sale_total,
-                R.string.tutorials_report_1));
-        sequence.addSequenceItem(buildSquareView(R.id.txt_total_purchases,
-                R.string.tutorials_report_2));
-        sequence.addSequenceItem(buildSquareView(R.id.txt_total_earnings,
-                R.string.tutorials_report_3));
-        sequence.addSequenceItem(buildSquareView(R.id.txt_sale_ticket,
-                R.string.tutorials_report_4));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_date,
-                R.string.tutorials_report_5));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_see_details,
-                R.string.tutorials_report_6));
-        sequence.addSequenceItem(buildView(R.id.btn_save_pdf,
-                R.string.tutorials_report_7));
-        sequence.start();
-    }
-
-    @Override
     protected void init() {
         super.init();
         currentDateTime = DateTime.now();

@@ -58,23 +58,6 @@ public class PurchaseListFragment extends BaseFragment implements DatePickerDial
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onShowTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        if (view.findViewById(R.id.txt_item_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_item_name,
-                    R.string.tutorials_purchases_1));
-            sequence.addSequenceItem(buildView(R.id.txt_items_amount,
-                    R.string.tutorials_purchases_2));
-
-            sequence.addSequenceItem(buildView(R.id.txt_purchase_amount,
-                    R.string.tutorials_purchases_3));
-        }
-        sequence.addSequenceItem(buildView(R.id.btn_pdf,
-                R.string.tutorials_purchases_4));
-        sequence.start();
-    }
-
     public static PurchaseListFragment newInstance(){
         PurchaseListFragment fragment = new PurchaseListFragment();
         Bundle args = new Bundle();

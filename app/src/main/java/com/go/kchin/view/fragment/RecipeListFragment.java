@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ import com.go.kchin.util.utilities.Loader;
 import butterknife.BindView;
 import butterknife.OnClick;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by MAV1GA on 26/01/2017.
@@ -122,15 +124,6 @@ public class RecipeListFragment extends BaseFragment implements AdapterView.OnIt
 
     @Override
     public void onShowTutorial() {
-        super.onShowTutorial();
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        if(view.findViewById(R.id.txt_material_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_material_name,
-                    R.string.tutorials_recipes_1));
-            sequence.addSequenceItem(buildView(R.id.txt_material_amount, "Puedes especificar la cantidad de Material usado para " +
-                    "que tus inventarios se ajusten automáticamente tras Vender, Producir o Comprar más del Producto"));
-        }
-        sequence.addSequenceItem(buildView(R.id.btn_add, "Puedes añadir más materiales a esta receta."));
-        sequence.start();
+
     }
 }

@@ -58,22 +58,6 @@ public class DepartmentListFragment extends BaseFragment implements
     }
 
     @Override
-    public void onShowTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        if (view.findViewById(R.id.txt_department_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_department_name,
-                    R.string.tutorials_department_list_1));
-            sequence.addSequenceItem(buildView(R.id.txt_department_products_amount,
-                    R.string.tutorials_department_list_2));
-            sequence.addSequenceItem(buildView(R.id.txt_department_name,
-                    R.string.tutorials_department_list_3));
-        }
-        sequence.addSequenceItem(buildView(R.id.btn_add,
-                R.string.tutorials_department_list_4));
-        sequence.start();
-    }
-
-    @Override
     protected void init() {
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);

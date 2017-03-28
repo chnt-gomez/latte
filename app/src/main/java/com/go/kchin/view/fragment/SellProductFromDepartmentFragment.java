@@ -3,6 +3,7 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.Loader;
 import butterknife.BindView;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 
 /**
@@ -48,35 +50,6 @@ public class SellProductFromDepartmentFragment extends BaseFragment implements
     }
 
     @Override
-    public void onShowTutorial() {
-        super.onShowTutorial();
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-
-
-        if(mSalesPresenter.isShowingTicket()){
-            sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelView(), "Para eliminar un producto del ticket " +
-                    "manten presionado el elemento."));
-            sequence.start();
-            return;
-        }
-
-        if (view.findViewById(R.id.txt_product_name) != null) {
-            sequence.addSequenceItem(buildView(R.id.txt_product_name,
-                    "Los productos aparecen enlistados aqui. Para agregarlos a la venta simplemente" +
-                            " tócalos."));
-            sequence.addSequenceItem(buildView(R.id.txt_product_name,
-                    "Si deseas agregar más de uno, mantén presionado el producto para añadir la cantidad" +
-                            " que desees"));
-        }
-        sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelView(),
-                "Cuando agregues un producto, el total de la venta se acumulará. Puedes ver todos los productos " +
-                        "que agregas si tocas la flecha."));
-        sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelButton(),
-                "Cuando la venta esté completa, usa el botón de aplicar para registrarla."));
-        sequence.start();
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mSalesPresenter = (MainMVP.SalesPresenterOps)context;
@@ -93,6 +66,21 @@ public class SellProductFromDepartmentFragment extends BaseFragment implements
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
 
+    }
+
+    @Override
+    public void onShowTutorial() {
+        super.onShowTutorial();
+        if (view.findViewById(R.id.product_container) != null) {
+            new MaterialShowcaseView.Builder(getActivity())
+                    .setTarget(view.findViewById(R.id.product_container))
+                    .setContentText(getString(R.string.to_sell_prouct))
+                    .setDismissOnTouch(true)
+                    .setMaskColour(ContextCompat.getColor(getContext(),
+                            R.color.colorDarkGrayBlue))
+                    .singleUse("to_sell_2")
+                    .build().show(getActivity());
+        }
     }
 
     @Override

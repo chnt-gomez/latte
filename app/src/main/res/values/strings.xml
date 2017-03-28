@@ -218,4 +218,21 @@
     <string name="tutorials_report_6">The best way to check your Sales is by seeing the details. You won\'t miss a thing.</string>
     <string name="tutorials_report_7">You can also export this inormation to print it or just save it.</string>
     <string name="tutorials_recipes_1">Products can use Materials to built or produce.</string>
+    <string name="tutorial_recipes_2">You can specify the amount of Material used so your stocks will adjust after Selling, Producing or Buying more of the Product.</string>
+    <string name="tutorial_recipes_3">You can add more Materials to this recipe.</string>
+    <string name="tutorials_sell_1">To delete a Product from the Ticket, long-tap the element.</string>
+    <string name="welcome_home_activity">Welcome. Let\'s start with the basics and create your first Product.</string>
+    <string name="move_to_sell">Now that you have some Products in your Inventory, let\'s sell them.</string>
+    <string name="see_report">Excellent! You probably don\'t need to check it right after Selling, but let\'s see how your business is doing.</string>
+    <string name="create_product">You can create new Products here.</string>
+    <string name="create_materials">Also, you can create and edit Materials here.</string>
+    <string name="create_departments">If you need to crate more Departments, you can do it here.</string>
+    <string name="see_low_inventory">With each Sale, your Product slowly deplete like in real life. You can see them here.</string>
+    <string name="see_purchases_report">After you Buy more of a Product, a Purchase Report is generated. You can check them here.</string>
+    <string name="add_a_product">Create a new Product.</string>
+    <string name="edit_security">For security, you must tap on \'Edit\' to make any changes.</string>
+    <string name="assigned_to_department">Assigned to Department.</string>
+    <string name="add_more_departments">Add a New Department Here. No need to go to the \'Department\' section.</string>
+    <string name="to_sell_department">To Sell a Product, first find it under the it\'s Department.</string>
+    <string name="to_sell_prouct">Add a Product to the current sale by taping on it.</string>
 </resources>

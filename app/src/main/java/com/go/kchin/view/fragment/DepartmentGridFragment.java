@@ -2,9 +2,12 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.go.kchin.R;
 import com.go.kchin.adapters.DepartmentGridAdapter;
@@ -14,6 +17,7 @@ import com.go.kchin.util.utilities.Loader;
 
 import butterknife.BindView;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by vicente on 19/02/17.
@@ -36,30 +40,27 @@ public class DepartmentGridFragment extends BaseFragment implements AdapterView.
     }
 
     @Override
-    public void onShowTutorial() {
-
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        if(mSalesPresenter.isShowingTicket()){
-            sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelView(),
-                    R.string.tutorials_department_sale_1));
-            sequence.start();
-            return;
-        }
-        sequence.addSequenceItem(buildView(R.id.txt_department_name,
-                R.string.tutorials_department_sale_2));
-        sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelView(),
-                R.string.tutorials_department_sale_3));
-        sequence.addSequenceItem(buildSquareView(mSalesPresenter.getSlidingPanelButton(),
-                R.string.tutorials_department_sale_4));
-        sequence.start();
-
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mSalesPresenter = (MainMVP.SalesPresenterOps) context;
     }
+
+    @Override
+    public void onShowTutorial() {
+        Log.d("Grid View count is: ", String.valueOf(gridView.getCount()));
+        Log.d("First visible children:", String.valueOf( gridView.getFirstVisiblePosition()));
+        if (gridView.getChildAt( gridView.getFirstVisiblePosition())!= null )
+            new MaterialShowcaseView.Builder(getActivity())
+                    .setTarget(gridView.getChildAt( gridView.getFirstVisiblePosition()))
+                    .setContentText(getString(R.string.to_sell_department))
+                    .setDismissOnTouch(true)
+                    .setMaskColour(ContextCompat.getColor(getContext(),
+                            R.color.colorDarkGrayBlue))
+                    .singleUse("to_sell_13")
+                    .build().show(getActivity());
+    }
+
+
 
     @Override
     public void onDetach() {
@@ -73,7 +74,6 @@ public class DepartmentGridFragment extends BaseFragment implements AdapterView.
         super.init();
         reload();
         gridView.setOnItemClickListener(this);
-
     }
 
     private void reload() {
@@ -97,6 +97,7 @@ public class DepartmentGridFragment extends BaseFragment implements AdapterView.
     public void onDoneLoading() {
         super.onDoneLoading();
         gridView.setAdapter(adapter);
+        onShowTutorial();
     }
 
     @Override

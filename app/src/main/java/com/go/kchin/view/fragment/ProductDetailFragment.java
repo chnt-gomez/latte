@@ -3,6 +3,7 @@ package com.go.kchin.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -32,6 +33,7 @@ import org.w3c.dom.Text;
 import butterknife.BindView;
 import butterknife.OnClick;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by MAV1GA on 09/01/2017.
@@ -101,6 +103,18 @@ public class ProductDetailFragment extends BaseFragment{
     }
 
     @Override
+    public void onShowTutorial() {
+        new MaterialShowcaseView.Builder(getActivity())
+                .setTarget(view.findViewById(R.id.btn_edit))
+                .setContentText(getString(R.string.edit_security))
+                .setDismissOnTouch(true)
+                .setMaskColour(ContextCompat.getColor(getContext(),
+                        R.color.colorDarkGrayBlue))
+                .singleUse("edit_a-product")
+                .build().show(getActivity());
+    }
+
+    @Override
     public void onDoneLoading() {
         if (product != null){
             btnSellPrice.setText(NFormatter.floatToStringAsPrice(product.productSellPrice, false));
@@ -123,32 +137,6 @@ public class ProductDetailFragment extends BaseFragment{
             }
         }
         super.onDoneLoading();
-    }
-
-    @Override
-    public void onShowTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        sequence.addSequenceItem(buildSquareView(R.id.edt_product_name,
-                R.string.tutorials_product_detail_1));
-        sequence.addSequenceItem(buildSquareView(R.id.spn_product_unit,
-                R.string.tutorials_product_details_2));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_product_amount,
-                R.string.tutorials_product_details_3));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_sale_price,
-                R.string.tutorials_product_details_4));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_product_department,
-                R.string.tutorials_product_details_5));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_see_recipe,
-                R.string.tutorials_product_details_6));
-        sequence.addSequenceItem(buildView(R.id.chk_is_made_on_sale,
-                R.string.tutorials_product_details_7));
-        sequence.addSequenceItem(buildSquareView(R.id.btn_inventory_adjustments,
-                R.string.tutorials_product_details_8));
-        if (btnEdit.getVisibility() != View.GONE) {
-            sequence.addSequenceItem(buildView(R.id.btn_edit,
-                    R.string.tutorials_product_details_9));
-        }
-        sequence.start();
     }
 
     public void save(){

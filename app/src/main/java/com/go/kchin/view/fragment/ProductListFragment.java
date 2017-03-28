@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.Loader;
 
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by MAV1GA on 09/01/2017.
@@ -64,15 +66,14 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
 
     @Override
     public void onShowTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        sequence.addSequenceItem(buildView(R.id.btn_add,
-                R.string.tutorials_products_1));
-        if (view.findViewById(R.id.txt_product_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_product_name,
-                    R.string.tutorials_products_2));
-        }
-        sequence.start();
-
+        new MaterialShowcaseView.Builder(getActivity())
+                .setTarget(view.findViewById(R.id.btn_add))
+                .setContentText(getString(R.string.add_a_product))
+                .setDismissOnTouch(true)
+                .setMaskColour(ContextCompat.getColor(getContext(),
+                        R.color.colorDarkGrayBlue))
+                .singleUse("create_a_product")
+                .build().show(getActivity());
     }
 
     @Override

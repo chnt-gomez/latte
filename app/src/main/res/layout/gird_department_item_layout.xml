@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:minHeight="90sp"
     android:minWidth="90sp"
+    android:id="@+id/department_container"
     android:background="@color/colorDarkGrayBlue"
     android:padding="@dimen/activity_default_margin_small">
 

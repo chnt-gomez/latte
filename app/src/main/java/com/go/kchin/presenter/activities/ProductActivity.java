@@ -103,4 +103,9 @@ public class ProductActivity extends BaseActivity implements MainMVP.ProductPres
     public void addMaterial(Material newMaterial) {
         mModel.addMaterial(newMaterial);
     }
+
+    @Override
+    public void addDepartment(Department department) {
+        mModel.addDepartment(department);
+    }
 }

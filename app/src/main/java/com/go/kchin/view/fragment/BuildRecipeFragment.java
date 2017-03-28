@@ -50,16 +50,6 @@ public class BuildRecipeFragment extends BaseFragment implements AdapterView.OnI
     }
 
     @Override
-    public void onShowTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-
-        if (view.findViewById(R.id.txt_material_name) != null)
-            sequence.addSequenceItem(buildView(R.id.txt_material_name, R.string.tutorials_build_recipe_1));
-        sequence.addSequenceItem(buildView(R.id.btn_add, R.string.tutorials_build_recipe_2));
-        sequence.start();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mPresenter.setActivityTitle(getString(R.string.select_material));

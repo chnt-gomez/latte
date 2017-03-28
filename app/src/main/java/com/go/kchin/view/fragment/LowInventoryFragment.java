@@ -57,24 +57,6 @@ public class LowInventoryFragment extends BaseFragment implements AdapterView.On
         return fragment;
     }
 
-    @Override
-    public void onShowTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity());
-        if (view.findViewById(R.id.txt_product_name) != null){
-            sequence.addSequenceItem(buildView(R.id.txt_product_name,
-                    R.string.tutorials_low_inv_1));
-            sequence.addSequenceItem(buildView(R.id.txt_product_sale_price,
-                    R.string.tutorials_low_inv_2));
-            sequence.addSequenceItem(buildView(R.id.txt_product_name,
-                    R.string.tutorials_low_inv_3));
-        }
-        sequence.addSequenceItem(buildView(R.id.btn_send,
-                R.string.tutorials_low_inv_4));
-        sequence.start();
-    }
-
-
-
     @OnClick(R.id.btn_send)
     public void onSendClick(View v) {
         buildPdf();

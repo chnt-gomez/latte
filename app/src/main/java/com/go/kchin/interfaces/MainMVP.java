@@ -151,6 +151,8 @@ public interface MainMVP {
 
         void addMaterial(Material newMaterial);
 
+        void addDepartment(Department department);
+
     }
 
     interface DepartmentsPresenterOps {

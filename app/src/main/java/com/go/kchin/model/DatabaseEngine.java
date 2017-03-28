@@ -179,7 +179,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
         Product product = Product.findById(Product.class, aLong);
         product.department = item;
         product.save();
-        mPresenter.onOperationSuccess(R.string.saved);
+        mPresenter.onOperationSuccess(R.string.assigned_to_department);
     }
 
     @Override
@@ -264,8 +264,13 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void addDepartment(Department newDepartment) {
-        newDepartment.save();
-        mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.department_saved));
+        if (Department.find(Department.class, "department_name = ?", newDepartment.departmentName)
+                .size() >= 1){
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.already_exists_department));
+        }else{
+            newDepartment.save();
+            mPresenter.onOperationSuccess(mPresenter.getStringResource(R.string.department_saved));
+        }
     }
 
 
