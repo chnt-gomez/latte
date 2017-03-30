@@ -67,4 +67,8 @@ public interface RequiredDialogOps {
         void onNewString(String newString);
 
     }
+
+    interface RequiredQuickSaleOps {
+        void onQuickSale(Product product);
+    }
 }

@@ -2,9 +2,12 @@ package com.go.kchin.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -47,20 +50,24 @@ public class DepartmentGridFragment extends BaseFragment implements AdapterView.
 
     @Override
     public void onShowTutorial() {
-        Log.d("Grid View count is: ", String.valueOf(gridView.getCount()));
-        Log.d("First visible children:", String.valueOf( gridView.getFirstVisiblePosition()));
-        if (gridView.getChildAt( gridView.getFirstVisiblePosition())!= null )
-            new MaterialShowcaseView.Builder(getActivity())
-                    .setTarget(gridView.getChildAt( gridView.getFirstVisiblePosition()))
+        if (gridView.getChildAt( gridView.getFirstVisiblePosition())!= null ) {
+            this.showCaseView = new MaterialShowcaseView.Builder(getActivity())
+                    .setTarget(gridView.getChildAt(gridView.getFirstVisiblePosition()))
                     .setContentText(getString(R.string.to_sell_department))
                     .setDismissOnTouch(true)
                     .setMaskColour(ContextCompat.getColor(getContext(),
                             R.color.colorDarkGrayBlue))
-                    .singleUse("to_sell_13")
-                    .build().show(getActivity());
+                    .singleUse("to_sell_1")
+                    .build();
+            showCaseView.show(getActivity());
+        }
+
     }
 
-
+    @Override
+    public void search(String query) {
+        reload(query);
+    }
 
     @Override
     public void onDetach() {
@@ -72,13 +79,19 @@ public class DepartmentGridFragment extends BaseFragment implements AdapterView.
     @Override
     protected void init() {
         super.init();
-        reload();
+        gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                onShowTutorial();
+            }
+        });
         gridView.setOnItemClickListener(this);
+        reload(null);
     }
 
-    private void reload() {
+    private void reload(@Nullable String query) {
         Loader loader = new Loader(this);
-        loader.execute();
+        loader.execute(query);
     }
 
     @Override
@@ -94,10 +107,15 @@ public class DepartmentGridFragment extends BaseFragment implements AdapterView.
     }
 
     @Override
+    public void onSearch(String query) {
+        adapter = new DepartmentGridAdapter(getActivity(), R.layout.gird_department_item_layout,
+                mSalesPresenter.getDepartments(query));
+    }
+
+    @Override
     public void onDoneLoading() {
         super.onDoneLoading();
         gridView.setAdapter(adapter);
-        onShowTutorial();
     }
 
     @Override

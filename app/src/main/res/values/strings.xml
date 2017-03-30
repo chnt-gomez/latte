@@ -150,7 +150,7 @@
     <string name="intro_app">Go Sales</string>
     <string name="intro_app_summary">Go Sales is a Point of Sale to keep record of your sales, your inventories and your expenses records.</string>
     <string name="intro_products">Create Products</string>
-    <string name="intro_products_summary">In Go Sales you must create Products to sell them. Each product has it\'s own price and settings.</string>
+    <string name="intro_products_summary">In Go Sales you must create Products to sell them. Each Product is a copy of your your business sells.</string>
     <string name="intro_materials">Use Materials too</string>
     <string name="intro_materials_summary">Your Products, as in real life, can be made of Materials. In Go Sales you can create Materials and use them in each Product\'s recipe.</string>
     <string name="intro_sales">Start selling</string>
@@ -233,6 +233,16 @@
     <string name="edit_security">For security, you must tap on \'Edit\' to make any changes.</string>
     <string name="assigned_to_department">Assigned to Department.</string>
     <string name="add_more_departments">Add a New Department Here. No need to go to the \'Department\' section.</string>
-    <string name="to_sell_department">To Sell a Product, first find it under the it\'s Department.</string>
-    <string name="to_sell_prouct">Add a Product to the current sale by taping on it.</string>
+    <string name="to_sell_department">To Sell a Product, first find it under it\'s Department.</string>
+    <string name="to_sell_prouct">Add a Product to the current sale by taping on it. Use long tap to add more than 1.</string>
+    <string name="intro_sell">Sell them</string>
+    <string name="intro_sell_summary">When a customer buys something use Go Sales to register the Sale. Like a cash register but in your phone!</string>
+    <string name="intro_reports">Check your day</string>
+    <string name="intro_reports_summary">After a day of sales, check your report to match your cash with the app results. You won\'t miss a single detail.</string>
+    <string name="intro_inventory">Automatic inventory tracking</string>
+    <string name="intro_inventory_summary">Go Sales will adjust automatically your inventories every time you perform a sale. The assistant will let you know what needs to replenish!</string>
+    <string name="sale_concept">Sale concept</string>
+    <string name="quick_sale">Quick sale</string>
+    <string name="see_a_product">Good job! Now let\'s see the properties of the Product.</string>
+    <string name="initial_stock">All products start with their stocks at 0. Let\'s re-stock this one.</string>
 </resources>

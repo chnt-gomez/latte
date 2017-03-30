@@ -48,6 +48,9 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
     @BindView(R.id.lv_sale)
     ListView saleListView;
 
+    @BindView(R.id.btn_apply_sale)
+    Button btnApplySale;
+
     private SaleAdapter saleAdapter;
 
     @Override
@@ -55,6 +58,7 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         mView.showMessage(message);
         saleAdapter.clear();
         txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
+        validateApplyButton();
     }
 
     @Override
@@ -99,11 +103,12 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 saleAdapter.remove(saleAdapter.getItem(position));
                 txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
+                validateApplyButton();
                 return true;
             }
         });
         txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
-
+        validateApplyButton();
 
     }
 
@@ -130,9 +135,6 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
                 searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
-
-
-
         return true;
     }
 
@@ -162,8 +164,18 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
     }
 
     @Override
+    public List<Department> getDepartments(String query) {
+        return mModel.getDepartments(query);
+    }
+
+    @Override
     public List<Product> getProductsInDepartment(long departmentId) {
         return mModel.getProductsFromDepartment(departmentId);
+    }
+
+    @Override
+    public List<Product> getProductsInDepartment(long departmentId, String query) {
+        return mModel.getProductsFromDepartment(departmentId, query);
     }
 
     @Override
@@ -203,6 +215,14 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         sale.saleTotal = item.productSellPrice * amount;
         saleAdapter.add(sale);
         txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
+        validateApplyButton();
+    }
+
+    private void validateApplyButton() {
+        if (saleAdapter.getCount() > 0)
+            btnApplySale.setEnabled(true);
+        else
+            btnApplySale.setEnabled(false);
     }
 
     @Override

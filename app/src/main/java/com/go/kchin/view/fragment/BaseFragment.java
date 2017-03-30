@@ -41,6 +41,7 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     protected View view;
     protected MainMVP.PresenterOps mPresenter;
     private List<View> editListenerItems;
+    protected MaterialShowcaseView showCaseView;
 
     protected static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
@@ -98,6 +99,15 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
             v.setEnabled(true);
         }
     }
+
+    @Override
+    public void onPause() {
+        if (showCaseView != null && showCaseView.isShown())
+            showCaseView.hide();
+        super.onPause();
+    }
+
+
 
     @Override
     public void onOperationSuccesfull(String message) {
@@ -182,19 +192,19 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     protected MaterialShowcaseView buildView(int viewId,
                                              int stringRes){
-
-        return new MaterialShowcaseView.Builder(getActivity())
+        showCaseView = new MaterialShowcaseView.Builder(getActivity())
                 .setTarget(view.findViewById(viewId))
                 .setContentText(getString(stringRes))
                 .setDismissOnTouch(true)
                 .setMaskColour(ContextCompat.getColor(getContext(),
                         R.color.colorDarkGrayBlue))
                 .build();
+        return showCaseView;
     }
 
     protected MaterialShowcaseView buildSquareView(int viewId,
                                              int stringRes){
-        return new MaterialShowcaseView.Builder(getActivity())
+        showCaseView = new MaterialShowcaseView.Builder(getActivity())
                 .setTarget(view.findViewById(viewId))
                 .setContentText(getString(stringRes))
                 .withRectangleShape()
@@ -202,11 +212,12 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
                 .setMaskColour(ContextCompat.getColor(getContext(),
                         R.color.colorDarkGrayBlue))
                 .build();
+        return showCaseView;
     }
 
     protected MaterialShowcaseView buildSquareView(View view,
                                                    int stringRes){
-        return new MaterialShowcaseView.Builder(getActivity())
+        showCaseView = new MaterialShowcaseView.Builder(getActivity())
                 .setTarget(view)
                 .setContentText(getString(stringRes))
                 .withRectangleShape()
@@ -214,18 +225,20 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
                 .setMaskColour(ContextCompat.getColor(getContext(),
                         R.color.colorDarkGrayBlue))
                 .build();
+        return showCaseView;
     }
 
     protected MaterialShowcaseView buildView(View view,
                                              int stringRes){
 
-        return new MaterialShowcaseView.Builder(getActivity())
+        showCaseView = new MaterialShowcaseView.Builder(getActivity())
                 .setTarget(view)
                 .setContentText(getString(stringRes))
                 .setDismissOnTouch(true)
                 .setMaskColour(ContextCompat.getColor(getContext(),
                         R.color.colorDarkGrayBlue))
                 .build();
+        return showCaseView;
     }
 
     @Override

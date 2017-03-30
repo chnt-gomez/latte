@@ -73,10 +73,6 @@ public class PurchaseListFragment extends BaseFragment implements DatePickerDial
             pickDate();
             return true;
         }
-        if (item.getItemId() == R.id.action_help){
-            onShowTutorial();
-            return true;
-        }
         return false;
     }
 

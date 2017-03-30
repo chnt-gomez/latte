@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.go.kchin.R;
@@ -15,7 +16,6 @@ import com.go.kchin.model.database.Product;
 import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.Loader;
 import butterknife.BindView;
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 
@@ -24,7 +24,7 @@ import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
  */
 
 public class SellProductFromDepartmentFragment extends BaseFragment implements
-        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
+        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, ViewTreeObserver.OnGlobalLayoutListener{
 
     private ProductListAdapter productListAdapter;
     private MainMVP.SalesPresenterOps mSalesPresenter;
@@ -65,22 +65,30 @@ public class SellProductFromDepartmentFragment extends BaseFragment implements
         reload(null);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
-
+        listView.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     @Override
     public void onShowTutorial() {
         super.onShowTutorial();
         if (view.findViewById(R.id.product_container) != null) {
-            new MaterialShowcaseView.Builder(getActivity())
+            listView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            this.showCaseView = new MaterialShowcaseView.Builder(getActivity())
                     .setTarget(view.findViewById(R.id.product_container))
                     .setContentText(getString(R.string.to_sell_prouct))
                     .setDismissOnTouch(true)
+                    .withRectangleShape()
                     .setMaskColour(ContextCompat.getColor(getContext(),
                             R.color.colorDarkGrayBlue))
                     .singleUse("to_sell_2")
-                    .build().show(getActivity());
+                    .build();
+            showCaseView.show(getActivity());
         }
+    }
+
+    @Override
+    public void search(String query) {
+        reload(query);
     }
 
     @Override
@@ -96,11 +104,23 @@ public class SellProductFromDepartmentFragment extends BaseFragment implements
     }
 
     @Override
+    public void onOperationSuccesfull(String message) {
+        super.onOperationSuccesfull(message);
+        reload(null);
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         addToCurrentSale(productListAdapter.getItem(position), 1.0f);
     }
     private void addToCurrentSale(Product item, float productAmount) {
         mSalesPresenter.addToCurrentSale(item, productAmount);
+    }
+
+    @Override
+    public void onSearch(String query) {
+        productListAdapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
+                mSalesPresenter.getProductsInDepartment(departmentId, query));
     }
 
     @Override
@@ -115,4 +135,8 @@ public class SellProductFromDepartmentFragment extends BaseFragment implements
         return true;
     }
 
+    @Override
+    public void onGlobalLayout() {
+        onShowTutorial();
+    }
 }

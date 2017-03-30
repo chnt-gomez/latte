@@ -8,11 +8,4 @@
         app:iconifiedByDefault="false"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <!-- Will be added later -->
-    <item android:id="@+id/action_help"
-        android:orderInCategory="101"
-        android:title="@string/help"
-        android:actionViewClass="android.widget.ImageButton"
-        android:icon="@drawable/ic_help_outline_white_24dp"
-        app:showAsAction="ifRoom"/>
-
 </menu>

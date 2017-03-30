@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.go.kchin.R;
+import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
+import com.go.kchin.model.database.Product;
 import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.view.fragment.HomeFragment;
 
@@ -17,7 +19,8 @@ import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 
-public class HomeActivity extends BaseActivity implements RequiredDialogOps.RequiredPasswordOps{
+public class HomeActivity extends BaseActivity implements RequiredDialogOps.RequiredPasswordOps,
+        MainMVP.QuickSalePresenter{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,5 +74,10 @@ public class HomeActivity extends BaseActivity implements RequiredDialogOps.Requ
     @Override
     public void recoverPassword() {
         mView.showMessage(R.string.recover_password);
+    }
+
+    @Override
+    public void quickSell(Product product) {
+        mModel.quickSale(product);
     }
 }

@@ -100,17 +100,19 @@ public class ProductDetailFragment extends BaseFragment{
     public void onOperationSuccesfull(String message) {
         super.onOperationSuccesfull(message);
         reload();
+
     }
 
     @Override
     public void onShowTutorial() {
         new MaterialShowcaseView.Builder(getActivity())
-                .setTarget(view.findViewById(R.id.btn_edit))
-                .setContentText(getString(R.string.edit_security))
+                .setTarget(view.findViewById(R.id.btn_product_amount))
+                .setContentText(getString(R.string.initial_stock))
                 .setDismissOnTouch(true)
+                .withRectangleShape()
                 .setMaskColour(ContextCompat.getColor(getContext(),
                         R.color.colorDarkGrayBlue))
-                .singleUse("edit_a-product")
+                .singleUse("buy_a_product")
                 .build().show(getActivity());
     }
 

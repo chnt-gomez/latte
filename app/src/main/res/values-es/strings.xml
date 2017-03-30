@@ -151,9 +151,16 @@
     <string name="intro_materials">Con Materiales también</string>
     <string name="intro_materials_summary">Tus Productos, como en la vida real, pueden ser elaborados con Materiales. En Go Sales puedes crear Materiales y usarlos en cada receta del Producto.</string>
     <string name="intro_products">Crea Productos</string>
-    <string name="intro_products_summary">En Go Sales debes crear Productos para poder venderlos. Cada producto tiene su propio precio y características.</string>
+    <string name="intro_products_summary">En Go Sales debes crear Productos para poder venderlos. Cada Producto es una copia de lo que vendes en tu negocio.</string>
     <string name="tutorial_hf_step0_summary">Go Sales tiene 3 secciones. En cada seccion podrás hacer cosas diferentes. Para empezar a vender debes crear un nuevo Producto. Vamos a intentarlo ahora.</string>
     <string name="intro_sales">Empieza a vender</string>
     <string name="intro_sales_summary">Cada que hagas una venta, tus inventarios se irán agotando lentamente. Go Sales se ocupa de todo esto automáticamente de manera que te concentres en tus reportes.</string>
     <string name="next">SIGUIENTE</string>
+    <string name="intro_reports">Revisa el día</string>
+    <string name="intro_reports_summary">Después de un día de ventas, revisa el reporte para comparar el efectivo con los resultados de la app. No se te perderá ni un detalle.</string>
+    <string name="intro_sell">Véndelos</string>
+    <string name="intro_sell_summary">Cuando un cliente compra algo, usa Go Sales para registrar la Venta. Justo como una caja registradora pero en tu teléfono.</string>
+    <string name="intro_inventory">Inventario automático</string>
+    <string name="intro_inventory_summary">Go Sales ajustará automaticamente los inventarios después de cada venta. El asistente te dira lo que necesitas reabastecer!</string>
+    <string name="help">Ayuda</string>
 </resources>

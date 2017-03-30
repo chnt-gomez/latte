@@ -400,7 +400,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     private boolean hasEnoughToSell(Sale sale){
-        return mPreferencePresenter.isAllowingDepletedProduction() || sale.product.productRemaining >= sale.productAmount
+        return mPreferencePresenter.isAllowingDepletedStokSales() || sale.product.productRemaining >= sale.productAmount
                 || sale.product.productType == Product.PRODUCT_TYPE_MADE_ON_SALE;
     }
 
@@ -496,7 +496,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public List<Product> getProductsFromDepartment(long departmentId, String query) {
         String formatedSearchQuery = formatForQuery(query);
-        return Product.find(Product.class, "material_name LIKE ?", "%"+formatedSearchQuery+"%");
+        return Product.find(Product.class, "product_name LIKE ?", "%"+formatedSearchQuery+"%");
     }
 
     @Override
@@ -508,6 +508,34 @@ public class DatabaseEngine implements MainMVP.ModelOps{
             mPresenter.onOperationSuccess(R.string.operation_complete);
         }
 
+    }
+
+    @Override
+    public void quickSale(Product product) {
+        Sale sale = new Sale();
+        sale.product = product;
+        sale.productAmount = 1;
+        sale.saleConcept = product.productName;
+        sale.saleTotal = product.productSellPrice;
+
+        SaleTicket ticket = new SaleTicket();
+        ticket.dateTime = DateTime.now().getMillis();
+        float total = sale.saleTotal;
+        ticket.saleTotal = total;
+        ticket.vendor = "Toad";
+        ticket.save();
+
+        sale.saleTicket = ticket;
+        sale.saleConcept = product.productName;
+        sale.save();
+
+        mPresenter.onOperationSuccess(R.string.sale_applied);
+    }
+
+    @Override
+    public List<Department> getDepartments(String query) {
+        String formatedSearchQuery = formatForQuery(query);
+        return Department.find(Department.class, "department_name LIKE ?", "%"+formatedSearchQuery+"%");
     }
 
     @Override

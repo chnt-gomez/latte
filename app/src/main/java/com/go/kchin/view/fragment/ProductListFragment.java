@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -27,7 +28,7 @@ import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
  */
 
 public class ProductListFragment extends BaseFragment implements RequiredDialogOps.RequiredNewProductOps,
-        AdapterView.OnItemClickListener{
+        AdapterView.OnItemClickListener, ViewTreeObserver.OnGlobalLayoutListener{
 
 
     private ListView listView;
@@ -61,6 +62,22 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
                 Dialogs.newProductDialog(getContext(), getResources().getString(R.string.new_product),
                         this).show();
                 break;
+        }
+    }
+
+    private void onFirstProductAdded(){
+        if (view.findViewById(R.id.product_container) != null) {
+            listView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            this.showCaseView = new MaterialShowcaseView.Builder(getActivity())
+                    .setTarget(view.findViewById(R.id.product_container))
+                    .setContentText(getString(R.string.see_a_product))
+                    .setDismissOnTouch(true)
+                    .withRectangleShape()
+                    .setMaskColour(ContextCompat.getColor(getContext(),
+                            R.color.colorDarkGrayBlue))
+                    .singleUse("see_a_product")
+                    .build();
+            showCaseView.show(getActivity());
         }
     }
 
@@ -99,6 +116,7 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         super.init();
         listView = (ListView)view.findViewById(R.id.lv_inventory);
         listView.setEmptyView(view.findViewById(android.R.id.empty));
+        listView.getViewTreeObserver().addOnGlobalLayoutListener(this);
         FloatingActionButton btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
         addToClickListener(btnAdd);
         listView.setOnItemClickListener(this);
@@ -109,8 +127,6 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
         super.onLoad();
         adapter = new ProductListAdapter(getContext(), R.layout.row_product_item,
                 mProductsPresenter.getAllProducts());
-
-
     }
 
     @Override
@@ -167,5 +183,11 @@ public class ProductListFragment extends BaseFragment implements RequiredDialogO
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         seeDetail(adapter.getItem(position).getId());
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        if (adapter != null && adapter.getCount() == 1)
+            onFirstProductAdded();
     }
 }

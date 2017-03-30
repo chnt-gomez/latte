@@ -99,7 +99,10 @@ public class QuickReportAdapter extends BaseExpandableListAdapter{
         TextView child = (TextView)convertView.findViewById(R.id.txt_sell_name);
         TextView amount = (TextView) convertView.findViewById(R.id.txt_sell_unit);
         TextView price = (TextView)convertView.findViewById(R.id.txt_sell_sale_price);
-        child.setText(childSale.product.productName);
+        if (childSale.product != null)
+            child.setText(childSale.product.productName);
+        else
+            child.setText(childSale.saleConcept);
 
         child.setTextColor(Color.parseColor("#808080"));
         amount.setTextColor(Color.parseColor("#808080"));

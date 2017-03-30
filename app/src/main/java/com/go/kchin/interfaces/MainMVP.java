@@ -252,7 +252,9 @@ public interface MainMVP {
         List<Product> getAllProducts(String query);
 
         List<Department> getDepartments();
+        List<Department> getDepartments(String query);
         List<Product> getProductsInDepartment(long departmentId);
+        List<Product> getProductsInDepartment(long departmentId, String query);
         List<Product> getProducts(long departmentId, String query);
 
         View getSlidingPanelView();
@@ -495,18 +497,20 @@ public interface MainMVP {
         List<Product> getProductsFromDepartment(long departmentId, String query);
 
         void setProductInventory(long productId, float arg);
+
+        void quickSale(Product product);
+
+        List<Department> getDepartments(String query);
     }
 
 
     interface PreferenceAccess {
-
         boolean ifPasswordProtected();
         boolean isAllowingDepletedStokSales();
         boolean isAllowingDepletedProduction();
         String getBusinessName();
         String getAdministratorName();
         boolean authorize(String password);
-
     }
 
     interface LowInventoryOps {
@@ -515,5 +519,11 @@ public interface MainMVP {
         List<DepletedItem> getAllDepletedArticles();
 
         void purchase(DepletedItem item, float arg, float cost);
+    }
+
+    interface QuickSalePresenter {
+
+        void quickSell(Product product);
+
     }
 }

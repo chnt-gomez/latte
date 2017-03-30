@@ -83,6 +83,28 @@ public class Dialogs {
         return instance;
     }
 
+    public static Dialog newQuickSaleDialog(Context context, String title,
+                                            final RequiredDialogOps.RequiredQuickSaleOps callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        final View dialogView = inflater.inflate(R.layout.dialog_quick_sale, null);
+        final EditText productName = (EditText)dialogView.findViewById(R.id.edt_sale_concept);
+        final EditText productSellPrice = (EditText)dialogView.findViewById(R.id.edt_product_sale_price);
+        builder.setView(dialogView).
+                setTitle(title).
+                setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Product product = new Product();
+                        product.productName = productName.getText().toString();
+                        product.productSellPrice = NFormatter.stringToFloat(productSellPrice.getText().toString());
+                        callback.onQuickSale(product);
+                    }
+                });
+        instance = builder.create();
+        return instance;
+    }
+
     /**
      * Builds a dialog to create a new Department
      * @param context Activity reference
@@ -259,12 +281,6 @@ public class Dialogs {
                     //TODO: what happens it there is not a password set?!
                 }
 
-        });
-        builder.setNegativeButton(context.getString(R.string.forgot_password), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                callback.recoverPassword();
-            }
         });
         instance = builder.create();
         return instance;

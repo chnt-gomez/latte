@@ -45,15 +45,6 @@ public class BaseActivity extends AppCompatActivity implements MainMVP.RequiredP
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_help){
-            mView.onShowTutorial();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         if (mModel != null){

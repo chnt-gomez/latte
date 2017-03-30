@@ -27,10 +27,12 @@ public class AppIntroActivity extends AppIntro{
                 getString(R.string.welcome_summary), R.drawable.ic_launcher, bgColor));
         addSlide(AppIntroFragment.newInstance(getString(R.string.intro_products),
                 getString(R.string.intro_products_summary), R.drawable.ic_launcher, bgColor));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_materials),
-                getString(R.string.intro_materials_summary), R.drawable.ic_launcher, bgColor));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_sales),
-                getString(R.string.intro_sales_summary), R.drawable.ic_launcher, bgColor));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_sell),
+                getString(R.string.intro_sell_summary), R.drawable.ic_launcher, bgColor));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_reports),
+                getString(R.string.intro_reports_summary), R.drawable.ic_launcher, bgColor));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_inventory),
+                getString(R.string.intro_inventory_summary), R.drawable.ic_launcher, bgColor));
     }
 
     @Override
