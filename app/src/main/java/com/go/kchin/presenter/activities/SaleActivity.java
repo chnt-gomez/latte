@@ -1,5 +1,6 @@
 package com.go.kchin.presenter.activities;
 
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,9 +20,11 @@ import android.widget.TextView;
 import com.go.kchin.R;
 import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.MainMVP;
+import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Department;
 import com.go.kchin.model.database.Product;
 import com.go.kchin.model.database.Sale;
+import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.NFormatter;
 import com.go.kchin.view.fragment.DepartmentGridFragment;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -37,7 +40,8 @@ import butterknife.OnClick;
  * Created by MAV1GA on 18/01/2017.
  */
 
-public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenterOps, SearchView.OnQueryTextListener{
+public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenterOps, SearchView.OnQueryTextListener,
+        RequiredDialogOps.RequiredQuickSaleOps{
 
     @BindView(R.id.sliding_layout)
     SlidingUpPanelLayout slideLayout;
@@ -66,6 +70,7 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         super.onOperationSuccess(resource);
         saleAdapter.clear();
         txtTotal.setText(NFormatter.floatToStringAsPrice(saleAdapter.getTotal(), false));
+        validateApplyButton();
     }
 
     @Override
@@ -93,9 +98,6 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
                 }
             }
         });
-
-
-
         saleAdapter = new SaleAdapter(this, R.layout.row_sell_item, new ArrayList<Sale>());
         saleListView.setAdapter(saleAdapter);
         saleListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -118,12 +120,10 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         attachFragment(DepartmentGridFragment.newInstance());
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
+        inflater.inflate(R.menu.search_menu_with_add, menu);
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -136,6 +136,15 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add){
+            Dialogs.newQuickSaleDialog(this, getString(R.string.add_temp_product), this).show();
+            return true;
+        }
+        return onOptionsItemSelected(item);
     }
 
     @OnClick(R.id.btn_apply_sale)
@@ -208,6 +217,10 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
 
     @Override
     public void addToCurrentSale(Product item, float amount) {
+        if (amount <= 0){
+            onOperationError(getStringResource(R.string.cannot_add_negative_sale));
+            return;
+        }
         Sale sale = new Sale();
         sale.product = item;
         sale.productAmount = amount;
@@ -241,5 +254,11 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
             mView.search(null);
         }
         return true;
+    }
+
+    @Override
+    public void onQuickSale(Product product) {
+        product.productName += getString(R.string.temporal_product_setting);
+        addToCurrentSale(product, 1);
     }
 }

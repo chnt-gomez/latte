@@ -72,7 +72,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void updateMaterial(Material newMaterialParams) {
         if ((Material.find(Material.class, "material_name = ?", newMaterialParams.materialName)).
-                size() > 1){
+                size() > 1) {
             mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_material));
             return;
         }
@@ -155,7 +155,7 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void addMaterialToRecipe(long productId, Material item) {
         for (Recipe r : getRecipeFromProduct(productId)){
-            if (r.material.getId() == item.getId()){
+            if (r.material.getId().equals(item.getId())){
                 mPresenter.onOperationError(mPresenter.getStringResource(R.string.duplicate_recipe));
                 return;
             }
@@ -184,6 +184,12 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void buyProduct(long productId, float purchaseAmount, float purchaseCost) {
+
+        if (purchaseAmount <= 0){
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.cannot_buy_negative));
+            return;
+        }
+
         Product product = Product.findById(Product.class, productId);
         if (product.productType == Product.PRODUCT_TYPE_MADE_ON_SALE){
             mPresenter.onOperationError(mPresenter.getStringResource(R.string.cannot_make_product));
@@ -350,8 +356,6 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     @Override
     public void applySale(List<Sale> currentSale) {
 
-
-
         if (currentSale.size() == 0){
             mPresenter.onOperationError(mPresenter.getStringResource(R.string.cannot_apply_void_sale));
             return;
@@ -377,10 +381,12 @@ public class DatabaseEngine implements MainMVP.ModelOps{
                 s.product.productRemaining -= s.productAmount;
                 s.product.save();
             }else {
-                for (Recipe r : getRecipeListFromProduct(s.product.getId())) {
-                    Material m = r.material;
-                    m.materialRemaining -= r.MaterialAmount;
-                    m.save();
+                if (s.product.getId() != null) {
+                    for (Recipe r : getRecipeListFromProduct(s.product.getId())) {
+                        Material m = r.material;
+                        m.materialRemaining -= r.MaterialAmount;
+                        m.save();
+                    }
                 }
             }
         }
@@ -388,6 +394,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
     }
 
     private boolean canMake(Product product){
+        //This is a temporal product.
+        if (product.getId() == null){
+            return true;
+        }
+
         if (mPreferencePresenter.isAllowingDepletedProduction() || product.productType ==
                 Product.PRODUCT_TYPE_STORED)
             return true;
@@ -415,7 +426,6 @@ public class DatabaseEngine implements MainMVP.ModelOps{
                                        preferencePresenter) {
         instance.setPresenter(presenter);
         instance.setPreferencesPresenter(preferencePresenter);
-
     }
 
     @Override
@@ -457,6 +467,11 @@ public class DatabaseEngine implements MainMVP.ModelOps{
 
     @Override
     public void buyMaterial(long purchaseId, float arg, float purchaseCost) {
+
+        if (arg <= 0){
+            mPresenter.onOperationError(mPresenter.getStringResource(R.string.cannot_buy_negative));
+            return;
+        }
         Material material = Material.findById(Material.class, purchaseId);
         material.materialRemaining += arg;
         material.save();

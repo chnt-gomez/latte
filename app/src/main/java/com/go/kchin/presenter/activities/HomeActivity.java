@@ -35,17 +35,13 @@ public class HomeActivity extends BaseActivity implements RequiredDialogOps.Requ
     }
 
     @Override
-    protected void onNeedTutorial() {
-        // Get the screen with the id
-
-    }
+    protected void onNeedTutorial() {}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -78,6 +74,7 @@ public class HomeActivity extends BaseActivity implements RequiredDialogOps.Requ
 
     @Override
     public void quickSell(Product product) {
+        product.productName += getString(R.string.temporal_product_setting);
         mModel.quickSale(product);
     }
 }
