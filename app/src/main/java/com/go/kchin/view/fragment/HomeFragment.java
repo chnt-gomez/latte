@@ -11,6 +11,7 @@ import com.go.kchin.R;
 import com.go.kchin.interfaces.MainMVP;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.model.database.Product;
+import com.go.kchin.presenter.activities.BackupActivity;
 import com.go.kchin.presenter.activities.QuickReportActivity;
 import com.go.kchin.presenter.activities.SaleActivity;
 import com.go.kchin.util.utilities.Dialogs;
@@ -122,6 +123,11 @@ public class HomeFragment extends BaseFragment implements RequiredDialogOps.Requ
         if (getPrefs().getInt(HOME_FRAGMENT_STEP_TUTORIAL, 0) <= 0)
                 getPrefs().edit().putInt(HOME_FRAGMENT_STEP_TUTORIAL, 1).apply();
         mPresenter.moveToFragment(InventoryFragment.newInstance());
+    }
+
+    @OnClick(R.id.cv_backup)
+    public void onBackupClick(View v){
+        mPresenter.moveToActivity(BackupActivity.class, null);
     }
 
     @Override

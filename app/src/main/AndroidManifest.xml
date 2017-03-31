@@ -3,6 +3,9 @@
     package="com.go.kchin">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:name="com.orm.SugarApp"
@@ -93,6 +96,9 @@
             android:configChanges = "orientation"
             android:screenOrientation = "portrait"/>
         <activity android:name=".presenter.activities.PurchasesReportActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".presenter.activities.BackupActivity"
             android:configChanges = "orientation"
             android:screenOrientation = "portrait"/>
     </application>

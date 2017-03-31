@@ -49,6 +49,16 @@
             <include layout="@layout/cv_reports"/>
         </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            android:background="@drawable/selector"
+            android:layout_width="match_parent"
+            android:id="@+id/cv_backup"
+            card_view:cardBackgroundColor="@drawable/selector"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp">
+            <include layout="@layout/cv_backup"/>
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
