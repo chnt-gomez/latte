@@ -175,7 +175,7 @@
     <string name="edit_security">Por seguridad, debes seleccionar \'Editar\' para hacer algun cambio.</string>
     <string name="got_it">Entendido</string>
     <string name="initial_stock">Todos los Productos inician con sus inventarios en 0. Vamos a reabastecerlos.</string>
-    <string name="move_to_sell">\"Ahora que tienes algunos Productos listos, vamos a venderlos.</string>
+    <string name="move_to_sell">Ahora que tienes algunos Productos listos, vamos a venderlos.</string>
     <string name="quick_sale">Venta rápida</string>
     <string name="sale_concept">Concepto de venta</string>
     <string name="see_a_product">Buen trabajo! Ahora veamos las propiedades del Producto.</string>

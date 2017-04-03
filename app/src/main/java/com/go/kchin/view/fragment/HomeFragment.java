@@ -48,7 +48,6 @@ public class HomeFragment extends BaseFragment implements RequiredDialogOps.Requ
         return fragment;
     }
 
-
     @Override
     public void onShowTutorial() {
         super.onShowTutorial();

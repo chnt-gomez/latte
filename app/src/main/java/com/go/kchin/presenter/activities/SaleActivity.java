@@ -144,7 +144,7 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
             Dialogs.newQuickSaleDialog(this, getString(R.string.add_temp_product), this).show();
             return true;
         }
-        return onOptionsItemSelected(item);
+        return false;
     }
 
     @OnClick(R.id.btn_apply_sale)

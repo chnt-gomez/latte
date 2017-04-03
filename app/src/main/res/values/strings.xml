@@ -190,7 +190,7 @@
     <string name="see_a_product">Good job! Now let\'s see the properties of the Product.</string>
     <string name="initial_stock">All products start with their stocks at 0. Let\'s re-stock this one.</string>
     <string name="add_temp_product">Add temporal Product</string>
-    <string name="temporal_product_setting">" * Temp Product"</string>
+    <string name="temporal_product_setting"> * Temp Product</string>
     <string name="cannot_buy_negative">Can\'t buy negative numbers</string>
     <string name="cannot_add_negative_sale">Can\'t add a negative Sale</string>
 </resources>
