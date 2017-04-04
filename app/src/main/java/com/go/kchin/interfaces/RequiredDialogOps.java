@@ -71,4 +71,11 @@ public interface RequiredDialogOps {
     interface RequiredQuickSaleOps {
         void onQuickSale(Product product);
     }
+
+    interface RequiredSecureWifi {
+        void onSetMacAddress(String macAddress);
+        void onHelpClick();
+        void onDeleteMacAddress();
+        void onNoNetwork();
+    }
 }

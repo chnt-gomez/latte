@@ -511,6 +511,7 @@ public interface MainMVP {
         String getBusinessName();
         String getAdministratorName();
         boolean authorize(String password);
+        boolean isWiFiSecure();
     }
 
     interface LowInventoryOps {

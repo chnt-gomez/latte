@@ -84,7 +84,7 @@
     <string name="purchases">Compras y gastos</string>
     <string name="recipe">Receta</string>
     <string name="recorded_ticket_id">Folios de tickets</string>
-    <string name="recover_password">Próximamente</string>
+    <string name="recover_password">Requiere conexión WiFi Segura</string>
     <string name="sale_applied">Venta aplicada</string>
     <string name="sale_price">Precio de venta</string>
     <string name="sale_report">Venta</string>
@@ -192,4 +192,21 @@
     <string name="temporal_product_setting">* Producto temporal</string>
     <string name="cannot_add_negative_sale">Imposible añadir ventas negativas</string>
     <string name="cannot_buy_negative">Imposible comprar números negativos</string>
+    <string name="whats_this">Qué es esto?</string>
+    <string name="set_secure_wifi">¿Asignar conexión WiFi actual como una Conexión Segura?</string>
+    <string name="secure_wifi">Conexión WiFi segura</string>
+    <string name="secure_wifi_set">Conexión WiFi asignada</string>
+    <string name="secure_wifi_summary">Cuando estés conectado a la WiFi segura, la aplicación no pedira constraseñas. Recomendamos usar una red WiFi como la de tu hogar o alguna red privada</string>
+    <string name="please_connect_to_secure_wifi">Por favor conéctate a una red WiFi segura</string>
+    <string name="connect_to_secure_wifi">Por favor, conéctate a una red WiFi segura</string>
+    <string name="whats_a_secure_wifi">Qué es una conexión WiFi Segura?</string>
+    <string name="whats_a_secure_wifi_summary">Una conexión WiFi segura es una red de confianza que te puede ayudar a reestablecer tu contraseña en caso de que la olvides o pierdas.</string>
+    <string name="set_now">Asignar WiFi segura ahora</string>
+    <string name="secure_wifi_deleted">WiFi segura eliminada</string>
+    <string name="remove">Quitar</string>
+    <string name="how_to_recover_password">Cómo se reestablece la contraseña con una Conexión WiFi Segura?</string>
+    <string name="how_to_recover_password_summary">Si has olvidado la contraseña, simplemente lleva el dispositivo y conéctalo a la red WiFi segura. Una vez que esté conectado, la aplicación no requerirá de la contraseña y podrás reestablecerla.</string>
+    <string name="how_to_set_my_secure_wifi">Cómo asignar una conexión WiFi Segura?</string>
+    <string name="how_to_set_my_secure_wifi_summary">Para asignarla, primero conectate a la red WiFi que desees. Te recomendamos que lo hagas con una red segura y de confianza lejos del lugar de tu trabajo. La red de tu hogar o una red privada son un buen ejemplo.</string>
+    <string name="how_to_set_my_secure_wifi_summary_2">Una vez que se realice la conexión, simplemente ve a la pantalla de ajustes y selecciona \'Conexión WiFi Segura\' o selecciona el botón aquí al final.</string>
 </resources>

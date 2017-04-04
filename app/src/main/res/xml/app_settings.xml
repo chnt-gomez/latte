@@ -26,6 +26,11 @@
         <EditTextPreference android:title="@string/password"
             android:inputType="textPassword"
             android:key="password"/>
+        <Preference
+            android:title="@string/secure_wifi"
+            android:key="secure_wifi_mac"/>
     </PreferenceCategory>
+
+
 
 </PreferenceScreen>

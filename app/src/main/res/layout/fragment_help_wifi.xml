@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_default_margin_small">
+
+
+    <TextView
+        android:text="@string/whats_a_secure_wifi"
+        android:textStyle="bold"
+        android:textColor="@color/colorDarkGrayBlue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include layout="@layout/include_space_4dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/whats_a_secure_wifi_summary"/>
+    <include layout="@layout/include_space_4dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorDarkGrayBlue"
+        android:text="@string/how_to_set_my_secure_wifi"/>
+    <include layout="@layout/include_space_4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/how_to_set_my_secure_wifi_summary"/>
+    <include layout="@layout/include_space_4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/how_to_set_my_secure_wifi_summary_2"/>
+    <include layout="@layout/include_space_4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textColor="@color/colorDarkGrayBlue"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:text="@string/how_to_recover_password"/>
+    <include layout="@layout/include_space_4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/how_to_recover_password_summary"/>
+    <include layout="@layout/include_space_8dp"/>
+
+    <Button
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector"
+        android:drawablePadding="4dp"
+        android:textColor="@android:color/white"
+        android:drawableEnd="@drawable/ic_done_white_24dp"
+        android:text="@string/set_now"
+        android:id="@+id/btn_set" />
+</LinearLayout>

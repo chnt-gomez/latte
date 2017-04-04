@@ -71,7 +71,7 @@
     <string name="content_protected_summary">This content is protected by the administrator. Please use the administrator password</string>
     <string name="unauthorized" >Not authorized</string>
     <string name="forgot_password">Forgot password</string>
-    <string name="recover_password">Coming soon</string>
+    <string name="recover_password">Connect to Secure WiFi</string>
     <string name="too_few_in_stock_to_sell">Not enough in stock to sell</string>
     <string name="operation_complete">Operation successful</string>
     <string name="new_purchase_order">New purchase order</string>
@@ -193,4 +193,21 @@
     <string name="temporal_product_setting"> * Temp Product</string>
     <string name="cannot_buy_negative">Can\'t buy negative numbers</string>
     <string name="cannot_add_negative_sale">Can\'t add a negative Sale</string>
+    <string name="secure_wifi">Secure WiFi connection</string>
+    <string name="secure_wifi_summary">When connected to the Secure Wifi, the app will not ask for a password. We advice you to use a private WiFi connection, like your home\'s or private network\'s</string>
+    <string name="whats_this">What\'s this?</string>
+    <string name="set_secure_wifi">Set current WiFi as a Secure Connection?</string>
+    <string name="connect_to_secure_wifi">Please connect to Secure WiFi</string>
+    <string name="please_connect_to_secure_wifi">Please connect to secure WiFi</string>
+    <string name="secure_wifi_set">Secure WiFi assigned</string>
+    <string name="secure_wifi_deleted">Secure WiFi removed</string>
+    <string name="remove">Remove</string>
+    <string name="whats_a_secure_wifi">What\'s a secure WiFi Connection?</string>
+    <string name="whats_a_secure_wifi_summary">A secure WiFi connection is a trusted network that can help you to restore your password in case you forget it.</string>
+    <string name="how_to_set_my_secure_wifi">How to set a Secure WiFi Connection?</string>
+    <string name="how_to_set_my_secure_wifi_summary">To set it, first connect to the desired WiFi connection. We recommend you to do this on a trusted and safe connection away from the workplace. Your home\'s connection or a private one would be a good sample.</string>
+    <string name="how_to_set_my_secure_wifi_summary_2">After is connected, just go to the settings screen and tap on \'Secure WiFi Connection\' or tap the button at the end here.</string>
+    <string name="how_to_recover_password">How to reset the password with a Secure WiFi Connection?</string>
+    <string name="how_to_recover_password_summary">If you forget the password, simply take the device and connect it to the secure WiFi connection. After is connected, the app no longer will ask for a password and you will be able to reset your password.</string>
+    <string name="set_now">Set Secure WIFi now</string>
 </resources>

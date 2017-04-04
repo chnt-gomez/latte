@@ -5,6 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -53,6 +57,48 @@ public class Dialogs {
         progressInstance.setIndeterminate(true);
         progressInstance.setCanceledOnTouchOutside(false);
         return progressInstance;
+    }
+
+    public static Dialog newSecureWifiDialog(final Context context,
+                                             final RequiredDialogOps.RequiredSecureWifi callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
+            builder.
+                setTitle(R.string.set_secure_wifi).
+                setMessage(R.string.secure_wifi_summary).
+                setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+                        if (activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI
+                                && activeNetwork.isConnected()) {
+
+                            WifiManager wifiMan = (WifiManager) context.getSystemService(
+                                    Context.WIFI_SERVICE);
+                            WifiInfo wifiInf = wifiMan.getConnectionInfo();
+                            String macAddr = wifiInf.getBSSID();
+                            callback.onSetMacAddress(macAddr);
+                        }else{
+                            callback.onNoNetwork();
+                        }
+                    }
+                    })
+                    .setNeutralButton(R.string.remove, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            callback.onDeleteMacAddress();
+                        }
+                    })
+                    .setNegativeButton(R.string.whats_this, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            callback.onHelpClick();
+                        }
+                    });
+        instance = builder.create();
+        return instance;
     }
 
 
@@ -281,6 +327,12 @@ public class Dialogs {
                     //TODO: what happens it there is not a password set?!
                 }
 
+        });
+        builder.setNeutralButton(R.string.forgot_password, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                callback.recoverPassword();
+            }
         });
         instance = builder.create();
         return instance;

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -48,7 +50,7 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     protected final static String LAYOUT_RES_ID = "layout_res_id";
 
     @Override
-    public void onOperationSuccesfull(String message, @Nullable final long rowId) {
+    public void onOperationSuccesfull(String message, final long rowId) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction(
                 R.string.see, new View.OnClickListener() {
                     @Override
@@ -320,7 +322,7 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
 
     @Override
     public void recoverPassword() {
-
+        showMessage(getString(R.string.recover_password));
     }
 
     public void onPermissionDenied() {
