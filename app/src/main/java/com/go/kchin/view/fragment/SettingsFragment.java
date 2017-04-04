@@ -1,23 +1,15 @@
 package com.go.kchin.view.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.go.kchin.R;
 import com.go.kchin.interfaces.RequiredDialogOps;
 import com.go.kchin.util.utilities.Dialogs;
@@ -42,6 +34,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     private void init(PreferenceGroup pg){
         boolean isEnabled = getPreferenceScreen().getSharedPreferences().getBoolean("protect_with_password", false);
         getPreferenceScreen().findPreference("password").setEnabled(isEnabled);
+        getPreferenceScreen().findPreference("secure_wifi_mac").setEnabled(isEnabled);
 
         for (int i=0; i<pg.getPreferenceCount(); ++i){
             Preference p = pg.getPreference(i);
