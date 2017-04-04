@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -278,8 +279,20 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
     }
 
     protected boolean isPasswordProtected() {
-        return PreferenceManager.getDefaultSharedPreferences(getActivity())
-                .getBoolean("protect_with_password", false);
+        return !isWiFiSecure() && (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("protect_with_password", false));
+    }
+
+    public boolean isWiFiSecure() {
+        if (PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getString("secure_wifi_mac", null) != null){
+            //There is a secure wifi connection
+            WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            String currentConnection = wifiInfo.getBSSID();
+            return (currentConnection.equals(PreferenceManager.getDefaultSharedPreferences(getActivity())
+                    .getString("secure_wifi_mac", "undefined")));
+        }
+        return false;
     }
 
     protected boolean isAllowingDepletedStokSales() {
