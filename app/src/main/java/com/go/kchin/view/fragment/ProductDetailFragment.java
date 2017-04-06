@@ -80,6 +80,13 @@ public class ProductDetailFragment extends BaseFragment{
     }
 
     @Override
+    public void onPause() {
+        save();
+        super.onPause();
+
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mProductPresenter = (MainMVP.ProductPresenterOps) context;
