@@ -170,9 +170,9 @@
     <string name="assigned_to_department">Asignado al Departamento</string>
     <string name="change_name">Cambiar nombre</string>
     <string name="create_departments">Si necesitar crear Departamentos nuevos, lo puedes hacer desde aquí.</string>
-    <string name="create_materials">También puedes crear y editar Materiales aqui.</string>
+    <string name="create_materials">También puedes crear y editar Materiales aquí.</string>
     <string name="create_product">Puedes crear Productos aquí.</string>
-    <string name="edit_security">Por seguridad, debes seleccionar \'Editar\' para hacer algun cambio.</string>
+    <string name="edit_security">Por seguridad, debes seleccionar \'Editar\' para hacer algún cambio.</string>
     <string name="got_it">Entendido</string>
     <string name="initial_stock">Todos los Productos inician con sus inventarios en 0. Vamos a reabastecerlos.</string>
     <string name="move_to_sell">Ahora que tienes algunos Productos listos, vamos a venderlos.</string>
