@@ -39,4 +39,5 @@ public class Loader extends AsyncTask<String, Void, Void> {
         presenter.onDoneLoading();
         presenter = null;
     }
+
 }
