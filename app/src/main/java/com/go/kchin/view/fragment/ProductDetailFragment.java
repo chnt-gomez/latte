@@ -152,6 +152,7 @@ public class ProductDetailFragment extends BaseFragment{
         Product newProduct = mProductPresenter.getProduct(product.getId());
         newProduct.productName = edtProductName.getText().toString();
         newProduct.productMeasureUnit = spnProductMeasure.getSelectedItemPosition();
+        newProduct.productType = swProductType.isChecked() ? 1 : 0;
         mProductPresenter.saveProduct(newProduct);
     }
 
