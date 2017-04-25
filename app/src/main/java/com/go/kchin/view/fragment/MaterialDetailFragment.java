@@ -130,7 +130,7 @@ public class MaterialDetailFragment extends BaseFragment {
         Dialogs.newPurchaseDialog(getContext(), getString(R.string.buy_more), null, new RequiredDialogOps.RequiredNewPurchaseOps() {
             @Override
             public void onNewPurchase(SimplePurchase arg) {
-                mMaterialPresenter.buyMore(material.getId(), arg.getPurchasedItems(), arg.getPurchasedItems());
+                mMaterialPresenter.buyMore(material.getId(), arg.getPurchasedItems(), arg.getPurchaseAmount());
                 reload();
             }
         }).show();
