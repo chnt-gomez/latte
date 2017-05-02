@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -163,8 +164,10 @@ public class QuickReportFragment extends BaseFragment implements DatePickerDialo
                 Dialogs.dismiss();
                 if (pdfFile != null) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    Uri fileUri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext()
+                    .getPackageName()+".provider", pdfFile);
+                    intent.setDataAndType(fileUri, "application/pdf");
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                 }
             }

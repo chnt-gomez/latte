@@ -68,6 +68,8 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
                 == PackageManager.PERMISSION_GRANTED;
     }
 
+
+
     protected void requestPermission(String permission, int requestCode){
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{permission},
@@ -338,11 +340,11 @@ public class BaseFragment extends Fragment implements MainMVP.RequiredViewOps, V
         showMessage(getString(R.string.recover_password));
     }
 
-    public void onPermissionDenied() {
-
+    protected void onPermissionDenied() {
+        onOperationError(getString(R.string.please_grant_permission), -1);
     }
 
-    public void onPermissionGranted(){
+    protected void onPermissionGranted(){
 
     }
 

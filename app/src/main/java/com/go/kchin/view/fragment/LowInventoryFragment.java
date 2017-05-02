@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
@@ -89,8 +90,10 @@ public class LowInventoryFragment extends BaseFragment implements AdapterView.On
                 Dialogs.dismiss();
                 if (pdfFIle != null){
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(pdfFIle), "application/pdf");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    Uri fileUri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext()
+                            .getPackageName()+".provider", pdfFIle);
+                    intent.setDataAndType(fileUri, "application/pdf");
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                 }
             }
@@ -169,5 +172,10 @@ public class LowInventoryFragment extends BaseFragment implements AdapterView.On
         reload(null);
     }
 
+    @Override
+    protected void onPermissionGranted() {
+        super.onPermissionGranted();
+        buildPdf();
+    }
 
 }

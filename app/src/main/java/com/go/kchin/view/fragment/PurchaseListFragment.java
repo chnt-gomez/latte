@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +35,6 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 
 /**
  * Created by MAV1GA on 21/02/2017.
@@ -160,8 +160,10 @@ public class PurchaseListFragment extends BaseFragment implements DatePickerDial
                 Dialogs.dismiss();
                 if (pdfFile != null){
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    Uri fileUri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext()
+                            .getPackageName()+".provider", pdfFile);
+                    intent.setDataAndType(fileUri, "application/pdf");
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                 }
             }
