@@ -78,4 +78,8 @@ public interface RequiredDialogOps {
         void onDeleteMacAddress();
         void onNoNetwork();
     }
+
+    interface RequiredChangeCalculatorDialog {
+        void onApply();
+    }
 }

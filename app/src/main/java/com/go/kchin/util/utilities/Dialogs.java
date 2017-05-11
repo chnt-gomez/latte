@@ -12,6 +12,8 @@ import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -386,6 +388,57 @@ public class Dialogs {
             public void onClick(DialogInterface dialog, int which) {
 
                 callback.onNewString(edtItems.getText().toString());
+
+            }
+
+        });
+        instance = builder.create();
+        return instance;
+    }
+
+    public static Dialog newChangeCalculatorDialog(final Context context, String title, String message,
+                                                   final float amount, final RequiredDialogOps.RequiredChangeCalculatorDialog callback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if(title != null)
+            builder.setTitle(title);
+        if(message != null){
+            builder.setMessage(message);
+        }
+        final View dialogView = inflater.inflate(R.layout.dialog_new_change_calculator, null);
+        final EditText edtAmountPaid = (EditText)dialogView.findViewById(R.id.edt_amount_paid);
+        final TextView txtChange = (TextView)dialogView.findViewById(R.id.txt_change);
+        final TextView txtTotaSale = (TextView)dialogView.findViewById(R.id.txt_sales_amount);
+        txtTotaSale.setText(NFormatter.floatToStringAsPrice(amount, true));
+        edtAmountPaid.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                try{
+                    float f = Float.valueOf(s.toString()) - amount ;
+                    txtChange.setText(NFormatter.floatToStringAsNumber(f));
+                }catch (Exception e){
+                    txtChange.setText(context.getString(R.string.error));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        builder.setView(dialogView);
+        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                callback.onApply();
 
             }
 

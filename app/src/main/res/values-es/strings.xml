@@ -211,4 +211,6 @@
     <string name="how_to_set_my_secure_wifi_summary_2">Una vez que se realice la conexión, simplemente ve a la pantalla de ajustes y selecciona \'Conexión WiFi Segura\' o selecciona el botón aquí al final.</string>
     <string name="please_grant_permission">Otorgue permisos para continuar</string>
     <string name="no_pdf_apk">Tu dispositivo no sabe leer este archivo</string>
+    <string name="change_calculator">Calculadora de cambio</string>
+    <string name="calculator">Calculadora</string>
 </resources>

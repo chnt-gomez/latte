@@ -1,13 +1,11 @@
 package com.go.kchin.presenter.activities;
 
-import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.go.kchin.R;
 import com.go.kchin.adapters.SaleAdapter;
 import com.go.kchin.interfaces.MainMVP;
@@ -28,10 +25,8 @@ import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.NFormatter;
 import com.go.kchin.view.fragment.DepartmentGridFragment;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -144,6 +139,11 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
             Dialogs.newQuickSaleDialog(this, getString(R.string.add_temp_product), this).show();
             return true;
         }
+        if (item.getItemId() == R.id.action_calculator){
+            Dialogs.newChangeCalculatorDialog(this, getString(R.string.change_calculator), null, saleAdapter.getTotal(),null)
+            .show();
+            return true;
+        }
         return false;
     }
 
@@ -154,6 +154,7 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
 
     @Override
     public void applyCurrentSale(List<Sale> currentSale) {
+
         mModel.applySale(currentSale);
     }
 

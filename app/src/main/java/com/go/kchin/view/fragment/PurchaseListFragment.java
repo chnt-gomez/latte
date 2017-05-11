@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ListView;
-
 import com.go.kchin.R;
 import com.go.kchin.adapters.PurchasesAdapter;
 import com.go.kchin.interfaces.LoaderRequiredOps;
@@ -24,15 +23,12 @@ import com.go.kchin.util.utilities.Dialogs;
 import com.go.kchin.util.utilities.Loader;
 import com.go.kchin.util.utilities.NFormatter;
 import com.itextpdf.text.DocumentException;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

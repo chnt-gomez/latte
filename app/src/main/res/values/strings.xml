@@ -211,4 +211,9 @@
     <string name="set_now">Set Secure WIFi now</string>
     <string name="please_grant_permission">Grant permissions to continue</string>
     <string name="no_pdf_apk">Your device can\'t open PDF files</string>
+    <string name="calculator">Calculator</string>
+    <string name="change_calculator">Change calculator</string>
+    <string name="sale">Sale</string>
+    <string name="total_change">Total change</string>
+    <string name="error">Error</string>
 </resources>
