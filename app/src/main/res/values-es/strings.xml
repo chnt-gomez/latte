@@ -210,4 +210,5 @@
     <string name="how_to_set_my_secure_wifi_summary">Para asignarla, primero conectate a la red WiFi que desees. Te recomendamos que lo hagas con una red segura y de confianza lejos del lugar de tu trabajo. La red de tu hogar o una red privada son un buen ejemplo.</string>
     <string name="how_to_set_my_secure_wifi_summary_2">Una vez que se realice la conexión, simplemente ve a la pantalla de ajustes y selecciona \'Conexión WiFi Segura\' o selecciona el botón aquí al final.</string>
     <string name="please_grant_permission">Otorgue permisos para continuar</string>
+    <string name="no_pdf_apk">Tu dispositivo no sabe leer este archivo</string>
 </resources>

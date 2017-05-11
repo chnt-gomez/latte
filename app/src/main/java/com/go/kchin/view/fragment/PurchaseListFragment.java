@@ -159,12 +159,16 @@ public class PurchaseListFragment extends BaseFragment implements DatePickerDial
             public void onDoneLoading() {
                 Dialogs.dismiss();
                 if (pdfFile != null){
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    Uri fileUri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext()
-                            .getPackageName()+".provider", pdfFile);
-                    intent.setDataAndType(fileUri, "application/pdf");
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    startActivity(intent);
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        Uri fileUri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext()
+                                .getPackageName() + ".provider", pdfFile);
+                        intent.setDataAndType(fileUri, "application/pdf");
+                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        startActivity(intent);
+                    }catch(Exception e){
+                        showError(getString(R.string.no_pdf_apk));
+                    }
                 }
             }
 

@@ -210,4 +210,5 @@
     <string name="how_to_recover_password_summary">If you forget the password, simply take the device and connect it to the secure WiFi connection. After is connected, the app no longer will ask for a password and you will be able to reset your password.</string>
     <string name="set_now">Set Secure WIFi now</string>
     <string name="please_grant_permission">Grant permissions to continue</string>
+    <string name="no_pdf_apk">Your device can\'t open PDF files</string>
 </resources>
