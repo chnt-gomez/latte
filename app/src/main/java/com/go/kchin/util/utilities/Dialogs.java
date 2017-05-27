@@ -421,7 +421,7 @@ public class Dialogs {
 
                 try{
                     float f = Float.valueOf(s.toString()) - amount ;
-                    txtChange.setText(NFormatter.floatToStringAsNumber(f));
+                    txtChange.setText(NFormatter.floatToStringAsPrice(f, true));
                 }catch (Exception e){
                     txtChange.setText(context.getString(R.string.error));
                 }
@@ -437,8 +437,8 @@ public class Dialogs {
         builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                callback.onApply();
+                if (callback != null)
+                    callback.onApply();
 
             }
 

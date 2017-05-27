@@ -97,7 +97,7 @@
     <string name="sale_applied">Sale applied</string>
     <string name="low_inventory">Low inventory</string>
     <string name="items_purchased">Items purchased</string>
-    <string name="amount_paid">Amount paid</string>
+    <string name="amount_paid">Cash</string>
     <string name="end_of_document">End of document</string>
     <string name="total_purchases">Total purchases</string>
     <string name="title_departments">Departments</string>
@@ -214,4 +214,6 @@
     <string name="no_pdf_apk">Your device can\'t open PDF files</string>
     <string name="change_calculator">Change calculator</string>
     <string name="calculator">Calculator</string>
+    <string name="apply_sale_and_give_change">Receive the cash and return the change</string>
+    <string name="total_change">Total change</string>
 </resources>

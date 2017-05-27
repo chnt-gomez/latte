@@ -30,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by MAV1GA on 18/01/2017.
@@ -139,17 +140,25 @@ public class SaleActivity extends BaseActivity implements MainMVP.SalesPresenter
             Dialogs.newQuickSaleDialog(this, getString(R.string.add_temp_product), this).show();
             return true;
         }
-        if (item.getItemId() == R.id.action_calculator){
-            Dialogs.newChangeCalculatorDialog(this, getString(R.string.change_calculator), null, saleAdapter.getTotal(),null)
-            .show();
-            return true;
-        }
         return false;
     }
 
     @OnClick(R.id.btn_apply_sale)
     public void onApplyClick(View v){
         applyCurrentSale(saleAdapter.getAll());
+    }
+
+    @OnLongClick(R.id.btn_apply_sale)
+    public boolean onApplyWithCalculator(View v){
+        Dialogs.newChangeCalculatorDialog(this, getString(R.string.change_calculator),
+                getString(R.string.apply_sale_and_give_change), saleAdapter.getTotal(),
+                new RequiredDialogOps.RequiredChangeCalculatorDialog() {
+                    @Override
+                    public void onApply() {
+                        mModel.applySale(saleAdapter.getAll());
+                    }
+                }).show();
+        return true;
     }
 
     @Override

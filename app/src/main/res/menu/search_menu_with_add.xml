@@ -7,13 +7,8 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:iconifiedByDefault="false"
         app:actionViewClass="android.support.v7.widget.SearchView" />
-    <item android:id="@+id/action_calculator"
-        android:title="@string/calculator"
-        android:icon="@drawable/ic_local_atm_white_24dp"
-        app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_add"
         android:title="@string/add"
         android:icon="@drawable/ic_add_white_24dp"
         app:showAsAction="ifRoom"/>
-
 </menu>

@@ -67,5 +67,4 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
         return view;
 
     }
-
 }

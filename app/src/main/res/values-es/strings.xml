@@ -51,7 +51,7 @@
     <string name="allow_depleted_production_summary">Cuando esté seleccionado, la aplicación permitirá producir más productos incluso cuando uno o mas de sus materiales necesarios se ha agotado.</string>
     <string name="allow_depleted_sales">Permitir ventas sin inventario</string>
     <string name="allow_depleted_sales_summary">Cuando esté seleccionado, la aplicación permitirá vender productos incluso cuando se agoten del inventario.</string>
-    <string name="amount_paid">Monto pagado</string>
+    <string name="amount_paid">Efectivo</string>
     <string name="building_pdf">Creando pdf…</string>
     <string name="busines_name">Nombre de la empresa</string>
     <string name="buy_and_sell_product">Producto de compra-venta</string>
@@ -213,4 +213,6 @@
     <string name="no_pdf_apk">Tu dispositivo no sabe leer este archivo</string>
     <string name="change_calculator">Calculadora de cambio</string>
     <string name="calculator">Calculadora</string>
+    <string name="apply_sale_and_give_change">Recibe el efectivo y regresa el cambio</string>
+    <string name="total_change">Cambio a entregar</string>
 </resources>
